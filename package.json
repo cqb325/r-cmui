@@ -94,21 +94,17 @@
     "webpack-dev-server": "^2.2.0"
   },
   "directories": {},
-  "dist": {
-    "shasum": "f3d84e2c8da586de3417ef3bcf6c87659550d562",
-    "tarball": "https://registry.npmjs.org/wdui/-/wdui-0.6.3.tgz"
-  },
   "gitHead": "d24d573cf9691eb66a1bfadd64761fa636d4b150",
-  "homepage": "https://github.com/cqb325/cmui#readme",
+  "homepage": "https://github.com/cqb325/cmui2.0#readme",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "src/components/index.js",
   "maintainers": [
     {
-      "name": "jin5354",
-      "email": "xiaoyanjinx@gmail.com"
+      "name": "cqb325",
+      "email": "cqb325@163.com"
     }
   ],
-  "name": "cmui",
+  "name": "cmui2.0",
   "optionalDependencies": {},
   "pre-commit": {
     "run": [
@@ -118,12 +114,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cqb325/cmui.git"
+    "url": "git+https://github.com/cqb325/cmui2.0.git"
   },
   "scripts": {
     "build:umd": "webpack --config build/webpack.build.js",
     "clean": "rm -rf temp coverage",
-    "dev": "webpack-dev-server --inline --hot --config build/webpack.config.js --host 192.168.105.202"
+    "dev": "webpack-dev-server --inline --hot --config build/webpack.config.js --host 0.0.0.0"
   },
-  "version": "0.2.0"
+  "version": "2.0.0"
 }
