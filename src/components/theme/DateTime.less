@@ -1,0 +1,329 @@
+@greyText: #787878;
+@lighter-white-text: #8A9095;
+@disabled-text: #ccc;
+
+@border-radius: 12px;
+@highlight-color: #3498DB;
+
+.cm-datetime{
+  display: inline-block;
+  position: relative;
+
+  .cm-datetime-wrap{
+    overflow: hidden;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    z-index: 10;
+    padding: 5px;
+    background: whitesmoke;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
+    display: none;
+  }
+  &.cm-dateRange{
+    border: 1px solid #e9e9e9;
+    border-radius: 2px;
+    color: #787878;
+    .cm-datetime-wrap{
+      width: 452px;
+    }
+    .date-text{
+      width: auto;
+      min-width: 90px;
+      padding: 4px 10px;
+      border: 0;
+    }
+    .cm-date-month-line{
+      width: 218px;
+    }
+    .cm-date-year-line{
+      width: 218px;
+    }
+  }
+  .tools-info{
+    font-size: 12px;
+    padding: 5px 20px 7px;
+    border-bottom: 1px dashed #ccc;
+    text-align: left;
+
+    .date-range-shortcut{
+      margin-left: 10px;
+      color: gray;
+    }
+  }
+  .date-picker{
+    display: inline-block;
+    font-size: 12px;
+    float: left;
+  }
+  &.dropup{
+    .cm-datetime-wrap{
+      top: auto;
+      bottom: 28px;
+    }
+  }
+  .date-text{
+    padding: 4px 30px 4px 10px;
+    border: 1px solid #e9e9e9;
+    border-radius: @border-radius;
+    color: @greyText;
+    width: 100%;
+    min-width: 161px;
+    display: inline-block;
+    background-color: #fff;
+    background-image: none;
+    font-size: 13px;
+    transition: border-color ease-in-out .15s;
+    cursor: pointer;
+    height: 28px;
+    line-height: 17px;
+  }
+
+  &.disabled{
+    cursor: default;
+    .date-text{
+      cursor: default;
+      color: #888;
+    }
+    i{
+      color: #888;
+    }
+  }
+
+  i.fa-calendar{
+    position: absolute;
+    right: 6px;
+    top: 8px;
+  }
+
+  .date-picker-header{
+    padding: 2px 4px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    a{
+      display: inline-block;
+      padding: 4px;
+      color: @greyText;
+      text-decoration: none;
+      &.year,
+      &.month{
+        padding: 4px 10px;
+        border-radius: @border-radius;
+        width: 65px;
+        :hover{
+          background: #fff;
+        }
+      }
+      &.prev{float: left; cursor: pointer; font-family: Consolas,cursive,monospace,serif; -webkit-user-select: none; user-select: none; margin-top: 4px;}
+      &.next{float: right; cursor: pointer; font-family: Consolas,cursive,monospace,serif; -webkit-user-select: none; user-select: none; margin-top: 4px;}
+    }
+  }
+
+  .inner{
+    white-space: normal;
+  }
+
+  .month,
+  .year,
+  button.day{
+    color: #787878;
+    font-size: 12px;
+    text-align: center;
+    display: inline-block;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    &::-moz-focus-inner {
+      border:0;
+      padding:0;
+    }
+  }
+  .week,
+  button.day span{
+    display: inline-block;
+    width: 24px;
+    padding: 5px 0;
+    margin: 0 3px;
+    border-radius: 50%;
+    font-family: Consolas,cursive,monospace,serif;
+    background-color: transparent;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+  }
+  .week{
+    text-align: center;
+    border: none;
+    background: none;
+    cursor: default;
+    color: #aaa;
+  }
+  .month{
+    cursor: pointer;
+    width: 45px;
+    padding: 6px 0;
+    margin: 4px 10px;
+    border-radius: 3px;
+    &.disabled{
+      color: @disabled-text;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+  .year{
+    cursor: pointer;
+    width: 39px;
+    padding: 6px 0;
+    border-radius: 3px;
+  }
+
+  button.day{
+    &:hover span{
+      background-color: lighten(#3498DB, 40%);
+    }
+    &.rangeSelect{
+      color: #fff;
+      background-color: #3498DB;
+      &.cm-date-range-start{
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+      }
+      &.cm-date-range-end{
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+      span{
+        background-color: transparent;
+      }
+    }
+    &.today span{
+      color: #fff;
+      background-color: #3498DB;
+      box-shadow: 0 5px 10px rgba(0,0,0,.25);
+    }
+    &.disabled,
+    &.gray{
+      color: @disabled-text;
+    }
+    &.disabled{
+      pointer-events: none;
+      cursor: default;
+    }
+    &.empty{
+      width: 30px;
+      visibility: hidden;
+    }
+  }
+
+  .date-picker-footer{
+    text-align: center;
+    margin: 5px 0;
+    a{
+      color: @greyText;
+      text-decoration: none;
+      padding: 4px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  }
+  .date-picker-footer a:hover,
+  .month:hover,
+  .year:hover{
+    background-color: #fff;
+  }
+  .month.active,
+  .year.active{
+      color: #fff;
+      background-color: #3498DB;
+      box-shadow: 0 5px 10px rgba(0,0,0,.25);
+  }
+
+  &.black{
+    .cm-datetime-wrap{
+      background: #29323F;
+    }
+    .date-picker-header {
+      a {
+        color: @lighter-white-text;
+      }
+    }
+    .week,
+    .month,
+    .year,
+    button.day{
+      color: #fff;
+    }
+
+    button.day{
+      &:hover span{
+        background-color: @lighter-white-text;
+      }
+      &.rangeSelect{
+        color: #fff;
+        background-color: #3498DB;
+        &.cm-date-range-start{
+          border-top-left-radius: 15px;
+          border-bottom-left-radius: 15px;
+        }
+        &.cm-date-range-end{
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+        span{
+          background-color: transparent;
+        }
+      }
+      &.today span{
+        color: #fff;
+        background-color: #3498DB;
+        box-shadow: 0 5px 10px rgba(0,0,0,.5);
+      }
+      &.disabled,
+      &.gray{
+        color: @lighter-white-text;
+      }
+      &:hover{
+        &.disabled,
+        &.gray{
+          color: #fff;
+        }
+      }
+    }
+    .date-picker-footer a:hover,
+    .month:hover,
+    .year:hover{
+      background-color: @lighter-white-text;
+      color: #fff;
+    }
+
+    .tools-info{
+      color: #fff;
+    }
+  }
+
+  .cm-date-week-line,
+  .cm-date-line{
+    padding: 4px;
+    white-space: nowrap;
+  }
+  .cm-date-lines{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .cm-date-month-line{
+    min-width: 140px;
+    text-align: center;
+  }
+}
+
+.invalid {
+  .cm-datetime .date-text{
+    border-color: #E05B5B;
+  }
+}

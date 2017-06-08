@@ -1,0 +1,86 @@
+@screen-xs-min: 480px;
+@screen-sm-min: 768px;
+@screen-md-min: 992px;
+@screen-lg-min: 1200px;
+
+.cm-row{
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+  height: auto;
+  zoom: 1;
+  display: block;
+  &:after{
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+  }
+  &:before,
+  &:after{
+    content: " ";
+    display: table;
+  }
+}
+.cm-col{
+  float: left;
+}
+
+@grid-columns: 24;
+
+.calc-grid-column(@index, @class, @type) when (@type = width) and (@index > 0) {
+  .cm-col-@{class}-@{index} {
+    width: percentage((@index / @grid-columns));
+  }
+}
+
+.calc-grid-column(@index, @class, @type) when (@type = offset) {
+  .cm-col-@{class}-offset-@{index} {
+    margin-left: percentage((@index / @grid-columns));
+  }
+}
+
+.loop-grid-columns(@index, @class, @type) when (@index >= 0) {
+  .calc-grid-column(@index, @class, @type);
+  // next iteration
+  .loop-grid-columns((@index - 1), @class, @type);
+}
+
+.float-grid-columns(@class) {
+  .col(@index) { // initial
+    @item: ~".cm-col-@{class}-@{index}";
+    .col((@index + 1), @item);
+  }
+  .col(@index, @list) when (@index =< @grid-columns) { // general
+    @item: ~".cm-col-@{class}-@{index}";
+    .col((@index + 1), ~"@{list}, @{item}");
+  }
+  .col(@index, @list) when (@index > @grid-columns) { // terminal
+    @{list} {
+      float: left;
+    }
+  }
+  .col(1);
+}
+
+.make-grid(@class) {
+  .float-grid-columns(@class);
+  .loop-grid-columns(@grid-columns, @class, width);
+  .loop-grid-columns(@grid-columns, @class, offset);
+}
+
+@media (min-width: @screen-xs-min) {
+  .make-grid(xs);
+}
+
+@media (min-width: @screen-sm-min) {
+  .make-grid(sm);
+}
+
+@media (min-width: @screen-md-min) {
+  .make-grid(md);
+}
+
+@media (min-width: @screen-lg-min) {
+  .make-grid(lg);
+}

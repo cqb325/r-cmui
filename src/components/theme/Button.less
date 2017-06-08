@@ -1,0 +1,180 @@
+
+@import "colors";
+
+a,
+a:hover,
+a:link,
+a:visited{
+    text-decoration: none;
+    color: #333;
+}
+a:focus{
+  outline: none;
+}
+.cm-button-group{
+  .cm-button{
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow:  none;
+    box-shadow:  none;
+    border-top: 1px solid #53b6ff!important;
+    border-bottom: 1px solid #53b6ff!important;
+    border-left: 1px solid #53b6ff!important;
+    &:first-child{
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 2px;
+    }
+    &:last-child{
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      border-right: 1px solid #53b6ff!important;
+    }
+    &.active{
+      &.primary{
+        background: @color-blue-dark;
+      }
+    }
+    &.success{
+      border-color: lighten(@color-success, 10%)!important;
+      &.active{
+        background: darken(@color-success, 10%);
+      }
+    }
+    &.warning{
+      border-color: lighten(@color-warning, 10%)!important;
+      &.active{
+        background: darken(@color-warning, 10%);
+      }
+    }
+
+    &.danger{
+      border-color: lighten(@color-danger, 10%)!important;
+      &.active{
+        background: darken(@color-danger, 10%);
+      }
+    }
+  }
+}
+.cm-button {
+  position: relative;
+  padding: 4px 15px;
+  -webkit-user-select: none;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  color: #000;
+  border-radius: 2px;
+  background: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  line-height: normal;
+
+  -webkit-transition: background0.2s linear ,-webkit-box-shadow 0.2s linear;
+  -moz-transition: background 0.2s linear,-moz-box-shadow 0.2s linear;
+  -ms-transition: background 0.2s linear,-ms-box-shadow 0.2s linear;
+  -o-transition: background 0.2s linear,-o-box-shadow 0.2s linear;
+  transition: background 0.2s linear,box-shadow 0.2s linear;
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+
+  &.large{
+    padding: 6px 15px 6px 15px;
+    font-size: 14px;
+  }
+  &.small{
+    padding: 1px 7px;
+    font-size: 12px;
+  }
+
+  &.raised{
+    -webkit-box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+  }
+  i.fa{
+    &.left {
+      margin-right: 5px;
+    }
+    &.right {
+      margin-left: 5px;
+    }
+  }
+  &.cm-iconButton{
+    padding: 0;
+    overflow: visible;
+    box-sizing: border-box;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    i.fa{
+      overflow: hidden;
+      &.left,
+      &.right{
+        margin: 0;
+      }
+    }
+
+    &:hover{
+      background: transparent;
+    }
+  }
+
+  &:hover{
+    background: rgba(153,153,153,.2);
+  }
+  &.flat{
+    padding: 0 5px !important;
+    -webkit-box-shadow: initial;
+    -moz-box-shadow: initial;
+    box-shadow: initial;
+  }
+
+  &.primary{
+    color: #fff;
+    background-color: @color-blue;
+    border-color: @color-blue;
+    &:hover{
+      background-color: lighten(@color-blue, 10%);
+    }
+  }
+  &.success{
+    color: #fff;
+    background-color: @color-success;
+    border-color: @color-success;
+    &:hover{
+      background-color: lighten(@color-success, 10%);
+    }
+  }
+  &.warning{
+    color: #fff;
+    background-color: @color-warning;
+    border-color: @color-warning;
+    &:hover{
+      background-color: lighten(@color-warning, 10%);
+    }
+  }
+  &.danger{
+    color: #fff;
+    background-color: @color-danger;
+    border-color: @color-danger;
+    &:hover{
+      background-color: lighten(@color-danger, 10%);
+    }
+  }
+
+  &[disabled]{
+    color: rgba(0,0,0,0.3);
+    cursor: default;
+    background: transparent;
+    &:hover{
+      background: transparent;
+    }
+    i.fa{
+      color: rgba(0,0,0,0.3);
+    }
+  }
+}

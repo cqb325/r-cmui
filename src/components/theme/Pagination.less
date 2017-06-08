@@ -1,0 +1,178 @@
+@borderColor: #ededed;
+@textColor: #666;
+@cyanColor: #1bB47C;
+@import "colors";
+
+.cm-pagination{
+  font-size: 12px;
+  line-height: normal;
+  color: @textColor;
+  margin: 15px 0;
+
+  &:after{
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  &>ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+      display: inline-block;
+
+      a,.ellipse{
+        display: inline-block;
+        padding: 5px 10px;
+        color: @textColor;
+        border: 1px solid @borderColor;
+        border-right: none;
+        background: #fff;
+      }
+      a:hover{
+        color: @color-blue;
+      }
+      &.disabled{
+        a{
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  a.cm-button.flat{
+    padding: 1px 5px 2px!important;
+  }
+
+  .cm-pagination-num-list li{
+    &:first-child>a{
+      border-radius: 2px 0 0 2px;
+    }
+    &:last-child>a{
+      border-right: 1px solid @borderColor;
+      border-radius: 0 2px 2px 0;
+    }
+    &.active>a{
+      background: @color-blue;
+      color: #fff;
+      border-color: @color-blue;
+    }
+  }
+
+  &.default{
+    .cm-pagination-num-list li{
+      &.active>a{
+        background: @color-blue;
+        color: #fff;
+        border-color: @color-blue;
+      }
+    }
+  }
+
+  .pageNum{
+    width: 40px;
+    height: 20px;
+    text-align: center;
+  }
+
+  .pagination-info{
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+    margin-top: 4px;
+  }
+
+
+  &.circle{
+    .cm-pagination-num-list li{
+      >a,
+      >span.ellipse{
+        border-radius: 100%;
+        margin: 0 3px;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        text-align: center;
+        line-height: 26px;
+        border-right: 1px solid @borderColor;
+      }
+      &:first-child>a,
+      &:last-child>a{
+        border-radius: 100%;
+      }
+    }
+  }
+
+  &.cyan{
+    color: @cyanColor;
+    .cm-pagination-num-list li{
+      >a,
+      >span.ellipse{
+        background: @cyanColor;
+        border-color: @cyanColor;
+        color: #fff;
+      }
+      &.active a{
+        background: darken(@cyanColor, 10%);
+        border-color: darken(@cyanColor, 10%);
+        -webkit-box-shadow: inset 0 0 15px rgba(0, 0, 0, .2);
+        -moz-box-shadow: inset 0 0 15px rgba(0, 0, 0, .2);
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, .2);
+      }
+    }
+  }
+
+  &.primary{
+    color: @color-blue;
+    &.none{
+      .cm-pagination-num-list li{
+        >a,
+        >span.ellipse{
+          border-color: @color-blue;
+        }
+      }
+    }
+    .cm-pagination-num-list li{
+      >a,
+      >span.ellipse{
+        background: @color-blue;
+        border-color: @color-blue-dark;
+        color: #fff;
+      }
+      &.active a{
+        background: darken(@color-blue, 10%);
+        border-color: darken(@color-blue, 10%);
+        -webkit-box-shadow: inset 0 0 15px rgba(0, 0, 0, .2);
+        -moz-box-shadow: inset 0 0 15px rgba(0, 0, 0, .2);
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, .2);
+      }
+    }
+  }
+
+  .cm-select{
+    margin-right: 5px;
+  }
+  .cm-select .cm-select-value{
+    font-size: 12px;
+    min-width: 1px;
+    height: 22px;
+    padding: 1px 16px 1px 6px;
+  }
+  .cm-select .cm-select-cert{
+    top: 5px;
+    height: 10px;
+  }
+  .cm-select .cm-select-options-wrap{
+    top: 22px;
+  }
+  .cm-select.dropup .cm-select-options-wrap{
+    bottom: 22px;
+  }
+  .cm-form-control{
+    width: 35px;
+    height: 20px;
+    text-align: center;
+    padding: 0;
+  }
+}
