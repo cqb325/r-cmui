@@ -59,6 +59,7 @@ ClassList.prototype.add = function(name){
  */
 
 ClassList.prototype.remove = function(name){
+    console.log("remove: "+name);
     // classList
     if (this.list) {
         this.list.remove(name);
