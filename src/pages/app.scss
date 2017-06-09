@@ -425,13 +425,31 @@ blockquote{
   background: rgba(200,200,200,.5);
 }
 
-#app,.cm-layout,.cm-menu{
+#app,.cm-layout{
     height: 100%;
 }
-
+.cm-layout-sider{
+    background: transparent;
+}
+.layout-wrap{
+    margin-left: 10%;
+    margin-right: 10%;
+}
 .cm-layout-content{
     padding: 25px;
 }
 .cm-layout{
     background: #fff;
+}
+.cm-layout-header{
+    background: #fff;
+    border-bottom: 1px solid #e9e9e9;
+    h3{
+        margin-left: 50px;
+    }
+    canvas{
+        display: inline-block;
+        float: left;
+        margin-top: 10px;
+    }
 }

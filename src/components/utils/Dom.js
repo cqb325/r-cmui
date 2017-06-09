@@ -303,6 +303,7 @@ class Dom {
             el.classList.remove(clazz);
         }else{
             var preCls = el.className;
+
             el.className = preCls.replace(clazz, '');
         }
         return el;
