@@ -24,7 +24,7 @@ var __DEV__ = process.env.NODE_ENV !== 'production';
 // console.log(process.env.NODE_ENV);
 
 var args = process.argv;
-var uglify = args.indexOf('--uglify') > -1;
+var uglify = false;//
 
 
 // conf
@@ -123,13 +123,7 @@ var config = {
         https: false,
         compress: true,
         hot: true,
-        historyApiFallback: true,
-        proxy: {
-            '/redux_test/*': {
-                target: 'http://www.mockhttp.cn/mock/',
-                secure: false,
-            }
-        },
+        historyApiFallback: true
     },
 };
 
