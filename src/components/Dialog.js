@@ -237,6 +237,15 @@ class Dialog extends BaseComponent {
         },0);
     }
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps.title !== this.state.title) {
+            this.panel.setTitle(nextProps.title);
+        }
+        if (nextProps.content !== this.state.content) {
+            this.panel.setContent(nextProps.content);
+        }
+    }
+
     render(){
         return (
             <div></div>
