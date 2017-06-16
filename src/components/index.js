@@ -60,6 +60,8 @@ import Validation from './utils/Validation';
 import Ajax from './core/Ajax';
 import Emitter from './core/Emitter';
 
+import SimpleForm from './business/SimpleForm';
+
 let Utils = {
     UUID,
     Dom,
@@ -67,6 +69,7 @@ let Utils = {
     grids,
     Validation,
 };
+
 
 export {
     Button,
@@ -125,4 +128,5 @@ export {
     Utils,
     Ajax,
     Emitter,
+    SimpleForm,
 };
