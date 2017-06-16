@@ -40,6 +40,7 @@ let router = render((
                             <SubMenu open title={<span><FontIcon icon="internet-explorer"></FontIcon>Components</span>}>
                                 <Menu.Item href='/button'>Button</Menu.Item>
                                 <Menu.Item href='/checkbox'>CheckBox</Menu.Item>
+                                <Menu.Item href='/form'>Form</Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>

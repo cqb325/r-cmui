@@ -6,6 +6,7 @@ let links = {
     dashboard: require("bundle-loader?lazy!../pages/dashboard/dashboard.js"),
     button: require("bundle-loader?lazy!../pages/Button/index.js"),
     checkbox: require("bundle-loader?lazy!../pages/CheckBox/checkbox.js"),
+    form: require("bundle-loader?lazy!../pages/form/form.js"),
 };
 
 let ret = [];
