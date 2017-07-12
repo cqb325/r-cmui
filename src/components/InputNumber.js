@@ -246,6 +246,6 @@ class InputNumber extends BaseComponent {
     }
 }
 
-FormControl.register(InputNumber, ["inputnumber"]);
+FormControl.register(InputNumber, "inputnumber");
 
 export default InputNumber;
