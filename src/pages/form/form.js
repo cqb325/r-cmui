@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {Layout, Sider, Menu, Card, Form, FormControl,SimpleForm, CheckBox, FontIcon,CheckBoxGroup, Button, Utils} from '../../components';
+import {Layout, Sider, Menu, Card, Form, FormControl,SimpleForm, CheckBox, FontIcon,CheckBoxGroup} from '../../components';
 import Data2Form from './data2Form';
-import ItemRender from './itemRender';
 const {Header,Footer,Content} = Layout;
-const {UUID} = Utils;
 const {Item} = Menu;
 
 import Types from '../../types/types';
@@ -15,17 +13,15 @@ class Page extends React.Component{
     constructor(props){
         super(props);
 
-        this.elements = {};
-        let formEle = {
-            identify: 'form',
-            items: []
-        };
-        this.elements[formEle.identify] = formEle;
         this.state = {
             component: 'Form',
-            ref: 'form',
+            ref: 'Form',
             formData: {
-                'Form': formEle
+                'Form': {
+                    items: [
+                        {name: "zz", type: "input", label: "Input"}
+                    ]
+                }
             }
         }
     }
@@ -39,11 +35,9 @@ class Page extends React.Component{
 
     showProps(){
         let comp = this.state.component;
-        console.log("comp:   "+comp);
         let propTypes = Types[comp].types;
         let defaultValues = Types[comp]['default'];
-        let lastProps = this.elements[this.state.ref];
-
+        let lastProps = this.state.formData[this.state.ref];
         defaultValues = Object.assign(defaultValues, lastProps);
         let ret = [];
         for(let key in propTypes){
@@ -57,9 +51,6 @@ class Page extends React.Component{
         if(type === 'string'){
             return this.showStringProp(name, type, val);
         }
-        if(type === 'number'){
-            return this.showNumberProp(name, type, val);
-        }
         if(type === 'object'){
             return this.showObjectProp(name, type, val);
         }
@@ -68,9 +59,6 @@ class Page extends React.Component{
         }
         if(type === 'bool'){
             return this.showBooleanProp(name, type, val);
-        }
-        if(type === 'item'){
-            return this.showItemProp(name, type, val);
         }
         //console.log(name, type);
     }
@@ -84,18 +72,6 @@ class Page extends React.Component{
     showStringProp(name, type, defaultValue){
         return (
             <FormControl key={name} value={defaultValue} type='text' name={name} label={name+": "} onChange={this.changeProperty.bind(this, name, 'string')}></FormControl>
-        );
-    }
-
-    /**
-     *
-     * @param  {[type]} name [description]
-     * @param  {[type]} type [description]
-     * @return {[type]}      [description]
-     */
-    showNumberProp(name, type, defaultValue){
-        return (
-            <FormControl key={name} value={defaultValue} type='number' name={name} label={name+": "} onChange={this.changeProperty.bind(this, name, 'string')}></FormControl>
         );
     }
 
@@ -120,12 +96,6 @@ class Page extends React.Component{
         );
     }
 
-    showItemProp(name, type, defaultValue){
-        return (
-            <ItemRender key={name} name={name}></ItemRender>
-        );
-    }
-
     changeProperty(name, type, value, selectItem){
         if(type === 'object'){
             try{
@@ -139,7 +109,7 @@ class Page extends React.Component{
             value = !Boolean(value);
         }
 
-        let compProps = this.elements[this.state.ref];
+        let compProps = this.state.formData[this.state.ref];
         compProps[name] = value;
         this.setState({
             formData: this.state.formData
@@ -147,67 +117,7 @@ class Page extends React.Component{
     }
 
     onSelectItem(item){
-        let type = item.getType();
-        window.setTimeout(()=>{
-            this.setState({
-                component: type,
-                ref: item.getIdentify()
-            });
-        }, 10);
-
-    }
-
-    addInput(){
-        let ele = {
-            identify: UUID.v4(),
-            name: 'input',
-            type: 'input',
-            label: 'Undefined',
-            placeholder: 'InputPlace'
-        };
-        this.elements[ele.identify] = ele;
-        this.state.formData.Form.items.push(ele);
-        this.setState({
-            formData: this.state.formData,
-            component: 'input',
-            ref: ele.identify
-        });
-    }
-
-    addInputNumber(){
-        let ele = {
-            identify: UUID.v4(),
-            name: 'inputnumber',
-            type: 'inputnumber',
-            label: 'Undefined'
-        };
-        this.elements[ele.identify] = ele;
-        this.state.formData.Form.items.push(ele);
-        this.setState({
-            formData: this.state.formData,
-            component: 'inputnumber',
-            ref: ele.identify
-        });
-    }
-
-    addRadio(){
-        let ele = {
-            identify: UUID.v4(),
-            name: 'radio',
-            type: 'radio',
-            label: 'Undefined'
-        };
-        this.elements[ele.identify] = ele;
-        this.state.formData.Form.items.push(ele);
-        this.setState({
-            formData: this.state.formData,
-            component: 'radio',
-            ref: ele.identify
-        });
-    }
-
-    getConfig(){
-        console.log(this.state.formData.Form);
+        console.log(item);
     }
 
     render(){
@@ -227,11 +137,6 @@ class Page extends React.Component{
                             <Data2Form data={this.state.formData.Form} onClick={this.onSelectItem.bind(this)}>
                             </Data2Form>
                         </div>
-
-                        <div><Button onClick={this.addInput.bind(this)}>添加Input</Button></div>
-                        <div><Button onClick={this.addInputNumber.bind(this)}>添加InputNumber</Button></div>
-                        <div><Button onClick={this.addRadio.bind(this)}>添加Radio</Button></div>
-                        <div><Button onClick={this.getConfig.bind(this)}>获取结构</Button></div>
                     </Card>
 
                 </Content>
