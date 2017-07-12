@@ -162,14 +162,6 @@ class FormItem extends React.Component{
         this.setState({item});
     }
 
-    getName(){
-        return this.state.item.name;
-    }
-
-    getIdentify(){
-        return this.state.item.identify;
-    }
-
     onClick(){
         if(this.props.onClick){
             this.props.onClick(this);
@@ -199,8 +191,7 @@ class FormItem extends React.Component{
         }
         if(item.type !== "row"){
             let itemProps = Object.assign({}, item.props||{});
-            this.mergeProps(itemProps, item, ["name","type","rules","messages","placeholder"]);
-            console.log(itemProps);
+            this.mergeProps(itemProps, item, ["name","type","rules","messages"]);
             return <div onClick={this.onClick.bind(this)}><FormControl {...itemProps} label={item.label}/></div>
         }
         return <span></span>;

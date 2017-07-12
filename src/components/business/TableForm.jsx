@@ -1,10 +1,16 @@
-import React from 'react';
-import BaseComponent from '../core/BaseComponent';
-import CheckBoxGroup from '../CheckBoxGroup';
-import RadioGroup from '../RadioGroup';
-import FormControl from '../FormControl';
-import Table from '../Table';
-import UUID from '../utils/UUID';
+const React = require("react");
+const BaseComponent = require("core/BaseComponent");
+const classnames = require('classnames');
+const Input = require('Input');
+const CheckBoxGroup = require('CheckBoxGroup');
+const RadioGroup = require('RadioGroup');
+const DateTime = require('DateTime');
+const Select = require('Select');
+const TextArea = require('TextArea');
+const Upload = require('Upload');
+const FormControl = require('FormControl');
+const Table = require('Table');
+const UUID = require('utils/UUID');
 
 class TableForm extends BaseComponent{
 
@@ -221,4 +227,4 @@ class TableForm extends BaseComponent{
     }
 }
 
-export default TableForm;
+module.exports = TableForm;
