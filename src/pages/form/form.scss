@@ -1,4 +1,41 @@
+.cm-layout-content{
+    padding-top: 0;
+}
 .cm-form{
-    padding: 50px;
+    padding: 30px;
     border: 1px dashed #ccc;
+}
+.form-table{
+    .cm-form-control{
+        width: 80px;
+    }
+}
+.form-item{
+    border: 1px dashed #ccc;
+    padding: 10px;
+    position: relative;
+}
+.form-item-row{
+    position: relative;
+    border: 2px dashed #ccc;
+    padding: 15px;
+    &.active{
+        border: 2px dashed #20A0FF;
+    }
+}
+.cm-form-row{
+    .form-item{
+        display: inline-block;
+        &.block{
+            display: block;
+        }
+    }
+}
+
+.form-tools{
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    color: #20A0FF;
+    cursor: pointer;
 }

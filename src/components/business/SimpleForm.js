@@ -5,6 +5,7 @@ import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import FormControl from '../FormControl';
 import Form from '../Form';
+import Button from '../Button';
 
 class SimpleForm extends BaseComponent{
 
@@ -58,8 +59,24 @@ class SimpleForm extends BaseComponent{
     renderItems(items){
         if(items){
             return items.map((item)=>{
+                if(item.type === 'button'){
+                    return <Button {...item} key={this.itemIndex++}>{item.label}</Button>;
+                }
                 if(item.type === "label"){
-                    return <span key={this.itemIndex++} style={item.style} {...item.props}>{item.label}</span>
+                    return <span key={this.itemIndex++} style={item.style} {...item.props}>{item.label}</span>;
+                }
+                if(item.type === "promote"){
+                    let style = item.style || {};
+                    if(this.state.data){
+                        if(this.state.data.labelWidth || (this.state.data.props && this.state.data.props.labelWidth)){
+                            style["paddingLeft"] = parseInt(this.state.data.labelWidth) + 8;
+                            if(this.state.data.props && this.state.data.props.labelWidth){
+                                style["paddingLeft"] = parseInt(this.state.data.props.labelWidth) + 8;
+                            }
+                        }
+                    }
+                    delete item.style;
+                    return <div key={this.itemIndex++} style={style} {...item}>{item.label}</div>;
                 }
                 if(item.type !== "row"){
                     let itemProps = Object.assign({}, item.props||{});

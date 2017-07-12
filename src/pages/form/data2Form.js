@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {FormControl,Form} from '../../components';
+import {FormControl,Form, FontIcon, Button} from '../../components';
 import PropTypes from 'prop-types';
 
 class Data2Form extends React.Component{
@@ -15,6 +15,7 @@ class Data2Form extends React.Component{
         };
 
         this.itemIndex = 0;
+        this.selectedItem = null;
     }
 
     /**
@@ -50,9 +51,38 @@ class Data2Form extends React.Component{
     }
 
     onClick(item){
+        if(this.selectedItem){
+            this.selectedItem.unSelect();
+        }
+        this.selectedItem = item;
+
         if(this.props.onClick){
             this.props.onClick(item);
         }
+    }
+
+    onSelect(item){
+        if(this.props.onSelect){
+            this.props.onSelect(item);
+        }
+    }
+
+    onRemove(formItem, item, items){
+        if(this.props.onRemove){
+            this.props.onRemove(formItem, item, items);
+        }
+        this.setState({
+            data: this.state.data
+        });
+    }
+
+    onSort(){
+        if(this.props.onSort){
+            this.props.onSort();
+        }
+        this.setState({
+            data: this.state.data
+        });
     }
 
     /**
@@ -61,8 +91,15 @@ class Data2Form extends React.Component{
      */
     renderItems(items){
         if(items){
-            return items.map((item)=>{
-                return <FormItem onClick={this.onClick.bind(this)} item={item} key={this.itemIndex++} form={this}></FormItem>;
+            return items.map((item, index)=>{
+                return <FormItem
+                    onClick={this.onClick.bind(this)}
+                    onRemove={this.onRemove.bind(this)}
+                    onSort={this.onSort.bind(this)}
+                    items={items}
+                    item={item}
+                    key={item.identify}
+                    form={this}></FormItem>;
             });
         }
         return null;
@@ -150,7 +187,8 @@ class FormItem extends React.Component{
         super(props);
 
         this.state = {
-            item: props.item
+            item: props.item,
+            active: false
         };
     }
 
@@ -162,9 +200,63 @@ class FormItem extends React.Component{
         this.setState({item});
     }
 
-    onClick(){
+    getName(){
+        return this.state.item.name;
+    }
+
+    getIdentify(){
+        return this.state.item.identify;
+    }
+
+    select(){
+        this.setState({active: true});
+        this.props.form.onSelect(this.state.item);
+    }
+
+    unSelect(){
+        this.setState({active: false});
+    }
+
+    onClick(e){
+        e.preventDefault();
+        e.stopPropagation();
         if(this.props.onClick){
             this.props.onClick(this);
+        }
+
+        if(this.state.item.type === 'row'){
+            this.select();
+        }
+    }
+
+    removeItem(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if(this.props.items){
+            let index = this.props.items.indexOf(this.state.item);
+            this.props.items.splice(index, 1);
+
+            if(this.props.onRemove){
+                this.props.onRemove(this, this.state.item, this.props.items);
+            }
+        }
+    }
+
+    sortItem(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if(this.props.items){
+            let index = this.props.items.indexOf(this.state.item);
+            if(index == 0){
+                return;
+            }
+            let temp = this.props.items[index];
+            this.props.items[index] = this.props.items[index - 1];
+            this.props.items[index - 1] = temp;
+
+            if(this.props.onSort){
+                this.props.onSort(this);
+            }
         }
     }
 
@@ -184,15 +276,67 @@ class FormItem extends React.Component{
         }
     }
 
+    /**
+     * 渲染组件
+     * @param  {[type]} itemProps [description]
+     * @return {[type]}           [description]
+     */
+    renderItem(itemProps){
+        if(itemProps.type === 'button'){
+            return <Button {...itemProps}>{itemProps.label}</Button>
+        }else if(itemProps.type === 'label'){
+            return <span {...itemProps}>{itemProps.label}</span>
+        }else if(itemProps.type === 'promote'){
+            return <div {...itemProps}>{itemProps.label}</div>
+        }else{
+            return <FormControl {...itemProps} label={itemProps.label}/>;
+        }
+    }
+
     render(){
         let item = this.state.item;
-        if(item.type === "label"){
-            return <span style={item.style} {...item.props}>{item.label}</span>
-        }
         if(item.type !== "row"){
             let itemProps = Object.assign({}, item.props||{});
-            this.mergeProps(itemProps, item, ["name","type","rules","messages"]);
-            return <div onClick={this.onClick.bind(this)}><FormControl {...itemProps} label={item.label}/></div>
+            itemProps = Object.assign(itemProps, item);
+            // this.mergeProps(itemProps, item, ["name","type","rules","messages","placeholder","data"]);
+            for(let key in itemProps){
+                if(itemProps[key] === ""){
+                    delete itemProps[key];
+                }
+            }
+            let className = classNames('form-item', {
+                block: item.block
+            })
+            return <div onClick={this.onClick.bind(this)} className={className}>
+                <div className="form-tools">
+                    <FontIcon icon="level-up" onClick={this.sortItem.bind(this)} className='mr-5'></FontIcon>
+                    <FontIcon icon="trash" onClick={this.removeItem.bind(this)}></FontIcon>
+                </div>
+                {this.renderItem(itemProps)}
+            </div>
+        }else{
+            let items = this.props.form.renderItems(item.children);
+            let itemProps = Object.assign({}, item.props||{});
+            itemProps = Object.assign(itemProps, item);
+            for(let key in itemProps){
+                if(itemProps[key] === ""){
+                    delete itemProps[key];
+                }
+            }
+            let className = classNames("form-item-row", {
+                active: this.state.active
+            });
+            return (
+                <div onClick={this.onClick.bind(this)} className={className}>
+                    <div className="form-tools">
+                        <FontIcon icon="level-up" onClick={this.sortItem.bind(this)} className='mr-5'></FontIcon>
+                        <FontIcon icon="trash" onClick={this.removeItem.bind(this)}></FontIcon>
+                    </div>
+                    <Form.Row {...itemProps} key={item.name}>
+                        {items}
+                    </Form.Row>
+                </div>
+            );
         }
         return <span></span>;
     }

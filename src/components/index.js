@@ -61,6 +61,7 @@ import Ajax from './core/Ajax';
 import Emitter from './core/Emitter';
 
 import SimpleForm from './business/SimpleForm';
+import TableForm from './business/TableForm';
 
 let Utils = {
     UUID,
@@ -129,4 +130,5 @@ export {
     Ajax,
     Emitter,
     SimpleForm,
+    TableForm,
 };

@@ -153,8 +153,7 @@ if (!__DEV__) {
     config.module.loaders.push({
         test: /\.(?:jpg|gif|png)$/,
         loaders: [
-            'url-loader?limit=8000&name=imgs/[hash].[ext]',
-            'image-webpack-loader'
+            'file-loader?name=imgs/[hash].[ext]'
         ]
     });
 
