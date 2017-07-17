@@ -14,12 +14,8 @@ import classNames from 'classnames';
  * @extend React.Component
  */
 class Basic extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
     render(){
-        let { prefixCls, className, children, name} = this.props;
+        let {prefixCls, className, children, name} = this.props;
         let hasSider;
         if (name === 'Layout') {
             React.Children.forEach(children, (child) => {
@@ -29,8 +25,8 @@ class Basic extends React.Component {
             });
         }
 
-        className = classNames(className, prefixCls,{
-            [`${prefixCls}-has-sider`]: hasSider,
+        className = classNames(className, prefixCls, {
+            [`${prefixCls}-has-sider`]: hasSider
         });
         return (
             <div className={className}>{children}</div>
@@ -46,9 +42,8 @@ class Basic extends React.Component {
  * @extend React.Component
  */
 class Layout extends React.Component {
-
     render(){
-        return <Basic prefixCls='cm-layout' name='Layout' {...this.props}/>
+        return <Basic prefixCls='cm-layout' name='Layout' {...this.props} />;
     }
 }
 
@@ -60,9 +55,8 @@ class Layout extends React.Component {
  * @extend React.Component
  */
 class Header extends React.Component {
-
     render(){
-        return <Basic prefixCls='cm-layout-header' name='Header' {...this.props}/>
+        return <Basic prefixCls='cm-layout-header' name='Header' {...this.props} />;
     }
 }
 
@@ -74,9 +68,8 @@ class Header extends React.Component {
  * @extend React.Component
  */
 class Footer extends React.Component {
-
     render(){
-        return <Basic prefixCls='cm-layout-footer' name='Footer' {...this.props}/>
+        return <Basic prefixCls='cm-layout-footer' name='Footer' {...this.props} />;
     }
 }
 
@@ -88,9 +81,8 @@ class Footer extends React.Component {
  * @extend React.Component
  */
 class Content extends React.Component {
-
     render(){
-        return <Basic prefixCls='cm-layout-content' name='Content' {...this.props}/>
+        return <Basic prefixCls='cm-layout-content' name='Content' {...this.props} />;
     }
 }
 

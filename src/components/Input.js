@@ -4,10 +4,8 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
-import PropTypes from 'prop-types';
 import grids from './utils/grids';
 const getGrid = grids.getGrid;
 import Omit from './utils/omit';
@@ -21,7 +19,6 @@ import FormControl from './FormControl';
  * @extend BaseComponent
  */
 class Input extends BaseComponent {
-
     constructor(props) {
         super(props);
 
@@ -62,7 +59,7 @@ class Input extends BaseComponent {
     handleTrigger(event){
         let value = event.target.value;
         this.props.onChange(value, event);
-        this.emit("change");
+        this.emit('change');
     }
 
     getValue(){
@@ -74,9 +71,12 @@ class Input extends BaseComponent {
     }
 
     render () {
-        const { className, grid, type, trigger} = this.props;
-        const others = Omit(this.props, ["className", "handleChange", "data-valueType", "data-itemBind", "grid", "type", "trigger"]);
-        let handleChange = this.props["handleChange"] ? (event)=>{this.props["handleChange"](event, {component: this})} : this.handleChange.bind(this);
+        const {className, grid, type, trigger} = this.props;
+        const others = Omit(this.props,
+            ['className', 'handleChange', 'data-valueType', 'data-itemBind', 'grid', 'type', 'trigger']);
+        let handleChange = this.props['handleChange']
+            ? (event)=>{ this.props['handleChange'](event, {component: this}); }
+            : this.handleChange.bind(this);
         const props = {
             className: classNames(
                 className,
@@ -102,6 +102,6 @@ Input.defaultProps = {
     value: ''
 };
 
-FormControl.register(Input, ["text"]); 
+FormControl.register(Input, ['text']);
 
 export default Input;

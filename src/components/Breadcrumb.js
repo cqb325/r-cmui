@@ -5,8 +5,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from "classnames";
-import BaseComponent from "./core/BaseComponent";
+import classNames from 'classnames';
+import BaseComponent from './core/BaseComponent';
 
 /**
  * 面包屑类
@@ -27,39 +27,35 @@ class Breadcrumb extends BaseComponent {
          * @attribute style
          * @type {Object}
          */
-        style: PropTypes.object,
-    }
-
-    constructor(props){
-        super(props);
+        style: PropTypes.object
     }
 
     renderItems(){
         return React.Children.map(this.props.children, (child)=>{
-            let componentName = "";
-            if(child.type){
-                if(child.type.name){
+            let componentName = '';
+            if (child.type) {
+                if (child.type.name) {
                     componentName = child.type.name;
-                }else{
+                } else {
                     let matches = child.type.toString().match(/function\s*([^(]*)\(/);
-                    if(matches){
+                    if (matches) {
                         componentName = matches[1];
                     }
                 }
             }
-            if(componentName === 'Item'){
+            if (componentName === 'Item') {
                 let props = Object.assign({
-                    "separator": this.props.separator
-                },child.props);
+                    'separator': this.props.separator
+                }, child.props);
                 return React.cloneElement(child, props);
-            }else {
+            } else {
                 return child;
             }
         });
     }
 
     render(){
-        let className = classNames("cm-breadcrumb", this.props.className);
+        let className = classNames('cm-breadcrumb', this.props.className);
         return (<div className={className} style={this.props.style}>
             {this.renderItems()}
         </div>);
@@ -94,19 +90,15 @@ class Item extends BaseComponent{
         link: PropTypes.string
     }
 
-    constructor(props){
-        super(props);
-    }
-
     render(){
-        let className = classNames("cm-breadcrumb-link", this.props.className);
+        let className = classNames('cm-breadcrumb-link', this.props.className);
         let link = this.props.link;
         let linkEle = link ? (<a className={className} href={this.props.link}>
             {this.props.children}
         </a>) : <span className={className}>{this.props.children}</span>;
         return (<span>
             {linkEle}
-            <span className="cm-breadcrumb-separator">{this.props.separator || "/"}</span>
+            <span className='cm-breadcrumb-separator'>{this.props.separator || '/'}</span>
         </span>);
     }
 }

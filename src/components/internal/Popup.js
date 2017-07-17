@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import classNames from "classnames";
+import classNames from 'classnames';
 import Dom from '../utils/Dom';
 import Events from '../utils/Events';
 
@@ -23,7 +23,7 @@ class Popup extends Component{
             visible: this.props.visible,
             content: null
         };
-        //距离目标的距离
+        // 距离目标的距离
         this.gap = 5;
         this.timer = null;
         this.scrollElements = [];
@@ -45,18 +45,18 @@ class Popup extends Component{
         this._isMounted = true;
 
         let flag = false;
-        Events.on(window, "resize", (e)=>{
-            if(!flag){
+        Events.on(window, 'resize', ()=>{
+            if (!flag){
                 flag = true;
-                if(this.timer){
+                if (this.timer){
                     clearTimeout(this.timer);
                 }
                 this.timer = window.setTimeout(()=>{
-                    if(this.state.visible && this._isMounted){
+                    if (this.state.visible && this._isMounted){
                         this.update(this.state.visible);
                     }
                     flag = false;
-                },100);
+                }, 100);
             }
         });
 
@@ -64,8 +64,8 @@ class Popup extends Component{
         this.getScrollElements(this.props.baseEle);
 
         this.scrollElements.forEach((ele)=>{
-            Events.on(ele, "scroll", (e)=>{
-                if(this.state.visible && this._isMounted){
+            Events.on(ele, 'scroll', ()=>{
+                if (this.state.visible && this._isMounted){
                     this.update(this.state.visible);
                 }
             });
@@ -74,7 +74,7 @@ class Popup extends Component{
 
     update(visible){
         let tip = Dom.dom(ReactDOM.findDOMNode(this));
-        if(visible) {
+        if (visible) {
             let base = Dom.dom(this.props.baseEle);
             let baseOffset = base.offset();
             let scroll = this.getScroll(this.props.baseEle);
@@ -94,54 +94,54 @@ class Popup extends Component{
             let tipWidth = tip.width();
             let tipHeight = tip.height();
 
-            if (this.props.align === "top") {
+            if (this.props.align === 'top') {
                 style.left = baseOffset.left + baseWidth / 2 - tipWidth / 2;
                 style.top = baseOffset.top - tipHeight - this.gap;
             }
-            if (this.props.align === "topRight") {
+            if (this.props.align === 'topRight') {
                 style.left = baseOffset.left - (tipWidth - baseWidth);
                 style.top = baseOffset.top - tipHeight - this.gap;
             }
-            if (this.props.align === "topLeft") {
+            if (this.props.align === 'topLeft') {
                 style.left = baseOffset.left;
                 style.top = baseOffset.top - tipHeight - this.gap;
             }
 
-            if (this.props.align === "bottom") {
+            if (this.props.align === 'bottom') {
                 style.left = baseOffset.left + baseWidth / 2 - tipWidth / 2;
                 style.top = baseOffset.top + baseHeight + this.gap;
             }
-            if (this.props.align === "bottomRight") {
+            if (this.props.align === 'bottomRight') {
                 style.left = baseOffset.left - (tipWidth - baseWidth);
                 style.top = baseOffset.top + baseHeight + this.gap;
             }
-            if (this.props.align === "bottomLeft") {
+            if (this.props.align === 'bottomLeft') {
                 style.left = baseOffset.left;
                 style.top = baseOffset.top + baseHeight + this.gap;
             }
 
-            if (this.props.align === "left") {
+            if (this.props.align === 'left') {
                 style.left = baseOffset.left - tipWidth - this.gap;
                 style.top = baseOffset.top + (baseHeight - tipHeight) / 2;
             }
-            if (this.props.align === "leftTop") {
+            if (this.props.align === 'leftTop') {
                 style.left = baseOffset.left - tipWidth - this.gap;
                 style.top = baseOffset.top;
             }
-            if (this.props.align === "leftBottom") {
+            if (this.props.align === 'leftBottom') {
                 style.left = baseOffset.left - tipWidth - this.gap;
                 style.top = baseOffset.top - (tipHeight - baseHeight);
             }
 
-            if (this.props.align === "right") {
+            if (this.props.align === 'right') {
                 style.left = baseOffset.left + baseWidth + this.gap;
                 style.top = baseOffset.top + (baseHeight - tipHeight) / 2;
             }
-            if (this.props.align === "rightTop") {
+            if (this.props.align === 'rightTop') {
                 style.left = baseOffset.left + baseWidth + this.gap;
                 style.top = baseOffset.top;
             }
-            if (this.props.align === "rightBottom") {
+            if (this.props.align === 'rightBottom') {
                 style.left = baseOffset.left + baseWidth + this.gap;
                 style.top = baseOffset.top - (tipHeight - baseHeight);
             }
@@ -153,7 +153,7 @@ class Popup extends Component{
                 visible: visible,
                 style: style
             });
-        }else{
+        } else {
             this.setState({
                 visible: visible
             });
@@ -163,7 +163,7 @@ class Popup extends Component{
             // }, this.props.delay || 0);
         }
 
-        if(this.props.onVisibleChange){
+        if (this.props.onVisibleChange){
             this.props.onVisibleChange(visible);
         }
     }
@@ -175,8 +175,10 @@ class Popup extends Component{
     getScrollElements(ele){
         let parent = ele.parentNode;
 
-        while(parent !== null && parent.tagName !== "HTML"){
-            if(parent.scrollHeight>parent.offsetHeight && (Dom.dom(parent).css("overflow-y") !== "hidden" || Dom.dom(parent).css("overflow-x") !== "hidden")){
+        while (parent !== null && parent.tagName !== 'HTML'){
+            if (parent.scrollHeight > parent.offsetHeight &&
+                (Dom.dom(parent).css('overflow-y') !== 'hidden' ||
+                Dom.dom(parent).css('overflow-x') !== 'hidden')){
                 this.scrollElements.push(parent);
             }
             parent = parent.parentNode;
@@ -188,9 +190,10 @@ class Popup extends Component{
      * @returns {{top: number, left: number}}
      */
     getScroll(){
-        let top = 0, left = 0;
+        let top = 0;
+        let left = 0;
         this.scrollElements.forEach((ele)=>{
-            if(ele.tagName !== "BODY") {
+            if (ele.tagName !== 'BODY') {
                 top += ele.scrollTop;
                 left += ele.scrollLeft;
             }
@@ -198,7 +201,7 @@ class Popup extends Component{
         return {
             top: top,
             left: left
-        }
+        };
     }
 
     setContent(content){
@@ -208,8 +211,8 @@ class Popup extends Component{
     render(){
         let className = classNames({
             visible: this.state.visible
-        },this.props.extraProps ? this.props.extraProps.className : "", this.props.align);
-        let style = Object.assign({},this.props.extraProps.style, this.state.style);
+        }, this.props.extraProps ? this.props.extraProps.className : '', this.props.align);
+        let style = Object.assign({}, this.props.extraProps.style, this.state.style);
         return (
             <div className={className} style={style}>
                 {this.state.content || this.props.children}

@@ -5,11 +5,13 @@
 import classes from './classes';
 import mutation from './mutation';
 
+let List;
+
 function tryParseInt(p) {
     if (!p) {
         return 0;
     }
-    const pi = parseInt(p);
+    const pi = parseInt(p, 10);
     return pi || 0;
 }
 
@@ -34,10 +36,6 @@ const map = {
  * @class Dom
  */
 class Dom {
-    constructor() {
-
-    }
-
     /**
      * 选取
      * @method query
@@ -46,12 +44,12 @@ class Dom {
      * @returns {Element}
      */
     static query(selector, el){
-        if(arguments.length === 1 && typeof arguments[0] == 'string'){
-            if(document.querySelector){
+        if (arguments.length === 1 && typeof arguments[0] === 'string') {
+            if (document.querySelector) {
                 return document.querySelector(arguments[0]);
             }
-        }else if(arguments.length === 2){
-            if(el.querySelector){
+        } else if (arguments.length === 2) {
+            if (el.querySelector) {
                 return el.querySelector(selector);
             }
         }
@@ -65,12 +63,12 @@ class Dom {
      * @returns {NodeList}
      */
     static queryAll(selector, el) {
-        if(arguments.length === 1 && typeof arguments[0] == 'string'){
-            if(document.querySelectorAll){
+        if (arguments.length === 1 && typeof arguments[0] === 'string') {
+            if (document.querySelectorAll) {
                 return document.querySelectorAll(arguments[0]);
             }
-        }else if(arguments.length === 2){
-            if(el.querySelectorAll){
+        } else if (arguments.length === 2) {
+            if (el.querySelectorAll) {
                 return el.querySelectorAll(selector);
             }
         }
@@ -94,11 +92,11 @@ class Dom {
      * @returns {*}
      */
     static first(el, selector) {
-        if(arguments.length === 1){
+        if (arguments.length === 1) {
             return el.children[0];
         }
-        if(arguments.length === 2){
-            return Dom.query(selector+':first-child', el);
+        if (arguments.length === 2) {
+            return Dom.query(selector + ':first-child', el);
         }
     }
 
@@ -110,7 +108,7 @@ class Dom {
      * @returns {Element}
      */
     static eq(el, index) {
-        return Dom.query(':nth-child('+ index +')', el);
+        return Dom.query(':nth-child(' + index + ')', el);
     }
 
     /**
@@ -121,7 +119,7 @@ class Dom {
      * @returns {*}
      */
     static not(el, selector) {
-        return Dom.queryAll(':not('+ selector +')', el);
+        return Dom.queryAll(':not(' + selector + ')', el);
     }
 
     /**
@@ -132,11 +130,11 @@ class Dom {
      */
     static prev(el){
         var node = el.previousSibling;
-        if(node.nodeType){
-            if(node.nodeType === 1){
+        if (node.nodeType) {
+            if (node.nodeType === 1) {
                 return node;
             }
-            if(node.nodeType === 3) {
+            if (node.nodeType === 3) {
                 node = node.previousSibling;
                 return node;
             }
@@ -151,11 +149,11 @@ class Dom {
      */
     static next(el) {
         var node = el.nextSibling;
-        if(node.nodeType){
-            if(node.nodeType === 1){
+        if (node.nodeType) {
+            if (node.nodeType === 1) {
                 return node;
             }
-            if(node.nodeType === 3) {
+            if (node.nodeType === 3) {
                 node = node.nextSibling;
                 return node;
             }
@@ -170,12 +168,12 @@ class Dom {
      * @returns {*}
      */
     static last(el, selector) {
-        if(arguments.length === 1){
+        if (arguments.length === 1) {
             var children = el.children;
             return children[children.length - 1];
         }
-        if(arguments.length === 2){
-            return Dom.query(selector+':last-child', el);
+        if (arguments.length === 2) {
+            return Dom.query(selector + ':last-child', el);
         }
     }
 
@@ -186,16 +184,18 @@ class Dom {
      * @param selector
      */
     static closest(el, selector){
-        var doms, targetDom;
+        let doms;
+        let targetDom;
         var isSame = function(doms, el){
-            var i = 0, len = doms.length;
-            for(i; i<len; i++){
-                if(doms[i].isEqualNode){
-                    if(doms[i].isEqualNode(el)) {
+            let i = 0;
+            let len = doms.length;
+            for (i; i < len; i++) {
+                if (doms[i].isEqualNode) {
+                    if (doms[i].isEqualNode(el)) {
                         return doms[i];
                     }
-                }else{
-                    if(doms[i] == el) {
+                } else {
+                    if (doms[i] == el) {
                         return doms[i];
                     }
                 }
@@ -205,9 +205,9 @@ class Dom {
         var traversal = function(el, selector){
             doms = Dom.queryAll(selector, el.parentNode);
             targetDom = isSame(doms, el);
-            while(!targetDom){
+            while (!targetDom) {
                 el = el.parentNode;
-                if(el != null && el.nodeType == el.DOCUMENT_NODE){
+                if (el != null && el.nodeType === el.DOCUMENT_NODE) {
                     return false;
                 }
                 traversal(el, selector);
@@ -225,7 +225,7 @@ class Dom {
      * @param el
      */
     static remove(el) {
-        if(el && el.parentNode){
+        if (el && el.parentNode) {
             el.parentNode.removeChild(el);
         }
     }
@@ -239,9 +239,9 @@ class Dom {
      * @returns {*}
      */
     static attr(el, name, value){
-        if(arguments.length == 2){
+        if (arguments.length === 2) {
             return el.getAttribute(name);
-        }else if(arguments.length == 3){
+        } else if (arguments.length === 3) {
             el.setAttribute(name, value);
             return el;
         }
@@ -254,7 +254,7 @@ class Dom {
      * @param name
      */
     static removeAttr(el, name) {
-        if(arguments.length === 2){
+        if (arguments.length === 2) {
             el.removeAttribute(name);
         }
     }
@@ -267,9 +267,9 @@ class Dom {
      * @returns {boolean}
      */
     static hasClass(el, clazz) {
-        if(el.className.indexOf(clazz) > -1){
+        if (el.className.indexOf(clazz) > -1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -282,11 +282,11 @@ class Dom {
      * @returns {*}
      */
     static addClass(el, clazz) {
-        if('classList' in el){
+        if ('classList' in el) {
             el.classList.add(clazz);
-        }else{
+        } else {
             var preCls = el.className;
-            el.className = preCls +' '+ clazz;
+            el.className = preCls + ' ' + clazz;
         }
         return el;
     }
@@ -299,9 +299,9 @@ class Dom {
      * @returns {*}
      */
     static removeClass(el, clazz) {
-        if('classList' in el){
+        if ('classList' in el) {
             el.classList.remove(clazz);
-        }else{
+        } else {
             var preCls = el.className;
 
             el.className = preCls.replace(clazz, '');
@@ -350,7 +350,7 @@ class Dom {
      * @returns {ClientRect} 文字区域范围
      */
     static bounding(el) {
-        return rect = el.getBoundingClientRect();
+        return el.getBoundingClientRect();
     }
 
     /**
@@ -359,7 +359,7 @@ class Dom {
      * @returns {number}
      */
     static forceRedraw (el) {
-        let originalDisplay = Dom.css(el, "display");
+        let originalDisplay = Dom.css(el, 'display');
 
         el.style.display = 'none';
         let oh = el.offsetHeight;
@@ -374,15 +374,15 @@ class Dom {
      * @param callback
      */
     static withoutTransition (el, callback) {
-        //turn off transition
+        // turn off transition
         el.style.transition = 'none';
 
         callback();
 
-        //force a redraw
+        // force a redraw
         Dom.forceRedraw(el);
 
-        //put the transition back
+        // put the transition back
         el.style.transition = '';
     }
 
@@ -393,11 +393,11 @@ class Dom {
      * @returns {*}
      */
     static getOuterHeight (el) {
-        let height = el.clientHeight
-            + tryParseInt(el.style.borderTopWidth)
-            + tryParseInt(el.style.borderBottomWidth)
-            + tryParseInt(el.style.marginTop)
-            + tryParseInt(el.style.marginBottom);
+        let height = el.clientHeight +
+            tryParseInt(el.style.borderTopWidth) +
+            tryParseInt(el.style.borderBottomWidth) +
+            tryParseInt(el.style.marginTop) +
+            tryParseInt(el.style.marginBottom);
         return height;
     }
 
@@ -408,11 +408,11 @@ class Dom {
      * @returns {*}
      */
     static getOuterWidth (el) {
-        return el.offsetWidth
-            + tryParseInt(el.style.borderLeftWidth)
-            + tryParseInt(el.style.borderRightWidth)
-            + tryParseInt(el.style.marginLeft)
-            + tryParseInt(el.style.marginRight);
+        return el.offsetWidth +
+            tryParseInt(el.style.borderLeftWidth) +
+            tryParseInt(el.style.borderRightWidth) +
+            tryParseInt(el.style.marginLeft) +
+            tryParseInt(el.style.marginRight);
     }
 
     /**
@@ -436,13 +436,13 @@ class Dom {
      * @returns {*}
      */
     static css (el, style, fake){
-        if(typeof el === 'string'){
+        if (typeof el === 'string') {
             el = Dom.query(el);
         }
-        if(window.getComputedStyle){
+        if (window.getComputedStyle) {
             return window.getComputedStyle(el, fake)[style];
         }
-        if(el.currentStyle){
+        if (el.currentStyle) {
             return el.currentStyle[style];
         }
         return null;
@@ -459,10 +459,10 @@ class Dom {
 
     static parseHTML(html){
         if (typeof html !== 'string') {
-            if(html.nodeType && html.nodeType === 1){
+            if (html.nodeType && html.nodeType === 1) {
                 return [html];
             }
-            if(typeof html === 'object' && html.length){
+            if (typeof html === 'object' && html.length) {
                 return html;
             }
             throw new TypeError('String expected');
@@ -470,17 +470,17 @@ class Dom {
 
         // tag name
         var m = /<([\w:]+)/.exec(html);
-        if (!m) throw new Error('No elements were generated.');
+        if (!m) {
+            throw new Error('No elements were generated.');
+        }
         var tag = m[1];
 
         // body support
-        if (tag == 'body') {
-            var el = document.createElement('html');
-            el.innerHTML = html;
-            return [el.removeChild(el.lastChild)];
+        if (tag === 'body') {
+            var ele = document.createElement('html');
+            ele.innerHTML = html;
+            return [ele.removeChild(ele.lastChild)];
         }
-
-        var elements = [];
 
         // wrap map
         var wrap = map[tag] || map._default;
@@ -502,7 +502,7 @@ class Dom {
             els.push(child);
         } while (child = child.nextElementSibling);
 
-        for (var i=0 ; i<els.length ; ++i) {
+        for (var i = 0; i < els.length; ++i) {
             el.removeChild(els[i]);
         }
 
@@ -520,10 +520,10 @@ class Dom {
  * @api private
  */
 
-function List(els, selector) {
+List = function (els, selector) {
     Array.prototype.push.apply(this, els);
     this.selector = selector;
-}
+};
 
 // for minifying
 var proto = List.prototype;
@@ -648,7 +648,7 @@ proto.html = function(val){
     var el = this[0];
 
     if (val) {
-        if (typeof(val) !== 'string') {
+        if (typeof (val) !== 'string') {
             throw new Error('.html() requires a string');
         }
 
@@ -700,7 +700,7 @@ proto.map = function(fn){
 };
 
 proto.select = function() {
-    for (var i=0; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         var el = this[i];
         el.select();
     };
@@ -728,7 +728,7 @@ proto.value = function(val) {
     var el = this[0];
     if (val) {
         el.value = val;
-        return this
+        return this;
     }
 
     return el.value;
@@ -736,7 +736,7 @@ proto.value = function(val) {
 
 proto.next = function() {
     var els = [];
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         var next = this[i].nextElementSibling;
         // if no more siblings then don't push
         if (next) {
@@ -749,7 +749,7 @@ proto.next = function() {
 
 proto.prev = function() {
     var els = [];
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         var next = this[i].previousElementSibling;
         // if no more siblings then don't push
         if (next) {
@@ -825,7 +825,9 @@ proto.hasClass = function(name){
     for (var i = 0; i < this.length; ++i) {
         el = this[i];
         el._classes = el._classes || classes(el);
-        if (el._classes.has(name)) return true;
+        if (el._classes.has(name)) {
+            return true;
+        }
     }
     return false;
 };
@@ -841,13 +843,15 @@ proto.hasClass = function(name){
 
 proto.css = function(prop, val){
     if (prop instanceof Object) {
-        for(var p in prop) {
-            this.setStyle(p, prop[p]);
+        for (var p in prop) {
+            if ({}.hasOwnProperty.call(prop, p)) {
+                this.setStyle(p, prop[p]);
+            }
         }
-        return ;
+        return;
     }
 
-    if (2 == arguments.length) {
+    if (arguments.length === 2) {
         return this.setStyle(prop, val);
     }
 
@@ -880,11 +884,13 @@ proto.setStyle = function(prop, val){
 
 proto.getStyle = function(prop) {
     var el = this[0];
-    if (el) return Dom.css(el, prop);
+    if (el) {
+        return Dom.css(el, prop);
+    }
 };
 proto.parent = function() {
     var els = [];
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         els.push(this[i].parentNode);
     }
 
@@ -894,91 +900,91 @@ proto.parent = function() {
 /// mutation
 
 proto.prepend = function(what) {
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         mutation.prepend(this[i], Dom.dom(what));
     }
     return this;
 };
 
 proto.append = function(what) {
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         mutation.append(this[i], Dom.dom(what));
     }
     return this;
 };
 
 proto.before = function(what) {
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         mutation.before(this[i], Dom.dom(what));
     }
     return this;
 };
 
 proto.after = function(what) {
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         mutation.after(this[i], Dom.dom(what));
     }
     return this;
 };
 
 proto.remove = function() {
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         mutation.remove(this[i]);
     }
 };
 
 proto.replace = function(what) {
-    for (var i=0 ; i<this.length ; ++i) {
-        mutation.replace(this[i], dom(what));
+    for (var i = 0; i < this.length; ++i) {
+        mutation.replace(this[i], Dom.dom(what));
     }
     return this;
 };
 
 // note, we don't do .find('*').remove() here for efficiency
 proto.empty = function() {
-    for (var i=0 ; i<this.length ; ++i) {
+    for (var i = 0; i < this.length; ++i) {
         mutation.empty(this[i]);
     }
     return this;
 };
 
 proto.show = function() {
-    for (var i=0 ; i<this.length ; ++i) {
-        this[i].style.display = this[i].org_display ? this[i].org_display : "block";
+    for (var i = 0; i < this.length; ++i) {
+        this[i].style.display = this[i].org_display ? this[i].org_display : 'block';
     }
     return this;
 };
 
 proto.hide = function() {
-    for (var i=0 ; i<this.length ; ++i) {
-        this[i].org_display = this[i].style.display
-        this[i].style.display = "none";
+    for (var i = 0; i < this.length; ++i) {
+        this[i].org_display = this[i].style.display;
+        this[i].style.display = 'none';
     }
     return this;
 };
 
 proto.width = function (isouter) {
-    if(isouter) {
+    if (isouter) {
         return Dom.getOuterWidth(this[0]);
-    }else{
+    } else {
         return this[0].offsetWidth;
     }
 };
 proto.height = function (isouter) {
-    if(isouter) {
+    if (isouter) {
         return Dom.getOuterHeight(this[0]);
-    }else{
+    } else {
         return this[0].offsetHeight;
     }
 };
 
 proto.offset = function () {
-    if(this.length){
+    if (this.length) {
         var ele = this[0];
         var actualLeft = ele.offsetLeft;
         var actualTop = ele.offsetTop;
         var current = ele.offsetParent;
-        while (current !== null && current.tagName !== "BODY"){
+        while (current !== null && current.tagName !== 'BODY'){
             actualLeft += current.offsetLeft;
             actualTop += current.offsetTop;
             current = current.offsetParent;
@@ -987,7 +993,7 @@ proto.offset = function () {
         return {
             top: actualTop,
             left: actualLeft
-        }
+        };
     }
     return null;
 };

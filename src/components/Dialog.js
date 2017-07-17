@@ -30,14 +30,18 @@ class Dialog extends BaseComponent {
 
         this.footers = props.hasFooter ? props.footers || {
             components: [
-                <Button theme="success" raised={true} onClick={this.btnHandler.bind(this, true)} icon="save" >{props.okButtonText||"保 存"}</Button>,
-                <Button theme="info" raised={true} onClick={this.btnHandler.bind(this, false)} icon="flask" className="ml-10">{props.cancelButtonText||"取 消"}</Button>
+                <Button theme='success' raised onClick={this.btnHandler.bind(this, true)} icon='save'>
+                    {props.okButtonText || '保 存'}
+                </Button>,
+                <Button theme='info' raised onClick={this.btnHandler.bind(this, false)} icon='flask' className='ml-10'>
+                    {props.cancelButtonText || '取 消'}
+                </Button>
             ]
         } : null;
 
         this.backdrop = null;
 
-        //保存的数据
+        // 保存的数据
         this.data = null;
     }
 
@@ -80,9 +84,9 @@ class Dialog extends BaseComponent {
      * @param flag
      */
     btnHandler(flag){
-        if(this.props.onConfirm){
+        if (this.props.onConfirm) {
             let ret = this.props.onConfirm(flag);
-            if(ret){
+            if (ret) {
                 this.close();
             }
 
@@ -97,7 +101,7 @@ class Dialog extends BaseComponent {
         this.setState({
             visibility: false
         });
-        if(this.orign) {
+        if (this.orign) {
             let offset = Dom.dom(this.orign).offset();
             let ele = ReactDOM.findDOMNode(this.panel);
 
@@ -105,18 +109,21 @@ class Dialog extends BaseComponent {
                 left: offset.left,
                 top: offset.top,
                 scale: 0
-            }, {duration: 300, complete: ()=>{
-                velocity(this.container, "fadeOut", {duration: 0});
-            }});
-        }else{
-            velocity(this.container, "fadeOut", {duration: 300});
+            }, {
+                duration: 300,
+                complete: ()=>{
+                    velocity(this.container, 'fadeOut', {duration: 0});
+                }
+            });
+        } else {
+            velocity(this.container, 'fadeOut', {duration: 300});
         }
 
-        if(this.props.onClose){
+        if (this.props.onClose) {
             this.props.onClose();
         }
-        this.emit("close");
-        this.backdrop.style.display = "none";
+        this.emit('close');
+        this.backdrop.style.display = 'none';
     }
 
     /**
@@ -128,55 +135,58 @@ class Dialog extends BaseComponent {
             visibility: true
         });
 
-        if(!this.backdrop){
-            let ele = Dom.query(".shadow-backdrop");
-            if(ele){
+        if (!this.backdrop) {
+            let ele = Dom.query('.shadow-backdrop');
+            if (ele) {
                 this.backdrop = ele;
-            }else {
-                this.backdrop = document.createElement("div");
-                this.backdrop.setAttribute("class", "shadow-backdrop");
+            } else {
+                this.backdrop = document.createElement('div');
+                this.backdrop.setAttribute('class', 'shadow-backdrop');
                 document.body.appendChild(this.backdrop);
             }
         }
 
-        this.backdrop.style.display = "block";
+        this.backdrop.style.display = 'block';
 
         window.setTimeout(()=>{
             Dom.dom(this.container).show();
             let ele = ReactDOM.findDOMNode(this.panel);
             let w = ele.clientWidth;
             let h = ele.clientHeight;
-            ele.style.marginLeft = -w/2+"px";
-            ele.style.marginTop = -h/2+"px";
+            ele.style.marginLeft = -w / 2 + 'px';
+            ele.style.marginTop = -h / 2 + 'px';
             Dom.dom(this.container).hide();
 
-            if(orign){
-                velocity(this.container, "fadeIn", { duration: 0 });
+            if (orign) {
+                velocity(this.container, 'fadeIn', { duration: 0 });
                 this.orign = orign;
                 let offset = Dom.dom(orign).offset();
                 Dom.dom(ele).css({
-                    left: offset.left+"px",
-                    top: offset.top+"px"
+                    left: offset.left + 'px',
+                    top: offset.top + 'px'
                 });
                 var bodyw = document.documentElement.clientWidth;
                 var bodyH = document.documentElement.clientHeight;
                 velocity(ele, {
-                    scale: 0,
-                }, { duration: 0 , complete: function(){
-                    velocity(ele, {
-                        scale: 1,
-                        left: bodyw/2,
-                        top: bodyH/2
-                    }, { duration: 500 ,easing: "ease-in"});
-                }});
-            }else{
-                velocity(this.container, "fadeIn", { duration: 300 });
+                    scale: 0
+                }, {
+                    duration: 0,
+                    complete: function(){
+                        velocity(ele, {
+                            scale: 1,
+                            left: bodyw / 2,
+                            top: bodyH / 2
+                        }, {duration: 500, easing: 'ease-in'});
+                    }
+                });
+            } else {
+                velocity(this.container, 'fadeIn', { duration: 300 });
             }
 
-            if(this.props.onOpen){
+            if (this.props.onOpen) {
                 this.props.onOpen();
             }
-            this.emit("open");
+            this.emit('open');
         }, 0);
     }
 
@@ -208,33 +218,36 @@ class Dialog extends BaseComponent {
      *
      */
     componentDidMount(){
-        this.container = document.createElement("div");
+        this.container = document.createElement('div');
         document.body.appendChild(this.container);
-        Dom.dom(this.container).addClass("cm-popup-warp");
+        Dom.dom(this.container).addClass('cm-popup-warp');
 
         let {className, style} = this.props;
-        className = classNames("cm-dialog", className);
+        className = classNames('cm-dialog', className);
         let props = Object.assign({}, this.props);
         props.className = className;
 
         props.style = style || {};
         props.footers = this.footers;
 
-        if(this.props.hasCloseBtn){
+        if (this.props.hasCloseBtn) {
             props.tools = {
-                components: [<a href="javascript:void(0)" onClick={this.close.bind(this)} className="cm-dialog-close">&times;</a>]
+                components: [<a href='javascript:void(0)' onClick={this.close.bind(this)}
+                    className='cm-dialog-close'>&times;</a>]
             };
         }
 
-        if(this.state.visibility){
+        if (this.state.visibility) {
             Dom.dom(this.container).show();
-        }else{
+        } else {
             Dom.dom(this.container).hide();
         }
 
         window.setTimeout(()=>{
-            ReactDOM.render(<Panel ref={(ref)=>{this.panel = ref;}} {...props}>{this.props.children}</Panel>, this.container);
-        },0);
+            ReactDOM.render(<Panel ref={(ref)=>{ this.panel = ref; }} {...props}>
+                {this.props.children}
+            </Panel>, this.container);
+        }, 0);
     }
 
     componentWillReceiveProps(nextProps){
@@ -248,7 +261,7 @@ class Dialog extends BaseComponent {
 
     render(){
         return (
-            <div></div>
+            <div />
         );
     }
 }
@@ -275,7 +288,7 @@ Dialog.propTypes = {
      * @attribute type
      * @type {String}
      */
-    type: PropTypes.oneOf(["info", "confirm", "error", "warning"]),
+    type: PropTypes.oneOf(['info', 'confirm', 'error', 'warning']),
     /**
      * 自定义class
      * @attribute className

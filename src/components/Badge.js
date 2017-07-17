@@ -4,9 +4,7 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import BaseComponent from './core/BaseComponent';
 
 /**
@@ -26,33 +24,33 @@ class Badge extends BaseComponent{
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.value !== this.state.value){
+        if (nextProps.value !== this.state.value) {
             this.setState({
                 value: nextProps.value
-            })
+            });
         }
     }
 
     renderCount(){
-        if(this.state.status){
-            let countName = classNames("cm-badge-status-dot", {
+        if (this.state.status) {
+            let countName = classNames('cm-badge-status-dot', {
                 [`cm-badge-status-${this.state.status}`]: this.state.status
             });
             return [
-                <span key="1" className={countName}></span>,
-                <span key="2" className="cm-badge-status-text">{this.props.text}</span>
+                <span key='1' className={countName} />,
+                <span key='2' className='cm-badge-status-text'>{this.props.text}</span>
             ];
-        }else{
-            let countName = classNames("cm-badge-count", {
-                "cm-badge-dot": this.props.dot
+        } else {
+            let countName = classNames('cm-badge-count', {
+                'cm-badge-dot': this.props.dot
             });
-            if(this.state.value != undefined || this.props.dot) {
+            if (this.state.value != undefined || this.props.dot) {
                 return (
                     <sup className={countName}>
                         {this.props.dot ? null : this.state.value}
                     </sup>
                 );
-            }else{
+            } else {
                 return null;
             }
         }
@@ -69,9 +67,9 @@ class Badge extends BaseComponent{
 
     render(){
         let {className, style} = this.props;
-        className = classNames(className, "cm-badge", this.state.theme,{
-            "cm-badge-static": (!React.Children.count(this.props.children) && !this.state.status),
-            "cm-badge-status": this.state.status
+        className = classNames(className, 'cm-badge', this.state.theme, {
+            'cm-badge-static': (!React.Children.count(this.props.children) && !this.state.status),
+            'cm-badge-status': this.state.status
         });
 
         return (

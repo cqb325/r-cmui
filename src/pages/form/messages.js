@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import JSONEditor from 'jsoneditor';
 
 class Messages extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     reset(data){
         this.editor.set(data);
     }
@@ -18,7 +14,7 @@ class Messages extends React.Component{
             name: 'messages',
             search: false,
             onChange: ()=>{
-                if(this.props.onChange){
+                if (this.props.onChange){
                     this.props.onChange(this.editor.get());
                 }
             }
@@ -28,7 +24,7 @@ class Messages extends React.Component{
 
     render(){
         return (
-            <div ref='messages' style={{height: 200}}></div>
+            <div ref='messages' style={{height: 200}} />
         );
     }
 }

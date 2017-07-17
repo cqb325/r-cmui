@@ -4,12 +4,8 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
-import PropTypes from 'prop-types';
-import Dom from './utils/Dom';
-import FontIcon from './FontIcon';
 import FormControl from './FormControl';
 
 /**
@@ -29,10 +25,10 @@ class Switch extends BaseComponent {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.checked !== this.state.checked){
+        if (nextProps.checked !== this.state.checked) {
             this.setState({
                 checked: nextProps.checked
-            })
+            });
         }
     }
 
@@ -41,7 +37,7 @@ class Switch extends BaseComponent {
     }
 
     toggleSwitch(){
-        if(this.state.disabled){
+        if (this.state.disabled) {
             return;
         }
         this.setState({
@@ -49,15 +45,15 @@ class Switch extends BaseComponent {
         });
 
         let value = this.state.checked ? 1 : 0;
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(value);
         }
-        this.emit("change", value);
+        this.emit('change', value);
     }
 
     render(){
         let {className, style} = this.props;
-        className = classNames("cm-switch", className, this.props.size, {
+        className = classNames('cm-switch', className, this.props.size, {
             checked: this.state.checked,
             disabled: this.state.disabled
         });
@@ -65,14 +61,14 @@ class Switch extends BaseComponent {
         let text = this.state.checked ? this.props.checkedText : this.props.unCheckedText;
 
         return (
-            <span className={className} style={style} tabIndex="0" onClick={this.toggleSwitch.bind(this)}>
-                <span className="cm-switch-inner">{text}</span>
-                <input name={this.props.name} type="hidden" value={this.state.checked ? 1 : 0}/>
+            <span className={className} style={style} tabIndex='0' onClick={this.toggleSwitch.bind(this)}>
+                <span className='cm-switch-inner'>{text}</span>
+                <input name={this.props.name} type='hidden' value={this.state.checked ? 1 : 0} />
             </span>
         );
     }
 }
 
-FormControl.register(Switch, "switch");
+FormControl.register(Switch, 'switch');
 
 export default Switch;

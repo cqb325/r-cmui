@@ -18,7 +18,7 @@ Emitter.extend(request.event);
  * Ajax 类
  * @class Ajax
  */
-const Ajax = class{
+class Ajax {
     /**
      * get请求
      * @method get
@@ -29,13 +29,13 @@ const Ajax = class{
     static get(url, params, callback){
         let options = {
             url: url,
-            type: "GET",
+            type: 'GET',
             data: params,
-            dataType: "json",
+            dataType: 'json',
             success: callback
         };
         return request.ajax(options);
-        //return Ajax.request(options);
+        // return Ajax.request(options);
     }
 
     /**
@@ -48,28 +48,28 @@ const Ajax = class{
     static post(url, params, callback){
         let options = {
             url: url,
-            type: "POST",
+            type: 'POST',
             data: params,
-            dataType: "json",
+            dataType: 'json',
             success: callback
         };
         return request.ajax(options);
-        //return Ajax.request(options);
+        // return Ajax.request(options);
     }
 
     static ajax(options){
         return request.ajax(options);
     }
 
-    ///**
+    // /**
     // * request请求
     // * @method request
     // * @param props
     // * @returns {*}
     // */
-    //static request(props) {
+    // static request(props) {
     //    var url = props.url;
-    //    var method = props.method.toLowerCase() || "get";
+    //    var method = props.method.toLowerCase() || 'get';
     //    var params = props.params;
     //    var body = props.body;
     //    var headers = props.headers;
@@ -82,7 +82,7 @@ const Ajax = class{
     //    var req = request(method, url);
     //    if(withCredentials){
     //        req.withCredentials();
-    //        type = "urlencoded";
+    //        type = 'urlencoded';
     //    }
     //    if(type){
     //        req.type(type);
@@ -103,7 +103,7 @@ const Ajax = class{
     //        req.timeout(timeout)
     //    }
     //    return req.end(handler);
-    //}
+    // }
 };
 
 export default Ajax;

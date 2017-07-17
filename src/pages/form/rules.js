@@ -4,10 +4,6 @@ import JSONEditor from 'jsoneditor';
 import 'jsoneditor/dist/jsoneditor.css';
 
 class Rules extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     reset(data){
         this.editor.set(data);
     }
@@ -19,7 +15,7 @@ class Rules extends React.Component{
             name: 'rules',
             search: false,
             onChange: ()=>{
-                if(this.props.onChange){
+                if (this.props.onChange){
                     this.props.onChange(this.editor.get());
                 }
             }
@@ -29,7 +25,7 @@ class Rules extends React.Component{
 
     render(){
         return (
-            <div ref='rules' style={{height: 200}}></div>
+            <div ref='rules' style={{height: 200}} />
         );
     }
 }

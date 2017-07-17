@@ -1,11 +1,6 @@
 import React from 'react';
 import {Label, Table} from '../../components';
 import Demo1 from './demo1';
-import Demo2 from './demo2';
-import Demo3 from './demo3';
-import Demo4 from './demo4';
-import Demo5 from './demo5';
-import Demo6 from './demo6';
 
 
 let Page = React.createClass({
@@ -13,9 +8,9 @@ let Page = React.createClass({
     render(){
         return (
             <div className='main-container'>
-                <h1 className='page-h1'>CheckBox 复选框</h1>
+                <h1 className='page-h1'>Tree</h1>
                 <blockquote className='page-tip'>
-                    多选框。
+                    树形结构。
                 </blockquote>
 
                 <h1 className='page-h1'>代码演示</h1>
@@ -23,23 +18,6 @@ let Page = React.createClass({
                 <Label grid={0.5} className='code-col'>
                     <Label className='code-box'>
                         <Demo1 />
-                    </Label>
-                    <Label className='code-box'>
-                        <Demo3 />
-                    </Label>
-                    <Label className='code-box'>
-                        <Demo5 />
-                    </Label>
-                </Label>
-                <Label grid={0.5} className='code-col'>
-                    <Label className='code-box'>
-                        <Demo2 />
-                    </Label>
-                    <Label className='code-box'>
-                        <Demo4 />
-                    </Label>
-                    <Label className='code-box'>
-                        <Demo6 />
                     </Label>
                 </Label>
 

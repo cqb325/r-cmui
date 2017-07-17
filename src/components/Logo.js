@@ -27,28 +27,28 @@ class Logo extends React.Component {
         canvas.width = this.WIDTH;
         canvas.height = this.HEIGHT;
 
-        this.ctx = canvas.getContext("2d");
+        this.ctx = canvas.getContext('2d');
 
         this.animate();
     }
 
     animate(){
         this.rotate();
-        if(window.requestAnimationFrame) {
+        if (window.requestAnimationFrame) {
             window.requestAnimationFrame(()=>{
                 this.animate();
             });
-        }else{
+        } else {
             window.setTimeout(()=>{
                 this.animate();
-            },10);
+            }, 10);
         }
     }
 
     rotate(){
         this.deg = this.deg + this.step;
 
-        this.ctx.clearRect(0,0,this.WIDTH, this.HEIGHT);
+        this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
         this.drawLines();
         this.drawCircle();
     }
@@ -56,29 +56,29 @@ class Logo extends React.Component {
     drawLines(){
         let ctx = this.ctx;
         ctx.save();
-        ctx.translate(this.WIDTH/2, this.HEIGHT/2);
+        ctx.translate(this.WIDTH / 2, this.HEIGHT / 2);
         ctx.rotate(this.deg);
         ctx.beginPath();
         ctx.moveTo(-this.LOGO_WIDTH / 2, -this.gap);
-        ctx.lineTo(-this.LOGO_WIDTH / 2, -this.LOGO_WIDTH / 2-this.gap);
-        ctx.lineTo(this.LOGO_WIDTH / 2, - this.LOGO_WIDTH / 2-this.gap);
+        ctx.lineTo(-this.LOGO_WIDTH / 2, -this.LOGO_WIDTH / 2 - this.gap);
+        ctx.lineTo(this.LOGO_WIDTH / 2, -this.LOGO_WIDTH / 2 - this.gap);
         ctx.lineTo(this.LOGO_WIDTH / 2, -this.gap);
         ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.strokeStyle = "#20A0FF";
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#20A0FF';
         ctx.stroke();
         ctx.restore();
 
         ctx.save();
-        ctx.translate(this.WIDTH/2, this.HEIGHT/2);
+        ctx.translate(this.WIDTH / 2, this.HEIGHT / 2);
         ctx.rotate(this.deg);
         ctx.beginPath();
-        ctx.moveTo(- this.LOGO_WIDTH / 2, this.gap);
-        ctx.lineTo(- this.LOGO_WIDTH / 2, this.LOGO_WIDTH / 2+this.gap);
-        ctx.lineTo(this.LOGO_WIDTH / 2, this.LOGO_WIDTH / 2+this.gap);
+        ctx.moveTo(-this.LOGO_WIDTH / 2, this.gap);
+        ctx.lineTo(-this.LOGO_WIDTH / 2, this.LOGO_WIDTH / 2 + this.gap);
+        ctx.lineTo(this.LOGO_WIDTH / 2, this.LOGO_WIDTH / 2 + this.gap);
         ctx.lineTo(this.LOGO_WIDTH / 2, this.gap);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "#13CE66";
+        ctx.strokeStyle = '#13CE66';
         ctx.stroke();
         ctx.restore();
     }
@@ -86,17 +86,17 @@ class Logo extends React.Component {
     drawCircle(){
         let ctx = this.ctx;
         ctx.save();
-        ctx.translate(this.WIDTH/2, this.HEIGHT/2);
+        ctx.translate(this.WIDTH / 2, this.HEIGHT / 2);
         ctx.beginPath();
-        ctx.arc(0, 0, 3, 0, Math.PI*2);
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "#FF4949";
+        ctx.strokeStyle = '#FF4949';
         ctx.stroke();
         ctx.restore();
     }
 
     render(){
-        return <canvas ref="canvas"></canvas>;
+        return <canvas ref='canvas' />;
     }
 }
 

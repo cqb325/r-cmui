@@ -9,9 +9,8 @@ import grids from './utils/grids';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import BaseComponent from './core/BaseComponent';
-import Core from './Core';
 import Ajax from './core/Ajax';
-import clickAway from "./utils/ClickAway";
+import clickAway from './utils/ClickAway';
 import Dom from './utils/Dom';
 const getGrid = grids.getGrid;
 import FormControl from './FormControl';
@@ -47,13 +46,14 @@ class ComboTree extends BaseComponent {
      */
     _renderValues(){
         let item = this.selectedItems[this.state.value];
-        let label = item ? item["text"] : (this.props.placeholder ? this.props.placeholder+"&nbsp;" : "&nbsp;"),
-            className = classnames("cm-select-value", {
-                placeholder: !item && this.props.placeholder
-            });
+        let label = item ? item['text'] : (this.props.placeholder ? this.props.placeholder + '&nbsp;' : '&nbsp;');
+        let className = classNames('cm-select-value', {
+            placeholder: !item && this.props.placeholder
+        });
 
-        let html = label+'<input type="hidden" name="'+this.props.name+'" value="'+this.state.value+'">';
-        return(<span className={className} dangerouslySetInnerHTML={{__html: html}}></span>);
+        let html = label + '<input type="hidden" name="' + this.props.name + '" value="' + this.state.value + '">';
+
+        return (<span className={className} dangerouslySetInnerHTML={{__html: html}} />);
     }
 
     /**
@@ -63,14 +63,14 @@ class ComboTree extends BaseComponent {
      * @private
      */
     _selectItem(item){
-        let valueField = "id";
+        let valueField = 'id';
 
         let value = null;
-        if(!item){
+        if (!item) {
             if (!this.props.multi) {
                 this.hideOptions();
             }
-        }else {
+        } else {
             if (this.props.multi) {
                 this.selectedItems[item[valueField]] = item;
                 value = this.getSelectedValues();
@@ -85,11 +85,11 @@ class ComboTree extends BaseComponent {
             value: value
         });
 
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(value, item);
         }
 
-        this.emit("change", value, item);
+        this.emit('change', value, item);
     }
 
     /**
@@ -98,14 +98,14 @@ class ComboTree extends BaseComponent {
      * @returns {string}
      */
     getSelectedValues(){
-        if(this.selectedItems){
+        if (this.selectedItems) {
             let ret = [];
-            for(let value in this.selectedItems){
+            for (let value in this.selectedItems) {
                 ret.push(value);
             }
-            return ret.join(",");
+            return ret.join(',');
         }
-        return "";
+        return '';
     }
 
     getValue(){
@@ -137,7 +137,7 @@ class ComboTree extends BaseComponent {
         let options = ReactDOM.findDOMNode(this.refs.options);
         options.style.display = 'block';
 
-        let container = Dom.closest(options, ".cm-select");
+        let container = Dom.closest(options, '.cm-select');
         let offset = Dom.getOuterHeight(options) + 5;
         let dropup = Dom.overView(container, offset);
 
@@ -163,7 +163,7 @@ class ComboTree extends BaseComponent {
         this.unbindClickAway();
 
         let time = 500;
-        if(this.isLtIE9()){
+        if (this.isLtIE9()) {
             time = 0;
         }
 
@@ -182,7 +182,7 @@ class ComboTree extends BaseComponent {
     setData(data){
         this.setState({
             data: data,
-            value: ""
+            value: ''
         });
     }
 
@@ -191,10 +191,10 @@ class ComboTree extends BaseComponent {
     }
 
     componentWillMount(){
-        if(this.props.url){
+        if (this.props.url) {
             let scope = this;
             Ajax.get(this.props.url, {}, function(data){
-                if(data) {
+                if (data) {
                     scope.setState({
                         data: data
                     });
@@ -205,7 +205,7 @@ class ComboTree extends BaseComponent {
 
     render(){
         let {className, disabled, readOnly, style, grid} = this.props;
-        className = classnames("cm-select", getGrid(grid), {
+        className = classNames('cm-select', getGrid(grid), {
             active: this.state.active,
             disabled: disabled || readOnly,
             dropup: this.state.dropup,
@@ -213,14 +213,14 @@ class ComboTree extends BaseComponent {
         });
 
         let text = this._renderValues();
-        return(
+        return (
             <div className={className} style={style} onClick={this.showOptions}>
                 {text}
-                <span className="cm-select-cert"></span>
+                <span className='cm-select-cert' />
 
-                <div className="cm-select-options-wrap">
-                    <div ref="options" className="cm-select-options">
-                        <Tree ref="tree" data={this.state.data} onSelect={this._selectItem.bind(this)}/>
+                <div className='cm-select-options-wrap'>
+                    <div ref='options' className='cm-select-options'>
+                        <Tree ref='tree' data={this.state.data} onSelect={this._selectItem.bind(this)} />
                     </div>
                 </div>
             </div>
@@ -287,8 +287,8 @@ ComboTree.propTypes = {
     placeholder: PropTypes.string
 };
 
-if(FormControl) {
-    FormControl.register(ComboTree, "combotree");
+if (FormControl) {
+    FormControl.register(ComboTree, 'combotree');
 }
 
 export default ComboTree;

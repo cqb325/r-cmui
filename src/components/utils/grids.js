@@ -25,22 +25,43 @@ ret.setOptions = function(options) {
     if (options.responsive) {
         defaultResponsive = options.responsive;
     }
+};
+
+function createStyle(text) {
+    if (document.createStyleSheet) {
+        let s = document.createStyleSheet();
+        let rules = text.replace(/\/\*[^\*]*\*\//g, '').replace(/@[^{]*\{/g, '').match(/[^\{\}]+\{[^\}]+\}/g);
+        for (let i = 0; i < rules.length; i++) {
+            let m = rules[i].match(/(.*)\s*\{\s*(.*)\}/);
+            if (m) {
+                try {
+                    s.addRule(m[1], m[2]);
+                } catch (e) {
+                }
+            }
+        }
+    } else {
+        let style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = text;
+        document.head.appendChild(style);
+    }
 }
 
-ret.getGrid = function(options) {
-    if (!options) {
-        return '';
-    }
+function generateGrid(width, key, responsive) {
+    GRIDS[key] = true;
+    let minWidth = RESPONSIVE[responsive];
+    let text = `@media screen and (min-width: ${minWidth}em) { .${gridPre}-${key}{width: ${width}%} }`;
 
-    if (typeof options === 'number') {
-        options = { width: options };
-    }
+    createStyle(text);
+}
 
-    let { width, offset, responsive } = options;
-    let gridClass = generate(width, 'grid', responsive);
-    let offsetClass = generate(offset, 'offset', responsive);
+function generateOffset(width, key, responsive) {
+    OFFSETS[key] = true;
+    let minWidth = RESPONSIVE[responsive];
+    let text = `@media screen and (min-width: ${minWidth}em) { .${offsetPre}-${key}{margin-left: ${width}%} }`;
 
-    return `${gridPre} ${gridPre}-1 ${gridClass} ${offsetClass}`;
+    createStyle(text);
 }
 
 function generate(width, type, responsive) {
@@ -66,47 +87,27 @@ function generate(width, type, responsive) {
     }
 }
 
-function generateGrid(width, key, responsive) {
-    GRIDS[key] = true;
-    let minWidth = RESPONSIVE[responsive];
-    let text = `@media screen and (min-width: ${minWidth}em) { .${gridPre}-${key}{width: ${width}%} }`;
-
-    createStyle(text);
-}
-
-function generateOffset(width, key, responsive) {
-    OFFSETS[key] = true;
-    let minWidth = RESPONSIVE[responsive];
-    let text = `@media screen and (min-width: ${minWidth}em) { .${offsetPre}-${key}{margin-left: ${width}%} }`;
-
-    createStyle(text);
-}
-
-function createStyle(text) {
-    if(document.createStyleSheet){
-        let s = document.createStyleSheet();
-        let rules = text.replace(/\/\*[^\*]*\*\//g, "").replace(/@[^{]*\{/g, '').match(/[^\{\}]+\{[^\}]+\}/g);
-        for(let i = 0; i < rules.length; i++) {
-            let m = rules[i].match(/(.*)\s*\{\s*(.*)\}/);
-            if(m) {
-                try {
-                    s.addRule(m[1], m[2]);
-                } catch(e) {
-                }
-            }
-        }
-    }else {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = text;
-        document.head.appendChild(style);
+ret.getGrid = function(options) {
+    if (!options) {
+        return '';
     }
-}
+
+    if (typeof options === 'number') {
+        options = { width: options };
+    }
+
+    let { width, offset, responsive } = options;
+    let gridClass = generate(width, 'grid', responsive);
+    let offsetClass = generate(offset, 'offset', responsive);
+
+    return `${gridPre} ${gridPre}-1 ${gridClass} ${offsetClass}`;
+};
 
 (function () {
     let text = [];
 
-    text.push(`.${gridPre}{display: inline-block;zoom: 1;letter-spacing: normal;word-spacing: normal;text-rendering: auto;box-sizing: border-box;}`);
+    text.push(`.${gridPre}{display: inline-block;zoom: 1;letter-spacing: normal;
+        word-spacing: normal;text-rendering: auto;box-sizing: border-box;}`);
 
     text.push(`.${gridPre}-1{width:100%}`);
     createStyle(text.join(''));

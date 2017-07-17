@@ -5,8 +5,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from "classnames";
-import BaseComponent from "./core/BaseComponent";
+import classNames from 'classnames';
+import BaseComponent from './core/BaseComponent';
 import FontIcon from './FontIcon';
 import EnhancedButton from './internal/EnhancedButton';
 
@@ -18,7 +18,6 @@ import EnhancedButton from './internal/EnhancedButton';
  * @extends BaseComponent
  */
 class Button extends BaseComponent {
-
     static propTypes = {
         /**
          * 自定义class
@@ -49,13 +48,13 @@ class Button extends BaseComponent {
          * @attribute raised
          * @type {string/bool}
          */
-        raised: PropTypes.oneOfType([PropTypes.string,PropTypes.bool]),
+        raised: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
         /**
          * 无边框效果
          * @attribute flat
          * @type {string/bool}
          */
-        flat: PropTypes.oneOfType([PropTypes.string,PropTypes.bool]),
+        flat: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
         /**
          * 链接地址
          * @attribute href
@@ -73,13 +72,13 @@ class Button extends BaseComponent {
          * @attribute iconAlign
          * @type {string}
          */
-        iconAlign: PropTypes.oneOf(["left","right"]),
+        iconAlign: PropTypes.oneOf(['left', 'right']),
         /**
          * 按钮尺寸
          * @attribute size
          * @type {string}
          */
-        size: PropTypes.oneOf(["default","large","small"]),
+        size: PropTypes.oneOf(['default', 'large', 'small']),
         /**
          * 跳转的目标通a标签的target
          * @attribute target
@@ -132,13 +131,13 @@ class Button extends BaseComponent {
      * @method _handleClick
      */
     _handleClick(e){
-        if(this.state.disabled){
+        if (this.state.disabled) {
             return;
         }
         if (this.props.onClick) {
             this.props.onClick(e);
         }
-        this.emit("click");
+        this.emit('click');
         if (this.props.once) {
             this.disable();
         }
@@ -161,7 +160,7 @@ class Button extends BaseComponent {
     };
 
     handleMouseUp = () => {
-        if(!this.props.disabled) {
+        if (!this.props.disabled) {
             this.setState({
                 raised: false
             });
@@ -170,8 +169,8 @@ class Button extends BaseComponent {
 
     componentDidMount(){
         this._isMounted = true;
-        if(this.props["data-itemBind"]){
-            this.props["data-itemBind"](this);
+        if (this.props['data-itemBind']) {
+            this.props['data-itemBind'](this);
         }
     }
 
@@ -185,38 +184,38 @@ class Button extends BaseComponent {
             this.state.theme,
             this.props.size,
             {
-                "cm-iconButton": this.props.iconButton,
+                'cm-iconButton': this.props.iconButton,
                 raised: this.props.raised && this.state.raised,
                 flat: this.props.flat,
-                "active": this.state.active
+                'active': this.state.active
             }
         );
 
-        let link = this.props.href || "javascript:void(0)";
+        let link = this.props.href || 'javascript:void(0)';
 
         let props = this.props;
-        let iconPosition = this.props.iconAlign || "left";
-        let icon = this.props.icon ? (<FontIcon icon={this.props.icon} className={iconPosition}/>) : null;
+        let iconPosition = this.props.iconAlign || 'left';
+        let icon = this.props.icon ? (<FontIcon icon={this.props.icon} className={iconPosition} />) : null;
 
-        let nodes = iconPosition === "left" ?
-            (<EnhancedButton>
+        let nodes = iconPosition === 'left'
+            ? (<EnhancedButton>
                 {icon}
                 {props.children}
-            </EnhancedButton>) :
-            (<EnhancedButton>
+            </EnhancedButton>)
+            : (<EnhancedButton>
                 {props.children}
                 {icon}
             </EnhancedButton>);
 
         return (
-            <a href={link} ref="button"
-               disabled={this.state.disabled}
-               onClick={this._handleClick.bind(this)}
-               onMouseUp={this.handleMouseUp}
-               onMouseDown={this.handleMouseDown}
-               className={className}
-               style={this.props.style}
-               target={this.props.target}>
+            <a href={link} ref='button'
+                disabled={this.state.disabled}
+                onClick={this._handleClick.bind(this)}
+                onMouseUp={this.handleMouseUp}
+                onMouseDown={this.handleMouseDown}
+                className={className}
+                style={this.props.style}
+                target={this.props.target}>
                 {nodes}
             </a>
         );

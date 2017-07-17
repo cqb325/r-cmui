@@ -8,9 +8,7 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
-import FontIcon from './FontIcon';
 import Button from './Button';
-import FormControl from './FormControl';
 import Dom from './utils/Dom';
 import Dialog from './Dialog';
 import MessageBox from './MessageBox';
@@ -26,7 +24,7 @@ class Uploadify extends BaseComponent {
     constructor(props) {
         super(props);
 
-        this.buttonText = this.props.buttonText || "upload";
+        this.buttonText = this.props.buttonText || 'upload';
         this.uploader = null;
         this.params = props.params;
         this.addState({
@@ -36,13 +34,14 @@ class Uploadify extends BaseComponent {
 
     getButton(){
         let mode = this.props.mode;
-        if(mode === "grid"){
-            return <div className="cm-uploadify-button" ref="button">
-                <span className="cm-uploadify-plus">+</span>
+        if (mode === 'grid') {
+            return <div className='cm-uploadify-button' ref='button'>
+                <span className='cm-uploadify-plus'>+</span>
                 <span>{this.buttonText}</span>
-            </div>
-        }else{
-            return <div className="cm-uploadify-button" ref="button"><Button icon="upload" theme="primary">{this.buttonText}</Button></div>;
+            </div>;
+        } else {
+            return <div className='cm-uploadify-button' ref='button'><Button icon='upload' theme='primary'>
+                {this.buttonText}</Button></div>;
         }
     }
 
@@ -50,11 +49,11 @@ class Uploadify extends BaseComponent {
      * 初始化函数
      */
     init(){
-        if(this.props.onInit){
+        if (this.props.onInit) {
             this.props.onInit();
         }
 
-        this.emit("init");
+        this.emit('init');
     }
 
     /**
@@ -76,22 +75,22 @@ class Uploadify extends BaseComponent {
             files: arr
         });
 
-        if(this.props.onFilesAdded){
+        if (this.props.onFilesAdded) {
             let ret = this.props.onFilesAdded(up, files, arr);
-            if(ret == false){
+            if (ret === false) {
                 return false;
-            }else{
-                if(this.props.auto){
+            } else {
+                if (this.props.auto) {
                     this.start();
                 }
             }
         }
 
-        let ret = this.emit("filesAdded", up, files, arr);
-        if(ret === false){
+        let ret = this.emit('filesAdded', up, files, arr);
+        if (ret === false) {
             return false;
-        }else{
-            if(this.props.auto){
+        } else {
+            if (this.props.auto) {
                 this.start();
             }
         }
@@ -103,15 +102,15 @@ class Uploadify extends BaseComponent {
      * @param file
      */
     progress(up, file){
-        let fileWrap = Dom.dom(Dom.query("#"+file.id));
-        let progress = Dom.dom(Dom.query(".cm-uploadify-progress", fileWrap[0]));
-        progress.css("width", file.percent+"%");
+        let fileWrap = Dom.dom(Dom.query('#' + file.id));
+        let progress = Dom.dom(Dom.query('.cm-uploadify-progress', fileWrap[0]));
+        progress.css('width', file.percent + '%');
 
-        if(this.props.onProgress){
+        if (this.props.onProgress) {
             this.props.onProgress(up, file);
         }
 
-        this.emit("progress", up, file);
+        this.emit('progress', up, file);
     }
 
     /**
@@ -121,19 +120,19 @@ class Uploadify extends BaseComponent {
      * @param ret
      */
     fileUploaded(up, file, ret){
-        let fileWrap = Dom.dom(Dom.query("#"+file.id));
-        if(file.status === 4){
-            fileWrap.addClass("cm-uploadify-failed");
+        let fileWrap = Dom.dom(Dom.query('#' + file.id));
+        if (file.status === 4) {
+            fileWrap.addClass('cm-uploadify-failed');
         }
-        if(file.status === 5){
-            fileWrap.addClass("cm-uploadify-done");
+        if (file.status === 5) {
+            fileWrap.addClass('cm-uploadify-done');
         }
 
-        if(this.props.onFileUploaded){
+        if (this.props.onFileUploaded) {
             this.props.onFileUploaded(up, file, ret);
         }
 
-        this.emit("fileUploaded", up, file, ret);
+        this.emit('fileUploaded', up, file, ret);
     }
 
     /**
@@ -142,11 +141,11 @@ class Uploadify extends BaseComponent {
      * @param files
      */
     uploadComplete(up, files){
-        if(this.props.onUploadComplete){
+        if (this.props.onUploadComplete) {
             this.props.onUploadComplete(up, files);
         }
 
-        this.emit("uploadComplete", up, files);
+        this.emit('uploadComplete', up, files);
     }
 
     /**
@@ -155,17 +154,17 @@ class Uploadify extends BaseComponent {
      * @param error
      */
     onError(up, error){
-        if(this.props.onException){
+        if (this.props.onException) {
             this.props.onException(up, error);
         }
 
         console.log(error);
-        if(error.code == -600){
-            this.refs.msg.show("上传的文件大小超出范围，请重新选择");
-        }else{
+        if (error.code === -600) {
+            this.refs.msg.show('上传的文件大小超出范围，请重新选择');
+        } else {
             this.refs.msg.show(error.message);
         }
-        this.emit("exception", up, error);
+        this.emit('exception', up, error);
     }
 
     /**
@@ -175,19 +174,19 @@ class Uploadify extends BaseComponent {
     removeFile(file){
         this.uploader.removeFile(file);
         let files = this.state.files;
-        if(files){
+        if (files) {
             files.forEach((f, index)=>{
-                if(file.id == f.id){
+                if (file.id === f.id) {
                     files.splice(index, 1);
                 }
             });
             this.setState({files});
         }
 
-        if(this.props.onRemoveFile){
+        if (this.props.onRemoveFile) {
             this.props.onRemoveFile(file);
         }
-        this.emit("removeFile", file);
+        this.emit('removeFile', file);
     }
 
     /**
@@ -206,33 +205,33 @@ class Uploadify extends BaseComponent {
      * @param index
      */
     renderFile(file, index){
-        if(this.props.mode === "falls"){
+        if (this.props.mode === 'falls') {
             let picture = null;
-            if(this.props.thumbnail){
-                picture = <span className="cm-uploadify-thumbnail">
-                    <img ref={"prev_"+file.id} onClick={this.openLightBox.bind(this, file)}/>
+            if (this.props.thumbnail) {
+                picture = <span className='cm-uploadify-thumbnail'>
+                    <img ref={'prev_' + file.id} onClick={this.openLightBox.bind(this, file)} />
                 </span>;
                 this.preloadImage(file);
-            }else{
-                picture = <i className="fa fa-paperclip mr-5"></i>;
+            } else {
+                picture = <i className='fa fa-paperclip mr-5' />;
             }
-            return <div className="cm-uploadify-item" key={index} id={file.id}>
+            return <div className='cm-uploadify-item' key={index} id={file.id}>
                 {picture}
-                <span className="cm-uploadify-name" title={file.name}>{file.name}</span>
-                <i className="fa fa-trash-o cm-uploadify-close" onClick={this.removeFile.bind(this, file)}></i>
-                <div className="cm-uploadify-progress"></div>
+                <span className='cm-uploadify-name' title={file.name}>{file.name}</span>
+                <i className='fa fa-trash-o cm-uploadify-close' onClick={this.removeFile.bind(this, file)} />
+                <div className='cm-uploadify-progress' />
             </div>;
         }
 
-        if(this.props.mode === "grid"){
+        if (this.props.mode === 'grid') {
             this.preloadImage(file);
-            return <div className="cm-uploadify-item" key={index} id={file.id}>
-                <span className="cm-uploadify-thumbnail">
-                    <img ref={"prev_"+file.id}/>
+            return <div className='cm-uploadify-item' key={index} id={file.id}>
+                <span className='cm-uploadify-thumbnail'>
+                    <img ref={'prev_' + file.id} />
                 </span>
-                <i className="fa fa-eye cm-uploadify-view" onClick={this.openLightBox.bind(this, file)}></i>
-                <i className="fa fa-trash-o cm-uploadify-close" onClick={this.removeFile.bind(this, file)}></i>
-                <div className="cm-uploadify-progress"></div>
+                <i className='fa fa-eye cm-uploadify-view' onClick={this.openLightBox.bind(this, file)} />
+                <i className='fa fa-trash-o cm-uploadify-close' onClick={this.removeFile.bind(this, file)} />
+                <div className='cm-uploadify-progress' />
             </div>;
         }
 
@@ -244,8 +243,8 @@ class Uploadify extends BaseComponent {
      * @param file
      */
     openLightBox(file){
-        let img = this.refs["prev_"+file.id];
-        if(img){
+        let img = this.refs['prev_' + file.id];
+        if (img) {
             img = ReactDOM.findDOMNode(img);
             let src = img.src;
             var temp = new Image();
@@ -259,12 +258,13 @@ class Uploadify extends BaseComponent {
             let screenHeight = window.screen.availHeight;
             let maxWidth = screenWidth / 2;
             let maxHeight = screenHeight * 0.7;
-            let imgWidth = w, imgHeight = 0;
-            if(w > maxWidth){
+            let imgWidth = w;
+            let imgHeight = 0;
+            if (w > maxWidth) {
                 imgWidth = maxWidth;
             }
             imgHeight = imgWidth / w * h;
-            if(imgHeight > maxHeight){
+            if (imgHeight > maxHeight) {
                 imgHeight = maxHeight;
                 imgWidth = imgHeight / h * w;
             }
@@ -284,9 +284,11 @@ class Uploadify extends BaseComponent {
     preloadImage(file){
         let preload = new mOxie.Image();
         preload.onload = ()=> {
-            let imgsrc = preload.type == 'image/jpeg' ? preload.getAsDataURL('image/jpeg', 80) : preload.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
-            let image = ReactDOM.findDOMNode(this.refs["prev_"+file.id]);
-            if(image){
+            let imgsrc = preload.type === 'image/jpeg'
+                ? preload.getAsDataURL('image/jpeg', 80)
+                : preload.getAsDataURL(); // 得到图片src,实质为一个base64编码的数据
+            let image = ReactDOM.findDOMNode(this.refs['prev_' + file.id]);
+            if (image) {
                 image.src = imgsrc;
             }
             preload.destroy();
@@ -299,16 +301,16 @@ class Uploadify extends BaseComponent {
         let button = ReactDOM.findDOMNode(this.refs.button);
         let {maxSize, mimeTypes} = this.props;
         let uploader = new plupload.Uploader({
-            runtimes : 'html5,flash,html4',
-            browse_button : button, // you can pass an id...
-            url : this.props.url,
-            flash_swf_url : requirejs.dir+'/../lib/Moxie.swf',
-            file_data_name: this.props.name || "file",
-            filters : {
-                max_file_size : maxSize || '2mb',
+            runtimes: 'html5,flash,html4',
+            browse_button: button, // you can pass an id...
+            url: this.props.url,
+            flash_swf_url: requirejs.dir + '/../lib/Moxie.swf',
+            file_data_name: this.props.name || 'file',
+            filters: {
+                max_file_size: maxSize || '2mb',
                 mime_types: mimeTypes
             },
-            multi_selection: this.props.multi != undefined ? this.props.multi : true,
+            multi_selection: this.props.multi !== undefined ? this.props.multi : true,
             multipart_params: this.params,
 
             init: {
@@ -331,28 +333,28 @@ class Uploadify extends BaseComponent {
      */
     setParams(params){
         this.params = params;
-        this.uploader.setOption("multipart_params", params);
+        this.uploader.setOption('multipart_params', params);
     }
 
     render(){
         let {className, mode, style, thumbnail} = this.props;
-        className = classNames(className, "cm-uploadify", {
+        className = classNames(className, 'cm-uploadify', {
             [`cm-uploadify-${mode}`]: this.props.mode
         });
 
-        let listClass = classNames("cm-uploadify-list",{
-            'cm-uploadify-picture': thumbnail|| (mode==="grid")
+        let listClass = classNames('cm-uploadify-list', {
+            'cm-uploadify-picture': thumbnail || (mode === 'grid')
         });
         return (
             <div className={className} style={style}>
                 {this.getButton()}
-                <div className={listClass} ref="list">
+                <div className={listClass} ref='list'>
                     {this.renderFiles()}
                 </div>
-                <Dialog title={" "} ref="dialog">
-                    <img ref="lightBox" className="cm-uploadify-lightbox"/>
+                <Dialog title={' '} ref='dialog'>
+                    <img ref='lightBox' className='cm-uploadify-lightbox' />
                 </Dialog>
-                <MessageBox ref="msg" title="提示"></MessageBox>
+                <MessageBox ref='msg' title='提示' />
             </div>
         );
     }
@@ -360,7 +362,7 @@ class Uploadify extends BaseComponent {
 
 
 Uploadify.defaultProps = {
-    mode: "falls"
+    mode: 'falls'
 };
 
 Uploadify.propTypes = {

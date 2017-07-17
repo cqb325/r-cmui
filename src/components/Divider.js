@@ -15,13 +15,9 @@ import BaseComponent from './core/BaseComponent';
  * @extend BaseComponent
  */
 class Divider extends BaseComponent {
-    constructor(props) {
-        super(props);
-    }
-
     render(){
         let {style, className, theme} = this.props;
-        className = classNames(className, "cm-divider", theme);
+        className = classNames(className, 'cm-divider', theme);
         return (
             <hr style={style} className={className} />
         );
@@ -29,7 +25,7 @@ class Divider extends BaseComponent {
 }
 
 Divider.defaultProps = {
-    theme: "default"
+    theme: 'default'
 };
 
 Divider.propTypes = {

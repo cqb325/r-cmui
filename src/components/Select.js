@@ -29,7 +29,7 @@ class Select extends BaseComponent {
         super(props);
 
         this.selectedItems = {};
-        let valueField = props.valueField || "id";
+        let valueField = props.valueField || 'id';
         this.sep = props.sep || ',';
 
         let data = this._rebuildData(props.data, props.value, valueField);
@@ -55,16 +55,16 @@ class Select extends BaseComponent {
      * @private
      */
     _rebuildData(data, defaultValue, valueField){
-        if(!data){
+        if (!data) {
             return null;
         }
-        let defaultValues = defaultValue ? defaultValue.split(this.sep) : [];
-        if(Core.isArray(data)){
+        let defaultValues = defaultValue ? (defaultValue + '').split(this.sep) : [];
+        if (Core.isArray(data)) {
             let one = data[0];
-            if(Core.isString(one)){
+            if (Core.isString(one)) {
                 return data.map(function(item){
                     let option = {id: item, text: item};
-                    for(let i in defaultValues) {
+                    for (let i in defaultValues) {
                         if (item == defaultValues[i]) {
                             this.selectedItems[item] = option;
                         }
@@ -72,10 +72,10 @@ class Select extends BaseComponent {
                     return option;
                 }, this);
             }
-            if(Core.isObject(one)){
-                if(defaultValue != undefined) {
+            if (Core.isObject(one)) {
+                if (defaultValue !== undefined) {
                     data.forEach(function (item) {
-                        for(let i in defaultValues) {
+                        for (let i in defaultValues) {
                             if (item[valueField] == defaultValues[i]) {
                                 this.selectedItems[item[valueField]] = item;
                             }
@@ -87,11 +87,11 @@ class Select extends BaseComponent {
 
             return null;
         }
-        if(Core.isObject(data)){
+        if (Core.isObject(data)) {
             let ret = [];
-            for(var id in data){
+            for (var id in data) {
                 let item = {id: id, text: data[id]};
-                for(let i in defaultValues) {
+                for (let i in defaultValues) {
                     if (id == defaultValues[i]) {
                         this.selectedItems[id] = item;
                     }
@@ -112,17 +112,19 @@ class Select extends BaseComponent {
      * @private
      */
     _renderValues(){
-        let values = this.state.value ? this.state.value.split(this.sep) : [];
+        let values = this.state.value ? (this.state.value + '').split(this.sep) : [];
         let html = [];
-        let className = classNames("cm-select-value", {
+        let className = classNames('cm-select-value', {
             placeholder: !values.length && this.props.placeholder
         });
-        if(values.length) {
+        if (values.length) {
             values.forEach((value) => {
                 let item = this.selectedItems[value];
 
-                let textField = this.props.textField || "text",
-                    label = item ? item[textField] : (this.props.placeholder ? this.props.placeholder + "&nbsp;" : "&nbsp;");
+                let textField = this.props.textField || 'text';
+                let label = item
+                    ? item[textField]
+                    : (this.props.placeholder ? this.props.placeholder + '&nbsp;' : '&nbsp;');
 
                 let optionsTpl = this.props.optionsTpl;
 
@@ -132,19 +134,20 @@ class Select extends BaseComponent {
                     html.push(label);
                 }
             });
-        }else{
+        } else {
             html.push(this.props.placeholder ? this.props.placeholder + '&nbsp;' : '&nbsp;');
         }
-        html = '<div class="cm-select-value-text">'+(html.join(this.sep) || '&nbsp;')+'</div>';
+        html = '<div class="cm-select-value-text">' + (html.join(this.sep) || '&nbsp;') + '</div>';
 
-        html = html + '<input type="hidden" class="'+(this.props.className||"")+'" name="'+this.props.name+'" value="'+(this.state.value||"")+'">';
+        html = html + '<input type="hidden" class="' + (this.props.className || '') + '" name="' +
+            this.props.name + '" value="' + (this.state.value || '') + '">';
 
 
-        return(<span className={className} dangerouslySetInnerHTML={{__html: html}}></span>);
+        return (<span className={className} dangerouslySetInnerHTML={{__html: html}} />);
     }
 
     _renderFilter(){
-        return "";
+        return '';
     }
 
     /**
@@ -154,19 +157,19 @@ class Select extends BaseComponent {
      * @private
      */
     _selectItem(item){
-        let valueField = this.props.valueField || "id";
+        let valueField = this.props.valueField || 'id';
 
         let value = null;
-        if(!item){
+        if (!item) {
             if (!this.props.multi) {
                 this.hideOptions();
             }
             this.selectedItems = {};
-        }else {
+        } else {
             if (this.props.multi) {
-                if(this.selectedItems[item[valueField]]){
+                if (this.selectedItems[item[valueField]]) {
                     delete this.selectedItems[item[valueField]];
-                }else {
+                } else {
                     this.selectedItems[item[valueField]] = item;
                 }
                 value = this.getSelectedValues();
@@ -182,11 +185,11 @@ class Select extends BaseComponent {
             value: value
         });
 
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(value, item);
         }
 
-        this.emit("change", value, item);
+        this.emit('change', value, item);
     }
 
     /**
@@ -195,14 +198,14 @@ class Select extends BaseComponent {
      * @returns {string}
      */
     getSelectedValues(){
-        if(this.selectedItems){
+        if (this.selectedItems) {
             let ret = [];
-            for(let value in this.selectedItems){
+            for (let value in this.selectedItems) {
                 ret.push(value);
             }
             return ret.join(this.sep);
         }
-        return "";
+        return '';
     }
 
     getValue(){
@@ -210,17 +213,17 @@ class Select extends BaseComponent {
     }
 
     setValue(value){
-        let valueField = this.props.valueField || "id";
+        let valueField = this.props.valueField || 'id';
         let data = this.state.data;
-        if(value == null || value == undefined || value == ""){
+        if (value === null || value === undefined || value === '') {
             this.selectedItems = {};
             this.setState({value});
         }
-        if(value != undefined) {
+        if (value != undefined) {
             for (let i in data) {
                 let item = data[i];
-                let values = value.split(this.sep);
-                for(let j in values){
+                let values = (value + '').split(this.sep);
+                for (let j in values) {
                     if (item[valueField] == values[j]) {
                         this.selectedItems[values[j]] = item;
                     }
@@ -237,36 +240,36 @@ class Select extends BaseComponent {
      * @private
      */
     _renderOptions(){
-        let {disabled, readOnly, textField, valueField, optionsTpl} = this.props;
+        let {textField, valueField, optionsTpl} = this.props;
 
         let data = this.state.data;
-        if(!data){
-            return "";
+        if (!data) {
+            return '';
         }
         let ret = [];
         if (!this.props.multi && this.props.hasEmptyOption) {
             ret.push(<li key={-1} onClick={this._selectItem.bind(this, null)}>
-                <a href="javascript:void(0)">
-					{this.props.choiceText || "--请选择--"}
+                <a href='javascript:void(0)'>
+                    {this.props.choiceText || '--请选择--'}
                 </a>
             </li>);
         }
         data.forEach(function(item, index){
-            textField = textField || "text";
-            valueField = valueField || "id";
-            let text = item[textField],
-                value = item[valueField];
+            textField = textField || 'text';
+            valueField = valueField || 'id';
+            let text = item[textField];
+            let value = item[valueField];
             let liClassName = classNames({
                 active: !!this.selectedItems[value]
             });
 
             let html = text;
-            if(optionsTpl){
+            if (optionsTpl) {
                 html = substitute(optionsTpl, item);
             }
             ret.push(<li className={liClassName} key={index} onClick={this._selectItem.bind(this, item)}>
-                <a href="javascript:void(0)">
-                     <span dangerouslySetInnerHTML={{__html: html}}></span>
+                <a href='javascript:void(0)'>
+                    <span dangerouslySetInnerHTML={{__html: html}} />
                 </a>
             </li>);
         }, this);
@@ -290,7 +293,7 @@ class Select extends BaseComponent {
         if (this.props.readOnly || this.state.disabled) {
             return;
         }
-        if(this.state.active && !this.props.multi){
+        if (this.state.active && !this.props.multi) {
             this.hideOptions();
             return;
         }
@@ -298,7 +301,7 @@ class Select extends BaseComponent {
         let options = ReactDOM.findDOMNode(this.refs.options);
         options.style.display = 'block';
 
-        let container = Dom.closest(options, ".cm-select");
+        let container = Dom.closest(options, '.cm-select');
         let offset = Dom.getOuterHeight(options) + 5;
         let dropup = Dom.overView(container, offset);
 
@@ -324,7 +327,7 @@ class Select extends BaseComponent {
         this.unbindClickAway();
 
         let time = 500;
-        if(this.isLtIE9()){
+        if (this.isLtIE9()) {
             time = 0;
         }
 
@@ -342,11 +345,11 @@ class Select extends BaseComponent {
      * @param value 默认值
      */
     setData(data, value){
-        let valueField = this.props.valueField || "id";
-        if(value != undefined){
+        let valueField = this.props.valueField || 'id';
+        if (value !== undefined) {
             this.selectedItems = {};
         }
-        let val = value == undefined ? this.state.value : value;
+        let val = value === undefined ? this.state.value : value;
         data = this._rebuildData(data, val, valueField);
         this.setState({
             data: data,
@@ -374,7 +377,7 @@ class Select extends BaseComponent {
     removeOption(key, value){
         let data = this.state.data;
         data.forEach((item, index)=>{
-            if(item[key] === value){
+            if (item[key] === value) {
                 data.splice(index, 1);
             }
         });
@@ -399,19 +402,19 @@ class Select extends BaseComponent {
     }
 
     componentWillMount(){
-        if(this.props.url){
+        if (this.props.url) {
             let scope = this;
             Ajax.get(this.props.url, {}, function(data){
-                if(data) {
+                if (data) {
                     data = scope._rebuildData(data);
                     scope.setState({
                         data: data
                     });
 
-                    if(scope.props.onDataLoaded){
+                    if (scope.props.onDataLoaded) {
                         scope.props.onDataLoaded();
                     }
-                    scope.emit("dataLoaded");
+                    scope.emit('dataLoaded');
                 }
             });
         }
@@ -419,7 +422,7 @@ class Select extends BaseComponent {
 
     render(){
         let {className, readOnly, style, grid} = this.props;
-        className = classNames("cm-select", getGrid(grid), {
+        className = classNames('cm-select', getGrid(grid), {
             active: this.state.active,
             disabled: this.state.disabled || readOnly,
             dropup: this.state.dropup,
@@ -429,13 +432,13 @@ class Select extends BaseComponent {
         let text = this._renderValues();
         let filter = this._renderFilter();
         let options = this._renderOptions();
-        return(
+        return (
             <div className={className} style={style} onClick={this.showOptions}>
                 {text}
-                <span className="cm-select-cert"></span>
+                <span className='cm-select-cert' />
 
-                <div className="cm-select-options-wrap">
-                    <div ref="options" className="cm-select-options">
+                <div className='cm-select-options-wrap'>
+                    <div ref='options' className='cm-select-options'>
                         {filter}
                         <ul>{options}</ul>
                     </div>
@@ -516,6 +519,6 @@ Select.propTypes = {
     placeholder: PropTypes.string
 };
 
-FormControl.register(Select, "select");
+FormControl.register(Select, 'select');
 
 export default Select;

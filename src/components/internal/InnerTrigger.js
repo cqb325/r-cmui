@@ -15,7 +15,6 @@ import Events from '../utils/Events';
  * @extend React.Component
  */
 class InnerTrigger extends Component{
-
     constructor(props){
         super(props);
 
@@ -62,7 +61,7 @@ class InnerTrigger extends Component{
         }
     }
 
-    onMouseEnter(event){
+    onMouseEnter(){
         this.delaySetPopupVisible(true, this.props.mouseEnterDelay);
     }
 
@@ -71,7 +70,7 @@ class InnerTrigger extends Component{
     }
 
     setPopupVisible(popupVisible){
-        if(this._isMounted) {
+        if (this._isMounted) {
             this.setState({popupVisible});
             this.popupRef.update(popupVisible);
         }
@@ -79,13 +78,13 @@ class InnerTrigger extends Component{
 
     delaySetPopupVisible(popupVisible, delay){
         window.setTimeout(()=>{
-            if(this._isMounted) {
-                if(!this.state.isEmpty) {
+            if (this._isMounted) {
+                if (!this.state.isEmpty) {
                     this.setState({popupVisible});
                     this.popupRef.update(popupVisible);
                 }
             }
-        }, delay*1000);
+        }, delay * 1000);
     }
 
     /**
@@ -102,7 +101,7 @@ class InnerTrigger extends Component{
      */
     contentIsEmpty(empty){
         this.setState({isEmpty: empty});
-        if(empty){
+        if (empty){
             this.setState({ popupVisible: false });
             this.popupRef.update(false);
         }
@@ -114,14 +113,14 @@ class InnerTrigger extends Component{
         p.removeChild(this.container);
 
         let target = ReactDOM.findDOMNode(this.refs.target);
-        Events.off(target, "click", this.onClick);
-        Events.off(target, "mouseenter", this.onMouseEnter);
-        Events.off(target, "mouseleave", this.onMouseLeave);
+        Events.off(target, 'click', this.onClick);
+        Events.off(target, 'mouseenter', this.onMouseEnter);
+        Events.off(target, 'mouseleave', this.onMouseLeave);
     }
 
     componentDidMount(){
         this._isMounted = true;
-        this.container = document.createElement("div");
+        this.container = document.createElement('div');
         document.body.appendChild(this.container);
         let baseEle = ReactDOM.findDOMNode(this);
 
@@ -136,9 +135,10 @@ class InnerTrigger extends Component{
         };
 
         window.setTimeout(()=>{
-            ReactDOM.render(<Popup ref={(ref)=>{this.popupRef = ref;}} {...props}>{typeof this.popup === 'function' ? this.popup() : this.popup}</Popup>, this.container);
-        },0);
-
+            ReactDOM.render(<Popup ref={(ref)=>{ this.popupRef = ref; }} {...props}>
+                {typeof this.popup === 'function' ? this.popup() : this.popup}
+            </Popup>, this.container);
+        }, 0);
     }
 
     render(){
@@ -146,7 +146,7 @@ class InnerTrigger extends Component{
         const children = props.children;
         const child = React.Children.only(children);
         const newChildProps = {
-            ref: "target"
+            ref: 'target'
         };
 
         if (this.isClickToHide() || this.isClickToShow()) {

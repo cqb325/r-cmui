@@ -1,5 +1,5 @@
 function on(el, type, callback) {
-    if(el.addEventListener) {
+    if (el.addEventListener) {
         el.addEventListener(type, callback);
     } else {
         el.attachEvent('on' + type, function() {
@@ -9,7 +9,7 @@ function on(el, type, callback) {
 }
 
 function off(el, type, callback) {
-    if(el.removeEventListener) {
+    if (el.removeEventListener) {
         el.removeEventListener(type, callback);
     } else {
         el.detachEvent('on' + type, callback);
@@ -28,4 +28,4 @@ function once(el, type, callback) {
     }
 }
 
-export default {on, off, once}
+export default {on, off, once};

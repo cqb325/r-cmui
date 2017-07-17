@@ -5,11 +5,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
-import Dom from './utils/Dom';
-import Core from './Core';
 
 
 /**
@@ -34,25 +31,25 @@ class Toast extends BaseComponent {
     }
 
     componentDidMount(){
-        if(!window.Toast){
+        if (!window.Toast) {
             window.Toast = this;
 
-            this.container = document.createElement("div");
+            this.container = document.createElement('div');
             document.body.appendChild(this.container);
 
             window.setTimeout(()=>{
                 ReactDOM.render(
-                    <ToastInner msg={this.props.msg} ref={(ref)=>{this.toast = ref;}}></ToastInner>
+                    <ToastInner msg={this.props.msg} ref={(ref)=>{ this.toast = ref; }} />
                     , this.container);
-            },0);
-        }else{
-            console.warn("Toast already exist");
+            }, 0);
+        } else {
+            console.warn('Toast already exist');
         }
     }
 
     render(){
         return (
-            <div className="toast-placeholder"></div>
+            <div className='toast-placeholder' />
         );
     }
 }
@@ -69,7 +66,7 @@ class ToastInner extends React.Component{
 
         this.state = {
             visibility: false,
-            msg: props.msg || "数据加载中"
+            msg: props.msg || '数据加载中'
         };
     }
 
@@ -81,7 +78,7 @@ class ToastInner extends React.Component{
         let params = {
             visibility: true
         };
-        if(msg){
+        if (msg) {
             params.msg = msg;
         }
         this.setState(params);
@@ -95,32 +92,32 @@ class ToastInner extends React.Component{
         let params = {
             visibility: false
         };
-        if(msg){
+        if (msg) {
             params.msg = msg;
         }
         this.setState(params);
     }
 
     render(){
-        return(
-            <div className="weui_loading_toast" style={{display: this.state.visibility ? "block" : "none"}}>
-                <div className="weui_mask_transparent"></div>
-                <div className="weui_toast">
-                    <div className="weui_loading">
-                        <div className="weui_loading_leaf weui_loading_leaf_0"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_1"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_2"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_3"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_4"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_5"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_6"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_7"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_8"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_9"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_10"></div>
-                        <div className="weui_loading_leaf weui_loading_leaf_11"></div>
+        return (
+            <div className='weui_loading_toast' style={{display: this.state.visibility ? 'block' : 'none'}}>
+                <div className='weui_mask_transparent' />
+                <div className='weui_toast'>
+                    <div className='weui_loading'>
+                        <div className='weui_loading_leaf weui_loading_leaf_0' />
+                        <div className='weui_loading_leaf weui_loading_leaf_1' />
+                        <div className='weui_loading_leaf weui_loading_leaf_2' />
+                        <div className='weui_loading_leaf weui_loading_leaf_3' />
+                        <div className='weui_loading_leaf weui_loading_leaf_4' />
+                        <div className='weui_loading_leaf weui_loading_leaf_5' />
+                        <div className='weui_loading_leaf weui_loading_leaf_6' />
+                        <div className='weui_loading_leaf weui_loading_leaf_7' />
+                        <div className='weui_loading_leaf weui_loading_leaf_8' />
+                        <div className='weui_loading_leaf weui_loading_leaf_9' />
+                        <div className='weui_loading_leaf weui_loading_leaf_10' />
+                        <div className='weui_loading_leaf weui_loading_leaf_11' />
                     </div>
-                    <p className="weui_toast_content">{this.state.msg}</p>
+                    <p className='weui_toast_content'>{this.state.msg}</p>
                 </div>
             </div>
         );

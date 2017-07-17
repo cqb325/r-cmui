@@ -2,11 +2,6 @@ import React from 'react';
 import Prism from 'prism';
 
 class Code extends React.Component{
-
-    constructor(props){
-        super(props);
-    }
-
     componentDidMount(){
         this._hightlight();
     }
@@ -22,7 +17,7 @@ class Code extends React.Component{
     render(){
         let {className, children} = this.props;
         return (
-            <code ref="code" className={className}>
+            <code ref='code' className={className}>
                 {children}
             </code>
         );

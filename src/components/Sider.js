@@ -16,12 +16,11 @@ import FontIcon from './FontIcon';
  * @extend React.Component
  */
 class Sider extends React.Component {
-
     constructor(props){
         super(props);
 
         let collapsed;
-        if (props['collapsed'] != undefined) {
+        if (props['collapsed'] !== undefined) {
             collapsed = props.collapsed;
         } else {
             collapsed = props.defaultCollapsed;
@@ -34,7 +33,7 @@ class Sider extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.collapsed != this.state.collapsed) {
+        if (nextProps.collapsed !== this.state.collapsed) {
             this.setState({
                 collapsed: nextProps.collapsed
             });
@@ -59,29 +58,31 @@ class Sider extends React.Component {
     }
 
     render(){
-        let { prefixCls, className, collapsible, trigger, style, width, collapsedWidth} = this.props;
+        let {prefixCls, className, collapsible, trigger, style, width, collapsedWidth} = this.props;
         let divProps = omit(this.props, ['collapsed', 'defaultCollapsed', 'onCollapse', 'name']);
 
         className = classNames(className, prefixCls, {
             [`${prefixCls}-collapsed`]: !!this.state.collapsed,
-            [`${prefixCls}-has-trigger`]: !!trigger,
+            [`${prefixCls}-has-trigger`]: !!trigger
         });
 
         style = Object.assign({
-            flex: `0 0 ${this.state.collapsed ? collapsedWidth : width}px`,
-        },style);
+            flex: `0 0 ${this.state.collapsed ? collapsedWidth : width}px`
+        }, style);
 
         const iconObj = {
-            'expanded': <FontIcon icon="angle-left" />,
-            'collapsed': <FontIcon icon="angle-right" />
+            'expanded': <FontIcon icon='angle-left' />,
+            'collapsed': <FontIcon icon='angle-right' />
         };
         const status = this.state.collapsed ? 'collapsed' : 'expanded';
         const defaultTrigger = iconObj[status];
         const triggerDom = (
-            trigger !== null ?
-                (<div className={`${prefixCls}-trigger`} onClick={this.toggle}>
-                    {trigger || defaultTrigger}
-                </div>)
+            trigger !== null
+                ? (
+                    <div className={`${prefixCls}-trigger`} onClick={this.toggle}>
+                        {trigger || defaultTrigger}
+                    </div>
+                )
                 : null
         );
 

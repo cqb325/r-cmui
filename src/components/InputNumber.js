@@ -4,12 +4,9 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
-import PropTypes from 'prop-types';
 import Button from './Button';
-import Regs from './utils/regs';
 import FormControl from './FormControl';
 
 
@@ -24,10 +21,10 @@ class InputNumber extends BaseComponent {
         super(props);
 
         let value = parseFloat(props.value || 0);
-        if(props.min != undefined){
+        if (props.min !== undefined) {
             value = Math.max(props.min, value);
         }
-        if(props.max != undefined){
+        if (props.max !== undefined) {
             value = Math.min(props.max, value);
         }
         this.addState({
@@ -41,25 +38,25 @@ class InputNumber extends BaseComponent {
 
 
     handleChange(event){
-        const { disabled} = this.props;
+        const {disabled} = this.props;
 
         if (disabled) {
             return;
         }
 
         let value = this.parser(event.target.value);
-        if(this.state.min != undefined){
+        if (this.state.min !== undefined) {
             value = Math.max(this.state.min, value);
         }
-        if(this.state.max != undefined){
+        if (this.state.max !== undefined) {
             value = Math.min(this.state.max, value);
         }
 
         this.setState({ value });
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(value);
         }
-        this.emit("change", value);
+        this.emit('change', value);
     }
 
     /**
@@ -67,8 +64,8 @@ class InputNumber extends BaseComponent {
      * @return {[type]} [description]
      */
     subtract(){
-        let value = this.add(this.parser(this.state.value+""), -this.state.step);
-        if(this.state.min != undefined){
+        let value = this.add(this.parser(this.state.value + ''), -this.state.step);
+        if (this.state.min !== undefined) {
             value = Math.max(this.state.min, value);
         }
         this.setState({value});
@@ -79,8 +76,8 @@ class InputNumber extends BaseComponent {
      * @return {[type]} [description]
      */
     plus(){
-        let value = this.add(this.parser(this.state.value+""), this.state.step);
-        if(this.state.max != undefined){
+        let value = this.add(this.parser(this.state.value + ''), this.state.step);
+        if (this.state.max !== undefined) {
             value = Math.min(this.state.max, value);
         }
         this.setState({value});
@@ -92,8 +89,8 @@ class InputNumber extends BaseComponent {
      * @return {[type]}       [description]
      */
     formatter(value){
-        if(this.props.formatter){
-            return this.props.formatter(value+"");
+        if (this.props.formatter) {
+            return this.props.formatter(value + '');
         }
         return value;
     }
@@ -104,7 +101,7 @@ class InputNumber extends BaseComponent {
      * @return {[type]}       [description]
      */
     parser(value){
-        if(this.props.parser){
+        if (this.props.parser) {
             return this.props.parser(value);
         }
         return value;
@@ -116,19 +113,21 @@ class InputNumber extends BaseComponent {
      * @param {[type]} num2 [description]
      */
     add(num1, num2){
-        let r1,r2,m;
-        try{
-            r1 = num1.toString().split(".")[1].length;
-        }catch(e){
+        let r1;
+        let r2;
+        let m;
+        try {
+            r1 = num1.toString().split('.')[1].length;
+        } catch (e) {
             r1 = 0;
         }
-        try{
-            r2 = num2.toString().split(".")[1].length;
-        }catch(e){
-            r2=0;
+        try {
+            r2 = num2.toString().split('.')[1].length;
+        } catch (e) {
+            r2 = 0;
         }
-        m = Math.pow(10,Math.max(r1,r2))
-        return (num1*m + num2*m) / m;
+        m = Math.pow(10, Math.max(r1, r2));
+        return (num1 * m + num2 * m) / m;
     }
 
     /**
@@ -168,10 +167,10 @@ class InputNumber extends BaseComponent {
      * @param {[type]} value [description]
      */
     setValue(value){
-        if(this.state.min != undefined){
+        if (this.state.min != undefined) {
             value = Math.max(this.state.min, value);
         }
-        if(this.state.max != undefined){
+        if (this.state.max != undefined) {
             value = Math.min(this.state.max, value);
         }
         this.setState(value);
@@ -183,8 +182,8 @@ class InputNumber extends BaseComponent {
      */
     setMax(max){
         max = parseFloat(max);
-        if(this.state.min != undefined){
-            if(this.state.min > max){
+        if (this.state.min !== undefined) {
+            if (this.state.min > max) {
                 console.warn(`max ${max} is < min ${this.state.min}`);
                 return;
             }
@@ -192,7 +191,7 @@ class InputNumber extends BaseComponent {
         let params = {
             max: max
         };
-        if(this.state.value > max){
+        if (this.state.value > max) {
             params.value = max;
         }
         this.setState(params);
@@ -212,8 +211,8 @@ class InputNumber extends BaseComponent {
      */
     setMin(min){
         min = parseFloat(min);
-        if(this.state.max != undefined){
-            if(this.state.max < min){
+        if (this.state.max !== undefined) {
+            if (this.state.max < min) {
                 console.warn(`max ${this.state.max} is < min ${min}`);
                 return;
             }
@@ -221,7 +220,7 @@ class InputNumber extends BaseComponent {
         let params = {
             min: min
         };
-        if(this.state.value < min){
+        if (this.state.value < min) {
             params.value = min;
         }
         this.setState(params);
@@ -229,23 +228,24 @@ class InputNumber extends BaseComponent {
 
     render(){
         let {className, style, itemClassName} = this.props;
-        className = classNames("cm-input-number", className, this.state.theme, {
-            "cm-input-number-disabled": this.state.disabled,
+        className = classNames('cm-input-number', className, this.state.theme, {
+            'cm-input-number-disabled': this.state.disabled,
             [`cm-input-number-${this.props.size}`]: this.props.size
         });
-        itemClassName = classNames("cm-input-number-field", itemClassName, {
-            "cm-input-number-readonly": this.state.readOnly
+        itemClassName = classNames('cm-input-number-field', itemClassName, {
+            'cm-input-number-readonly': this.state.readOnly
         });
         return (
             <span className={className} style={style}>
                 <Button onClick={this.subtract.bind(this)}>-</Button>
-                <input className={itemClassName} name={this.props.name} value={this.formatter(this.state.value)} type="text" onChange={this.handleChange.bind(this)}/>
+                <input className={itemClassName} name={this.props.name} value={this.formatter(this.state.value)}
+                    type='text' onChange={this.handleChange.bind(this)} />
                 <Button onClick={this.plus.bind(this)}>+</Button>
             </span>
         );
     }
 }
 
-FormControl.register(InputNumber, "inputnumber");
+FormControl.register(InputNumber, 'inputnumber');
 
 export default InputNumber;

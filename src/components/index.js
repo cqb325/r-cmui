@@ -68,7 +68,7 @@ let Utils = {
     Dom,
     Events,
     grids,
-    Validation,
+    Validation
 };
 
 
@@ -130,5 +130,5 @@ export {
     Ajax,
     Emitter,
     SimpleForm,
-    TableForm,
+    TableForm
 };

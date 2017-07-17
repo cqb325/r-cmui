@@ -4,12 +4,10 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import grids from './utils/grids';
 import Button from './Button';
-import Dom from './utils/Dom';
 import Ajax from './core/Ajax';
 import PropTypes from 'prop-types';
 const getGrid = grids.getGrid;
@@ -22,20 +20,19 @@ const getGrid = grids.getGrid;
  * @extend BaseComponent
  */
 class Form extends BaseComponent {
-
     constructor(props) {
         super(props);
 
         this.action = props.action;
         this.method = props.method;
         this.target = props.target;
-        //是否使用默认提交按钮
+        // 是否使用默认提交按钮
         this.useDefaultSubmitBtn = this.props.useDefaultSubmitBtn == undefined ? true : this.props.useDefaultSubmitBtn;
 
         this.items = {};
 
-        if(this.props.component && this.props.component != "form"){
-            this.method = "ajax";
+        if (this.props.component && this.props.component != 'form') {
+            this.method = 'ajax';
         }
 
         this.addState({
@@ -49,10 +46,10 @@ class Form extends BaseComponent {
      * @returns {boolean} 是否验证通过
      */
     isValid(){
-        for(let name in this.items){
+        for (let name in this.items) {
             let control = this.items[name];
 
-            if(!control.ref.check()){
+            if (!control.ref.check()) {
                 return false;
             }
         }
@@ -77,7 +74,7 @@ class Form extends BaseComponent {
      * @returns {*}
      */
     getItem(name){
-        if(this.items[name]){
+        if (this.items[name]) {
             return this.items[name].ref.getReference();
         }
 
@@ -90,10 +87,10 @@ class Form extends BaseComponent {
      * @param data 子元素数据
      */
     itemBind(data){
-        if(data.name && data.isFormItem){
+        if (data.name && data.isFormItem) {
             this.items[data.name] = data;
-        }else{
-            console.log(data.ref , "need a name property");
+        } else {
+            console.log(data.ref, 'need a name property');
         }
     }
 
@@ -113,29 +110,29 @@ class Form extends BaseComponent {
      */
     renderChildren(){
         return React.Children.map(this.props.children, (child)=>{
-            let componentName = "";
-            if(child && child.type){
-                if(child.type.name){
+            let componentName = '';
+            if (child && child.type) {
+                if (child.type.name) {
                     componentName = child.type.name;
-                }else{
+                } else {
                     let matches = child.type.toString().match(/function\s*([^(]*)\(/);
-                    if(matches){
+                    if (matches) {
                         componentName = matches[1];
                     }
                 }
             }
-            if(componentName === 'FormControl' || componentName === 'Row'){
+            if (componentName === 'FormControl' || componentName === 'Row') {
                 let props = Object.assign({
-                    "data-itemBind": this.itemBind.bind(this),
-                    "itemUnBind": this.itemUnBind.bind(this)
-                },child.props);
+                    'data-itemBind': this.itemBind.bind(this),
+                    'itemUnBind': this.itemUnBind.bind(this)
+                }, child.props);
                 props.layout = this.props.layout ? this.props.layout : props.layout;
                 props.tipTheme = this.props.tipTheme ? this.props.tipTheme : props.tipTheme;
                 props.tipAlign = this.props.tipAlign ? this.props.tipAlign : props.tipAlign;
                 props.tipAuto = this.props.tipAuto ? this.props.tipAuto : props.tipAuto;
                 props.labelWidth = this.props.labelWidth ? this.props.labelWidth : props.labelWidth;
                 return React.cloneElement(child, props);
-            }else {
+            } else {
                 return child;
             }
         });
@@ -148,22 +145,22 @@ class Form extends BaseComponent {
     submit(){
         let {customParams, success, error} = this.props;
         let method = this.method;
-        if(this.isValid()){
-            if(method === "ajax"){
+        if (this.isValid()) {
+            if (method === 'ajax') {
                 let params = customParams ? customParams() : this.getFormParams();
                 Ajax.ajax({
                     url: this.action,
                     method: 'post',
                     data: params,
-                    dataType: "json",
+                    dataType: 'json',
                     success: success,
                     error: error
                 });
-            }else if(method === "custom"){
-                if(this.props.submit) {
+            } else if (method === 'custom') {
+                if (this.props.submit) {
                     this.props.submit();
                 }
-            }else{
+            } else {
                 this.refs.form.submit();
             }
         }
@@ -185,7 +182,7 @@ class Form extends BaseComponent {
      */
     getFormParams(){
         let params = {};
-        for(let name in this.items){
+        for (let name in this.items) {
             let control = this.items[name];
             let value = control.ref.getValue();
             params[name] = value;
@@ -200,40 +197,40 @@ class Form extends BaseComponent {
      * @returns {XML}
      */
     renderSubmit(){
-        if(this.useDefaultSubmitBtn) {
+        if (this.useDefaultSubmitBtn) {
             return (
-                <Button theme="success" onClick={this.submit.bind(this)}>{this.props.submitText || "保 存"}</Button>
+                <Button theme='success' onClick={this.submit.bind(this)}>{this.props.submitText || '保 存'}</Button>
             );
-        }else{
+        } else {
             return null;
         }
     }
 
     render () {
-        let { className, grid, style, layout, encType} = this.props;
+        let {className, grid, style, layout, encType} = this.props;
 
-        className = classNames("cm-form",className, getGrid(grid), {
+        className = classNames('cm-form', className, getGrid(grid), {
             [`cm-form-${layout}`]: layout
         });
 
-        if(this.props.component && this.props.component === "div"){
+        if (this.props.component && this.props.component === 'div') {
             return (
-                <div ref="form" className={className} style={style} encType={encType} action={this.action}
-                      method={this.method || "post"} target={this.target}>
+                <div ref='form' className={className} style={style} encType={encType} action={this.action}
+                    method={this.method || 'post'} target={this.target}>
                     {this.renderChildren()}
 
-                    <div style={{"textAlign": "center"}}>
+                    <div style={{'textAlign': 'center'}}>
                         {this.renderSubmit()}
                     </div>
                 </div>
             );
-        }else {
+        } else {
             return (
-                <form ref="form" className={className} style={style} encType={encType} action={this.action}
-                      method={this.method || "post"} target={this.target}>
+                <form ref='form' className={className} style={style} encType={encType} action={this.action}
+                    method={this.method || 'post'} target={this.target}>
                     {this.renderChildren()}
 
-                    <div style={{"textAlign": "center"}}>
+                    <div style={{'textAlign': 'center'}}>
                         {this.renderSubmit()}
                     </div>
                 </form>
@@ -272,7 +269,7 @@ Form.propTypes = {
      * @attribute method
      * @type {String}
      */
-    method: PropTypes.oneOf(["post","get","ajax","custom"]),
+    method: PropTypes.oneOf(['post', 'get', 'ajax', 'custom']),
     /**
      * 提交目标
      * @attribute target
@@ -303,42 +300,38 @@ export default Form;
 
 
 class Row extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     renderChildren(){
         return React.Children.map(this.props.children, (child)=>{
-            let componentName = "";
-            if(child && child.type){
-                if(child.type.name){
+            let componentName = '';
+            if (child && child.type) {
+                if (child.type.name) {
                     componentName = child.type.name;
-                }else{
+                } else {
                     let matches = child.type.toString().match(/function\s*([^(]*)\(/);
-                    if(matches){
+                    if (matches) {
                         componentName = matches[1];
                     }
                 }
             }
-            if(componentName === 'FormControl'){
+            if (componentName === 'FormControl') {
                 let props = Object.assign({
-                    "data-itemBind": this.props["data-itemBind"],
-                    "itemUnBind": this.props["itemUnBind"]
-                },child.props);
+                    'data-itemBind': this.props['data-itemBind'],
+                    'itemUnBind': this.props['itemUnBind']
+                }, child.props);
                 props.layout = this.props.layout ? this.props.layout : props.layout;
                 props.labelWidth = this.props.labelWidth ? this.props.labelWidth : props.labelWidth;
                 return React.cloneElement(child, props);
-            }else {
+            } else {
                 return child;
             }
         });
     }
 
     render(){
-        let className = classNames("cm-form-row", this.props.className);
+        let className = classNames('cm-form-row', this.props.className);
         return <div className={className} style={this.props.style}>
             {this.renderChildren()}
-        </div>
+        </div>;
     }
 }
 

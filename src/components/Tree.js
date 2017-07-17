@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
 import shallowEqual from './utils/shallowEqual';
-import UUID from './utils/UUID';
 import Ajax from './core/Ajax';
 
 /**
@@ -29,7 +28,7 @@ class TreeNode extends BaseComponent{
      * @method _select
      * @private
      */
-    _select(){
+    _select() {
         let item = this.state.item;
         this.props.onSelect ? this.props.onSelect(item) : false;
     }
@@ -39,7 +38,7 @@ class TreeNode extends BaseComponent{
      * @method _openClose
      * @private
      */
-    _openClose(){
+    _openClose() {
         let item = this.state.item;
         item.open = !item.open;
         this.updateState();
@@ -51,7 +50,7 @@ class TreeNode extends BaseComponent{
      * @method _check
      * @private
      */
-    _check(){
+    _check() {
         let item = this.state.item;
         this.props.onCheck ? this.props.onCheck(item) : false;
 
@@ -62,7 +61,7 @@ class TreeNode extends BaseComponent{
      * 更新状态
      * @method updateState
      */
-    updateState(){
+    updateState() {
         let item = this.state.item;
         this.setState({
             item: item
@@ -73,9 +72,9 @@ class TreeNode extends BaseComponent{
      * 展开节点
      * @method open
      */
-    open(){
+    open() {
         let item = this.state.item;
-        if(!item.open){
+        if (!item.open) {
             item.open = true;
             this.updateState();
         }
@@ -85,9 +84,9 @@ class TreeNode extends BaseComponent{
      * 收缩节点
      * @method close
      */
-    close(){
+    close() {
         let item = this.state.item;
-        if(item.open){
+        if (item.open) {
             item.open = false;
             this.updateState();
         }
@@ -97,9 +96,9 @@ class TreeNode extends BaseComponent{
      * 选中节点
      * @method select
      */
-    select(){
+    select() {
         let item = this.state.item;
-        if(!item._selected){
+        if (!item._selected) {
             item._selected = true;
             this.setState({
                 item: item
@@ -111,9 +110,9 @@ class TreeNode extends BaseComponent{
      * 取消选中节点
      * @method unSelect
      */
-    unSelect(){
+    unSelect() {
         let item = this.state.item;
-        if(item._selected === true){
+        if (item._selected === true) {
             item._selected = false;
             this.setState({
                 item: item
@@ -124,29 +123,29 @@ class TreeNode extends BaseComponent{
     render() {
         let item = this.state.item;
         item._node = this;
-        let iconStyle = item.icon ?  {
-            "backgroundImage": "url(" + item.icon + ")"
+        let iconStyle = item.icon ? {
+            'backgroundImage': 'url(' + item.icon + ')'
         } : null;
         let textColor = item.color ? {
             color: item.color
         } : null;
 
         item._checked = item._checked === undefined ? 0 : item._checked;
-        //if(this.props.enableCheckbox && this.props.enableSmartCheckbox && item._parent && item._parent._checked){
+        // if (this.props.enableCheckbox && this.props.enableSmartCheckbox && item._parent && item._parent._checked) {
         //    item._checked = 1;
-        //}
+        // }
 
         let checkboxEle;
-        if(this.props.enableCheckbox){
-            let checkClassName = classNames("tree_checkbox", {
+        if (this.props.enableCheckbox) {
+            let checkClassName = classNames('tree_checkbox', {
                 checked: item._checked === 1,
                 dischecked: item._checked === 2
             });
-            checkboxEle = (<span className={checkClassName} onClick={this._check.bind(this)}></span>);
+            checkboxEle = (<span className={checkClassName} onClick={this._check.bind(this)} />);
         }
 
         let subNodes = null;
-        if(item.children && item.children.length){
+        if (item.children && item.children.length) {
             subNodes = (
                 <TreeSubNodes
                     items={item.children}
@@ -157,30 +156,30 @@ class TreeNode extends BaseComponent{
                     enableCheckbox={this.props.enableCheckbox}
                     enableSmartCheckbox={this.props.enableSmartCheckbox}
                     onCheck={this.props.onCheck}
-                    />
+                />
             );
         }
 
-        let iconClassName = classNames("tree_icon", {
+        let iconClassName = classNames('tree_icon', {
             icon_branch: (item.children && item.children.length),
             icon_leaf: !(item.children && item.children.length)
         });
 
-        let nodeClassName = classNames("tree_node_wrap", {
+        let nodeClassName = classNames('tree_node_wrap', {
             node_open: item.open,
             node_close: !item.open
         });
 
-        let contClassName = classNames("tree_cont", {
+        let contClassName = classNames('tree_cont', {
             node_selected: item._selected
         });
-        return(
+        return (
             <div className='tree_node'>
                 <span className={nodeClassName}>
-                    <span className='tree_arrow' onClick={this._openClose.bind(this)}></span>
+                    <span className='tree_arrow' onClick={this._openClose.bind(this)} />
                     {checkboxEle}
                     <span className={contClassName} onClick={this._select.bind(this)}>
-                        <span className={iconClassName} style={iconStyle}></span>
+                        <span className={iconClassName} style={iconStyle} />
                         <span className='tree_text' title={item.text} style={textColor}>{item.text}</span>
                     </span>
                 </span>
@@ -248,7 +247,7 @@ class TreeSubNodes extends BaseComponent{
      * @method updateState
      * @param newItems 新的数据
      */
-    updateState(newItems){
+    updateState(newItems) {
         let items = newItems || this.state.items;
         this.setState({
             items: items
@@ -262,19 +261,20 @@ class TreeSubNodes extends BaseComponent{
      * @override
      */
     componentWillReceiveProps (nextProps) {
-        if(!shallowEqual(nextProps.items, this.props.items)){
+        if (!shallowEqual(nextProps.items, this.props.items)) {
             this.setState({ items: nextProps.items });
         }
     }
 
     render() {
-        let items = this.state.items, visible = this.props.visible;
+        let items = this.state.items;
+        let visible = this.props.visible;
 
-        if(this.props.parent) {
+        if (this.props.parent) {
             this.props.parent._subNodes = this;
         }
 
-        let nodes = items.map(function(item, index){
+        let nodes = items.map(function(item, index) {
             item._parent = this.props.parent;
             return (
                 <TreeNode
@@ -285,13 +285,13 @@ class TreeSubNodes extends BaseComponent{
                     enableCheckbox={this.props.enableCheckbox}
                     enableSmartCheckbox={this.props.enableSmartCheckbox}
                     onCheck={this.props.onCheck}
-                    ></TreeNode>
+                />
             );
         }, this);
 
-        let classNames = this.props.isRoot ? "tree_rootNode" : "tree_subNode";
-        let display = this.props.isRoot ? "" : visible ? "" : "none";
-        return(
+        let classNames = this.props.isRoot ? 'tree_rootNode' : 'tree_subNode';
+        let display = this.props.isRoot ? '' : visible ? '' : 'none';
+        return (
             <div className={classNames} style={{display: display}}>
                 {nodes}
             </div>
@@ -384,8 +384,8 @@ class Tree extends BaseComponent {
      * @param data {Object} 属性中的数据结构
      * @private
      */
-    _reBuildData(data){
-        if(data) {
+    _reBuildData(data) {
+        if (data) {
             data.forEach(function (item) {
                 this.idData[item.id] = item;
                 if (item.children && item.children.length) {
@@ -401,23 +401,21 @@ class Tree extends BaseComponent {
      * @param item {Object} 选中的节点数据
      * @private
      */
-    _select(item){
+    _select(item) {
         let lastSelectItem = this.selectedItem;
 
-        if(lastSelectItem && lastSelectItem.id === item.id){
-            return;
-        }else{
-            if(lastSelectItem){
+        if (!lastSelectItem || lastSelectItem.id !== item.id) {
+            if (lastSelectItem) {
                 lastSelectItem._node.unSelect();
             }
             item._node.select();
             this.selectedItem = item;
 
-            if(this.props.onSelect){
+            if (this.props.onSelect) {
                 this.props.onSelect(item);
             }
 
-            this.emit("select", item);
+            this.emit('select', item);
         }
     }
 
@@ -427,11 +425,11 @@ class Tree extends BaseComponent {
      * @param item {Object} 操作的节点数据
      * @private
      */
-    _openClose(item){
-        if(this.props.onOpen){
+    _openClose(item) {
+        if (this.props.onOpen) {
             this.props.onOpen(item);
         }
-        this.emit("open", item);
+        this.emit('open', item);
     }
 
     /**
@@ -440,26 +438,26 @@ class Tree extends BaseComponent {
      * @param item {Object} 勾选的节点数据
      * @private
      */
-    _check(item){
+    _check(item) {
         let checkedItems = this.checkedItems;
 
-        if(item._checked === 0 || item._checked === 2){
+        if (item._checked === 0 || item._checked === 2) {
             item._checked = 1;
             checkedItems[item.id] = item;
-        }else if(item._checked === 1){
+        } else if (item._checked === 1) {
             item._checked = 0;
             delete checkedItems[item.id];
         }
 
-        if(this.state.enableSmartCheckbox){
+        if (this.state.enableSmartCheckbox) {
             this.setSmartSubChecked(item);
             this.updateParentCheckStatus(item);
         }
 
-        if(this.props.onCheck){
+        if (this.props.onCheck) {
             this.props.onCheck(item);
         }
-        this.emit("check", item);
+        this.emit('check', item);
     }
 
     /**
@@ -467,10 +465,10 @@ class Tree extends BaseComponent {
      * @method setSmartSubChecked
      * @param item {Object} 当前节点
      */
-    setSmartSubChecked(item){
+    setSmartSubChecked(item) {
         this.setSubChecked(item);
-        if(item.children && item.children.length){
-            item.children.forEach(function(child){
+        if (item.children && item.children.length) {
+            item.children.forEach(function(child) {
                 this.setSmartSubChecked(child);
             }, this);
         }
@@ -481,9 +479,9 @@ class Tree extends BaseComponent {
      * @method setSubChecked
      * @param item {Object} 当前节点
      */
-    setSubChecked(item){
-        if(item.children && item.children.length){
-            item.children.forEach(function(child){
+    setSubChecked(item) {
+        if (item.children && item.children.length) {
+            item.children.forEach(function(child) {
                 child._checked = item._checked;
                 child._node.updateState();
             });
@@ -496,31 +494,31 @@ class Tree extends BaseComponent {
      * @param {Object} item 节点对象
      * @param {Number} checked 节点勾选状态
      */
-    setItemChecked(item, checked){
+    setItemChecked(item, checked) {
         let checkedItems = this.checkedItems;
 
         item._checked = checked;
-        if(item._checked === 0){
+        if (item._checked === 0) {
             delete checkedItems[item.id];
         }
-        if(item._checked === 1){
+        if (item._checked === 1) {
             checkedItems[item.id] = item;
         }
-        if(item._checked === 2){
+        if (item._checked === 2) {
             delete checkedItems[item.id];
         }
 
         item._node.updateState();
 
-        if(this.state.enableSmartCheckbox){
+        if (this.state.enableSmartCheckbox) {
             this.setSmartSubChecked(item);
             this.updateParentCheckStatus(item);
         }
 
-        if(this.props.onCheck){
+        if (this.props.onCheck) {
             this.props.onCheck(item);
         }
-        this.emit("check", item);
+        this.emit('check', item);
     }
 
     /**
@@ -528,8 +526,8 @@ class Tree extends BaseComponent {
      * @method getSubItems
      * @param {Object} item
      */
-    getSubItems(item){
-        if(typeof(item) === 'string'){
+    getSubItems(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
         return item.children;
@@ -541,7 +539,7 @@ class Tree extends BaseComponent {
      * @param {Object} itemId
      * @return {Object} item
      */
-    getItem(itemId){
+    getItem(itemId) {
         return this.idData[itemId];
     }
 
@@ -551,13 +549,13 @@ class Tree extends BaseComponent {
      * @param {Object} item
      * @return {String}
      */
-    getItemText(item){
-        if(typeof(item) === 'string'){
+    getItemText(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             return item.text;
-        }else{
+        } else {
             return null;
         }
     }
@@ -568,11 +566,11 @@ class Tree extends BaseComponent {
      * @param {Object} item
      * @param {Object} text 要设置的文字
      */
-    setItemText(item, text){
-        if(typeof(item) === 'string'){
+    setItemText(item, text) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             item.text = text;
             item._node.updateState();
         }
@@ -584,11 +582,11 @@ class Tree extends BaseComponent {
      * @param {Object} item
      * @param {Object} color 要设置的颜色
      */
-    setItemColor(item, color){
-        if(typeof(item) === 'string'){
+    setItemColor(item, color) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             item.color = color;
             item._node.updateState();
         }
@@ -600,11 +598,11 @@ class Tree extends BaseComponent {
      * @param {Object} item
      * @param {Object} img 要设置的图标
      */
-    setItemImg(item, img){
-        if(typeof(item) === 'string'){
+    setItemImg(item, img) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             item.icon = img;
             item._node.updateState();
         }
@@ -616,13 +614,13 @@ class Tree extends BaseComponent {
      * @param {Object} item 节点ID或则节点对象
      * @return {Number} 节点层级
      */
-    getLevel(item){
-        if(typeof(item) === 'string'){
+    getLevel(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             return item.level;
-        }else{
+        } else {
             return null;
         }
     }
@@ -633,13 +631,13 @@ class Tree extends BaseComponent {
      * @param {Object} item 节点ID或则节点对象
      * @return {Boolean} 节点打开状态
      */
-    getOpenState(item){
-        if(typeof(item) === 'string'){
+    getOpenState(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             return item.open;
-        }else{
+        } else {
             return null;
         }
     }
@@ -649,7 +647,7 @@ class Tree extends BaseComponent {
      * @method getSelectedItem
      * @return {Object} 节点
      */
-    getSelectedItem(){
+    getSelectedItem() {
         return this.selectedItem;
     }
 
@@ -659,8 +657,8 @@ class Tree extends BaseComponent {
      * @param {Object} item 节点ID或则节点对象
      * @return {Boolean} 节点打开状态
      */
-    isItemChecked(item){
-        if(typeof(item) === 'string'){
+    isItemChecked(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
         return item._checked === 1;
@@ -671,14 +669,14 @@ class Tree extends BaseComponent {
      * @method checkItem
      * @param {Object} item 节点ID或则节点对象
      */
-    checkItem(item){
-        if(typeof(item) === 'string'){
+    checkItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(!item){
+        if (!item) {
             return;
         }
-        if(item._checked !== 1){
+        if (item._checked !== 1) {
             this.setItemChecked(item, 1);
         }
     }
@@ -688,14 +686,14 @@ class Tree extends BaseComponent {
      * @method unCheckItem
      * @param {Object} item 节点ID或则节点对象
      */
-    unCheckItem(item){
-        if(typeof(item) === 'string'){
+    unCheckItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(!item){
+        if (!item) {
             return;
         }
-        if(item._checked !== 0){
+        if (item._checked !== 0) {
             this.setItemChecked(item, 0);
         }
     }
@@ -705,11 +703,11 @@ class Tree extends BaseComponent {
      * @method openItem
      * @param {Object} item 节点ID或则节点对象
      */
-    openItem(item){
-        if(typeof(item) === 'string'){
+    openItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             item._node.open();
         }
     }
@@ -718,9 +716,9 @@ class Tree extends BaseComponent {
      * 打开所有的节点
      * @method openAllItem
      */
-    openAllItem(){
+    openAllItem() {
         var items = this.getAllBranches() || [];
-        items.forEach(function(item){
+        items.forEach(function(item) {
             this.openItem(item);
         }, this);
     }
@@ -730,11 +728,11 @@ class Tree extends BaseComponent {
      * @method closeItem
      * @param {Object} item 节点ID或则节点对象
      */
-    closeItem(item){
-        if(typeof(item) === 'string'){
+    closeItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             item._node.close();
         }
     }
@@ -743,9 +741,9 @@ class Tree extends BaseComponent {
      * 关闭所有的节点
      * @method closeAllItem
      */
-    closeAllItem(){
+    closeAllItem() {
         var items = this.getAllBranches() || [];
-        items.forEach(function(item){
+        items.forEach(function(item) {
             this.closeItem(item);
         }, this);
     }
@@ -755,20 +753,20 @@ class Tree extends BaseComponent {
      * @method selectItem
      * @param {Object} item 节点ID或则节点对象
      */
-    selectItem(item){
-        if(typeof(item) === 'string'){
+    selectItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             this._select(item);
         }
     }
 
-    unSelectItem(item){
-        if(typeof(item) === 'string'){
+    unSelectItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             item._node.unSelect();
             this.selectedItem = null;
         }
@@ -780,7 +778,7 @@ class Tree extends BaseComponent {
      * @param {Object} item 节点ID或则节点对象
      * @return {Array} 节点数组
      */
-    getSubCheckedItems(item){
+    getSubCheckedItems(item) {
         return this.getSubChecks(item, 1);
     }
 
@@ -790,7 +788,7 @@ class Tree extends BaseComponent {
      * @param {Object} item 节点ID或则节点对象
      * @return {Array} 节点数组
      */
-    getSubUncheckedItems(item){
+    getSubUncheckedItems(item) {
         return this.getSubChecks(item, 0);
     }
 
@@ -799,7 +797,7 @@ class Tree extends BaseComponent {
      * @method getAllChecked
      * @return {Array} 节点数组
      */
-    getAllChecked(){
+    getAllChecked() {
         return this.checkedItems;
     }
 
@@ -808,12 +806,14 @@ class Tree extends BaseComponent {
      * @method getAllCheckedIncludeSmart
      * @return {Array} 节点数组
      */
-    getAllCheckedIncludeSmart(){
+    getAllCheckedIncludeSmart() {
         let ret = [];
-        for(let i in this.idData){
-            let item = this.idData[i];
-            if(item._checked === 1 || item._checked === 2){
-                ret.push(item);
+        for (let i in this.idData) {
+            if ({}.hasOwnProperty.call(this.idData, i)) {
+                let item = this.idData[i];
+                if (item._checked === 1 || item._checked === 2) {
+                    ret.push(item);
+                }
             }
         }
 
@@ -827,13 +827,13 @@ class Tree extends BaseComponent {
      * @param {Number} checked 节点的勾选状态
      * @return {Array} 节点数组
      */
-    getSubChecks(item, checked){
-        if(typeof(item) === 'string'){
+    getSubChecks(item, checked) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
         var subs = [];
-        if(item.children){
-            subs = item.children.filter(function(child){
+        if (item.children) {
+            subs = item.children.filter(function(child) {
                 return child._checked === checked;
             });
         }
@@ -845,12 +845,14 @@ class Tree extends BaseComponent {
      * @method getAllCheckedBranches
      * @return {Array} 节点数组
      */
-    getAllCheckedBranches(){
+    getAllCheckedBranches() {
         var items = [];
-        for(let i in this.idData){
-            let item = this.idData[i];
-            if(item._checked === 1 && item.children && item.children.length){
-                items.push(item);
+        for (let i in this.idData) {
+            if ({}.hasOwnProperty.call(this.idData, i)) {
+                let item = this.idData[i];
+                if (item._checked === 1 && item.children && item.children.length) {
+                    items.push(item);
+                }
             }
         }
         return items;
@@ -861,12 +863,14 @@ class Tree extends BaseComponent {
      * @method getAllCheckedLeafs
      * @return {Array} 节点数组
      */
-    getAllCheckedLeafs(){
+    getAllCheckedLeafs() {
         var items = [];
-        for(let i in this.idData){
-            let item = this.idData[i];
-            if(!item.children && item._checked === 1){
-                items.push(item);
+        for (let i in this.idData) {
+            if ({}.hasOwnProperty.call(this.idData, i)) {
+                let item = this.idData[i];
+                if (!item.children && item._checked === 1) {
+                    items.push(item);
+                }
             }
         }
         return items;
@@ -878,17 +882,17 @@ class Tree extends BaseComponent {
      * @param {Object} parent
      * @param {Object} item
      */
-    addItem(parent, item){
-        if(typeof(parent) == "string"){
+    addItem(parent, item) {
+        if (typeof (parent) === 'string') {
             parent = this.getItem(parent);
         }
         this.idData[item.id] = item;
 
         item.parent = parent;
-        if(parent){
+        if (parent) {
             item.level = parent.level + 1;
-            parent.children ? parent.children.push(item) : parent.children=[item];
-        }else{
+            parent.children ? parent.children.push(item) : parent.children = [item];
+        } else {
             parent = {
                 open: true,
                 children: [item]
@@ -904,11 +908,11 @@ class Tree extends BaseComponent {
      * @method deleteChildItems
      * @param {Object} item
      */
-    deleteChildItems(item){
-        if(typeof(item) == "string"){
+    deleteChildItems(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             delete item.children;
 
             item._node.updateState();
@@ -920,23 +924,23 @@ class Tree extends BaseComponent {
      * @method removeItem
      * @param {Object} item
      */
-    removeItem(item){
-        if(typeof(item) == "string"){
+    removeItem(item) {
+        if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        if(item){
+        if (item) {
             var parent = item._parent;
-            if(parent){
-                for(let i=0; i < parent.children.length; i++){
-                    if(shallowEqual(parent.children[i], item)){
-                        parent.children.splice(i,1);
+            if (parent) {
+                for (let i = 0; i < parent.children.length; i++) {
+                    if (shallowEqual(parent.children[i], item)) {
+                        parent.children.splice(i, 1);
                         break;
                     }
                 }
-                if(parent.children.length === 0){
-                    delete parent["children"];
+                if (parent.children.length === 0) {
+                    delete parent['children'];
                 }
-                if(this.selectedItem == item){
+                if (this.selectedItem == item) {
                     this.selectedItem = null;
                 }
                 parent._node.updateState();
@@ -950,12 +954,14 @@ class Tree extends BaseComponent {
      * @method getAllBranches
      * @return {Array} 非叶子节点数组
      */
-    getAllBranches(){
+    getAllBranches() {
         let ret = [];
-        for(let i in this.idData){
-            let item = this.idData[i];
-            if(item.children && item.children.length){
-                ret.push(item);
+        for (let i in this.idData) {
+            if ({}.hasOwnProperty.call(this.idData, i)) {
+                let item = this.idData[i];
+                if (item.children && item.children.length) {
+                    ret.push(item);
+                }
             }
         }
 
@@ -967,12 +973,14 @@ class Tree extends BaseComponent {
      * @method getAllLeafs
      * @return {Array} 叶子节点数组
      */
-    getAllLeafs(){
+    getAllLeafs() {
         let ret = [];
-        for(let i in this.idData){
-            let item = this.idData[i];
-            if(!item.children){
-                ret.push(item);
+        for (let i in this.idData) {
+            if ({}.hasOwnProperty.call(this.idData, i)) {
+                let item = this.idData[i];
+                if (!item.children) {
+                    ret.push(item);
+                }
             }
         }
 
@@ -984,27 +992,33 @@ class Tree extends BaseComponent {
      * @method updateParentCheckStatus
      * @param item {Object} 当前节点
      */
-    updateParentCheckStatus(item){
+    updateParentCheckStatus(item) {
         var parent = item._parent;
-        if(!parent){
+
+        if (!parent) {
             return;
         }
 
         let checkNum = 0;
-        parent.children.forEach(function(child){
+        let stageNum = 0;
+        parent.children.forEach(function(child) {
             checkNum = child._checked === 1 ? checkNum + 1 : checkNum;
+            stageNum = child._checked === 2 ? stageNum + 1 : stageNum;
         });
 
         var checked = parent._checked;
-        if(checkNum === parent.children.length){
+        if (checkNum === parent.children.length) {
             checked = 1;
-        }else if(checkNum === 0){
+        } else if (checkNum === 0) {
             checked = 0;
-        }else{
+            if (stageNum > 0){
+                checked = 2;
+            }
+        } else {
             checked = 2;
         }
 
-        if(checked !== parent._checked){
+        if (checked !== parent._checked) {
             parent._checked = checked;
             parent._node.updateState();
             this.updateParentCheckStatus(parent);
@@ -1014,11 +1028,11 @@ class Tree extends BaseComponent {
     /**
      * 当节点存在url则请求数据
      */
-    componentDidMount(){
-        if(this.state.url){
+    componentDidMount() {
+        if (this.state.url) {
             let scope = this;
-            this.req = Ajax.get(this.state.url, {}, function(data, err){
-                if(data) {
+            this.req = Ajax.get(this.state.url, {}, function(data) {
+                if (data) {
                     scope.setState({
                         data: data
                     });
@@ -1028,7 +1042,7 @@ class Tree extends BaseComponent {
     }
 
     componentWillUnmount () {
-        if(this.req) {
+        if (this.req) {
             this.req.abort();
         }
     }
@@ -1040,7 +1054,7 @@ class Tree extends BaseComponent {
      * @override
      */
     componentWillReceiveProps (nextProps) {
-        if(!shallowEqual(nextProps.data, this.props.data)){
+        if (!shallowEqual(nextProps.data, this.props.data)) {
             this.setState({ data: nextProps.data });
         }
     }
@@ -1052,15 +1066,15 @@ class Tree extends BaseComponent {
      * @param {Object} json 节点数据
      * @param {Object} cback 回调
      */
-    loadDynamicJSON(parent, json, cback){
-        if(typeof(parent) == "string"){
+    loadDynamicJSON(parent, json, cback) {
+        if (typeof (parent) === 'string') {
             parent = this.getItem(parent);
         }
-        if(parent){
-            if(parent.children){
+        if (parent) {
+            if (parent.children) {
                 parent.children = parent.children.concat(json);
                 parent._subNodes.updateState(parent.children);
-            }else{
+            } else {
                 parent.children = json;
                 parent._node.updateState(parent);
             }
@@ -1068,19 +1082,19 @@ class Tree extends BaseComponent {
         }
     }
 
-    render(){
-        let className = classNames("cm-tree");
+    render() {
+        let className = classNames('cm-tree');
         return (
             <div className={className}>
                 <TreeSubNodes
                     items={this.state.data}
-                    isRoot={true}
+                    isRoot
                     onSelect={this._select.bind(this)}
                     onOpenClose={this._openClose.bind(this)}
                     enableCheckbox={this.state.enableCheckbox}
                     enableSmartCheckbox={this.state.enableSmartCheckbox}
                     onCheck={this._check.bind(this)}
-                    />
+                />
             </div>
         );
     }

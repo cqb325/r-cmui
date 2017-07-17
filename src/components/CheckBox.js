@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from './core/BaseComponent';
@@ -38,7 +37,7 @@ class CheckBox extends BaseComponent {
             return;
         }
 
-        if(this.props.type == "radio" && this.state.checked){
+        if (this.props.type == 'radio' && this.state.checked) {
             return;
         }
 
@@ -64,11 +63,11 @@ class CheckBox extends BaseComponent {
      */
     handleTrigger(checked, event){
         let value = this.state.value;
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(value, checked, event, this.props.item);
         }
 
-        this.emit("change");
+        this.emit('change');
     }
 
     /**
@@ -99,7 +98,7 @@ class CheckBox extends BaseComponent {
     }
 
     render () {
-        let { className,name, type, item} = this.props;
+        let {className, name, type, item} = this.props;
         className = classNames(
             className,
             'cm-checkbox',
@@ -109,22 +108,22 @@ class CheckBox extends BaseComponent {
             }
         );
 
-        type = type || "checkbox";
+        type = type || 'checkbox';
 
-        if(item){
+        if (item) {
             item._node = this;
         }
 
         return (
             <span className={className} onClick={this.handleChange.bind(this)}>
-                <input ref="input" checked={this.props.checked}
-                       type={type} name={name}
-                       defaultValue={this.state.value}
-                       style={{display: "none"}}
-                       onChange={()=>{}}
-                    />
-                <span style={{position: "relative"}}>
-                    <span className="cm-checkbox-icon"></span>
+                <input ref='input' checked={this.props.checked}
+                    type={type} name={name}
+                    defaultValue={this.state.value}
+                    style={{display: 'none'}}
+                    onChange={()=>{}}
+                />
+                <span style={{position: 'relative'}}>
+                    <span className='cm-checkbox-icon' />
                 </span>
                 <label>{this.props.label}</label>
             </span>

@@ -4,11 +4,9 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
-import Core from './Core';
 import moment from 'moment';
 import Dom from './utils/Dom';
 import UUID from './utils/UUID';
@@ -25,7 +23,6 @@ class Table extends BaseComponent {
     constructor(props) {
         super(props);
 
-
         this.data = this._rebuildData(props.data);
 
         this.addState({
@@ -39,12 +36,12 @@ class Table extends BaseComponent {
     }
 
     _rebuildData(data){
-        if(data && data.length){
+        if (data && data.length){
             return data.map((item)=>{
                 return {
                     key: item.id || UUID.v4(),
                     data: item
-                }
+                };
             });
         }
         return data;
@@ -95,7 +92,7 @@ class Table extends BaseComponent {
      */
     removeRow(index){
         let data = this.getData();
-        if(index >= 0 && index < data.length){
+        if (index >= 0 && index < data.length){
             data.splice(index, 1);
             this.setState({data: data});
         }
@@ -108,8 +105,8 @@ class Table extends BaseComponent {
      */
     removeRows(field, value){
         let data = this.getData();
-        for(let i = data.length - 1; i >= 0; i--){
-            if(data[i].data[field] == value){
+        for (let i = data.length - 1; i >= 0; i--) {
+            if (data[i].data[field] == value){
                 data.splice(i, 1);
             }
         }
@@ -132,8 +129,8 @@ class Table extends BaseComponent {
      * @param checked
      */
     checkedAll(checked){
-        for(let key in this.checkboxes){
-            let row = this.checkboxes[key]["row"];
+        for (let key in this.checkboxes) {
+            let row = this.checkboxes[key]['row'];
             row.check(checked);
         }
     }
@@ -144,9 +141,9 @@ class Table extends BaseComponent {
      * @param value
      */
     checkRow(field, value){
-        for(let key in this.checkboxes){
-            let row = this.checkboxes[key]["row"];
-            if(row.getData()[field] == value){
+        for (let key in this.checkboxes) {
+            let row = this.checkboxes[key]['row'];
+            if (row.getData()[field] == value){
                 row.check(true);
             }
         }
@@ -159,9 +156,9 @@ class Table extends BaseComponent {
      * @param value
      */
     unCheckRow(field, value){
-        for(let key in this.checkboxes){
-            let row = this.checkboxes[key]["row"];
-            if(row.getData()[field] == value){
+        for (let key in this.checkboxes) {
+            let row = this.checkboxes[key]['row'];
+            if (row.getData()[field] == value){
                 row.check(false);
             }
         }
@@ -189,9 +186,9 @@ class Table extends BaseComponent {
      */
     getAllChecked(){
         let data = []; let rows = [];
-        for(let key in this.checkboxes){
-            let row = this.checkboxes[key]["row"];
-            if(row.isChecked()){
+        for (let key in this.checkboxes) {
+            let row = this.checkboxes[key]['row'];
+            if (row.isChecked()){
                 data.push(row.getData());
                 rows.push(row);
             }
@@ -209,13 +206,13 @@ class Table extends BaseComponent {
      * @param checked
      */
     refreshHeaderCheckBox(key, checked){
-        if(!checked){
+        if (!checked) {
             this.refs.header.check(checked);
-        }else{
+        } else {
             let isAllChecked = true;
-            for(let key in this.checkboxes){
-                let row = this.checkboxes[key]["row"];
-                if(!row.isChecked()){
+            for (let key in this.checkboxes) {
+                let row = this.checkboxes[key]['row'];
+                if (!row.isChecked()) {
                     isAllChecked = false;
                     break;
                 }
@@ -232,23 +229,23 @@ class Table extends BaseComponent {
      * @return {[type]}        [description]
      */
     onSort(column, type){
-        if(this.props.onSort){
+        if (this.props.onSort) {
             this.props.onSort(column, type);
         }
-        this.emit("sort", column, type);
+        this.emit('sort', column, type);
     }
 
     render(){
-        let className = classNames("cm-table",this.props.className,{
-            "table-bordered": this.props.bordered,
-            "table-striped": this.props.striped,
-            "table-hover": this.props.hover
+        let className = classNames('cm-table', this.props.className, {
+            'table-bordered': this.props.bordered,
+            'table-striped': this.props.striped,
+            'table-hover': this.props.hover
         });
         return (
-            <div className="table-responsive">
+            <div className='table-responsive'>
                 <table className={className} style={this.props.style}>
-                    <Header ref="header" columns={this.state.columns} table={this}></Header>
-                    <Body ref="body" data={this.state.data} columns={this.state.columns} table={this}></Body>
+                    <Header ref='header' columns={this.state.columns} table={this} />
+                    <Body ref='body' data={this.state.data} columns={this.state.columns} table={this} />
                 </table>
             </div>
         );
@@ -261,7 +258,6 @@ class Table extends BaseComponent {
  * @extend BaseComponent
  */
 class Header extends BaseComponent{
-
     constructor(props){
         super(props);
 
@@ -278,7 +274,7 @@ class Header extends BaseComponent{
         }
     }
 
-    checkedAll(value, checked, event, item){
+    checkedAll(value, checked){
         this.props.table.checkedAll(checked);
     }
 
@@ -288,58 +284,58 @@ class Header extends BaseComponent{
         });
     }
 
-    sort(column, event){
+    sort(column){
         let columns = this.state.columns;
-        if(!column.__sort){
-            column.__sort = "asc";
-        }else if(column.__sort === "asc"){
-            column.__sort = "desc";
-        }else{
+        if (!column.__sort){
+            column.__sort = 'asc';
+        } else if (column.__sort === 'asc'){
+            column.__sort = 'desc';
+        } else {
             column.__sort = undefined;
         }
         this.setState({
             columns
         });
-        this.props.table.onSort(column, column.__sort); 
+        this.props.table.onSort(column, column.__sort);
     }
 
     renderColumns(){
         let columns = this.state.columns;
 
         return columns.map((column, index)=>{
-            if(columns.hide){
+            if (columns.hide){
                 return null;
             }
             let text = null;
             let className = classNames(column.className);
-            if(column.type === "checkbox"){
-                text = <CheckBox ref="checkbox" checked={false} onChange={this.checkedAll.bind(this)}></CheckBox>;
-                className = classNames(className, "cm-table-col-checkbox");
-            }else if(column.type === "index"){
-                className = classNames(className, "cm-table-col-index");
+            if (column.type === 'checkbox'){
+                text = <CheckBox ref='checkbox' checked={false} onChange={this.checkedAll.bind(this)} />;
+                className = classNames(className, 'cm-table-col-checkbox');
+            } else if (column.type === 'index'){
+                className = classNames(className, 'cm-table-col-index');
                 text = column.text;
-            }else{
+            } else {
                 text = column.text;
             }
             let sortEle = null;
-            if(column.sort){
-                let sortClassName = classNames("cm-table-sort",{
+            if (column.sort) {
+                let sortClassName = classNames('cm-table-sort', {
                     [`cm-table-sort-${column.__sort}`]: column.__sort
                 });
-                sortEle = <span className={sortClassName} onClick={this.sort.bind(this, column)}></span>;
+                sortEle = <span className={sortClassName} onClick={this.sort.bind(this, column)} />;
             }
             return <th key={index} className={className} width={column.width} style={column.style}
-                       name={column.name}>{text}{sortEle}</th>;
+                name={column.name}>{text}{sortEle}
+            </th>;
         });
     }
 
     render(){
-
         return (
             <thead>
-            <tr>
-                {this.renderColumns()}
-            </tr>
+                <tr>
+                    {this.renderColumns()}
+                </tr>
             </thead>
         );
     }
@@ -354,7 +350,6 @@ Table.Header = Header;
  * @extend BaseComponent
  */
 class Body extends BaseComponent{
-
     constructor(props){
         super(props);
 
@@ -375,15 +370,15 @@ class Body extends BaseComponent{
         let data = this.state.data;
 
         return data.map((row, index)=>{
-            return <Row row={index} data={row.data} key={row.key} identify={row.key} columns={this.props.columns} table={this.props.table}></Row>;
+            return <Row row={index} data={row.data} key={row.key} identify={row.key}
+                columns={this.props.columns} table={this.props.table} />;
         });
     }
 
     render(){
-
         return (
             <tbody>
-            {this.renderData()}
+                {this.renderData()}
             </tbody>
         );
     }
@@ -398,7 +393,6 @@ Table.Body = Body;
  * @extend BaseComponent
  */
 class Row extends BaseComponent{
-
     constructor(props){
         super(props);
 
@@ -417,7 +411,7 @@ class Row extends BaseComponent{
         }
     }
 
-    checkRow(value, checked, event, item){
+    checkRow(value, checked){
         window.setTimeout(()=>{
             this.props.table.refreshHeaderCheckBox(this.identify, checked);
         }, 0);
@@ -428,9 +422,9 @@ class Row extends BaseComponent{
     }
 
     isChecked(){
-        if(this.refs.checkbox) {
+        if (this.refs.checkbox) {
             return this.refs.checkbox.state.checked;
-        }else{
+        } else {
             return false;
         }
     }
@@ -440,13 +434,13 @@ class Row extends BaseComponent{
     }
 
     componentDidMount(){
-        if(this.refs.checkbox){
+        if (this.refs.checkbox){
             this.props.table.bindCheckBox(this.identify, {checkbox: this.refs.checkbox, row: this});
         }
     }
 
     componentWillUnmount(){
-        if(this.refs.checkbox){
+        if (this.refs.checkbox){
             this.props.table.unBindCheckBox(this.identify);
         }
     }
@@ -457,21 +451,23 @@ class Row extends BaseComponent{
 
         let columns = this.props.columns || [];
         return columns.map((col, index)=>{
-            if(col.hide){
+            if (col.hide){
                 return null;
             }
-            if(col.type === "checkbox"){
-                return <td data-row={this.props.row} data-col={index} key={index}><CheckBox ref="checkbox" checked={false} onChange={this.checkRow.bind(this)}/></td>;
+            if (col.type === 'checkbox'){
+                return <td data-row={this.props.row} data-col={index} key={index}>
+                    <CheckBox ref='checkbox' checked={false} onChange={this.checkRow.bind(this)} />
+                </td>;
             }
-            if(col.type === "index"){
+            if (col.type === 'index'){
                 return <td data-row={this.props.row} data-col={index} key={index}>{table._index++}</td>;
             }
             let text = data[col.name];
             text = this.formatData(text, col, data);
 
-            let tip = "";
+            let tip = '';
             if (React.isValidElement(text)) {
-                if(col.tip){
+                if (col.tip){
                     text = text.props.children;
                 }
                 return (
@@ -481,19 +477,20 @@ class Row extends BaseComponent{
                 );
             }
 
-            if(text instanceof Array){
-                text = text.join("");
+            if (text instanceof Array){
+                text = text.join('');
                 col.tip = false;
             }
 
-            if(col.tip){
-                tip = text+"";
-                if('<' == tip.charAt(0)){
+            if (col.tip){
+                tip = text + '';
+                if (tip.charAt(0) === '<'){
                     tip = Dom.dom(tip).text();
                 }
             }
 
-            return <td data-row={this.props.row} data-col={index} key={index} dangerouslySetInnerHTML={{__html: text}} title={tip}></td>
+            return <td data-row={this.props.row} data-col={index}
+                key={index} dangerouslySetInnerHTML={{__html: text}} title={tip} />;
         });
     }
 
@@ -505,14 +502,14 @@ class Row extends BaseComponent{
      * @returns {*}
      */
     formatData(text, col, data){
-        if(col.format){
+        if (col.format){
             let formatFun;
-            if(typeof col.format === 'function'){
+            if (typeof col.format === 'function'){
                 formatFun = col.format;
-            }else if(typeof col.format === 'string'){
+            } else if (typeof col.format === 'string'){
                 formatFun = Table.Formats[col.format];
             }
-            if(formatFun) {
+            if (formatFun) {
                 text = formatFun(text, col, data);
             }
         }
@@ -521,7 +518,6 @@ class Row extends BaseComponent{
     }
 
     render(){
-
         return (
             <tr data-row={this.props.row}>
                 {this.renderData()}
@@ -592,11 +588,11 @@ Table.Formats = {
      * @returns {*}
      * @constructor
      */
-    DateFormat: function(value, column, row){
-        if(value) {
-            return moment(value).format("YYYY-MM-DD");
-        }else{
-            return "";
+    DateFormat: function(value){
+        if (value) {
+            return moment(value).format('YYYY-MM-DD');
+        } else {
+            return '';
         }
     },
 
@@ -608,11 +604,11 @@ Table.Formats = {
      * @returns {*}
      * @constructor
      */
-    DateTimeFormat: function(value, column, row){
-        if(value) {
-            return moment(value).format("YYYY-MM-DD HH:mm:ss");
-        }else{
-            return "";
+    DateTimeFormat: function(value){
+        if (value) {
+            return moment(value).format('YYYY-MM-DD HH:mm:ss');
+        } else {
+            return '';
         }
     }
 };

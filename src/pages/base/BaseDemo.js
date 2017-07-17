@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Utils} from '../../components';
-const Dom = Utils.Dom;
+// import {Utils} from '../../components';
+// const Dom = Utils.Dom;
 
 class BaseDemo extends React.Component {
     constructor(props){

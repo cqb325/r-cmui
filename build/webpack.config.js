@@ -116,7 +116,16 @@ var config = {
         // 使用 hash 作模块 ID，文件名作ID太长了，文件大小剧增
         new HashedModuleIdsPlugin(),
         // 根据文件内容生成 hash
-        new WebpackMd5Hash()
+        new WebpackMd5Hash(),
+
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                eslint: {
+                    configFile: './.eslintrc',
+                    ignorePath: './.eslintignore'
+                }
+            }
+       })
     ],
     devServer: {
         port: 8083,
@@ -144,7 +153,7 @@ config.module.loaders.push({
     test: /\.js$/,
     exclude: /node_modules/,
     // 这里使用 loaders ，因为后面还需要添加 loader
-    loaders: ['babel-loader?cacheDirectory=' + CACHE_PATH]
+    loaders: ['babel-loader?cacheDirectory=' + CACHE_PATH, 'eslint-loader']
 });
 
 // 编译 sass

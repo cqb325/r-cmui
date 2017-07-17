@@ -4,11 +4,11 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-const Component = React.Component;
 import PropTypes from 'prop-types';
 import Dom from '../utils/Dom';
 import CircleRipple from './CircleRipple';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
+const Component = React.Component;
 
 /**
  * 添加元素
@@ -86,10 +86,10 @@ class TouchRipple extends Component {
             <CircleRipple
                 key={this.state.nextKey}
                 style={!this.props.centerRipple ? this.getRippleStyle(event) : {}}
-                color={this.props.color || "rgba(255, 255, 255, .25)"}
+                color={this.props.color || 'rgba(255, 255, 255, .25)'}
                 opacity={this.props.opacity || 1}
                 touchGenerated={isRippleTouchGenerated}
-                />
+            />
         ));
 
         this.ignoreNextMouseDown = isRippleTouchGenerated;
@@ -98,7 +98,6 @@ class TouchRipple extends Component {
             nextKey: this.state.nextKey + 1,
             ripples: ripples
         });
-
     }
 
     /**
@@ -181,13 +180,13 @@ class TouchRipple extends Component {
         // Note that when scolling Chrome throttles this event to every 200ms
         // Also note we don't listen for scroll events directly as there's no general
         // way to cover cases like scrolling within containers on the page
-        if(document.addEventListener) {
+        if (document.addEventListener) {
             document.body.addEventListener('touchmove', this.handleTouchMove);
         }
     }
 
     stopListeningForScrollAbort() {
-        if(document.removeEventListener) {
+        if (document.removeEventListener) {
             document.body.removeEventListener('touchmove', this.handleTouchMove);
         }
     }
@@ -246,24 +245,22 @@ class TouchRipple extends Component {
                     {ripples}
                 </TransitionGroup>
             );
-        }else{
-            if(true) {
-                ripples = push(ripples, (
-                    <CircleRipple
-                        key={this.state.nextKey-1}
-                        color={this.props.color || "rgba(255, 255, 255, .25)"}
-                        opacity={0}
-                        touchGenerated={false}
-                        aborted={true}
-                        />
-                ));
+        } else {
+            ripples = push(ripples, (
+                <CircleRipple
+                    key={this.state.nextKey - 1}
+                    color={this.props.color || 'rgba(255, 255, 255, .25)'}
+                    opacity={0}
+                    touchGenerated={false}
+                    aborted
+                />
+            ));
 
-                rippleGroup = (
-                    <TransitionGroup style={mergedStyles}>
-                        {ripples}
-                    </TransitionGroup>
-                );
-            }
+            rippleGroup = (
+                <TransitionGroup style={mergedStyles}>
+                    {ripples}
+                </TransitionGroup>
+            );
         }
 
         return (
@@ -274,7 +271,7 @@ class TouchRipple extends Component {
                 onTouchStart={this.handleTouchStart}
                 onTouchEnd={this.handleTouchEnd}
                 style={style}
-                >
+            >
                 {rippleGroup}
                 {children}
             </div>

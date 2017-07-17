@@ -2,18 +2,6 @@
 var re = /\s+/;
 
 /**
- * Wrap `el` in a `ClassList`.
- *
- * @param {Element} el
- * @return {ClassList}
- * @api public
- */
-
-export default function(el){
-    return new ClassList(el);
-};
-
-/**
  * Initialize a new ClassList for `el`.
  *
  * @param {Element} el
@@ -59,7 +47,6 @@ ClassList.prototype.add = function(name){
  */
 
 ClassList.prototype.remove = function(name){
-    console.log("remove: "+name);
     // classList
     if (this.list) {
         this.list.remove(name);
@@ -108,7 +95,7 @@ ClassList.prototype.toggle = function(name){
 
 ClassList.prototype.array = function(){
     var arr = this.el.className.split(re);
-    if ('' === arr[0]) {
+    if (arr[0] === '') {
         arr.pop();
     }
     return arr;
@@ -125,5 +112,17 @@ ClassList.prototype.array = function(){
 ClassList.prototype.has = function(name){
     return this.list
         ? this.list.contains(name)
-        : !! ~this.array().indexOf(name);
+        : !!~this.array().indexOf(name);
+};
+
+/**
+ * Wrap `el` in a `ClassList`.
+ *
+ * @param {Element} el
+ * @return {ClassList}
+ * @api public
+ */
+
+export default function(el){
+    return new ClassList(el);
 };
