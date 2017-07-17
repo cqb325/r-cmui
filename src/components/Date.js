@@ -5,12 +5,9 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import grids from './utils/grids';
-import ReactDOM from 'react-dom';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Dom from './utils/Dom';
 import Clock from './Clock';
 
 /**
@@ -24,28 +21,30 @@ class Date extends BaseComponent {
         super(props);
 
         let stages = {
-            "time": 0,
-            "date": 1,
-            "month": 2,
-            "year": 3
+            'time': 0,
+            'date': 1,
+            'month': 2,
+            'year': 3
         };
 
-        this.view = props.view || "datetime";
-        let stage = this.view != "datetime" ? props.view : "date", minStage = 0, maxStage = 3;
-        if(props.timeOnly){
-            this.view = stage = "time";
+        this.view = props.view || 'datetime';
+        let stage = this.view !== 'datetime' ? props.view : 'date';
+        let minStage = 0;
+        let maxStage = 3;
+        if (props.timeOnly){
+            this.view = stage = 'time';
             maxStage = 0;
         }
-        if(props.dateOnly){
+        if (props.dateOnly){
             minStage = 1;
-            this.view = "date";
+            this.view = 'date';
         }
-        if(props.monthOnly){
-            this.view = stage = "month";
+        if (props.monthOnly){
+            this.view = stage = 'month';
             minStage = 2;
         }
-        if(props.yearOnly){
-            this.view = stage = "year";
+        if (props.yearOnly){
+            this.view = stage = 'year';
             minStage = 3;
         }
         this.minStage = minStage;
@@ -54,10 +53,10 @@ class Date extends BaseComponent {
         this.maxRange = props.maxRange || 0;
         let current = moment();
         let format = props.format;
-        if(props.value) {
+        if (props.value) {
             if (!format) {
-                if (stages[stage] == 0) {
-                    format = "HH:mm:ss";
+                if (stages[stage] === 0) {
+                    format = 'HH:mm:ss';
                     current = moment(props.value, format);
                 } else {
                     current = moment(props.value);
@@ -117,7 +116,7 @@ class Date extends BaseComponent {
     }
 
     setFormat(format){
-        if(this.state.format !== format) {
+        if (this.state.format !== format) {
             this.setState({
                 format
             });
@@ -154,29 +153,29 @@ class Date extends BaseComponent {
      * @returns {String} 格式化后的日期
      */
     formatValue(value){
-        if(this.state.format){
+        if (this.state.format){
             return moment(value).format(this.state.format);
         }
 
         let view = this.view;
         let format = null;
-        if(view === "datetime"){
-            format = "YYYY-MM-DD HH:mm:ss";
+        if (view === 'datetime'){
+            format = 'YYYY-MM-DD HH:mm:ss';
         }
-        if(view === "date"){
-            format = "YYYY-MM-DD";
+        if (view === 'date'){
+            format = 'YYYY-MM-DD';
         }
-        if(view === "time"){
-            format = "HH:mm:ss";
+        if (view === 'time'){
+            format = 'HH:mm:ss';
         }
 
-        if(view === "month"){
-            format = "YYYY-MM-01";
+        if (view === 'month'){
+            format = 'YYYY-MM-01';
         }
-        if(view === "year"){
-            format = "YYYY-01-01";
+        if (view === 'year'){
+            format = 'YYYY-01-01';
         }
-        return format ? moment(value).format(format) : "";
+        return format ? moment(value).format(format) : '';
     }
 
     /**
@@ -186,8 +185,8 @@ class Date extends BaseComponent {
      */
     dayChange(date){
         let value = this.formatValue(date);
-        if(!date.isSame(this.state.current, "month")){
-            this.emit("selectMonth", date.get("month"));
+        if (!date.isSame(this.state.current, 'month')){
+            this.emit('selectMonth', date.get('month'));
         }
         this.setState({
             value: value,
@@ -196,20 +195,20 @@ class Date extends BaseComponent {
 
         this.valueChange(value, date.toDate());
 
-        if(this.minStage == 0){
+        if (this.minStage === 0){
             setTimeout(() => {
                 this.setState({
                     stage: 0
                 });
-            },0);
-        }else {
-            this.emit("hide");
+            }, 0);
+        } else {
+            this.emit('hide');
         }
     }
 
     valueChange(value, date){
-        this.emit("selectDate", value, date);
-        if(this.props.onSelectDate){
+        this.emit('selectDate', value, date);
+        if (this.props.onSelectDate){
             this.props.onSelectDate(value, date);
         }
     }
@@ -221,9 +220,9 @@ class Date extends BaseComponent {
      */
     yearChange(year) {
         var current = this.state.current;
-        current.set({"year": year, date: 1});
+        current.set({'year': year, date: 1});
         let state;
-        if(this.minStage == 3){
+        if (this.minStage === 3){
             let value = this.formatValue(current);
             state = {
                 value: value,
@@ -232,8 +231,8 @@ class Date extends BaseComponent {
 
             this.valueChange(value, current.toDate());
 
-            this.emit("hide");
-        }else {
+            this.emit('hide');
+        } else {
             state = {
                 stage: 2,
                 current: current
@@ -241,7 +240,7 @@ class Date extends BaseComponent {
         }
         setTimeout(() => {
             this.setState(state);
-            this.emit("selectYear", year);
+            this.emit('selectYear', year);
         }, 0);
     }
 
@@ -252,10 +251,10 @@ class Date extends BaseComponent {
      */
     monthChange(month) {
         let current = this.state.current;
-        current.set({"month": month, date: 1});
+        current.set({'month': month, date: 1});
 
         let state;
-        if(this.minStage == 2){
+        if (this.minStage === 2){
             let value = this.formatValue(current);
             state = {
                 value: this.formatValue(current),
@@ -264,8 +263,8 @@ class Date extends BaseComponent {
 
             this.valueChange(value, current.toDate());
 
-            this.emit("hide");
-        }else {
+            this.emit('hide');
+        } else {
             state = {
                 stage: 1,
                 current: current
@@ -273,7 +272,7 @@ class Date extends BaseComponent {
         }
         setTimeout(() => {
             this.setState(state);
-            this.emit("selectMonth", month);
+            this.emit('selectMonth', month);
         }, 0);
     }
 
@@ -285,7 +284,7 @@ class Date extends BaseComponent {
     timeChange(time){
         time = time.time;
         let current = this.state.current;
-        current.set({"hour": time.get("hour"), minute: time.get("minute"), second: time.get("second")});
+        current.set({'hour': time.get('hour'), minute: time.get('minute'), second: time.get('second')});
 
         let value = this.formatValue(current);
         setTimeout(() => {
@@ -296,11 +295,11 @@ class Date extends BaseComponent {
         }, 0);
 
         this.valueChange(value, current.toDate());
-        this.emit("selectTime", value, current.toDate());
+        this.emit('selectTime', value, current.toDate());
     }
 
     hoverDay(d){
-        this.emit("hoverDay", d);
+        this.emit('hoverDay', d);
     }
 
     /**
@@ -309,10 +308,10 @@ class Date extends BaseComponent {
      * @param stage {String} 显示的状态，包含datetime date time month year
      */
     stageChange(stage){
-        if(stage < this.minStage || stage > this.maxStage){
+        if (stage < this.minStage || stage > this.maxStage){
             return;
         }
-        if(this.state.stage === stage){
+        if (this.state.stage === stage){
             stage = 1;
         }
         window.setTimeout(()=>{
@@ -327,14 +326,14 @@ class Date extends BaseComponent {
     prev(){
         let stage = this.state.stage;
         let d;
-        if(stage == 1) {
+        if (stage === 1) {
             d = this.state.current.add(-1, 'month');
         }
-        if(stage == 2){
+        if (stage === 2){
             d = this.state.current.add(-1, 'year');
         }
         this.setState({current: d});
-        this.emit("selectPrev", d);
+        this.emit('selectPrev', d);
     }
 
     /**
@@ -344,14 +343,14 @@ class Date extends BaseComponent {
     next() {
         let stage = this.state.stage;
         let d;
-        if(stage == 1) {
+        if (stage === 1) {
             d = this.state.current.add(1, 'month');
         }
-        if(stage == 2){
+        if (stage === 2){
             d = this.state.current.add(1, 'year');
         }
         this.setState({current: d});
-        this.emit("selectNext", d);
+        this.emit('selectNext', d);
     }
 
     /**
@@ -360,63 +359,70 @@ class Date extends BaseComponent {
      * @return {Array} 日期元素结构
      */
     renderDays(){
-        let value = this.state.value,
-            current = moment(this.state.current),
-            year = current.year(),
-            month = current.month(),
-            first = moment(current.set("date", 1)),
-            end = moment(first).add(1,'months').add(-1,'days'),
-            min = 1 - first.weekday(),
-            max = (Math.ceil((end.get("date") - min + 1) / 7) * 7),
-            days = [], lines = [], lineLength = 0;
+        let value = this.state.value;
+        let current = moment(this.state.current);
+        let year = current.year();
+        let month = current.month();
+        let first = moment(current.set('date', 1));
+        let end = moment(first).add(1, 'months').add(-1, 'days');
+        let min = 1 - first.weekday();
+        let max = (Math.ceil((end.get('date') - min + 1) / 7) * 7);
+        let days = [];
+        let lines = [];
+        let lineLength = 0;
 
-        //当前视窗需要渲染的日期
+        // 当前视窗需要渲染的日期
         for (let date, i = 0; i < max; i++) {
             let temp = moment(first);
-            date = temp.add(i+min-1, "days");
+            date = temp.add(i + min - 1, 'days');
             days.push(date);
         }
 
         lineLength = days.length / 7;
 
-        //当天
-        let isToday = value ?
-            (year === moment(value).get("year") && month === moment(value).get('month')) :
-            false;
+        // 当天
+        let isToday = value
+            ? (year === moment(value).get('year') && month === moment(value).get('month'))
+            : false;
 
         let startDate = this.state.startDate;
         let endDate = this.state.endDate;
 
-        let selectedRange = this.state.selectedRange, rangeStart, rangeEnd;
+        let selectedRange = this.state.selectedRange;
+        let rangeStart;
+        let rangeEnd;
 
-        if(selectedRange && selectedRange.length){
+        if (selectedRange && selectedRange.length){
             rangeStart = moment(selectedRange[0]);
             rangeEnd = moment(selectedRange[1]);
             isToday = false;
         }
 
-        let completion = this.props.completion == undefined ? true : this.props.completion;
-        for(let i = 0; i < lineLength; i++){
+        let completion = this.props.completion === undefined ? true : this.props.completion;
+        for (let i = 0; i < lineLength; i++){
             let line = [];
-            for(let j = 0; j < 7; j++){
-                let index = i*7 + j;
+            for (let j = 0; j < 7; j++){
+                let index = i * 7 + j;
                 let d = days[index];
 
-                //日期过滤
-                let disabled = (startDate && moment(d.format(startDate._f)).diff(startDate) < 0) ? true : false;
-                disabled = disabled || ((endDate && moment(d.format(endDate._f)).diff(endDate) > 0) ? true : false);
+                // 日期过滤
+                let disabled = (startDate && moment(d.format(startDate._f)).diff(startDate) < 0);
+                disabled = disabled || ((endDate && moment(d.format(endDate._f)).diff(endDate) > 0));
 
                 let rangeSelect = false;
-                let isRangeStart = false, isRangeEnd = false;
-                if(rangeStart &&
-                    (rangeStart.isBefore(d) || (rangeStart.isSame(d, 'day') && rangeStart.isSame(d, 'month') && rangeStart.isSame(d, 'year')))
-                    && (d.isBefore(rangeEnd) || (rangeEnd.isSame(d, 'day') && rangeEnd.isSame(d, 'month') && rangeEnd.isSame(d, 'year') ))){
+                let isRangeStart = false;
+                let isRangeEnd = false;
+                if (rangeStart &&
+                    (rangeStart.isBefore(d) || (rangeStart.isSame(d, 'day') &&
+                    rangeStart.isSame(d, 'month') && rangeStart.isSame(d, 'year'))) &&
+                    (d.isBefore(rangeEnd) || (rangeEnd.isSame(d, 'day') &&
+                    rangeEnd.isSame(d, 'month') && rangeEnd.isSame(d, 'year')))){
                     rangeSelect = true;
 
-                    if(rangeStart.isSame(d, 'day') && rangeStart.isSame(d, 'month') && rangeStart.isSame(d, 'year')){
+                    if (rangeStart.isSame(d, 'day') && rangeStart.isSame(d, 'month') && rangeStart.isSame(d, 'year')){
                         isRangeStart = true;
                     }
-                    if(rangeEnd.isSame(d, 'day') && rangeEnd.isSame(d, 'month') && rangeEnd.isSame(d, 'year') ){
+                    if (rangeEnd.isSame(d, 'day') && rangeEnd.isSame(d, 'month') && rangeEnd.isSame(d, 'year')){
                         isRangeEnd = true;
                     }
                 }
@@ -426,24 +432,25 @@ class Date extends BaseComponent {
                     {
                         disabled: disabled,
                         gray: d.get('month') !== month,
-                        today: isToday && moment(value).get('date') === d.get('date') && moment(value).get('month') === d.get('month'),
+                        today: isToday && moment(value).get('date') === d.get('date') &&
+                            moment(value).get('month') === d.get('month'),
                         rangeSelect: rangeSelect,
-                        "cm-date-range-start": isRangeStart,
-                        "cm-date-range-end": isRangeEnd
+                        'cm-date-range-start': isRangeStart,
+                        'cm-date-range-end': isRangeEnd
                     }
                 );
 
-                if(!completion && d.get('month') !== month){
-                    line.push(<button type="button" key={index} className="day empty"></button>);
-                }else {
-                    line.push(<button type="button" onClick={() => {
+                if (!completion && d.get('month') !== month){
+                    line.push(<button type='button' key={index} className='day empty' />);
+                } else {
+                    line.push(<button type='button' onClick={() => {
                         this.dayChange(d);
                     }} onMouseOver={() => {
-                        this.hoverDay(d)
+                        this.hoverDay(d);
                     }} key={index} className={className}><span>{d.get('date')}</span></button>);
                 }
             }
-            lines.push(<li key={i} className="cm-date-line">{line}</li>);
+            lines.push(<li key={i} className='cm-date-line'>{line}</li>);
         }
         return lines;
     }
@@ -454,25 +461,26 @@ class Date extends BaseComponent {
      * @returns {Array} 年份渲染结构
      */
     renderYears() {
-        let current = moment(this.state.current),
-            year = current.get("year");
+        let current = moment(this.state.current);
+        let year = current.get('year');
 
         let ret = [];
-        for(let i = year - 12; i < year + 13; i++){
-            let className = classNames("year", {
-                "active": i === year
+        for (let i = year - 12; i < year + 13; i++){
+            let className = classNames('year', {
+                'active': i === year
             });
-            ret.push(<button type="button" onClick={() => { this.yearChange(i); }} key={i} className={className}>{i}</button>);
+            ret.push(<button type='button' onClick={() => { this.yearChange(i); }} key={i}
+                className={className}>{i}</button>);
         }
 
         let lines = [];
-        for(let i = 0; i < 5; i++){
+        for (let i = 0; i < 5; i++){
             let line = [];
-            for(let j = 0; j < 5; j++) {
+            for (let j = 0; j < 5; j++) {
                 let index = i * 5 + j;
                 line.push(ret[index]);
             }
-            lines.push(<div className="cm-date-line" key={i}>{line}</div>);
+            lines.push(<div className='cm-date-line' key={i}>{line}</div>);
         }
 
         return lines;
@@ -484,42 +492,43 @@ class Date extends BaseComponent {
      * @returns {Array} 月份渲染结构
      */
     renderMonths() {
-        let current = moment(this.state.current),
-            year = current.get("year"),
-            month = current.get("month");
+        let current = moment(this.state.current);
+        let year = current.get('year');
+        let month = current.get('month');
 
         let startDate = this.state.startDate;
         let endDate = this.state.endDate;
 
         let ret = [];
-        let months = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
-        for(let i = 0; i < 12; i++){
+        let months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+        for (let i = 0; i < 12; i++){
             let disabled = false;
-            if(startDate){
-                if(startDate.get("year") > year){
+            if (startDate){
+                if (startDate.get('year') > year){
                     disabled = true;
                 }
-                if(startDate.get("year") == year){
-                    if(startDate.get("month") > i){
+                if (startDate.get('year') === year){
+                    if (startDate.get('month') > i){
                         disabled = true;
                     }
                 }
             }
-            if(endDate){
-                if(endDate.get("year") < year){
+            if (endDate){
+                if (endDate.get('year') < year){
                     disabled = true;
                 }
-                if(endDate.get("year") == year){
-                    if(endDate.get("month") < i){
+                if (endDate.get('year') === year){
+                    if (endDate.get('month') < i){
                         disabled = true;
                     }
                 }
             }
-            let className=classNames('month', {
+            let className = classNames('month', {
                 disabled: disabled,
-                active: i == month
+                active: i === month
             });
-            ret.push(<button type="button" onClick={() => { this.monthChange(i); }} key={i} className={className}>{months[i]}</button>);
+            ret.push(<button type='button' onClick={() => { this.monthChange(i); }} key={i} className={className}>
+                {months[i]}</button>);
         }
 
         return ret;
@@ -530,7 +539,7 @@ class Date extends BaseComponent {
      * @method timeClose
      */
     timeClose() {
-        if(this.view !== "time") {
+        if (this.view !== 'time') {
             window.setTimeout(()=>{
                 this.setState({
                     stage: 1
@@ -546,7 +555,10 @@ class Date extends BaseComponent {
      */
     renderClock(){
         return (
-            <Clock ref="clock" view={this.view} value={this.state.current} onChange={this.timeChange.bind(this)} onTimeClose={this.timeClose.bind(this)}></Clock>
+            <Clock ref='clock' view={this.view}
+                value={this.state.current}
+                onChange={this.timeChange.bind(this)}
+                onTimeClose={this.timeClose.bind(this)} />
         );
     }
 
@@ -567,13 +579,13 @@ class Date extends BaseComponent {
     today() {
         let time = moment(this.state.value);
         let today = moment();
-        if(this.view === "datetime"){
-            let hour = time.get("hour"),
-                minute = time.get("minute"),
-                second = time.get("second");
-            today.set("hour", hour);
-            today.set("minute", minute);
-            today.set("second", second);
+        if (this.view === 'datetime'){
+            let hour = time.get('hour');
+            let minute = time.get('minute');
+            let second = time.get('second');
+            today.set('hour', hour);
+            today.set('minute', minute);
+            today.set('second', second);
         }
 
         this.setState({
@@ -581,7 +593,7 @@ class Date extends BaseComponent {
             current: moment(today)
         });
 
-        this.emit("selectDate", moment(today).toDate());
+        this.emit('selectDate', moment(today).toDate());
     }
 
     /**
@@ -591,8 +603,8 @@ class Date extends BaseComponent {
      * @private
      */
     _getWeek() {
-        return ["日","一","二","三","四","五","六"].map(function (w, i) {
-            return <div key={i} className="week">{w}</div>;
+        return ['日', '一', '二', '三', '四', '五', '六'].map(function (w, i) {
+            return <div key={i} className='week'>{w}</div>;
         });
     }
 
@@ -603,21 +615,23 @@ class Date extends BaseComponent {
      * @private
      */
     _getHeader(now) {
-        if(this.state.stage == 0){
-            return "";
+        if (this.state.stage === 0){
+            return '';
         }
-        let prev = (this.state.stage == 3 || !this.state.prevBtn) ? null : (<a className="prev" onClick={this.prev.bind(this)}>{"<"}</a>);
-        let next = (this.state.stage == 3 || !this.state.nextBtn) ? null : (<a className="next" onClick={this.next.bind(this)}>
-                {">"}
-        </a>);
-        let month = this.state.stage > 1 ? null : (<a className="month" onClick={() => { this.stageChange(2); }}>
+        let prev = (this.state.stage === 3 || !this.state.prevBtn)
+            ? null
+            : (<a className='prev' onClick={this.prev.bind(this)}>{'<'}</a>);
+        let next = (this.state.stage === 3 || !this.state.nextBtn)
+            ? null
+            : (<a className='next' onClick={this.next.bind(this)}>{'>'}</a>);
+        let month = this.state.stage > 1 ? null : (<a className='month' onClick={() => { this.stageChange(2); }}>
             {now.format('MM')}
         </a>);
-        let year = this.state.stage >= 3 ? null : (<a className="year" onClick={() => { this.stageChange(3); }}>
-                {now.format('YYYY')}
-            </a>);
+        let year = this.state.stage >= 3 ? null : (<a className='year' onClick={() => { this.stageChange(3); }}>
+            {now.format('YYYY')}
+        </a>);
         return (
-            <div style={this.props.style} className="date-picker-header">
+            <div style={this.props.style} className='date-picker-header'>
                 {prev}
                 {year}
                 {month}
@@ -633,19 +647,19 @@ class Date extends BaseComponent {
      * @private
      */
     _getFooter() {
-        if(this.state.stage == 1 && this.props.tools) {
+        if (this.state.stage === 1 && this.props.tools) {
             return (
-                <div className="date-picker-footer">
-                    <a className="clear" onClick={this.clear.bind(this)}>
+                <div className='date-picker-footer'>
+                    <a className='clear' onClick={this.clear.bind(this)}>
                         清除
                     </a>
-                    <a className="today-btn" onClick={this.today.bind(this)}>
+                    <a className='today-btn' onClick={this.today.bind(this)}>
                         今天
                     </a>
                 </div>
             );
-        }else{
-            return "";
+        } else {
+            return '';
         }
     }
 
@@ -658,37 +672,37 @@ class Date extends BaseComponent {
     _getView() {
         switch (this.state.stage){
             case 1:{
-                //星期结构
+                // 星期结构
                 let weeks = this._getWeek();
                 let cont = this.renderDays();
                 return (
-                    <div className="inner">
-                        <div className="cm-date-week-line">{weeks}</div>
-                        <ul className="cm-date-lines">{cont}</ul>
+                    <div className='inner'>
+                        <div className='cm-date-week-line'>{weeks}</div>
+                        <ul className='cm-date-lines'>{cont}</ul>
                     </div>
                 );
             }
             case 3: {
                 let cont = this.renderYears();
                 return (
-                    <div className="inner">
-                        <ul className="cm-date-lines cm-date-year-line">{cont}</ul>
+                    <div className='inner'>
+                        <ul className='cm-date-lines cm-date-year-line'>{cont}</ul>
                     </div>
                 );
             }
             case 2: {
                 let cont = this.renderMonths();
                 return (
-                    <div className="inner">
-                        <ul className="cm-date-lines cm-date-month-line">{cont}</ul>
+                    <div className='inner'>
+                        <ul className='cm-date-lines cm-date-month-line'>{cont}</ul>
                     </div>
                 );
             }
             case 0: {
                 let cont = this.renderClock();
                 return (
-                    <div className="inner">
-                        <ul className="cm-date-lines">{cont}</ul>
+                    <div className='inner'>
+                        <ul className='cm-date-lines'>{cont}</ul>
                     </div>
                 );
             }
@@ -797,13 +811,13 @@ Date.propTypes = {
      * @attribute value
      * @type {string/moment}
      */
-    value: PropTypes.oneOfType([PropTypes.string,PropTypes.instanceOf(moment)]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(moment)]),
     /**
-     * 显示状态 "datetime","date","time"
+     * 显示状态 'datetime','date','time'
      * @attribute view
      * @type {string}
      */
-    view: PropTypes.oneOf(["datetime","date","time"]),
+    view: PropTypes.oneOf(['datetime', 'date', 'time']),
     /**
      * 格式化
      * @attribute format
@@ -815,13 +829,13 @@ Date.propTypes = {
      * @attribute startDate
      * @type {string/moment}
      */
-    startDate: PropTypes.oneOfType([PropTypes.string,PropTypes.instanceOf(moment)]),
+    startDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(moment)]),
     /**
      * 结束时间
      * @attribute endDate
      * @type {string/moment}
      */
-    endDate: PropTypes.oneOfType([PropTypes.string,PropTypes.instanceOf(moment)]),
+    endDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(moment)]),
     /**
      * 只显示时刻
      * @attribute timeOnly
@@ -833,19 +847,19 @@ Date.propTypes = {
      * @attribute dateOnly
      * @type {Boolean}
      */
-    dateOnly: PropTypes.oneOfType([PropTypes.bool,PropTypes.string]),
+    dateOnly: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     /**
      * 只显示月份
      * @attribute monthOnly
      * @type {Boolean}
      */
-    monthOnly: PropTypes.oneOfType([PropTypes.bool,PropTypes.string]),
+    monthOnly: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     /**
      * 只显示年份
      * @attribute yearOnly
      * @type {Boolean}
      */
-    yearOnly: PropTypes.oneOfType([PropTypes.bool,PropTypes.string]),
+    yearOnly: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     /**
      * 最小视图
      * @attribute minStage

@@ -25,20 +25,20 @@ import Tooltip from './Tooltip';
  * @extend BaseComponent
  */
 class FormControl extends BaseComponent {
-    displayName="FormControl";
+    displayName='FormControl';
 
     constructor(props) {
         super(props);
 
         this.rules = props.rules || {};
         this.messages = props.messages || {};
-        this._isFormItem = (props.isFormItem != undefined) ? props.isFormItem : true;
+        this._isFormItem = (props.isFormItem !== undefined) ? props.isFormItem : true;
         this._name = props.name;
         this._areaLabel = false;
-        this._tipAlign = props.tipAlign || "right";
+        this._tipAlign = props.tipAlign || 'right';
         this._tipAuto = props.tipAuto || false;
-        if(props.required){
-            this.rules["required"] = true;
+        if (props.required) {
+            this.rules['required'] = true;
         }
         this.addState({
             errorTip: ''
@@ -56,27 +56,30 @@ class FormControl extends BaseComponent {
      */
     _getControl(type){
         let component = null;
-        if(type) {
+        if (type) {
             component = FormControl.COMPONENTS[type];
-            if(!component) {
-                component = FormControl.COMPONENTS["text"];
+            if (!component) {
+                component = FormControl.COMPONENTS['text'];
             }
 
-            let others = Omit(this.props, ["itemUnBind","tipTheme","tipAlign","tipAuto","itemStyle","labelWidth","handleChange","data-valueType","className","children","layout","rules","messages","isFormItem","onValid","onChange","label","labelGrid"]);
+            let others = Omit(this.props, ['itemUnBind', 'tipTheme', 'tipAlign', 'tipAuto', 'itemStyle', 'labelWidth',
+                'handleChange', 'data-valueType', 'className', 'children', 'layout', 'rules', 'messages', 'isFormItem',
+                'onValid', 'onChange', 'label', 'labelGrid']);
             let props = Object.assign({
                 type: this.props.type,
                 key: this.props.name,
                 id: this.props.id,
-                ref: "formItem",
-                "data-valueType": component.valueType
+                ref: 'formItem',
+                'data-valueType': component.valueType
             }, others);
-            let componentName = component.component.name || component.component.toString().match(/function\s*([^(]*)\(/)[1];
-            if(componentName === 'Input'){
-                props["handleChange"] = this.handleChange.bind(this);
-            }else if(componentName === 'TextArea'){
+            let componentName = component.component.name ||
+                component.component.toString().match(/function\s*([^(]*)\(/)[1];
+            if (componentName === 'Input') {
+                props['handleChange'] = this.handleChange.bind(this);
+            } else if (componentName === 'TextArea') {
                 this._areaLabel = true;
-                props["handleChange"] = this.handleChange.bind(this);
-            }else{
+                props['handleChange'] = this.handleChange.bind(this);
+            } else {
                 props.onChange = this.onChange.bind(this);
             }
 
@@ -98,31 +101,33 @@ class FormControl extends BaseComponent {
 
         return React.Children.map(children, (child, index)=>{
             let registerComp = this.isRegisterComponent(child);
-            if(registerComp){
-                let others = Omit(this.props, ["itemUnBind","tipTheme","tipAlign","tipAuto","itemStyle", "labelWidth", "handleChange","data-valueType","tipAlign","className","children","layout","rules","messages","isFormItem","onValid","onChange","label","labelGrid"]);
+            if (registerComp) {
+                let others = Omit(this.props, ['itemUnBind', 'tipTheme', 'tipAlign', 'tipAuto', 'itemStyle',
+                    'labelWidth', 'handleChange', 'data-valueType', 'tipAlign', 'className', 'children', 'layout',
+                    'rules', 'messages', 'isFormItem', 'onValid', 'onChange', 'label', 'labelGrid']);
                 let props = Object.assign({
                     key: index,
-                    "data-valueType": registerComp.valueType,
-                    ref: "formItem"
+                    'data-valueType': registerComp.valueType,
+                    ref: 'formItem'
                 }, others);
 
                 props = Object.assign(props, child.props);
 
                 let componentName = child.type.name || child.type.toString().match(/function\s*([^(]*)\(/)[1];
 
-                if(componentName === 'Input' || componentName === 'TextArea'){
-                    props["handleChange"] = this.handleChange.bind(this);
-                    if(componentName === 'TextArea'){
+                if (componentName === 'Input' || componentName === 'TextArea') {
+                    props['handleChange'] = this.handleChange.bind(this);
+                    if (componentName === 'TextArea') {
                         this._areaLabel = true;
                     }
-                }else{
+                } else {
                     props.onChange = this.onChange.bind(this);
                 }
 
                 props.style = this.props.itemStyle;
 
                 return React.cloneElement(child, props);
-            }else{
+            } else {
                 return child;
             }
         });
@@ -135,9 +140,9 @@ class FormControl extends BaseComponent {
      * @returns {boolean}
      */
     isRegisterComponent(child){
-        for(let type in FormControl.COMPONENTS){
+        for (let type in FormControl.COMPONENTS) {
             let typeComp = FormControl.COMPONENTS[type];
-            if(typeComp.component == child.type){
+            if (typeComp.component == child.type) {
                 return typeComp;
             }
         }
@@ -151,21 +156,21 @@ class FormControl extends BaseComponent {
      * @param event {Event} 事件对象
      */
     handleChange(event, options){
-        let { readOnly, type, trigger } = this.props;
-        if(readOnly){
+        let {readOnly, type, trigger} = this.props;
+        if (readOnly) {
             return;
         }
-        //textArea
-        if(this.props.autoHeight){
-            if(options && options.component){
-                options.component.autoHeight(event)
+        // textArea
+        if (this.props.autoHeight) {
+            if (options && options.component) {
+                options.component.autoHeight(event);
             }
         }
 
-        if(!this.item){
-            this.item = this.refs["formItem"];
+        if (!this.item) {
+            this.item = this.refs['formItem'];
         }
-        //chilren自定义
+        // chilren自定义
         type = type || this.item.props.type;
 
         let value = event.target.value;
@@ -178,9 +183,9 @@ class FormControl extends BaseComponent {
 
         this.item.setState({ value });
 
-        if(trigger && trigger == event.type) {
+        if (trigger && trigger === event.type) {
             this.check(value);
-            if(this.props.onChange){
+            if (this.props.onChange) {
                 this.props.onChange.apply(this, [value, event]);
             }
         }
@@ -191,14 +196,14 @@ class FormControl extends BaseComponent {
      * @returns {boolean}
      */
     needValid(){
-        if(this.props.type === "hidden"){
+        if (this.props.type === 'hidden') {
             return false;
         }
 
-        if(this.props.disabled || this.props.readOnly){
+        if (this.props.disabled || this.props.readOnly) {
             return false;
         }
-        if(this._isMounted) {
+        if (this._isMounted) {
             var ele = Dom.dom(ReactDOM.findDOMNode(this));
             if (ele.width() === 0 && ele.height() === 0) {
                 return false;
@@ -214,8 +219,8 @@ class FormControl extends BaseComponent {
      * @param value 当前的值
      */
     onChange(value){
-        let valid = this.check(value);
-        if(this.props.onChange){
+        this.check(value);
+        if (this.props.onChange) {
             this.props.onChange.apply(this, arguments);
         }
     }
@@ -227,18 +232,19 @@ class FormControl extends BaseComponent {
      * @returns {boolean} 是否通过
      */
     check(value){
-        if(!this.needValid()) {
+        if (!this.needValid()) {
             return true;
         }
-        if(!value){
+        if (!value) {
             value = this.item.getValue();
         }
-        let rules = this.rules,
-            messages = this.messages,
-            rule, result, errorTip;
+        let rules = this.rules;
+        let messages = this.messages;
+        let rule;
+        let result;
 
-        if(!rules["required"] && (value == null || value == "" || value == undefined)){
-            if(this.state.errorTip) {
+        if (!rules['required'] && (value === null || value === '' || value === undefined)) {
+            if (this.state.errorTip) {
                 this.setState({errorTip: null});
                 this.refs.tooltip.setTitle(null);
                 this.refs.tooltip.hide();
@@ -246,57 +252,56 @@ class FormControl extends BaseComponent {
             return true;
         }
 
-        if(this.item.props["data-valueType"] === 'array'){
-            value = value ? value.split(",") : [];
+        if (this.item.props['data-valueType'] === 'array') {
+            value = value ? value.split(',') : [];
         }
 
-        if(rules["required"]){
-            rule = { method: "required", parameters: rules[ "required" ] };
+        if (rules['required']) {
+            rule = { method: 'required', parameters: rules[ 'required' ] };
             result = this.validByMethod(value, rule, messages);
-            if(result == false){
-                if(this._tipAuto) {
+            if (result === false) {
+                if (this._tipAuto) {
                     this.refs.tooltip.show();
                 }
                 return false;
             }
         }
-        for(let method in rules){
-            if(method === "required" || method === "remote"){
+        for (let method in rules) {
+            if (method === 'required' || method === 'remote') {
                 continue;
             }
             rule = { method: method, parameters: rules[ method ] };
 
             result = this.validByMethod(value, rule, messages);
-            if(result == false){
-                if(this._tipAuto) {
+            if (result === false) {
+                if (this._tipAuto) {
                     this.refs.tooltip.show();
                 }
                 return false;
             }
         }
-        if(rules["remote"]){
-            let url = rules[ "remote" ];
-            var name = this.item.props.name;
-            if(typeof url === 'function'){
+        if (rules['remote']) {
+            let url = rules[ 'remote' ];
+            if (typeof url === 'function') {
                 url = url();
-            }else{
+            } else {
                 url = this._URLParse(url);
                 url = this._rebuildURL(url, {name: value});
             }
 
             result = this.validByRemote(value, url, messages);
-            if(result == false){
-                if(this._tipAuto) {
+            if (result === false) {
+                if (this._tipAuto) {
                     this.refs.tooltip.show();
                 }
                 return false;
             }
         }
 
-        if(this.props.onValid){
+        if (this.props.onValid) {
             this.props.onValid(value, true, this);
         }
-        this.emit("valid", value, true, this);
+        this.emit('valid', value, true, this);
 
         this.setState({errorTip: null});
         this.refs.tooltip.setTitle(null);
@@ -313,20 +318,20 @@ class FormControl extends BaseComponent {
      * @private
      */
     _URLParse(url, otherParams){
-        url = url.split("?");
+        url = url.split('?');
         let params = {};
 
-        if(url[1]){
-            let parts = url[1].split("=");
-            if(parts.length){
+        if (url[1]) {
+            let parts = url[1].split('=');
+            if (parts.length) {
                 parts.forEach(function(part){
-                    let pair = part.split("&");
+                    let pair = part.split('&');
                     params[pair[0]] = pair[1];
                 });
             }
         }
-        if(otherParams){
-            for(let key in otherParams){
+        if (otherParams) {
+            for (let key in otherParams) {
                 params[key] = otherParams[key];
             }
         }
@@ -334,7 +339,7 @@ class FormControl extends BaseComponent {
         return {
             pathname: url[0],
             query: params
-        }
+        };
     }
 
     /**
@@ -345,12 +350,12 @@ class FormControl extends BaseComponent {
      */
     _rebuildURL(url){
         let suffix = [];
-        if(url.query){
-            for(let key in url.query){
-                suffix.push(key+"="+url.query[key]);
+        if (url.query) {
+            for (let key in url.query) {
+                suffix.push(key + '=' + url.query[key]);
             }
         }
-        return url.pathname+"?"+suffix.join("&");
+        return url.pathname + '?' + suffix.join('&');
     }
 
     /**
@@ -363,11 +368,11 @@ class FormControl extends BaseComponent {
         let remoteRet = false;
         Ajax.ajax({
             url: url,
-            type: "GET",
-            dataType: "text",
-            async: "false",
+            type: 'GET',
+            dataType: 'text',
+            async: 'false',
             success: function(ret){
-                remoteRet = ret === "true";
+                remoteRet = ret === 'true';
             },
             error: function(){
                 remoteRet = false;
@@ -375,19 +380,16 @@ class FormControl extends BaseComponent {
         });
 
         var errorTip;
-        if(remoteRet === false) {
-            errorTip = (messages && messages["remote"]) ? messages["remote"] : Validation.messages["remote"];
-            if (typeof errorTip === 'function') {
-                errorTip = errorTip.call(null, rule.parameters);
-            }
-            if(this._isMounted) {
+        if (remoteRet === false) {
+            errorTip = (messages && messages['remote']) ? messages['remote'] : Validation.messages['remote'];
+            if (this._isMounted) {
                 this.setState({errorTip});
                 this.refs.tooltip.setTitle(errorTip);
             }
             if (this.props.onValid) {
                 this.props.onValid(value, remoteRet, this);
             }
-            this.emit("valid", value, remoteRet, this);
+            this.emit('valid', value, remoteRet, this);
         }
 
         return remoteRet;
@@ -395,23 +397,23 @@ class FormControl extends BaseComponent {
 
     validByMethod(value, rule, messages){
         let method = rule.method;
-        if(!Validation.methods[ method ]){
-            console.error("验证中缺少"+method+"方法");
+        if (!Validation.methods[ method ]) {
+            console.error('验证中缺少' + method + '方法');
             return;
         }
-        var result = Validation.methods[ method ].call( this, value, rule.parameters );
+        var result = Validation.methods[ method ].call(this, value, rule.parameters);
         var errorTip;
-        if(result == false) {
+        if (result === false) {
             errorTip = (messages && messages[method]) ? messages[method] : Validation.messages[method];
             if (typeof errorTip === 'function') {
-                errorTip = errorTip.call(null, rule.parameters);
+                errorTip = errorTip(rule.parameters);
             }
             this.setState({errorTip});
             this.refs.tooltip.setTitle(errorTip);
             if (this.props.onValid) {
                 this.props.onValid(value, result, this);
             }
-            this.emit("valid", value, result, this);
+            this.emit('valid', value, result, this);
         }
 
         return result;
@@ -423,14 +425,14 @@ class FormControl extends BaseComponent {
      * @returns {*}
      */
     getReference(){
-        return this.refs["formItem"];
+        return this.refs['formItem'];
     }
 
     componentDidMount(){
         this._isMounted = true;
-        this.item = this.refs["formItem"];
-        if(this.props["data-itemBind"] && this.isFormItem()){
-            this.props["data-itemBind"]({
+        this.item = this.refs['formItem'];
+        if (this.props['data-itemBind'] && this.isFormItem()) {
+            this.props['data-itemBind']({
                 ref: this,
                 name: this.props.name,
                 isFormItem: this.isFormItem()
@@ -496,10 +498,10 @@ class FormControl extends BaseComponent {
     /**
      * 动态设置验证规则
      * @param rule
-     * @param rule_args
+     * @param ruleArgs
      */
-    setRule(rule, rule_args){
-        this.rules[rule] = rule_args;
+    setRule(rule, ruleArgs){
+        this.rules[rule] = ruleArgs;
     }
 
     /**
@@ -514,9 +516,9 @@ class FormControl extends BaseComponent {
     componentWillUnmount(){
         this._isMounted = false;
 
-        this.item = this.refs["formItem"];
-        if(this.props["itemUnBind"] && this.isFormItem()){
-            this.props["itemUnBind"](this.props.name);
+        this.item = this.refs['formItem'];
+        if (this.props['itemUnBind'] && this.isFormItem()) {
+            this.props['itemUnBind'](this.props.name);
         }
     }
 
@@ -528,24 +530,23 @@ class FormControl extends BaseComponent {
             layout,
             className,
             style,
-            children,
             required
-            } = this.props;
+        } = this.props;
 
-        className = classNames("cm-form-group", className,{
-            inline: layout === "inline",
-            invalid: this.state.errorTip ? true : false
+        className = classNames('cm-form-group', className, {
+            inline: layout === 'inline',
+            invalid: this.state.errorTip
         });
 
         let items = this._getControl(type);
         let customChildren = this._renderChildren();
 
-        let labelClass = classNames("cm-form-label", {
+        let labelClass = classNames('cm-form-label', {
             required: required || this.required,
-            "cm-form-label-top": this._areaLabel
+            'cm-form-label-top': this._areaLabel
         });
 
-        if(type === "hidden"){
+        if (type === 'hidden') {
             return (
                 <div className={className} style={style}>
                     {items}
@@ -555,20 +556,21 @@ class FormControl extends BaseComponent {
         }
 
         let labelEle = null;
-        if(label){
-            if(label === "&nbsp;"){
-                label = " ";
+        if (label) {
+            if (label === '&nbsp;') {
+                label = ' ';
             }
             let labelStyle = {};
-            if(this.props.labelWidth){
-                labelStyle["width"] = this.props.labelWidth+"px";
+            if (this.props.labelWidth) {
+                labelStyle['width'] = this.props.labelWidth + 'px';
             }
             labelEle = <Label className={labelClass} grid={labelGrid} style={labelStyle}>{label}</Label>;
         }
-        return(
+        return (
             <div className={className} style={style}>
                 {labelEle}
-                <Tooltip theme={this.props.tipTheme||"error"} className={"error-tip"} align={this._tipAlign} ref="tooltip" title={this.state.errorTip}>
+                <Tooltip theme={this.props.tipTheme || 'error'} className={'error-tip'}
+                    align={this._tipAlign} ref='tooltip' title={this.state.errorTip}>
                     {items}
                     {customChildren}
                 </Tooltip>
@@ -579,7 +581,7 @@ class FormControl extends BaseComponent {
 
 FormControl.defaultProps = {
     layout: 'inline',
-    trigger: "blur"
+    trigger: 'blur'
 };
 
 FormControl.COMPONENTS = {
@@ -593,20 +595,20 @@ FormControl.COMPONENTS = {
  * @param valueType 值类型
  */
 FormControl.register = function(component, type, valueType){
-    if(type instanceof Array){
+    if (type instanceof Array) {
         type.forEach(function(theType){
-            if(theType == "number" || theType == "integer" || theType == "tel"){
-                valueType = "number";
+            if (theType === 'number' || theType === 'integer' || theType === 'tel') {
+                valueType = 'number';
             }
             FormControl.COMPONENTS[theType] = {
                 component: component,
-                valueType: valueType || "string"
+                valueType: valueType || 'string'
             };
         });
-    }else {
+    } else {
         FormControl.COMPONENTS[type] = {
             component: component,
-            valueType: valueType || "string"
+            valueType: valueType || 'string'
         };
     }
 };

@@ -1,13 +1,10 @@
 import React from 'react';
 import BaseComponent from '../core/BaseComponent';
-import CheckBoxGroup from '../CheckBoxGroup';
-import RadioGroup from '../RadioGroup';
 import FormControl from '../FormControl';
 import Table from '../Table';
 import UUID from '../utils/UUID';
 
 class TableForm extends BaseComponent{
-
     constructor(props) {
         super(props);
 
@@ -23,7 +20,7 @@ class TableForm extends BaseComponent{
      * @param columns
      */
     buildColumns(columns){
-        if(columns) {
+        if (columns) {
             columns.forEach((column) => {
                 if (column.type) {
                     this.buildColumn(column);
@@ -41,7 +38,7 @@ class TableForm extends BaseComponent{
      * @param selectItem
      */
     onChange(col, items, name, value, selectItem){
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(name, value, col, items, selectItem);
         }
     }
@@ -52,17 +49,23 @@ class TableForm extends BaseComponent{
      */
     buildColumn(column){
         let scope = this;
-        column.format = function(value, col, row){
-            let itemProps = Object.assign({}, column.props||{});
-            scope.mergeProps(itemProps, column, ["rules","messages","name"]);
-            itemProps.value = value || itemProps.defaultValue || "";
-            return <FormControl ref={(ref)=>{
-                let refs = scope.getLastRefs();
-                if(refs) {
-                    refs[column.name] = ref;
-                }
-            }} onChange={scope.onChange.bind(scope, col, scope.getLastRefs(), itemProps.name)} type={column.type} {...itemProps}/>
-        }
+        column.format = function(value, col){
+            let itemProps = Object.assign({}, column.props || {});
+            scope.mergeProps(itemProps, column, ['rules', 'messages', 'name']);
+            itemProps.value = value || itemProps.defaultValue || '';
+            return (
+                <FormControl
+                    ref={(ref)=>{
+                        let refs = scope.getLastRefs();
+                        if (refs) {
+                            refs[column.name] = ref;
+                        }
+                    }}
+                    onChange={scope.onChange.bind(scope, col, scope.getLastRefs(), itemProps.name)}
+                    type={column.type} {...itemProps}
+                />
+            );
+        };
     }
 
     /**
@@ -72,9 +75,9 @@ class TableForm extends BaseComponent{
      * @param props
      */
     mergeProps(target, source, props){
-        if(props){
+        if (props) {
             props.forEach(function(prop){
-                if(source[prop] != undefined){
+                if (source[prop] !== undefined) {
                     target[prop] = source[prop];
                 }
             });
@@ -86,9 +89,9 @@ class TableForm extends BaseComponent{
      * @returns {*}
      */
     getLastRefs(){
-        if(this.items.length) {
+        if (this.items.length) {
             return this.items[this.items.length - 1];
-        }else{
+        } else {
             return null;
         }
     }
@@ -100,17 +103,17 @@ class TableForm extends BaseComponent{
     addRow(row){
         let rowItems = {};
         this.items.push(rowItems);
-        if(row) {
-            if(row.id == undefined){
+        if (row) {
+            if (row.id === undefined) {
                 row.id = UUID.v4();
             }
             this.refs.table.addRow(row);
             row.__rowItems = rowItems;
-        }else{
+        } else {
             row = this.props.columns.map((column)=>{
                 return {
-                    [`${column.name}`]: column.defaultValue || ""
-                }
+                    [`${column.name}`]: column.defaultValue || ''
+                };
             });
             row.id = UUID.v4();
             row.__rowItems = rowItems;
@@ -125,12 +128,12 @@ class TableForm extends BaseComponent{
     getRowData(id){
         let index = this.getIndexById(id);
 
-        if(index != null){
-            if(index < this.items.length) {
+        if (index != null) {
+            if (index < this.items.length) {
                 let items = this.items[index];
                 let param = {};
-                for(let field in items){
-                    if(items[field].getValue) {
+                for (let field in items) {
+                    if (items[field].getValue) {
                         param[field] = items[field].getValue();
                     }
                 }
@@ -156,7 +159,7 @@ class TableForm extends BaseComponent{
      */
     removeRowById(id){
         let index = this.getIndexById(id);
-        if(index != null) {
+        if (index != null) {
             this.removeRow(index);
         }
     }
@@ -168,8 +171,8 @@ class TableForm extends BaseComponent{
     getIndexById(id){
         let tableData = this.refs.table.getData();
         let index = null;
-        for(let i = 0; i < tableData.length; i++){
-            if(tableData[i].key === id){
+        for (let i = 0; i < tableData.length; i++) {
+            if (tableData[i].key === id) {
                 index = i;
                 break;
             }
@@ -184,8 +187,8 @@ class TableForm extends BaseComponent{
     getData(){
         return this.items.map((rowItems)=>{
             let param = {};
-            for(let field in rowItems){
-                if(rowItems[field].getValue) {
+            for (let field in rowItems) {
+                if (rowItems[field].getValue) {
                     param[field] = rowItems[field].getValue();
                 }
             }
@@ -198,10 +201,10 @@ class TableForm extends BaseComponent{
      */
     isValid(){
         let valid = true;
-        for(let i =0; i < this.items.length; i++){
+        for (let i = 0; i < this.items.length; i++) {
             let rowItems = this.items[i];
-            for(let field in rowItems){
-                if(rowItems[field].isFormItem() && rowItems[field].check() == false) {
+            for (let field in rowItems) {
+                if (rowItems[field].isFormItem() && rowItems[field].check() === false) {
                     valid = false;
                     return valid;
                 }
@@ -215,8 +218,8 @@ class TableForm extends BaseComponent{
         let {columns, className, bordered, hover, striped} = this.props;
         this.buildColumns(columns);
         return (
-            <Table ref="table" columns={columns} data={this.state.data} className={className} bordered={bordered} hover={hover} striped={striped}>
-            </Table>
+            <Table ref='table' columns={columns} data={this.state.data}
+                className={className} bordered={bordered} hover={hover} striped={striped} />
         );
     }
 }

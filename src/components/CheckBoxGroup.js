@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from './core/BaseComponent';
@@ -24,7 +23,7 @@ class CheckBoxGroup extends BaseComponent {
 
         this.addState({
             data: props.data,
-            value: props.value == undefined ? "" : props.value
+            value: props.value === undefined ? '' : props.value
         });
     }
 
@@ -37,23 +36,24 @@ class CheckBoxGroup extends BaseComponent {
      * @param item  {Object} 当前操作对象
      */
     handleChange(value, checked, event, item){
-        const { readOnly, disabled} = this.props;
+        const {readOnly, disabled} = this.props;
 
         if (readOnly || disabled) {
             return;
         }
 
         item._checked = checked;
-        let data = this.state.data, ret=[];
-        let value_key = this.props.valueField ? this.props.valueField : "id";
+        let data = this.state.data;
+        let ret = [];
+        let valueKey = this.props.valueField || 'id';
         data.forEach(function(theItem) {
-            if(theItem._checked){
-                let value = theItem[value_key];
+            if (theItem._checked) {
+                let value = theItem[valueKey];
                 ret.push(value);
             }
         });
 
-        this.handleTrigger(ret.join(","));
+        this.handleTrigger(ret.join(','));
     }
 
     /**
@@ -63,11 +63,11 @@ class CheckBoxGroup extends BaseComponent {
      */
     handleTrigger(value){
         this.state.value = value;
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(value);
         }
 
-        this.emit("change", value);
+        this.emit('change', value);
     }
 
     /**
@@ -98,32 +98,32 @@ class CheckBoxGroup extends BaseComponent {
         let {valueField, textField, name} = this.props;
 
         let data = this.state.data || [];
-        let values = this.state.value.split(",");
+        let values = this.state.value.split(',');
         return data.map(function(item, index){
-            let value_key = valueField ? valueField : "id";
-
-            let text_key = textField ? textField : "text";
-            let value = item[value_key], text = item[text_key];
+            let valueKey = valueField || 'id';
+            let textKey = textField || 'text';
+            let value = item[valueKey];
+            let text = item[textKey];
             let checked = values.indexOf(value) != -1;
             item._checked = checked;
 
             return (<CheckBox key={index}
-                              name={name}
-                              disabled={this.props.disabled}
-                              readOnly={this.props.readOnly}
-                              value={value}
-                              label={text}
-                              checked={checked}
-                              item={item}
-                              onChange={this.handleChange.bind(this)}
-                ></CheckBox>);
+                name={name}
+                disabled={this.props.disabled}
+                readOnly={this.props.readOnly}
+                value={value}
+                label={text}
+                checked={checked}
+                item={item}
+                onChange={this.handleChange.bind(this)}
+            />);
         }, this);
     }
 
     componentWillMount(){
-        if(this.props.url){
+        if (this.props.url) {
             let scope = this;
-            Ajax.get(this.props.url, {}, function(data, err){
+            Ajax.get(this.props.url, {}, function(data){
                 scope.setState({
                     data: data
                 });
@@ -132,12 +132,12 @@ class CheckBoxGroup extends BaseComponent {
     }
 
     render () {
-        let { className,name,layout } = this.props;
+        let {className, layout} = this.props;
         className = classNames(
             className,
             'cm-checkbox-group',
             {
-                stack: layout == "stack"
+                stack: layout === 'stack'
             }
         );
 
@@ -150,7 +150,7 @@ class CheckBoxGroup extends BaseComponent {
 }
 
 CheckBoxGroup.defaultProps = {
-    layout: "inline"
+    layout: 'inline'
 };
 
 CheckBoxGroup.propTypes = {
@@ -201,7 +201,7 @@ CheckBoxGroup.propTypes = {
      * @attribute layout
      * @type {String}
      */
-    layout: PropTypes.oneOf(["inline","stack"]),
+    layout: PropTypes.oneOf(['inline', 'stack']),
     /**
      * value字段
      * @attribute valueField
@@ -222,6 +222,6 @@ CheckBoxGroup.propTypes = {
     onChange: PropTypes.func
 };
 
-FormControl.register(CheckBoxGroup, "checkbox", "array");
+FormControl.register(CheckBoxGroup, 'checkbox', 'array');
 
 export default CheckBoxGroup;

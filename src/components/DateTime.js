@@ -2,8 +2,6 @@
  * @author cqb 2016-04-05.
  * @module Datetime
  */
-
-
 import React from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
@@ -17,7 +15,7 @@ import shallowEqual from './utils/shallowEqual';
 import FormControl from './FormControl';
 import grids from './utils/grids';
 const getGrid = grids.getGrid;
-import velocity from "velocity";
+import velocity from 'velocity';
 import Omit from './utils/omit';
 
 /**
@@ -53,13 +51,13 @@ class Datetime extends BaseComponent {
             return;
         }
 
-        if(this.state.visibility){
+        if (this.state.visibility){
             return false;
         }
 
         let ele = ReactDOM.findDOMNode(this.refs.datePicker);
         Dom.dom(ele).show();
-        let container = Dom.closest(ele, ".cm-datetime");
+        let container = Dom.closest(ele, '.cm-datetime');
         let offset = Dom.getOuterHeight(ele) + 5;
         let dropup = Dom.overView(container, offset);
 
@@ -68,9 +66,9 @@ class Datetime extends BaseComponent {
             Dom.dom(ele).hide();
         });
 
-        velocity(ele, "fadeIn", {duration: 500});
+        velocity(ele, 'fadeIn', {duration: 500});
 
-        if(!this.state.visibility) {
+        if (!this.state.visibility) {
             super.show();
             setTimeout(() => {
                 let dateComp = this.refs.date;
@@ -88,14 +86,18 @@ class Datetime extends BaseComponent {
      */
     hide() {
         let ele = ReactDOM.findDOMNode(this.refs.datePicker);
-        velocity(ele, "fadeOut", {delay: 200, duration: 500, complete: ()=>{
-            super.hide();
-            this.unbindClickAway();
-        }});
+        velocity(ele, 'fadeOut', {
+            delay: 200,
+            duration: 500,
+            complete: () =>{
+                super.hide();
+                this.unbindClickAway();
+            }
+        });
 
         let dateComp = this.refs.date;
 
-        if(dateComp.view === "datetime" && dateComp.state.stage === "time"){
+        if (dateComp.view === 'datetime' && dateComp.state.stage === 'time'){
             dateComp.setState({
                 stage: 1
             });
@@ -127,22 +129,22 @@ class Datetime extends BaseComponent {
             value: value
         });
 
-        if(this.props.onSelectDate) {
+        if (this.props.onSelectDate) {
             this.props.onSelectDate(value, date);
         }
 
-        this.emit("selectDate", value, date);
+        this.emit('selectDate', value, date);
 
 
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(value, date);
         }
 
-        this.emit("change", value, date);
+        this.emit('change', value, date);
     }
 
     componentWillReceiveProps(newProps){
-        if(!shallowEqual(newProps, this.props)){
+        if (!shallowEqual(newProps, this.props)){
             let propsChangeFlag = this.state.propsChangeFlag || 0;
             this.setState({
                 propsChangeFlag: propsChangeFlag + 1
@@ -153,18 +155,18 @@ class Datetime extends BaseComponent {
     componentDidMount(){
         let dateComp = this.refs.date;
 
-        dateComp.on("hide", ()=>{
+        dateComp.on('hide', ()=>{
             this.hide();
         });
 
-        dateComp.on("selectTime", (value)=>{
-            this.emit("selectTime", value);
+        dateComp.on('selectTime', (value)=>{
+            this.emit('selectTime', value);
         });
-        dateComp.on("selectMonth", (value)=>{
-            this.emit("selectMonth", value);
+        dateComp.on('selectMonth', (value)=>{
+            this.emit('selectMonth', value);
         });
-        dateComp.on("selectYear", (value)=>{
-            this.emit("selectYear", value);
+        dateComp.on('selectYear', (value)=>{
+            this.emit('selectYear', value);
         });
     }
 
@@ -191,19 +193,27 @@ class Datetime extends BaseComponent {
             }
         );
 
-        let text = this.state.value ? this.state.value : "";
-        text = text ?
-            (<span className="date-text"><input type="hidden" name={name} defaultValue={this.state.value}/>{text}</span>) :
-            (<span className="date-text"><input type="hidden" name={name} defaultValue={this.state.value}/>{placeholder}&nbsp;</span>);
+        let text = this.state.value
+            ? this.state.value
+            : '';
+        text = text
+            ? (<span className='date-text'>
+                <input type='hidden' name={name} defaultValue={this.state.value} />{text}
+            </span>)
+            : (<span className='date-text'>
+                <input type='hidden' name={name} defaultValue={this.state.value} />{placeholder}&nbsp;
+            </span>);
 
-        let others = Omit(this.props, ["className", "grid", "readOnly", "disabled", "style"]);
-        return (<div ref="datetime" onClick={this.show.bind(this)} className={className} style={style||{}}>
-            {text}
-            <i className="fa fa-calendar" />
-            <div className="cm-datetime-wrap" ref="datePicker" >
-                <Date ref="date" {...others} onSelectDate={this._selectDate.bind(this)}></Date>
+        let others = Omit(this.props, ['className', 'grid', 'readOnly', 'disabled', 'style']);
+        return (
+            <div ref='datetime' onClick={this.show.bind(this)} className={className} style={style || {}}>
+                {text}
+                <i className='fa fa-calendar' />
+                <div className='cm-datetime-wrap' ref='datePicker'>
+                    <Date ref='date' {...others} onSelectDate={this._selectDate.bind(this)} />
+                </div>
             </div>
-        </div>);
+        );
     }
 }
 
@@ -239,13 +249,13 @@ Datetime.propTypes = {
      * @attribute value
      * @type {string/moment}
      */
-    value: PropTypes.oneOfType([PropTypes.string,PropTypes.instanceOf(moment)]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(moment)]),
     /**
-     * 显示状态 "datetime","date","time"
+     * 显示状态 'datetime','date','time'
      * @attribute view
      * @type {string}
      */
-    view: PropTypes.oneOf(["datetime","date","time"]),
+    view: PropTypes.oneOf(['datetime', 'date', 'time']),
     /**
      * 格式化
      * @attribute format
@@ -257,15 +267,15 @@ Datetime.propTypes = {
      * @attribute startDate
      * @type {string/moment}
      */
-    startDate: PropTypes.oneOfType([PropTypes.string,PropTypes.instanceOf(moment)]),
+    startDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(moment)]),
     /**
      * 结束时间
      * @attribute endDate
      * @type {string/moment}
      */
-    endDate: PropTypes.oneOfType([PropTypes.string,PropTypes.instanceOf(moment)])
+    endDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(moment)])
 };
 
-FormControl.register(Datetime, "datetime");
+FormControl.register(Datetime, 'datetime');
 
 export default Datetime;

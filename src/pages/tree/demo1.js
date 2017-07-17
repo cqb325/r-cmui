@@ -1,20 +1,34 @@
 import React from 'react';
 import BaseDemo from '../base/BaseDemo';
-import {CheckBox, FontIcon} from '../../components';
+import {Tree, FontIcon} from '../../components';
 import Code from '../base/Code';
 
 class Demo extends BaseDemo{
     render(){
+        let treeData = [{
+            id: 0,
+            text: '中国',
+            open: true,
+            children: [
+                {
+                    id: '1',
+                    text: '北京',
+                    children: [{id: '11', text: '海淀'}, {id: '12', text: '朝阳'}]
+                }, {
+                    id: '2',
+                    text: '上海'
+                }
+            ]
+        }];
         return (
             <div>
                 <div className='code-box-demo'>
-                    <CheckBox value='0' label='Iphone' disabled />
-                    <CheckBox value='1' label='Android' disabled checked />
+                    <Tree data={treeData} enableCheckbox enableSmartCheckbox />
                 </div>
                 <div className='code-box-desc'>
-                    <div className='code-box-title'>禁用状态</div>
+                    <div className='code-box-title'>基本用法</div>
                     <div>
-                        禁用状态下的checkbox
+                        简单的 checkbox
                         <FontIcon
                             icon={'chevron-circle-down'}
                             ref='collapse'
@@ -30,8 +44,9 @@ const CheckBox = require('CheckBox');
 
 ReactDOM.render(
 <div>
-    <CheckBox value='0' label='Iphone' disabled={true}/>
-    <CheckBox value='1' label='Android' disabled={true} checked={true}/>
+    <CheckBox value='0' label='Iphone'/>
+    <CheckBox value='1' label='Android'/>
+    <CheckBox value='2' label='WinPhone'/>
 </div>, mountNode);
 `}
                     </Code>

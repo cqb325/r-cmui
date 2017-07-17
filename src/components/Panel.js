@@ -4,18 +4,11 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
-import Core from './Core';
-import strings from './utils/strings';
-import Dom from './utils/Dom';
-import FontIcon from './FontIcon';
-const substitute = strings.substitute;
 import grids from './utils/grids';
 const getGrid = grids.getGrid;
-import shallowEqual from './utils/shallowEqual';
 
 /**
  * Panel 类
@@ -28,8 +21,8 @@ class Panel extends BaseComponent {
         super(props);
 
         this.addState({
-            title: props.title || "",
-            content: props.content || ""
+            title: props.title || '',
+            content: props.content || ''
         });
     }
 
@@ -60,54 +53,54 @@ class Panel extends BaseComponent {
 
     renderHeader(){
         let tools = this.props.tools;
-        let align = tools ? tools.align || "right" : "";
+        let align = tools ? tools.align || 'right' : '';
 
-        let tools_cont = null;
-        if(tools) {
+        let toolsCont = null;
+        if (tools) {
             let components = tools.components;
 
-            if(components && components.length){
-                let className = classNames("cm-panel-tools", align);
+            if (components && components.length) {
+                let className = classNames('cm-panel-tools', align);
 
                 let comps = components.map(function(comp, index){
-                    let nextProps = Object.assign({key: comp.props.key || index+""}, comp.props);
-                    return React.cloneElement(comp,nextProps);
+                    let nextProps = Object.assign({key: comp.props.key || index + ''}, comp.props);
+                    return React.cloneElement(comp, nextProps);
                 });
-                tools_cont = (
-                    <span key="tools" className={className}>
+                toolsCont = (
+                    <span key='tools' className={className}>
                         {comps}
                     </span>
                 );
             }
         }
 
-        let text = <span key="text" className="cm-panel-head-text">{this.state.title}</span>;
-        if(tools_cont) {
-            if (align === "right") {
-                return [text, tools_cont];
+        let text = <span key='text' className='cm-panel-head-text'>{this.state.title}</span>;
+        if (toolsCont) {
+            if (align === 'right') {
+                return [text, toolsCont];
             } else {
-                return [tools_cont, text];
+                return [toolsCont, text];
             }
-        }else{
+        } else {
             return text;
         }
     }
 
     renderFooter(){
         let tools = this.props.footers;
-        let tools_cont= null;
-        if(tools) {
+        let toolsCont = null;
+        if (tools) {
             let components = tools.components;
 
-            if(components && components.length){
-                let className = classNames("cm-panel-footer-tools");
+            if (components && components.length) {
+                let className = classNames('cm-panel-footer-tools');
 
                 let comps = components.map(function(comp, index){
-                    let nextProps = Object.assign({key: comp.props.key || index+""}, comp.props);
-					return React.cloneElement(comp,nextProps);
+                    let nextProps = Object.assign({key: comp.props.key || index + ''}, comp.props);
+                    return React.cloneElement(comp, nextProps);
                 });
-                tools_cont = (
-                    <div className="cm-panel-footer">
+                toolsCont = (
+                    <div className='cm-panel-footer'>
                         <span className={className}>
                             {comps}
                         </span>
@@ -116,7 +109,7 @@ class Panel extends BaseComponent {
             }
         }
 
-        return tools_cont;
+        return toolsCont;
     }
 
     /**
@@ -124,7 +117,7 @@ class Panel extends BaseComponent {
      * @param nextProps
      */
     componentWillReceiveProps(nextProps){
-        if(this.props.content !== nextProps.content || this.props.title !== nextProps.title){
+        if (this.props.content !== nextProps.content || this.props.title !== nextProps.title) {
             this.setState({
                 title: nextProps.title,
                 content: nextProps.content
@@ -137,11 +130,11 @@ class Panel extends BaseComponent {
      * @returns {XML}
      */
     renderContent(){
-        if(this.state.content && this.state.content.substring && this.state.content.substring(0,1) === "<"){
+        if (this.state.content && this.state.content.substring && this.state.content.substring(0, 1) === '<') {
             return (
-                <div dangerouslySetInnerHTML={{__html: this.state.content}}></div>
+                <div dangerouslySetInnerHTML={{__html: this.state.content}} />
             );
-        }else{
+        } else {
             return this.state.content;
         }
     }
@@ -149,15 +142,15 @@ class Panel extends BaseComponent {
     render(){
         let {className, style, grid} = this.props;
 
-        className = classNames("cm-panel", className, getGrid(grid));
+        className = classNames('cm-panel', className, getGrid(grid));
 
         let headContent = this.renderHeader();
         return (
             <div className={className} style={style}>
-                <div className="cm-panel-title">
+                <div className='cm-panel-title'>
                     {headContent}
                 </div>
-                <div className="cm-panel-content">
+                <div className='cm-panel-content'>
                     {this.renderContent() || this.props.children}
                 </div>
                 {this.renderFooter()}

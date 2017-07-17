@@ -4,14 +4,12 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
 import grids from './utils/grids';
 import Omit from './utils/omit';
 import Dom from './utils/Dom';
-import Regs from './utils/regs';
 import FormControl from './FormControl';
 const getGrid = grids.getGrid;
 
@@ -23,7 +21,6 @@ const getGrid = grids.getGrid;
  * @extend BaseComponent
  */
 class TextArea extends BaseComponent {
-
     constructor(props) {
         super(props);
 
@@ -42,7 +39,7 @@ class TextArea extends BaseComponent {
     handleChange(event){
         this.props.autoHeight && this.autoHeight(event);
 
-        const { readOnly, type, trigger } = this.props;
+        const { readOnly, trigger } = this.props;
 
         if (readOnly) {
             return;
@@ -59,33 +56,33 @@ class TextArea extends BaseComponent {
 
     autoHeight(event){
         let ele = event.target;
-        if(!this.initHeight){
+        if (!this.initHeight) {
             this.initHeight = ele.clientHeight;
         }
-        if(ele.scrollHeight > this.initHeight) {
+        if (ele.scrollHeight > this.initHeight) {
             ele.style.height = 'auto';
-            ele.style.overflowY = "hidden";
-            ele.scrollTop = 0; //防抖动
+            ele.style.overflowY = 'hidden';
+            ele.scrollTop = 0; // 防抖动
             let pd = this.getPadding(ele);
-            ele.style.height = (ele.scrollHeight+pd) + 'px';
+            ele.style.height = (ele.scrollHeight + pd) + 'px';
         }
     }
 
     getPadding(ele){
-        let pd_top = parseFloat(Dom.css(ele, "paddingTop"));
-        let pd_bottom = parseFloat(Dom.css(ele, "paddingBottom"));
-        let bd_top = parseFloat(Dom.css(ele, "borderTopWidth"));
-        let bd_bottom = parseFloat(Dom.css(ele, "borderBottomWidth"));
+        let pdTop = parseFloat(Dom.css(ele, 'paddingTop'));
+        let pdBottom = parseFloat(Dom.css(ele, 'paddingBottom'));
+        let bdTop = parseFloat(Dom.css(ele, 'borderTopWidth'));
+        let bdBottom = parseFloat(Dom.css(ele, 'borderBottomWidth'));
 
-        return pd_top+pd_bottom+bd_top+bd_bottom;
+        return pdTop + pdBottom + bdTop + bdBottom;
     }
 
     handleTrigger(event){
         let value = event.target.value;
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(value, event);
         }
-        this.emit("change", value);
+        this.emit('change', value);
     }
 
     getValue(){
@@ -97,12 +94,15 @@ class TextArea extends BaseComponent {
     }
 
     render () {
-        let { className, grid, type, trigger, style, height} = this.props;
-        const others = Omit(this.props, ["className", "handleChange", "data-valueType", "data-itemBind", "grid", "type", "trigger", "style","autoHeight"]);
-        let handleChange = this.props.handleChange ? (event)=>{this.props.handleChange(event, {component: this})} : this.handleChange.bind(this);
+        let {className, grid, trigger, style, height} = this.props;
+        const others = Omit(this.props, ['className', 'handleChange', 'data-valueType',
+            'data-itemBind', 'grid', 'type', 'trigger', 'style', 'autoHeight']);
+        let handleChange = this.props.handleChange
+            ? (event)=>{ this.props.handleChange(event, {component: this}); }
+            : this.handleChange.bind(this);
         style = style || {};
-        if(height != undefined && height != null) {
-            style["height"] = height;
+        if (height !== undefined && height !== null) {
+            style['height'] = height;
         }
         const props = {
             className: classNames(
@@ -119,12 +119,12 @@ class TextArea extends BaseComponent {
             props[handle] = handleChange;
         }
 
-        return (<textarea {...others} {...props} value={this.state.value}></textarea>);
+        return (<textarea {...others} {...props} value={this.state.value} />);
     }
 }
 
 
-FormControl.register(TextArea, ["textarea"]);
+FormControl.register(TextArea, ['textarea']);
 
 TextArea.propTypes = {
     /**

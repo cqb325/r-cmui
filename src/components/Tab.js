@@ -4,11 +4,8 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
-import PropTypes from 'prop-types';
-import Core from './Core';
 import EnhancedButton from './internal/EnhancedButton';
 
 /**
@@ -28,21 +25,20 @@ class Tab extends BaseComponent {
     }
 
     _selectTab(item){
-        if(!item.active){
-
+        if (!item.active) {
             let data = this.state.data;
             let index = data.indexOf(item);
             item.active = true;
             let last = this.state.activeIndex;
 
             data[last].active = false;
-            this.emit("beforeSelect", item);
-            if(this.props.onBeforeSelect){
+            this.emit('beforeSelect', item);
+            if (this.props.onBeforeSelect) {
                 this.props.onBeforeSelect(item);
             }
             this.setState({activeIndex: index});
-            this.emit("select", item);
-            if(this.props.onSelect){
+            this.emit('select', item);
+            if (this.props.onSelect) {
                 this.props.onSelect(item);
             }
         }
@@ -53,10 +49,10 @@ class Tab extends BaseComponent {
      * @param index {Number} 选择的索引
      */
     selectByIndex(index){
-        if(index >= 0 && index < this.state.data.length){
+        if (index >= 0 && index < this.state.data.length) {
             let data = this.state.data;
             data.forEach((item, ind)=>{
-                if(ind !== index){
+                if (ind !== index) {
                     item.active = false;
                 }
             });
@@ -85,10 +81,10 @@ class Tab extends BaseComponent {
     }
 
     _getHeader(){
-        let data = this.state.data,
-            activeIndex = this.state.activeIndex;
+        let data = this.state.data;
+        let activeIndex = this.state.activeIndex;
         return data.map(function(item, index){
-            if(activeIndex == index){
+            if (activeIndex === index) {
                 item.active = true;
             }
 
@@ -96,9 +92,9 @@ class Tab extends BaseComponent {
                 active: item.active
             });
             return (
-                <li key={index} className={className} onClick={()=>{this._selectTab(item)}}>
-                    <EnhancedButton initFull={true} touchRippleColor={'rgba(0, 0, 0, 0.1)'}>
-                        <a href="javascript:void(0)">{item.text}</a>
+                <li key={index} className={className} onClick={()=>{ this._selectTab(item); }}>
+                    <EnhancedButton initFull touchRippleColor={'rgba(0, 0, 0, 0.1)'}>
+                        <a href='javascript:void(0)'>{item.text}</a>
                     </EnhancedButton>
                 </li>
             );
@@ -106,24 +102,24 @@ class Tab extends BaseComponent {
     }
 
     _getContent(){
-        let data = this.state.data,
-            activeIndex = this.state.activeIndex;
+        let data = this.state.data;
+        let activeIndex = this.state.activeIndex;
 
         return data.map(function(item, index){
-            if(activeIndex == index){
+            if (activeIndex === index) {
                 item.active = true;
             }
 
-            let className = classNames("cm-tab-panel",{
+            let className = classNames('cm-tab-panel', {
                 active: item.active
             });
 
             let component = item.component;
             let tabPanel = null;
-            if(React.isValidElement(component)){
+            if (React.isValidElement(component)) {
                 let newProps = Object.assign({ref: item.id, data: item.data}, component.props);
                 tabPanel = React.cloneElement(component, newProps);
-            }else {
+            } else {
                 tabPanel = React.createElement(component, {ref: item.id, data: item.data});
             }
 
@@ -137,16 +133,16 @@ class Tab extends BaseComponent {
 
     render(){
         let {className, style} = this.props;
-        className = classNames("cm-tab", className);
+        className = classNames('cm-tab', className);
 
         let headers = this._getHeader();
         let contents = this._getContent();
         return (
             <div className={className} style={style}>
-                <ul className="cm-tab-header">
+                <ul className='cm-tab-header'>
                     {headers}
                 </ul>
-                <div className="cm-tab-content">
+                <div className='cm-tab-content'>
                     {contents}
                 </div>
             </div>

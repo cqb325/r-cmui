@@ -3,11 +3,32 @@
  * @module event emitter
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import Core from '../Core';
 
 const defaultMaxListeners = 10;
+
+/**
+ *
+ * @param target
+ * @param objs
+ * @returns {*}
+ * @private
+ */
+function inherits(target, ...objs) {
+    for (var i = 0, l = objs.length; i < l; i++) {
+        var keys = Object.getOwnPropertyNames(objs[i] || {});
+
+        for (var j in keys) {
+            if ({}.hasOwnProperty.call(keys, j)) {
+                var key = keys[j];
+                target[key] = objs[i][key];
+            }
+        }
+    }
+
+    return target;
+}
 
 /**
  * 事件分发类
@@ -28,11 +49,6 @@ class Emitter{
      * @private
      */
     _maxListeners = defaultMaxListeners;
-
-    constructor() {
-        //this._events = {};
-        //this._maxListeners = this._maxListeners || defaultMaxListeners;
-    }
 
     /**
      * 设置最大监听数
@@ -78,13 +94,14 @@ class Emitter{
 
         if (Core.isFunction(handler)) {
             let args = arguments;
-            Array.prototype.splice.apply(args, [0,1]);
+            Array.prototype.splice.apply(args, [0, 1]);
 
             return handler.apply(this, args);
-        }else if(Core.isArray(handler)){
+        } else if (Core.isArray(handler)) {
             let args = arguments;
-            Array.prototype.splice.apply(args, [0,1]);
-            let len = handler.length, ret;
+            Array.prototype.splice.apply(args, [0, 1]);
+            let len = handler.length;
+            let ret;
             for (let i = 0; i < len; i++) {
                 ret = ret && handler[i].apply(this, args);
             }
@@ -126,10 +143,9 @@ class Emitter{
 
         if (!this._events[type]) {
             this._events[type] = listener;
-        }
-        else if (Core.isArray(this._events[type])) {
+        } else if (Core.isArray(this._events[type])) {
             this._events[type].push(listener);
-        } else{
+        } else {
             this._events[type] = [this._events[type], listener];
 
             // Check for listener leak
@@ -140,7 +156,7 @@ class Emitter{
                     console.error('(node) warning: possible EventEmitter memory ' +
                         'leak detected. %d listeners added. ' +
                         'Use emitter.setMaxListeners() to increase limit.',
-                        this._events[type].length);
+                    this._events[type].length);
                     console.trace();
                 }
             }
@@ -218,7 +234,7 @@ class Emitter{
             }
         }
 
-        return this
+        return this;
     }
 
     /**
@@ -267,12 +283,11 @@ class Emitter{
      */
     listeners(type) {
         let ret;
-        if (!this._events || !this._events[type])
+        if (!this._events || !this._events[type]){
             ret = [];
-        else if (Core.isFunction(this._events[type])) {
+        } else if (Core.isFunction(this._events[type])) {
             ret = [this._events[type]];
-        }
-        else {
+        } else {
             ret = this._events[type].slice();
         }
         return ret;
@@ -286,7 +301,7 @@ class Emitter{
      * @returns {Object}
      */
     static extend(target) {
-        return _extend(target, new Emitter(), Emitter.prototype)
+        return inherits(target, new Emitter(), Emitter.prototype);
     }
 
     /**
@@ -296,29 +311,9 @@ class Emitter{
      * @param subClass {Class} 继承Emitter的类
      */
     static inherits(subClass) {
-        _extend(subClass.prototype, Emitter.prototype);
+        inherits(subClass.prototype, Emitter.prototype);
         subClass.prototype.constructor = subClass;
     }
-}
-
-/**
- *
- * @param target
- * @param objs
- * @returns {*}
- * @private
- */
-function _extend(target, ...objs) {
-    for (var i = 0, l = objs.length; i < l; i++) {
-        var keys = Object.getOwnPropertyNames(objs[i] || {});
-
-        for (var j in keys) {
-            var key = keys[j];
-            target[key] = objs[i][key];
-        }
-    }
-
-    return target;
 }
 
 Emitter.propTypes = {

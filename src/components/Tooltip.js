@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
@@ -26,16 +25,16 @@ class Tooltip extends BaseComponent {
             theme: props.theme
         });
 
-        //鼠标移走后延迟隐藏
+        // 鼠标移走后延迟隐藏
         this.delay = this.props.delay || 0;
-        this.action = this.props.trigger || "hover";
-        if(this.action === "hover"){
-            this.showAction = "mouseEnter";
-            this.hideAction = "mouseLeave";
+        this.action = this.props.trigger || 'hover';
+        if (this.action === 'hover') {
+            this.showAction = 'mouseEnter';
+            this.hideAction = 'mouseLeave';
         }
-        if(this.action === "click"){
-            this.showAction = "click";
-            this.hideAction = "click";
+        if (this.action === 'click') {
+            this.showAction = 'click';
+            this.hideAction = 'click';
         }
     }
 
@@ -46,9 +45,9 @@ class Tooltip extends BaseComponent {
      */
     getPopupElement(title){
         return (
-            <div className="cm-tooltip-body">
-                <div className="cm-tooltip-arrow"></div>
-                <div className="cm-tooltip-inner">
+            <div className='cm-tooltip-body'>
+                <div className='cm-tooltip-arrow' />
+                <div className='cm-tooltip-inner'>
                     {title || this.state.title}
                 </div>
             </div>
@@ -60,7 +59,7 @@ class Tooltip extends BaseComponent {
      * @param visible
      */
     onVisibleChange(visible){
-        if(this.props.onVisibleChange){
+        if (this.props.onVisibleChange) {
             this.props.onVisibleChange(visible);
         }
     }
@@ -92,16 +91,16 @@ class Tooltip extends BaseComponent {
 
     render(){
         let {className, style} = this.props;
-        className = classNames("cm-tooltip", className, this.state.theme, this.props.align);
+        className = classNames('cm-tooltip', className, this.state.theme, this.props.align);
 
         return (
             <InnerTrigger
-                ref="trigger"
+                ref='trigger'
                 action={this.action}
                 hideAction={this.hideAction}
                 showAction={this.showAction}
                 popup={this.getPopupElement.bind(this)}
-                align={this.props.align || "top"}
+                align={this.props.align || 'top'}
                 delay={this.delay}
                 isEmpty={!this.state.title}
                 offsetEle={this.props.offsetEle}
@@ -111,14 +110,18 @@ class Tooltip extends BaseComponent {
                     style: style
                 }}
             >
-                {React.isValidElement(this.props.children) ? this.props.children : <span className="cm-tooltip-helper">{this.props.children}</span>}
+                {
+                    React.isValidElement(this.props.children)
+                        ? this.props.children
+                        : <span className='cm-tooltip-helper'>{this.props.children}</span>
+                }
             </InnerTrigger>
         );
     }
 }
 
 Tooltip.defaultProps = {
-    theme: "black"
+    theme: 'black'
 };
 
 Tooltip.propTypes = {
@@ -147,19 +150,20 @@ Tooltip.propTypes = {
      */
     theme: PropTypes.string,
     /**
-     * 停靠位置 "topLeft","top","topRight","bottom","bottomLeft",
-     * "bottomRight","left","leftTop","leftBottom","right",
-     * "rightTop","rightBottom"
+     * 停靠位置 'topLeft','top','topRight','bottom','bottomLeft',
+     * 'bottomRight','left','leftTop','leftBottom','right',
+     * 'rightTop','rightBottom'
      * @attribute theme
      * @type {String}
      */
-    align: PropTypes.oneOf(["topLeft","top","topRight","bottom","bottomLeft","bottomRight","left","leftTop","leftBottom","right","rightTop","rightBottom"]),
+    align: PropTypes.oneOf(['topLeft', 'top', 'topRight', 'bottom', 'bottomLeft', 'bottomRight', 'left',
+        'leftTop', 'leftBottom', 'right', 'rightTop', 'rightBottom']),
     /**
-     * 触发条件 "hover","click"
+     * 触发条件 'hover','click'
      * @attribute trigger
      * @type {String}
      */
-    trigger: PropTypes.oneOf(["hover","click"])
+    trigger: PropTypes.oneOf(['hover', 'click'])
 };
 
 export default Tooltip;

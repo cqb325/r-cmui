@@ -5,7 +5,7 @@ export default {
             style: 'object',
             grid: 'number',
             action: 'string',
-            method: ["post","get","ajax","custom"],
+            method: ['post', 'get', 'ajax', 'custom'],
             target: 'string',
             submitText: 'string',
             layout: 'string',
@@ -26,9 +26,9 @@ export default {
             className: 'string',
             style: 'object',
             grid: 'number',
-            type: ["input","number","integer"],
+            type: ['input', 'number', 'integer'],
             placeholder: 'string',
-            label: 'string',
+            label: 'string'
         },
         'default': {
             type: 'text',
@@ -98,7 +98,7 @@ export default {
             label: 'string',
             disabled: 'bool',
             checked: 'bool',
-            size: ['default','small'],
+            size: ['default', 'small'],
             checkedText: 'string',
             unCheckedText: 'string',
             layout: 'string'
@@ -143,7 +143,6 @@ export default {
             label: 'string',
             className: 'string',
             style: 'object',
-            label: 'string',
             disabled: 'bool',
             placeholder: 'string',
             valueField: 'string',
@@ -154,8 +153,7 @@ export default {
             hasEmptyOption: 'bool',
             choiceText: 'string',
             url: 'string',
-            data: 'item',
-            url: 'string'
+            data: 'item'
         },
         'default': {
             label: 'Undefined',
@@ -208,7 +206,7 @@ export default {
     'row': {
         'types': {
             className: 'string',
-            style: 'object',
+            style: 'object'
         },
         'default': {
             className: 'cm-form-inline'
@@ -221,13 +219,13 @@ export default {
             style: 'object',
             theme: 'string',
             icon: 'string',
-            iconAlign: ["left","right"],
+            iconAlign: ['left', 'right'],
             raised: 'bool',
             flat: 'bool',
             disabled: 'bool',
             href: 'string',
             target: 'string',
-            size: ['small','default','large']
+            size: ['small', 'default', 'large']
         },
         'default': {
             label: 'BUTTON',
@@ -256,4 +254,4 @@ export default {
             label: 'Undefined'
         }
     }
-}
+};

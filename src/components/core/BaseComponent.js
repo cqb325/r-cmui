@@ -3,9 +3,8 @@
  * @module BaseComponent
  */
 
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import Emitter from './Emitter';
-import PropTypes from 'prop-types';
 
 /**
  * BaseComponent 类
@@ -45,20 +44,20 @@ class BaseComponent extends Component{
      * @type String
      * @default auto
      */
-    width = "auto";
+    width = 'auto';
     /**
      * 组件的高度
      * @property height
      * @type String
      * @default auto
      */
-    height = "auto";
+    height = 'auto';
     /**
      * 组件的id
      * @property id
      * @type String
      */
-    id="";
+    id='';
     /**
      * 组件的子节点内容
      * @property children
@@ -71,8 +70,8 @@ class BaseComponent extends Component{
 
         let prop;
 
-        for(prop in props){
-            if(this.hasOwnProperty(prop)){
+        for (prop in props) {
+            if ({}.hasOwnProperty.call(this, prop)) {
                 this[prop] = props[prop];
             }
         }
@@ -84,7 +83,7 @@ class BaseComponent extends Component{
              * @type {String}
              * @default default
              */
-            theme: props.theme || "default",
+            theme: props.theme || 'default',
             /**
              * 组件的显示状态
              * @property visibility
@@ -101,11 +100,13 @@ class BaseComponent extends Component{
      * @param params
      */
     addState(params){
-        if(!this.state){
+        if (!this.state){
             this.state = {};
         }
-        for(var i in params){
-            this.state[i] = params[i];
+        for (var i in params) {
+            if ({}.hasOwnProperty.call(params, i)) {
+                this.state[i] = params[i];
+            }
         }
     }
 
@@ -119,12 +120,12 @@ class BaseComponent extends Component{
      * @return {Object}
      */
     show(){
-        let ret = this.emit("beforeShow");
-        ret = ret == undefined ? true : ret;
-        if(ret && !this.state.visibility) {
-            this.emit("show");
+        let ret = this.emit('beforeShow');
+        ret = ret === undefined ? true : ret;
+        if (ret && !this.state.visibility) {
+            this.emit('show');
             this.setState({visibility: true});
-            this.emit("shown");
+            this.emit('shown');
         }
         return this;
     }
@@ -139,12 +140,12 @@ class BaseComponent extends Component{
      * @return {Object}
      */
     hide() {
-        let ret = this.emit("beforeHide");
-        ret = ret == undefined ? true : ret;
-        if(ret && this.state.visibility) {
-            this.emit("hide");
+        let ret = this.emit('beforeHide');
+        ret = ret === undefined ? true : ret;
+        if (ret && this.state.visibility) {
+            this.emit('hide');
             this.setState({visibility: false});
-            this.emit("hidden");
+            this.emit('hidden');
         }
         return this;
     }
@@ -163,7 +164,7 @@ class BaseComponent extends Component{
      * @method setValue
      * @param args {*}
      */
-    setValue(...args) {
+    setValue() {
 
     }
 
@@ -199,19 +200,19 @@ class BaseComponent extends Component{
      * @returns {boolean}
      */
     isLtIE9() {
-        if(navigator.userAgent.indexOf("MSIE")>0){
-            if(navigator.userAgent.indexOf("MSIE 6.0")>0){
+        if (navigator.userAgent.indexOf('MSIE') > 0) {
+            if (navigator.userAgent.indexOf('MSIE 6.0') > 0) {
                 return true;
-            }else if(navigator.userAgent.indexOf("MSIE 7.0")>0){
+            } else if (navigator.userAgent.indexOf('MSIE 7.0') > 0) {
                 return true;
-            }else if(navigator.userAgent.indexOf("MSIE 8.0")>0){
+            } else if (navigator.userAgent.indexOf('MSIE 8.0') > 0) {
                 return true;
-            }else if(navigator.userAgent.indexOf("MSIE 9.0")>0){
+            } else if (navigator.userAgent.indexOf('MSIE 9.0') > 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
@@ -222,20 +223,12 @@ class BaseComponent extends Component{
      * @returns {XML}
      */
     render() {
-        return (<div></div>);
+        return (<div />);
     }
 }
 
-BaseComponent.propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    disabled: PropTypes.bool,
-    readOnly: PropTypes.bool,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    id: PropTypes.string,
-    children: PropTypes.any
-};
+BaseComponent.propTypes = {};
+
 Emitter.inherits(BaseComponent);
 
 export default BaseComponent;

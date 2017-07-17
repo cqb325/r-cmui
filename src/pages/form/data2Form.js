@@ -1,11 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {FormControl,Form, FontIcon, Button} from '../../components';
-import PropTypes from 'prop-types';
+import {FormControl, Form, FontIcon, Button} from '../../components';
 
 class Data2Form extends React.Component{
-
     constructor(props) {
         super(props);
 
@@ -25,9 +22,9 @@ class Data2Form extends React.Component{
      * @param props
      */
     mergeProps(target, source, props){
-        if(props){
+        if (props){
             props.forEach(function(prop){
-                if(source[prop] != undefined){
+                if (source[prop] !== undefined){
                     target[prop] = source[prop];
                 }
             });
@@ -43,32 +40,32 @@ class Data2Form extends React.Component{
     onChange(item, value, selectItem){
         item.value = value;
 
-        if(this.props.onChange){
+        if (this.props.onChange){
             this.props.onChange(item, value, selectItem);
         }
 
-        this.emit("change", item, value, selectItem);
+        this.emit('change', item, value, selectItem);
     }
 
     onClick(item){
-        if(this.selectedItem){
+        if (this.selectedItem){
             this.selectedItem.unSelect();
         }
         this.selectedItem = item;
 
-        if(this.props.onClick){
+        if (this.props.onClick){
             this.props.onClick(item);
         }
     }
 
     onSelect(item){
-        if(this.props.onSelect){
+        if (this.props.onSelect){
             this.props.onSelect(item);
         }
     }
 
     onRemove(formItem, item, items){
-        if(this.props.onRemove){
+        if (this.props.onRemove){
             this.props.onRemove(formItem, item, items);
         }
         this.setState({
@@ -77,7 +74,7 @@ class Data2Form extends React.Component{
     }
 
     onSort(){
-        if(this.props.onSort){
+        if (this.props.onSort){
             this.props.onSort();
         }
         this.setState({
@@ -90,8 +87,8 @@ class Data2Form extends React.Component{
      * @param items
      */
     renderItems(items){
-        if(items){
-            return items.map((item, index)=>{
+        if (items){
+            return items.map((item)=>{
                 return <FormItem
                     onClick={this.onClick.bind(this)}
                     onRemove={this.onRemove.bind(this)}
@@ -99,7 +96,7 @@ class Data2Form extends React.Component{
                     items={items}
                     item={item}
                     key={item.identify}
-                    form={this}></FormItem>;
+                    form={this} />;
             });
         }
         return null;
@@ -113,7 +110,7 @@ class Data2Form extends React.Component{
         let items = this.renderItems(item.children);
         return <Form.Row {...item.props} key={this.itemIndex++}>
             {items}
-        </Form.Row>
+        </Form.Row>;
     }
 
     /**
@@ -174,11 +171,11 @@ class Data2Form extends React.Component{
 
     render(){
         let formData = this.state.data;
-        let formProps = Object.assign({}, formData.props||{});
-        this.mergeProps(formProps, formData, ["action","method","encType"]);
-        return <Form ref="form" {...formProps}>
+        let formProps = Object.assign({}, formData.props || {});
+        this.mergeProps(formProps, formData, ['action', 'method', 'encType']);
+        return <Form ref='form' {...formProps}>
             {this.renderItems(formData.items)}
-        </Form>
+        </Form>;
     }
 }
 
@@ -220,11 +217,11 @@ class FormItem extends React.Component{
     onClick(e){
         e.preventDefault();
         e.stopPropagation();
-        if(this.props.onClick){
+        if (this.props.onClick){
             this.props.onClick(this);
         }
 
-        if(this.state.item.type === 'row'){
+        if (this.state.item.type === 'row'){
             this.select();
         }
     }
@@ -232,11 +229,11 @@ class FormItem extends React.Component{
     removeItem(e){
         e.preventDefault();
         e.stopPropagation();
-        if(this.props.items){
+        if (this.props.items){
             let index = this.props.items.indexOf(this.state.item);
             this.props.items.splice(index, 1);
 
-            if(this.props.onRemove){
+            if (this.props.onRemove){
                 this.props.onRemove(this, this.state.item, this.props.items);
             }
         }
@@ -245,16 +242,16 @@ class FormItem extends React.Component{
     sortItem(e){
         e.preventDefault();
         e.stopPropagation();
-        if(this.props.items){
+        if (this.props.items){
             let index = this.props.items.indexOf(this.state.item);
-            if(index == 0){
+            if (index === 0){
                 return;
             }
             let temp = this.props.items[index];
             this.props.items[index] = this.props.items[index - 1];
             this.props.items[index - 1] = temp;
 
-            if(this.props.onSort){
+            if (this.props.onSort){
                 this.props.onSort(this);
             }
         }
@@ -267,9 +264,9 @@ class FormItem extends React.Component{
      * @param props
      */
     mergeProps(target, source, props){
-        if(props){
+        if (props){
             props.forEach(function(prop){
-                if(source[prop] != undefined){
+                if (source[prop] !== undefined){
                     target[prop] = source[prop];
                 }
             });
@@ -282,55 +279,55 @@ class FormItem extends React.Component{
      * @return {[type]}           [description]
      */
     renderItem(itemProps){
-        if(itemProps.type === 'button'){
-            return <Button {...itemProps}>{itemProps.label}</Button>
-        }else if(itemProps.type === 'label'){
-            return <span {...itemProps}>{itemProps.label}</span>
-        }else if(itemProps.type === 'promote'){
-            return <div {...itemProps}>{itemProps.label}</div>
-        }else{
-            return <FormControl {...itemProps} label={itemProps.label}/>;
+        if (itemProps.type === 'button'){
+            return <Button {...itemProps}>{itemProps.label}</Button>;
+        } else if (itemProps.type === 'label'){
+            return <span {...itemProps}>{itemProps.label}</span>;
+        } else if (itemProps.type === 'promote'){
+            return <div {...itemProps}>{itemProps.label}</div>;
+        } else {
+            return <FormControl {...itemProps} label={itemProps.label} />;
         }
     }
 
     render(){
         let item = this.state.item;
-        if(item.type !== "row"){
-            let itemProps = Object.assign({}, item.props||{});
+        if (item.type !== 'row'){
+            let itemProps = Object.assign({}, item.props || {});
             itemProps = Object.assign(itemProps, item);
-            // this.mergeProps(itemProps, item, ["name","type","rules","messages","placeholder","data"]);
-            for(let key in itemProps){
-                if(itemProps[key] === ""){
+            // this.mergeProps(itemProps, item, ['name','type','rules','messages','placeholder','data']);
+            for (let key in itemProps){
+                if (itemProps[key] === ''){
                     delete itemProps[key];
                 }
             }
             let className = classNames('form-item', {
                 block: item.block
-            })
+            });
             return <div onClick={this.onClick.bind(this)} className={className}>
-                <div className="form-tools">
-                    <FontIcon icon="level-up" onClick={this.sortItem.bind(this)} className='mr-5'></FontIcon>
-                    <FontIcon icon="trash" onClick={this.removeItem.bind(this)}></FontIcon>
+                <div className='form-tools'>
+                    <FontIcon icon='level-up' onClick={this.sortItem.bind(this)} className='mr-5' />
+                    <FontIcon icon='trash' onClick={this.removeItem.bind(this)} />
                 </div>
                 {this.renderItem(itemProps)}
-            </div>
-        }else{
+            </div>;
+        } else {
             let items = this.props.form.renderItems(item.children);
-            let itemProps = Object.assign({}, item.props||{});
+            let itemProps = Object.assign({}, item.props || {});
             itemProps = Object.assign(itemProps, item);
-            for(let key in itemProps){
-                if(itemProps[key] === ""){
+            for (let key in itemProps){
+                if (itemProps[key] === ''){
                     delete itemProps[key];
                 }
             }
-            let className = classNames("form-item-row", {
+            let className = classNames('form-item-row', {
                 active: this.state.active
             });
             return (
                 <div onClick={this.onClick.bind(this)} className={className}>
-                    <div className="form-tools">
-                        <FontIcon icon="level-up" onClick={this.sortItem.bind(this)} className='mr-5'></FontIcon>
-                        <FontIcon icon="trash" onClick={this.removeItem.bind(this)}></FontIcon>
+                    <div className='form-tools'>
+                        <FontIcon icon='level-up' onClick={this.sortItem.bind(this)} className='mr-5' />
+                        <FontIcon icon='trash' onClick={this.removeItem.bind(this)} />
                     </div>
                     <Form.Row {...itemProps} key={item.name}>
                         {items}
@@ -338,7 +335,6 @@ class FormItem extends React.Component{
                 </div>
             );
         }
-        return <span></span>;
     }
 }
 

@@ -17,12 +17,12 @@ class Clock extends BaseComponent {
     constructor(props) {
         super(props);
 
-        let current = props.value ? moment(props.value) : "";
-        if(current === ""){
+        let current = props.value ? moment(props.value) : '';
+        if (current === '') {
             current = moment();
-            current.set("hour", 0);
-            current.set("minute", 0);
-            current.set("second", 0);
+            current.set('hour', 0);
+            current.set('minute', 0);
+            current.set('second', 0);
         }
 
         this.state = {
@@ -46,14 +46,14 @@ class Clock extends BaseComponent {
         let ret = [];
         let radius = 130;
         let r = Math.PI / 6;
-        for(let i = 1; i<= 12; i++){
+        for (let i = 1; i <= 12; i++) {
             let x = Math.sin(r * i);
             let y = Math.cos(r * i);
             let fx = 8 / radius / 2;
             let fy = 8 / radius / 2;
             let style = {
-                left: (radius * (0.5+x/2 - fx)) + "px",
-                top: (radius * (0.5-y/2 - fy) ) + "px"
+                left: (radius * (0.5 + x / 2 - fx)) + 'px',
+                top: (radius * (0.5 - y / 2 - fy)) + 'px'
             };
             ret.push(<span key={i} style={style}>{i}</span>);
         }
@@ -68,34 +68,34 @@ class Clock extends BaseComponent {
      * @private
      */
     _renderHands() {
-        let current = this.state.current,
-            hour = current.get("hour"),
-            minute = current.get("minute"),
-            second = current.get("second");
+        let current = this.state.current;
+        let hour = current.get('hour');
+        let minute = current.get('minute');
+        let second = current.get('second');
         let sr = -90 + 6 * second;
         let mr = -90 + 6 * (minute + second / 60);
         let hr = -90 + 30 * (hour + minute / 60 + second / 3600);
 
 
         let secondStyle = {
-            "transform": "rotateZ("+sr+"deg)"
+            'transform': 'rotateZ(' + sr + 'deg)'
         };
         let minuteStyle = {
-            "transform": "rotateZ("+mr+"deg)"
+            'transform': 'rotateZ(' + mr + 'deg)'
         };
         let hourStyle = {
-            "transform": "rotateZ("+hr+"deg)"
+            'transform': 'rotateZ(' + hr + 'deg)'
         };
-        if(this.isLtIE9()) {
+        if (this.isLtIE9()) {
             this._calcFilter(sr, secondStyle, 52);
             this._calcFilter(mr, minuteStyle, 42);
             this._calcFilter(hr, hourStyle, 32);
         }
         return (
-            <div className="click-hands">
-                <div className="hourHand" style={hourStyle}></div>
-                <div className="minuteHand" style={minuteStyle}></div>
-                <div className="secondHand" style={secondStyle}></div>
+            <div className='click-hands'>
+                <div className='hourHand' style={hourStyle} />
+                <div className='minuteHand' style={minuteStyle} />
+                <div className='secondHand' style={secondStyle} />
             </div>
         );
     }
@@ -109,29 +109,34 @@ class Clock extends BaseComponent {
      * @private
      */
     _calcFilter(deg, style, width) {
-        var rad = deg * (Math.PI / 180);
-        var m11 = Math.cos(rad), m12 = -1 * Math.sin(rad), m21 = Math.sin(rad), m22 = m11;
+        let rad = deg * (Math.PI / 180);
+        let m11 = Math.cos(rad);
+        let m12 = -1 * Math.sin(rad);
+        let m21 = Math.sin(rad);
+        let m22 = m11;
 
-        let dx=m11, dy=m21;
-        if(deg > 270){
+        let dx = m11;
+        let dy = m21;
+        if (deg > 270) {
             deg = deg - 360;
         }
-        if(deg < 0 && deg >=-90){
+        if (deg < 0 && deg >= -90) {
             dx = 0;
             dy = m21 * width;
-        }else if(deg>=0 && deg<=90){
+        } else if (deg >= 0 && deg <= 90) {
             dx = -8 * m11;
             dy = -m21 * 2;
-        }else if(deg > 90 && deg <= 180){
+        } else if (deg > 90 && deg <= 180) {
             dx = width * m11;
             dy = -1;
-        }else if(deg > 180 && deg <= 270){
+        } else if (deg > 180 && deg <= 270) {
             dx = width * m11;
             dy = m21 * width;
         }
-        style.filter = "progid:DXImageTransform.Microsoft.Matrix(M11=" + m11 + ",M12=" + m12 + ",M21=" + m21 + ",M22=" + m22 + ",SizingMethod='auto expand')";
-        style["marginTop"] = dy+"px";
-        style["marginLeft"] = dx+"px";
+        style.filter = 'progid:DXImageTransform.Microsoft.Matrix(M11=' +
+            m11 + ',M12=' + m12 + ',M21=' + m21 + ',M22=' + m22 + ',SizingMethod="auto expand")';
+        style['marginTop'] = dy + 'px';
+        style['marginLeft'] = dx + 'px';
     }
 
     /**
@@ -141,7 +146,7 @@ class Clock extends BaseComponent {
      */
     setValue(value){
         let d = {time: value};
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(d);
         }
     }
@@ -151,7 +156,7 @@ class Clock extends BaseComponent {
      * @method close
      */
     close() {
-        if(this.props.onTimeClose) {
+        if (this.props.onTimeClose) {
             this.props.onTimeClose();
         }
     }
@@ -162,7 +167,7 @@ class Clock extends BaseComponent {
      */
     addHour() {
         let current = this.state.current;
-        current.add(1, "hour");
+        current.add(1, 'hour');
 
         this.setValue(current);
     }
@@ -173,7 +178,7 @@ class Clock extends BaseComponent {
      */
     subHour(){
         let current = this.state.current;
-        current.add(-1, "hour");
+        current.add(-1, 'hour');
 
         this.setValue(current);
     }
@@ -184,7 +189,7 @@ class Clock extends BaseComponent {
      */
     addMinute() {
         let current = this.state.current;
-        current.add(1, "minute");
+        current.add(1, 'minute');
 
         this.setValue(current);
     }
@@ -195,7 +200,7 @@ class Clock extends BaseComponent {
      */
     subMinute() {
         let current = this.state.current;
-        current.add(-1, "minute");
+        current.add(-1, 'minute');
 
         this.setValue(current);
     }
@@ -206,7 +211,7 @@ class Clock extends BaseComponent {
      */
     addSecond() {
         let current = this.state.current;
-        current.add(1, "second");
+        current.add(1, 'second');
 
         this.setValue(current);
     }
@@ -217,7 +222,7 @@ class Clock extends BaseComponent {
      */
     subSecond() {
         let current = this.state.current;
-        current.add(-1, "second");
+        current.add(-1, 'second');
 
         this.setValue(current);
     }
@@ -228,7 +233,7 @@ class Clock extends BaseComponent {
      * @returns {String} 当前的时刻
      */
     getTime() {
-        return this.state.current.format("HH:mm:ss");
+        return this.state.current.format('HH:mm:ss');
     }
 
     /**
@@ -240,42 +245,54 @@ class Clock extends BaseComponent {
         let nums = this._renderNumbers();
         let hands = this._renderHands();
         let current = this.state.current;
-        let hour = current.get("hour");
-        let minute = current.get("minute");
-        let second = current.get("second");
+        let hour = current.get('hour');
+        let minute = current.get('minute');
+        let second = current.get('second');
 
-        let close = this.props.view === "time" ? "" :
-            (<div className="clock-close" onClick={this.close.bind(this)}>
-                    <span className="fa-stack text-center">
-                        <i className="fa fa-circle-o fa-stack-2x"></i>
-                        <i className="fa fa-close fa-stack-1x"></i>
-                    </span>
+        let close = this.props.view === 'time' ? ''
+            : (<div className='clock-close' onClick={this.close.bind(this)}>
+                <span className='fa-stack text-center'>
+                    <i className='fa fa-circle-o fa-stack-2x' />
+                    <i className='fa fa-close fa-stack-1x' />
+                </span>
             </div>);
 
         return (
-            <div className="clock-container">
+            <div className='clock-container'>
                 {close}
-                <div className="clock-face">
-                    <div className="clock-numbers">
+                <div className='clock-face'>
+                    <div className='clock-numbers'>
                         {nums}
                     </div>
                     {hands}
                 </div>
-                <div className="spinners">
-                    <div className="hourSpinner spinner">
-                        <span className="spinner-value">{hour}</span>
-                        <span className="spinner-plus" onClick={this.addHour.bind(this)}><i className="fa fa-angle-up"></i></span>
-                        <span className="spinner-subs" onClick={this.subHour.bind(this)}><i className="fa fa-angle-down"></i></span>
+                <div className='spinners'>
+                    <div className='hourSpinner spinner'>
+                        <span className='spinner-value'>{hour}</span>
+                        <span className='spinner-plus' onClick={this.addHour.bind(this)}>
+                            <i className='fa fa-angle-up' />
+                        </span>
+                        <span className='spinner-subs' onClick={this.subHour.bind(this)}>
+                            <i className='fa fa-angle-down' />
+                        </span>
                     </div>
-                    <div className="minuteSpinner spinner">
-                        <span className="spinner-value">{minute}</span>
-                        <span className="spinner-plus" onClick={this.addMinute.bind(this)}><i className="fa fa-angle-up"></i></span>
-                        <span className="spinner-subs" onClick={this.subMinute.bind(this)}><i className="fa fa-angle-down"></i></span>
+                    <div className='minuteSpinner spinner'>
+                        <span className='spinner-value'>{minute}</span>
+                        <span className='spinner-plus' onClick={this.addMinute.bind(this)}>
+                            <i className='fa fa-angle-up' />
+                        </span>
+                        <span className='spinner-subs' onClick={this.subMinute.bind(this)}>
+                            <i className='fa fa-angle-down' />
+                        </span>
                     </div>
-                    <div className="secondSpinner spinner">
-                        <span className="spinner-value">{second}</span>
-                        <span className="spinner-plus" onClick={this.addSecond.bind(this)}><i className="fa fa-angle-up"></i></span>
-                        <span className="spinner-subs" onClick={this.subSecond.bind(this)}><i className="fa fa-angle-down"></i></span>
+                    <div className='secondSpinner spinner'>
+                        <span className='spinner-value'>{second}</span>
+                        <span className='spinner-plus' onClick={this.addSecond.bind(this)}>
+                            <i className='fa fa-angle-up' />
+                        </span>
+                        <span className='spinner-subs' onClick={this.subSecond.bind(this)}>
+                            <i className='fa fa-angle-down' />
+                        </span>
                     </div>
                 </div>
             </div>

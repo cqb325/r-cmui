@@ -33,11 +33,11 @@ class CircleRipple extends React.Component {
 
     componentWillUnmount() {
         clearTimeout(this.enterTimer);
-        //clearTimeout(this.leaveTimer);
+        // clearTimeout(this.leaveTimer);
     }
 
-    componentWillAppear(callback) {
-        //this.initializeAnimation(callback);
+    componentWillAppear() {
+        // this.initializeAnimation(callback);
     }
 
     componentWillEnter(callback) {
@@ -45,7 +45,7 @@ class CircleRipple extends React.Component {
     }
 
     componentDidAppear() {
-        //this.animate();
+        // this.animate();
     }
 
     componentDidEnter() {
@@ -88,7 +88,7 @@ class CircleRipple extends React.Component {
             color,
             opacity,
             style
-            } = this.props;
+        } = this.props;
 
         const mergedStyles = Object.assign({
             position: 'absolute',
@@ -103,7 +103,7 @@ class CircleRipple extends React.Component {
         }, style);
 
         return (
-            <div style={mergedStyles}/>
+            <div style={mergedStyles} />
         );
     }
 }

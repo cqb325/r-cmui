@@ -1,7 +1,7 @@
 function mkfragment(elements) {
     var frag = document.createDocumentFragment();
 
-    for (var i=0 ; i<elements.length ; ++i) {
+    for (var i = 0; i < elements.length; ++i) {
         frag.appendChild(elements[i]);
     }
 

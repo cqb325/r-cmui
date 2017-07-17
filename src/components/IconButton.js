@@ -4,10 +4,8 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
-import PropTypes from 'prop-types';
 import FontIcon from './FontIcon';
 import EnhancedButton from './internal/EnhancedButton';
 
@@ -49,8 +47,8 @@ class IconButton extends BaseComponent {
      * @private
      * @method _handleClick
      */
-    _handleClick(e){
-        if(this.state.disabled){
+    _handleClick(){
+        if (this.state.disabled) {
             return;
         }
         if (this.props.onClick) {
@@ -72,19 +70,19 @@ class IconButton extends BaseComponent {
             disabled,
             touchRippleColor,
             touchRippleOpacity
-            } = this.props;
+        } = this.props;
 
         let icon = this.props.icon ? (<FontIcon icon={this.props.icon}>
             {children}
         </FontIcon>) : children;
 
-        return <EnhancedButton centerRipple={true}
-                            touchRippleColor={touchRippleColor || 'rgba(0, 0, 0, 0.27)'}
-                            opacity={touchRippleOpacity}
-                            disabled={disabled}
-                            style={{textAlign: "center"}}>
-                {icon}
-            </EnhancedButton>;
+        return <EnhancedButton centerRipple
+            touchRippleColor={touchRippleColor || 'rgba(0, 0, 0, 0.27)'}
+            opacity={touchRippleOpacity}
+            disabled={disabled}
+            style={{textAlign: 'center'}}>
+            {icon}
+        </EnhancedButton>;
     }
 
     /**
@@ -93,15 +91,15 @@ class IconButton extends BaseComponent {
     render(){
         const className = classNames(
             this.props.className,
-            'cm-button','cm-iconButton',
+            'cm-button', 'cm-iconButton',
             this.state.theme
         );
 
-        let link = this.props.href || "javascript:void(0)";
+        let link = this.props.href || 'javascript:void(0)';
 
-        let iconSize = (this.props.style && this.props.style.fontSize) ? parseInt(this.props.style.fontSize) : 24;
+        let iconSize = (this.props.style && this.props.style.fontSize) ? parseInt(this.props.style.fontSize, 10) : 24;
         let style = Object.assign({
-            fontSize: iconSize+'px',
+            fontSize: iconSize + 'px',
             overflow: 'visible',
             padding: iconSize / 2,
             width: iconSize * 2,
@@ -111,11 +109,11 @@ class IconButton extends BaseComponent {
         }, this.props.style);
 
         return (
-            <a href={link} ref="button"
-               disabled={this.state.disabled}
-               onClick={this._handleClick.bind(this)}
-               className={className}
-               style={style}>
+            <a href={link} ref='button'
+                disabled={this.state.disabled}
+                onClick={this._handleClick.bind(this)}
+                className={className}
+                style={style}>
                 {this.createButtonChildren()}
             </a>
         );

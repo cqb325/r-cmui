@@ -13,7 +13,7 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
  * @param objB
  * @returns {boolean} true: 相等 false:不相等
  */
-export default function(objA, objB) {
+function shallowEqual(objA, objB) {
     if (objA === objB) {
         return true;
     }
@@ -23,14 +23,14 @@ export default function(objA, objB) {
         return false;
     }
 
-    if(objA instanceof Array && objB instanceof Array){
-        if(objA.length != objB.length){
+    if (objA instanceof Array && objB instanceof Array) {
+        if (objA.length !== objB.length) {
             return false;
         }
         let equal = true;
         objA.forEach(function(objAItem){
             objB.forEach(function(objBItem){
-                if(!shallowEqual(objAItem, objBItem)){
+                if (!shallowEqual(objAItem, objBItem)){
                     equal = false;
                 }
             });
@@ -54,5 +54,7 @@ export default function(objA, objB) {
         }
     }
 
-    return true
+    return true;
 };
+
+export default shallowEqual;

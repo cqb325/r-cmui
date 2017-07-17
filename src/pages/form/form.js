@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import {Layout, Sider, Menu, Card, Form, FormControl,SimpleForm, CheckBox, FontIcon,CheckBoxGroup, Button, Utils, TextArea} from '../../components';
+import {Layout, Sider, Menu, Card, Form, FormControl, Utils, TextArea} from '../../components';
 import Data2Form from './data2Form';
 import ItemRender from './itemRender';
 import Rules from './rules';
 import Messages from './messages';
-const {Header,Footer,Content} = Layout;
+const {Content} = Layout;
 const {UUID} = Utils;
 const {Item} = Menu;
 
@@ -33,11 +31,11 @@ class Page extends React.Component{
             formData: {
                 'Form': formEle
             }
-        }
+        };
     }
 
     switchComponent(comp, ref){
-        if(comp === 'Form'){
+        if (comp === 'Form'){
             this.refs.data2form.onClick(null);
             this.containerItem = this.state.formData.Form;
         }
@@ -55,35 +53,36 @@ class Page extends React.Component{
 
         defaultValues = Object.assign(lastProps, defaultValues);
         let ret = [];
-        for(let key in propTypes){
-            ret.push(this.showProp(key, propTypes[key], defaultValues[key]));
+        for (let key in propTypes){
+            if (Object.prototype.hasOwnProperty.call(propTypes, key)) {
+                ret.push(this.showProp(key, propTypes[key], defaultValues[key]));
+            }
         }
-        if(this.refs.rules){
+        if (this.refs.rules){
             this.refs.rules.reset(lastProps.rules || {});
         }
         return ret;
     }
 
     showProp(name, type, val){
-        if(type === 'string'){
+        if (type === 'string'){
             return this.showStringProp(name, type, val);
         }
-        if(type === 'number'){
+        if (type === 'number'){
             return this.showNumberProp(name, type, val);
         }
-        if(type === 'object'){
+        if (type === 'object'){
             return this.showObjectProp(name, type, val);
         }
-        if(type instanceof Array){
+        if (type instanceof Array){
             return this.showOneOfProp(name, type, val);
         }
-        if(type === 'bool'){
+        if (type === 'bool'){
             return this.showBooleanProp(name, type, val);
         }
-        if(type === 'item'){
+        if (type === 'item'){
             return this.showItemProp(name, type, val);
         }
-        //console.log(name, type);
     }
 
     /**
@@ -94,7 +93,9 @@ class Page extends React.Component{
      */
     showStringProp(name, type, defaultValue){
         return (
-            <FormControl key={name} value={defaultValue} type='text' name={name} label={name+": "} onChange={this.changeProperty.bind(this, name, 'string')}></FormControl>
+            <FormControl key={name} value={defaultValue} type='text' name={name}
+                label={name + ': '} onChange={this.changeProperty.bind(this, name, 'string')}
+            />
         );
     }
 
@@ -106,13 +107,17 @@ class Page extends React.Component{
      */
     showNumberProp(name, type, defaultValue){
         return (
-            <FormControl key={name} value={defaultValue} type='number' name={name} label={name+": "} onChange={this.changeProperty.bind(this, name, 'string')}></FormControl>
+            <FormControl key={name} value={defaultValue} type='number' name={name}
+                label={name + ': '} onChange={this.changeProperty.bind(this, name, 'string')}
+            />
         );
     }
 
     showObjectProp(name, type, defaultValue){
         return (
-            <FormControl key={name} value={JSON.stringify(defaultValue)} type='textarea' name={name} label={name+": "} height={50} onChange={this.changeProperty.bind(this, name, 'object')}></FormControl>
+            <FormControl key={name} value={JSON.stringify(defaultValue)} type='textarea' name={name}
+                label={name + ': '} height={50} onChange={this.changeProperty.bind(this, name, 'object')}
+            />
         );
     }
 
@@ -121,40 +126,54 @@ class Page extends React.Component{
             return {id: item, text: item};
         });
         return (
-            <FormControl key={name} value={defaultValue} type='radio' name={name} label={name+": "} data={data} stick onChange={this.changeProperty.bind(this, name, 'string')}></FormControl>
+            <FormControl key={name} value={defaultValue} type='radio' name={name}
+                label={name + ': '} data={data} stick onChange={this.changeProperty.bind(this, name, 'string')}
+            />
         );
     }
 
     showBooleanProp(name, type, defaultValue){
         return (
-            <FormControl key={name} checked={defaultValue} type='switch' name={name} label={name+": "} size="small" onChange={this.changeProperty.bind(this, name, 'bool')}></FormControl>
+            <FormControl
+                key={name}
+                checked={defaultValue}
+                type='switch'
+                name={name}
+                label={name + ': '}
+                size='small'
+                onChange={this.changeProperty.bind(this, name, 'bool')} />
         );
     }
 
     showItemProp(name, type, defaultValue){
         return (
-            <ItemRender key={name} name={name} value={defaultValue} onChange={this.changeProperty.bind(this, name, 'array')}></ItemRender>
+            <ItemRender
+                key={name}
+                name={name}
+                value={defaultValue}
+                onChange={this.changeProperty.bind(this, name, 'array')}
+            />
         );
     }
 
-    changeProperty(name, type, value, selectItem){
-        if(type === 'object'){
-            try{
-                if(value !== ""){
+    changeProperty(name, type, value){
+        if (type === 'object'){
+            try {
+                if (value !== ''){
                     value = JSON.parse(value);
                 }
-            }catch(e){
+            } catch (e){
                 console.log(e);
             }
         }
 
-        if(type === 'bool'){
-            value = !Boolean(value);
+        if (type === 'bool'){
+            value = !value;
         }
 
         let compProps = this.elements[this.state.ref];
         compProps[name] = value;
-        if(value == ""){
+        if (value === ''){
             delete compProps[name];
         }
         this.setState({
@@ -171,7 +190,7 @@ class Page extends React.Component{
      */
     updateRules(rules){
         let compProps = this.elements[this.state.ref];
-        if(compProps.type && compProps.type !== 'row'){
+        if (compProps.type && compProps.type !== 'row'){
             compProps['rules'] = rules;
             this.setState({
                 formData: this.state.formData
@@ -183,7 +202,7 @@ class Page extends React.Component{
 
     updateMessages(messages){
         let compProps = this.elements[this.state.ref];
-        if(compProps.type && compProps.type !== 'row'){
+        if (compProps.type && compProps.type !== 'row'){
             compProps['messages'] = messages;
             this.setState({
                 formData: this.state.formData
@@ -194,7 +213,7 @@ class Page extends React.Component{
     }
 
     onSelectItem(item){
-        if(item){
+        if (item){
             let type = item.getType();
             window.setTimeout(()=>{
                 this.setState({
@@ -214,10 +233,10 @@ class Page extends React.Component{
      * @param {[type]} ele [description]
      */
     addElement(ele){
-        if(this.containerItem.items){
+        if (this.containerItem.items){
             this.containerItem.items.push(ele);
-        }else{
-            if(!this.containerItem.children){
+        } else {
+            if (!this.containerItem.children){
                 this.containerItem.children = [];
             }
             this.containerItem.children.push(ele);
@@ -228,10 +247,10 @@ class Page extends React.Component{
         let data = this.state.formData.Form;
         data = JSON.parse(JSON.stringify(data));
         delete data.identify;
-        for(let i in data.items){
+        for (let i = 0; i < data.items.length; i++){
             delete data.items[i].identify;
             delete data.items[i].block;
-            if(data.items[i].children){
+            if (data.items[i].children){
                 this.deleteIdentify(data.items[i].children);
             }
         }
@@ -244,7 +263,7 @@ class Page extends React.Component{
      * @return {[type]}     [description]
      */
     deleteIdentify(arr){
-        for(let i in arr){
+        for (let i = 0; i < arr.length; i++){
             delete arr[i].identify;
             delete arr[i].block;
         }
@@ -261,14 +280,14 @@ class Page extends React.Component{
             block: block,
             label: 'Undefined'
         };
-        if(type === 'row'){
+        if (type === 'row'){
             ele.children = [];
             delete ele.label;
         }
         this.elements[ele.identify] = ele;
-        if(type === 'row'){
+        if (type === 'row'){
             this.state.formData.Form.items.push(ele);
-        }else{
+        } else {
             this.addElement(ele);
         }
 
@@ -284,7 +303,7 @@ class Page extends React.Component{
     }
 
     onRemoveItem(){
-        if(this.refs.rules){
+        if (this.refs.rules){
             this.refs.rules.reset({});
         }
         this.getConfig();
@@ -320,35 +339,34 @@ class Page extends React.Component{
                     </Menu>
                 </Sider>
                 <Content style={{padding: 0}} >
-                    <Card title="表单">
+                    <Card title='表单'>
                         <div onClick={this.switchComponent.bind(this, 'Form', 'form')}>
-                            <Data2Form ref="data2form" data={this.state.formData.Form}
+                            <Data2Form ref='data2form' data={this.state.formData.Form}
                                 onSelect={this.selectContainer.bind(this)}
                                 onClick={this.onSelectItem.bind(this)}
                                 onRemove={this.onRemoveItem.bind(this)}
                                 onSort={this.onSortItem.bind(this)}
-                                >
-                            </Data2Form>
+                            />
                         </div>
 
                         <div className='mt-20'>
                             <span>最终结构</span>
-                            <TextArea autoHeight grid={1} ref='result' height={300}></TextArea>
+                            <TextArea autoHeight grid={1} ref='result' height={300} />
                         </div>
                     </Card>
 
                 </Content>
                 <Sider style={{width: 400}}>
-                    <Card title="Props">
+                    <Card title='Props'>
                         <Form labelWidth={80} useDefaultSubmitBtn={false}>
                             {this.showProps()}
                         </Form>
                     </Card>
-                    <Card title="Rules">
-                        <Rules ref='rules' onChange={this.updateRules.bind(this)}></Rules>
+                    <Card title='Rules'>
+                        <Rules ref='rules' onChange={this.updateRules.bind(this)} />
                     </Card>
-                    <Card title="Messages">
-                        <Messages ref='messages' onChange={this.updateMessages.bind(this)}></Messages>
+                    <Card title='Messages'>
+                        <Messages ref='messages' onChange={this.updateMessages.bind(this)} />
                     </Card>
                 </Sider>
             </Layout>

@@ -29,7 +29,7 @@ class RadioGroup extends BaseComponent {
 
         this.addState({
             data: data,
-            value: props.value == undefined ? "" : props.value
+            value: props.value == undefined ? '' : props.value
         });
 
         this._lastChecked = null;
@@ -41,26 +41,26 @@ class RadioGroup extends BaseComponent {
      * @private
      */
     _rebuildData(data){
-        if(!data){
+        if (!data) {
             return null;
         }
-        if(Object.prototype.toString.apply(data) === '[object Array]'){
+        if (Object.prototype.toString.apply(data) === '[object Array]') {
             let one = data[0];
-            if(Object.prototype.toString.apply(one) === '[object String]'){
+            if (Object.prototype.toString.apply(one) === '[object String]') {
                 return data.map(function(item, index){
-                    let option = {id: index+"", text: item};
+                    let option = {id: index + '', text: item};
                     return option;
                 });
             }
-            if(Object.prototype.toString.apply(one) === '[object Object]'){
+            if (Object.prototype.toString.apply(one) === '[object Object]') {
                 return data;
             }
             return null;
         }
 
-        if(Object.prototype.toString.apply(data) === '[object Object]'){
+        if (Object.prototype.toString.apply(data) === '[object Object]') {
             let ret = [];
-            for(var id in data){
+            for (var id in data) {
                 let item = {id: id, text: data[id]};
                 ret.push(item);
             }
@@ -79,13 +79,13 @@ class RadioGroup extends BaseComponent {
      * @param item  {Object} 当前操作对象
      */
     handleChange(value, checked, event, item){
-        const { readOnly, disabled} = this.props;
+        const {readOnly, disabled} = this.props;
 
         if (readOnly || disabled) {
             return;
         }
 
-        if(this._lastChecked){
+        if (this._lastChecked) {
             this._lastChecked._node.updateState({
                 checked: false
             });
@@ -103,11 +103,11 @@ class RadioGroup extends BaseComponent {
      */
     handleTrigger(value){
         this.state.value = value;
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(value);
         }
 
-        this.emit("change", value);
+        this.emit('change', value);
     }
 
     getItem(value){
@@ -158,35 +158,38 @@ class RadioGroup extends BaseComponent {
         let data = this.state.data || [];
         let {valueField, textField} = this.props;
         let currentValue = this.state.value;
-        let name = this.props.name || "radio_"+new Date().getTime();
+        let name = this.props.name || 'radio_' + new Date().getTime();
         return data.map(function(item, index){
-            let value_key = valueField ? valueField : "id";
-            let text_key = textField ? textField : "text";
-            let value = item[value_key], text = item[text_key];
+            let valueKey = valueField || 'id';
+            let textKey = textField || 'text';
+            let value = item[valueKey];
+            let text = item[textKey];
             let checked = currentValue === value;
-            if(checked){
+            if (checked) {
                 this._lastChecked = item;
             }
 
-            return (<CheckBox key={index}
-                              disabled={this.props.disabled}
-                              readOnly={this.props.readOnly}
-                              ref={(ref)=>{this.items[value] = ref}}
-                              type="radio"
-                              value={value}
-                              label={text}
-                              checked={checked}
-                              item={item}
-                              name={name}
-                              onChange={this.handleChange.bind(this)}
-                ></CheckBox>);
+            return (
+                <CheckBox
+                    key={index}
+                    disabled={this.props.disabled}
+                    readOnly={this.props.readOnly}
+                    ref={(ref)=>{ this.items[value] = ref; }}
+                    type='radio'
+                    value={value}
+                    label={text}
+                    checked={checked}
+                    item={item}
+                    name={name}
+                    onChange={this.handleChange.bind(this)}
+                />);
         }, this);
     }
 
     componentWillMount(){
-        if(this.props.url){
+        if (this.props.url) {
             let scope = this;
-            Ajax.get(this.props.url, {}, function(data, err){
+            Ajax.get(this.props.url, {}, function(data){
                 scope.setState({
                     data: data
                 });
@@ -195,12 +198,12 @@ class RadioGroup extends BaseComponent {
     }
 
     render () {
-        let { className,layout } = this.props;
+        let {className, layout} = this.props;
         className = classNames(
             className,
             'cm-radio-group',
             {
-                stack: layout == "stack",
+                stack: layout === 'stack',
                 stick: this.props.stick
             }
         );
@@ -214,7 +217,7 @@ class RadioGroup extends BaseComponent {
 }
 
 RadioGroup.defaultProps = {
-    layout: "inline"
+    layout: 'inline'
 };
 
 RadioGroup.propTypes = {
@@ -265,7 +268,7 @@ RadioGroup.propTypes = {
      * @attribute layout
      * @type {String}
      */
-    layout: PropTypes.oneOf(["inline","stack"]),
+    layout: PropTypes.oneOf(['inline', 'stack']),
     /**
      * value字段
      * @attribute valueField
@@ -286,6 +289,6 @@ RadioGroup.propTypes = {
     onChange: PropTypes.func
 };
 
-FormControl.register(RadioGroup, "radio", "array");
+FormControl.register(RadioGroup, 'radio', 'array');
 
 export default RadioGroup;

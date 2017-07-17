@@ -10,7 +10,6 @@
  * @constructor
  */
 class Core {
-
     /**
      * 判断一个变量是否为某个类型的数据
      * @param obj
@@ -18,7 +17,7 @@ class Core {
      * @returns {boolean}
      */
     static isType(obj, type) {
-        return Object.prototype.toString.apply(obj) === '[object '+type+']';
+        return Object.prototype.toString.apply(obj) === '[object ' + type + ']';
     }
 
     /**
@@ -27,7 +26,7 @@ class Core {
      * @returns {boolean} 是否为数组
      */
     static isArray(obj){
-        return Core.isType(obj, "Array");
+        return Core.isType(obj, 'Array');
     }
 
     /**
@@ -36,7 +35,7 @@ class Core {
      * @returns {boolean} 是否为字符串
      */
     static isString(obj){
-        return Core.isType(obj, "String");
+        return Core.isType(obj, 'String');
     }
 
     /**
@@ -45,7 +44,7 @@ class Core {
      * @returns {boolean} 是否为数字
      */
     static isNumber(obj){
-        return Core.isType(obj, "Number");
+        return Core.isType(obj, 'Number');
     }
 
     /**
@@ -54,7 +53,7 @@ class Core {
      * @returns {boolean} 是否为对象
      */
     static isObject(obj){
-        return Core.isType(obj, "Object");
+        return Core.isType(obj, 'Object');
     }
 
     /**
@@ -63,7 +62,7 @@ class Core {
      * @returns {boolean} 是否为空
      */
     static isNull(obj){
-        return Core.isType(obj, "Null");
+        return Core.isType(obj, 'Null');
     }
 
     /**
@@ -72,7 +71,7 @@ class Core {
      * @returns {boolean} 是否为未定义
      */
     static isUndefined(obj){
-        return obj === undefined || Core.isType(obj, "Undefined");
+        return obj === undefined || Core.isType(obj, 'Undefined');
     }
 
     /**
@@ -81,7 +80,7 @@ class Core {
      * @returns {boolean} 是否为函数
      */
     static isFunction(fun){
-        return Core.isType(fun, "Function");
+        return Core.isType(fun, 'Function');
     }
 
     /**

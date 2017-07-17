@@ -4,15 +4,13 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
-import Core from "./Core";
-import FontIcon from "./FontIcon";
-import Button from "./Button";
-import Select from "./Select";
-import Input from "./Input";
+import FontIcon from './FontIcon';
+import Button from './Button';
+import Select from './Select';
+import Input from './Input';
 const Component = React.Component;
 
 
@@ -20,16 +18,12 @@ const Component = React.Component;
  * PagePrev Component
  */
 class PagePrev extends Component {
-    constructor (props) {
-        super(props);
-    }
-
     render() {
-        let className = classNames("prev",{
-            disabled: this.props.current == 1
+        let className = classNames('prev', {
+            disabled: this.props.current === 1
         });
-        return (<li onClick={this.props.onClick} className={className}><a href="javascript:void(0)">
-            <FontIcon icon="angle-left"/>
+        return (<li onClick={this.props.onClick} className={className}><a href='javascript:void(0)'>
+            <FontIcon icon='angle-left' />
         </a></li>);
     }
 }
@@ -38,14 +32,13 @@ class PagePrev extends Component {
  * PageNext Component
  */
 class PageNext extends Component {
-
     render() {
-        let className = classNames("next",{
+        let className = classNames('next', {
             disabled: this.props.disabled
         });
 
-        return (<li onClick={this.props.onClick} className={className}><a href="javascript:void(0)">
-            <FontIcon icon="angle-right"/>
+        return (<li onClick={this.props.onClick} className={className}><a href='javascript:void(0)'>
+            <FontIcon icon='angle-right' />
         </a></li>);
     }
 }
@@ -58,7 +51,9 @@ class PageItem extends Component {
         let className = classNames({
             active: this.props.active
         });
-        return (<li onClick={this.props.onClick} className={className}><a href="javascript:void(0)">{this.props.currentIndex}</a></li>);
+        return (<li onClick={this.props.onClick} className={className}>
+            <a href='javascript:void(0)'>{this.props.currentIndex}</a>
+        </li>);
     }
 }
 
@@ -77,7 +72,7 @@ class Pagination extends BaseComponent {
             pageSize: props.pageSize,
             total: props.total,
             displayedPages: 5,
-            displayInfo: this.props.displayInfo != undefined ?  this.props.displayInfo : true
+            displayInfo: this.props.displayInfo !== undefined ? this.props.displayInfo : true
         });
     }
 
@@ -88,17 +83,17 @@ class Pagination extends BaseComponent {
      */
     update(data) {
         let params = {};
-        if(data.pageSize != undefined){
+        if (data.pageSize != undefined) {
             params.pageSize = data.pageSize;
         }
-        if(data.displayedPages != undefined){
+        if (data.displayedPages != undefined) {
             params.displayedPages = data.displayedPages;
         }
-        if(data.total != undefined){
+        if (data.total != undefined) {
             params.total = data.total;
         }
 
-        if(data.current != undefined){
+        if (data.current != undefined) {
             params.current = data.current;
 
             let size = data.pageSize || this.state.pageSize;
@@ -106,13 +101,13 @@ class Pagination extends BaseComponent {
 
             if (params.current > this._calcPage(size, total)) {
                 this.setState(params);
-                this._changePageSize(parseInt(size), true);
+                this._changePageSize(parseInt(size, 10), true);
                 return;
             }
         }
 
         this.setState(params);
-        if(this.refs.pageNum){
+        if (this.refs.pageNum) {
             this.refs.pageNum.setValue(params.current);
         }
     }
@@ -150,8 +145,8 @@ class Pagination extends BaseComponent {
      * @method _selectPageSize
      * @private
      */
-    _selectPageSize(value, item){
-        this._changePageSize(parseInt(value));
+    _selectPageSize(value){
+        this._changePageSize(parseInt(value, 10));
     }
 
     /**
@@ -173,17 +168,17 @@ class Pagination extends BaseComponent {
                 current: current
             });
         }
-        if(this.refs.pageNum) {
+        if (this.refs.pageNum) {
             this.refs.pageNum.setValue(current);
         }
-        if(!preventCallback) {
+        if (!preventCallback) {
             if (this.props.onShowSizeChange) {
                 this.props.onShowSizeChange(current, size);
-                this.emit("showSizeChange", current, size);
+                this.emit('showSizeChange', current, size);
             } else {
                 this.goToPage();
             }
-        }else {
+        } else {
             this.goToPage();
         }
     }
@@ -204,17 +199,17 @@ class Pagination extends BaseComponent {
 
             if (!('current' in this.props)) {
                 this.setState({
-                    current: page,
+                    current: page
                 });
             }
 
             this.update({current: page});
-            if(this.props.onChange) {
+            if (this.props.onChange) {
                 this.props.onChange(page, this.state.pageSize);
             }
-            this.emit("change", page, this.state.pageSize);
+            this.emit('change', page, this.state.pageSize);
 
-            if(this.refs.pageNum) {
+            if (this.refs.pageNum) {
                 this.refs.pageNum.setValue(page);
             }
 
@@ -229,21 +224,21 @@ class Pagination extends BaseComponent {
      * @method goToPage
      */
     goToPage(){
-        var page = parseInt(this.refs.pageNum.getValue());
-        if(this._isValid(page) && page <= this._calcPage()) {
+        var page = parseInt(this.refs.pageNum.getValue(), 10);
+        if (this._isValid(page) && page <= this._calcPage()) {
             this._handleChange(page);
-        }else{
+        } else {
             window.setTimeout(()=>{
                 page = this._calcPage();
                 this.refs.pageNum.setValue(page);
-                if(page !== this.state.current){
+                if (page !== this.state.current) {
                     this._handleChange(page);
                 }
-            },0);
+            }, 0);
         }
     }
 
-    handlerInput(value){
+    handlerInput(){
         // if(value > this._calcPage()){
         //     value = this._calcPage();
         // }
@@ -257,7 +252,7 @@ class Pagination extends BaseComponent {
      * @param e
      */
     keyUp(e){
-        if(e.keyCode == 13){
+        if (e.keyCode === 13) {
             this.goToPage();
         }
     }
@@ -334,7 +329,9 @@ class Pagination extends BaseComponent {
         let displayedPages = state.displayedPages;
         let half = displayedPages / 2;
         return {
-            start: Math.ceil(state.current > half ? Math.max(Math.min(state.current - half, (pages - displayedPages)), 0) : 0),
+            start: Math.ceil(state.current > half
+                ? Math.max(Math.min(state.current - half, (pages - displayedPages)), 0)
+                : 0),
             end: Math.ceil(state.current > half ? Math.min(state.current + half, pages) : Math.min(half, pages))
         };
     }
@@ -345,67 +342,77 @@ class Pagination extends BaseComponent {
 
         let current = this.state.current;
         let interval = this._getInterval();
-        if(pages <= 9){
-            for(let i = 0; i < pages; i++){
-                let active = current === i+1;
-                pagerList.push((<PageItem key={i+1} onClick={this._handleChange.bind(this, i+1)} active={active} currentIndex={i+1}/>));
+        if (pages <= 9) {
+            for (let i = 0; i < pages; i++) {
+                let active = current === i + 1;
+                pagerList.push((<PageItem key={i + 1} onClick={this._handleChange.bind(this, i + 1)}
+                    active={active} currentIndex={i + 1} />));
             }
-        }else {
+        } else {
             let edges = 2;
             let end = Math.min(edges, interval.start);
             for (let i = 0; i < end; i++) {
-                pagerList.push(<PageItem key={i+1} onClick={this._handleChange.bind(this, i+1)}
-                                         currentIndex={i+1}/>);
+                pagerList.push(<PageItem key={i + 1} onClick={this._handleChange.bind(this, i + 1)}
+                    currentIndex={i + 1} />);
             }
-            if (edges < interval.start && (interval.start - edges != 1)) {
-                pagerList.push(<li key={"...1"} className="disabled"><span className="ellipse">•••</span></li>);
-            } else if (interval.start - edges == 1) {
-                pagerList.push(<PageItem key={edges+1} onClick={this._handleChange.bind(this, edges+1)}
-                                         currentIndex={edges+1} />);
+            if (edges < interval.start && (interval.start - edges !== 1)) {
+                pagerList.push(<li key={'...1'} className='disabled'><span className='ellipse'>•••</span></li>);
+            } else if (interval.start - edges === 1) {
+                pagerList.push(<PageItem key={edges + 1} onClick={this._handleChange.bind(this, edges + 1)}
+                    currentIndex={edges + 1} />);
             }
 
             for (let j = interval.start; j < interval.end; j++) {
-                let active = current === j+1;
-                pagerList.push(<PageItem key={j+1} onClick={this._handleChange.bind(this, j+1)}
-                                         currentIndex={j+1} active={active}/>);
+                let active = current === j + 1;
+                pagerList.push(<PageItem key={j + 1} onClick={this._handleChange.bind(this, j + 1)}
+                    currentIndex={j + 1} active={active} />);
             }
 
             if (interval.end < pages && edges > 0) {
-                if (pages - edges > interval.end && (pages - edges - interval.end != 1)) {
-                    pagerList.push(<li key={"...2"} className="disabled"><span className="ellipse">•••</span></li>);
-                } else if (pages - edges - interval.end == 1) {
-                    pagerList.push(<PageItem key={interval.end+1} onClick={this._handleChange.bind(this, interval.end+1)}
-                                             currentIndex={interval.end+1}/>);
+                if (pages - edges > interval.end && (pages - edges - interval.end !== 1)) {
+                    pagerList.push(<li key={'...2'} className='disabled'><span className='ellipse'>•••</span></li>);
+                } else if (pages - edges - interval.end === 1) {
+                    pagerList.push(<PageItem key={interval.end + 1}
+                        onClick={this._handleChange.bind(this, interval.end + 1)}
+                        currentIndex={interval.end + 1} />);
                 }
                 let begin = Math.max(pages - edges, interval.end);
                 for (let k = begin; k < pages; k++) {
-                    pagerList.push(<PageItem key={k+1} onClick={this._handleChange.bind(this, k+1)}
-                                             currentIndex={k+1}/>);
+                    pagerList.push(<PageItem key={k + 1} onClick={this._handleChange.bind(this, k + 1)}
+                        currentIndex={k + 1} />);
                 }
             }
         }
 
-        let className = classNames("cm-pagination", this.state.theme, this.props.className, this.props.shape);
+        let className = classNames('cm-pagination', this.state.theme, this.props.className, this.props.shape);
         return (
             <div className={className}>
-                <ul style={{float: "left"}} className="cm-pagination-num-list">
-                    <PagePrev current={current} onClick={this._prev.bind(this, null)}/>
+                <ul style={{float: 'left'}} className='cm-pagination-num-list'>
+                    <PagePrev current={current} onClick={this._prev.bind(this, null)} />
                     {pagerList}
-                    <PageNext current={current} onClick={this._next.bind(this, null)} disabled={current==pages}/>
+                    <PageNext current={current} onClick={this._next.bind(this, null)} disabled={current === pages} />
                 </ul>
-                {this.state.displayInfo ?
-                    <div className="pagination-info">
-                        <span className="page-code ml-5">
-                            <Select ref="pageSize" value={this.state.pageSize+""} onChange={this._selectPageSize.bind(this)} style={{width: 65}} data={[{id: "10", text: "10/页"},{id: "50", text: "50/页"},{id: "100", text: "100/页"}]}></Select>
+                {this.state.displayInfo
+                    ? <div className='pagination-info'>
+                        <span className='page-code ml-5'>
+                            <Select ref='pageSize' value={this.state.pageSize + ''}
+                                onChange={this._selectPageSize.bind(this)}
+                                style={{width: 65}} data={[
+                                    {id: '10', text: '10/页'},
+                                    {id: '50', text: '50/页'},
+                                    {id: '100', text: '100/页'}
+                                ]}
+                            />
                         </span>
-                        <span className="page-code mr-10">
+                        <span className='page-code mr-10'>
                             <span>到第</span>
-                            <Input ref="pageNum" type="number" autoComplete="off" value={this.state.current}
-                                   onKeyUp={this.keyUp.bind(this)}
-                                   onChange={this.handlerInput.bind(this)}></Input>
+                            <Input ref='pageNum' type='number' autoComplete='off' value={this.state.current}
+                                onKeyUp={this.keyUp.bind(this)}
+                                onChange={this.handlerInput.bind(this)}
+                            />
                             <span>/{pages}页</span>
                         </span>
-                        <Button theme="primary" flat={true} onClick={this.goToPage.bind(this, null)}>确定</Button>
+                        <Button theme='primary' flat onClick={this.goToPage.bind(this, null)}>确定</Button>
                     </div>
                     : null
                 }

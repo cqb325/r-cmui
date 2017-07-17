@@ -5,9 +5,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from "classnames";
-import BaseComponent from "./core/BaseComponent";
-import FontIcon from './FontIcon';
+import classNames from 'classnames';
+import BaseComponent from './core/BaseComponent';
 
 /**
  * Button 类
@@ -16,7 +15,6 @@ import FontIcon from './FontIcon';
  * @extend BaseComponent
  */
 class ButtonGroup extends BaseComponent {
-
     static propTypes = {
         /**
          * 自定义class
@@ -40,16 +38,16 @@ class ButtonGroup extends BaseComponent {
 
     itemBind(button){
         this.buttons.push(button);
-        button.on("click", ()=>{
-            if(!button.getActive()) {
+        button.on('click', ()=>{
+            if (!button.getActive()) {
                 this.buttons.forEach((btn)=> {
                     if (btn != button) {
                         btn.setActive(false);
                     } else {
-                        if(this.props.onSelect){
+                        if (this.props.onSelect) {
                             this.props.onSelect(btn);
                         }
-                        this.emit("select", btn);
+                        this.emit('select', btn);
                         btn.setActive(true);
                     }
                 });
@@ -59,23 +57,23 @@ class ButtonGroup extends BaseComponent {
 
     renderButtons(){
         return React.Children.map(this.props.children, (child)=>{
-            let componentName = "";
-            if(child.type){
-                if(child.type.name){
+            let componentName = '';
+            if (child.type) {
+                if (child.type.name) {
                     componentName = child.type.name;
-                }else{
+                } else {
                     let matches = child.type.toString().match(/function\s*([^(]*)\(/);
-                    if(matches){
+                    if (matches) {
                         componentName = matches[1];
                     }
                 }
             }
-            if(componentName === 'Button'){
+            if (componentName === 'Button') {
                 let props = Object.assign({
-                    "data-itemBind": this.itemBind.bind(this)
-                },child.props);
+                    'data-itemBind': this.itemBind.bind(this)
+                }, child.props);
                 return React.cloneElement(child, props);
-            }else {
+            } else {
                 return child;
             }
         });

@@ -1,14 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
-import PropTypes from 'prop-types';
 import FormControl from '../FormControl';
 import Form from '../Form';
 import Button from '../Button';
 
 class SimpleForm extends BaseComponent{
-
     constructor(props) {
         super(props);
 
@@ -27,9 +23,9 @@ class SimpleForm extends BaseComponent{
      * @param props
      */
     mergeProps(target, source, props){
-        if(props){
+        if (props) {
             props.forEach(function(prop){
-                if(source[prop] != undefined){
+                if (source[prop] !== undefined) {
                     target[prop] = source[prop];
                 }
             });
@@ -45,11 +41,11 @@ class SimpleForm extends BaseComponent{
     onChange(item, value, selectItem){
         item.value = value;
 
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(item, value, selectItem);
         }
 
-        this.emit("change", item, value, selectItem);
+        this.emit('change', item, value, selectItem);
     }
 
     /**
@@ -57,40 +53,42 @@ class SimpleForm extends BaseComponent{
      * @param items
      */
     renderItems(items){
-        if(items){
+        if (items) {
             return items.map((item)=>{
-                if(item.type === 'button'){
+                if (item.type === 'button') {
                     return <Button {...item} key={this.itemIndex++}>{item.label}</Button>;
                 }
-                if(item.type === "label"){
+                if (item.type === 'label') {
                     return <span key={this.itemIndex++} style={item.style} {...item.props}>{item.label}</span>;
                 }
-                if(item.type === "promote"){
+                if (item.type === 'promote') {
                     let style = item.style || {};
-                    if(this.state.data){
-                        if(this.state.data.labelWidth || (this.state.data.props && this.state.data.props.labelWidth)){
-                            style["paddingLeft"] = parseInt(this.state.data.labelWidth) + 8;
-                            if(this.state.data.props && this.state.data.props.labelWidth){
-                                style["paddingLeft"] = parseInt(this.state.data.props.labelWidth) + 8;
+                    if (this.state.data) {
+                        if (this.state.data.labelWidth || (this.state.data.props && this.state.data.props.labelWidth)) {
+                            style['paddingLeft'] = parseInt(this.state.data.labelWidth, 10) + 8;
+                            if (this.state.data.props && this.state.data.props.labelWidth) {
+                                style['paddingLeft'] = parseInt(this.state.data.props.labelWidth, 10) + 8;
                             }
                         }
                     }
                     delete item.style;
                     return <div key={this.itemIndex++} style={style} {...item}>{item.label}</div>;
                 }
-                if(item.type !== "row"){
-                    let itemProps = Object.assign({}, item.props||{});
-                    this.mergeProps(itemProps, item, ["name","type","rules","messages"]);
+                if (item.type !== 'row') {
+                    let itemProps = Object.assign({}, item.props || {});
+                    this.mergeProps(itemProps, item, ['name', 'type', 'rules', 'messages']);
                     itemProps.key = this.itemIndex++;
                     let initData = this.state.initData;
                     let val = initData[item.name];
-                    if(typeof itemProps.value === 'function'){
+                    if (typeof itemProps.value === 'function') {
                         val = itemProps.value(initData);
                     }
-                    itemProps.value = val == undefined ? itemProps.value : val;
-                    itemProps.value = (itemProps.value == undefined || itemProps.value == null) ? undefined : itemProps.value+"";
-                    return <FormControl {...itemProps} label={item.label} onChange={this.onChange.bind(this, item)}/>
-                }else{
+                    itemProps.value = val === undefined ? itemProps.value : val;
+                    itemProps.value = (itemProps.value === undefined || itemProps.value === null)
+                        ? undefined
+                        : itemProps.value + '';
+                    return <FormControl {...itemProps} label={item.label} onChange={this.onChange.bind(this, item)} />;
+                } else {
                     return this.renderFormRow(item);
                 }
             });
@@ -106,7 +104,7 @@ class SimpleForm extends BaseComponent{
         let items = this.renderItems(item.children);
         return <Form.Row {...item.props} key={this.itemIndex++}>
             {items}
-        </Form.Row>
+        </Form.Row>;
     }
 
     /**
@@ -167,11 +165,11 @@ class SimpleForm extends BaseComponent{
 
     render(){
         let formData = this.state.data;
-        let formProps = Object.assign({}, formData.props||{});
-        this.mergeProps(formProps, formData, ["action","method","encType"]);
-        return <Form ref="form" {...formProps}>
+        let formProps = Object.assign({}, formData.props || {});
+        this.mergeProps(formProps, formData, ['action', 'method', 'encType']);
+        return <Form ref='form' {...formProps}>
             {this.renderItems(formData.items)}
-        </Form>
+        </Form>;
     }
 }
 

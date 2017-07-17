@@ -8,7 +8,6 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from './core/BaseComponent';
-import shallowEqual from './utils/shallowEqual';
 import FontIcon from './FontIcon';
 import velocity from 'velocity';
 import UUID from './utils/UUID';
@@ -80,13 +79,13 @@ class Item extends BaseComponent{
         });
     }
 
-    onClick(event){
-        if(this._animating){
+    onClick(){
+        if (this._animating) {
             return false;
         }
-        if(!this.active){
+        if (!this.active) {
             this.open();
-        }else{
+        } else {
             this.collapse();
         }
     }
@@ -97,21 +96,24 @@ class Item extends BaseComponent{
     open(){
         this._animating = true;
         let body = ReactDOM.findDOMNode(this.refs.body);
-        if(this.props.onOpen){
+        if (this.props.onOpen) {
             this.props.onOpen(this);
         }
-        velocity(body, "slideDown", {duration: 300, complete: ()=>{
-            this.active = true;
-            if(this._isMounted){
-                this.setState({
-                    active: true
-                });
+        velocity(body, 'slideDown', {
+            duration: 300,
+            complete: ()=>{
+                this.active = true;
+                if (this._isMounted) {
+                    this.setState({
+                        active: true
+                    });
+                }
+                this._animating = false;
+                if (this.props.onOpened) {
+                    this.props.onOpened(this);
+                }
             }
-            this._animating = false;
-            if(this.props.onOpened){
-                this.props.onOpened(this);
-            }
-        }});
+        });
     }
 
     /**
@@ -120,21 +122,24 @@ class Item extends BaseComponent{
     collapse(){
         this._animating = true;
         let body = ReactDOM.findDOMNode(this.refs.body);
-        if(this.props.onCollapse){
+        if (this.props.onCollapse) {
             this.props.onCollapse(this);
         }
-        velocity(body, "slideUp", {duration: 300, complete: ()=>{
-            this.active = false;
-            if(this._isMounted){
-                this.setState({
-                    active: false
-                });
+        velocity(body, 'slideUp', {
+            duration: 300,
+            complete: ()=>{
+                this.active = false;
+                if (this._isMounted) {
+                    this.setState({
+                        active: false
+                    });
+                }
+                this._animating = false;
+                if (this.props.onCollapsed) {
+                    this.props.onCollapsed(this);
+                }
             }
-            this._animating = false;
-            if(this.props.onCollapsed){
-                this.props.onCollapsed(this);
-            }
-        }});
+        });
     }
 
     componentWillUnmount(){
@@ -144,7 +149,7 @@ class Item extends BaseComponent{
     componentDidMount(){
         this._isMounted = true;
         this.props.parent.items.push(this);
-        if(this.props.open){
+        if (this.props.open) {
             this.open();
         }
     }
@@ -152,14 +157,14 @@ class Item extends BaseComponent{
     render() {
         let {className, style, icon, title, children} = this.props;
 
-        className = classNames("cm-accordion-item",className, {
-            "cm-accordion-item-active": this.state.active
+        className = classNames('cm-accordion-item', className, {
+            'cm-accordion-item-active': this.state.active
         });
-        icon = icon ? <FontIcon className="cm-accordion-item-icon" icon={icon}></FontIcon> : null;
+        icon = icon ? <FontIcon className='cm-accordion-item-icon' icon={icon} /> : null;
         return (
             <li className={className} style={style}>
-                <div className="cm-accordion-item-head" onClick={this.onClick.bind(this)}>{icon}{title}</div>
-                <div className="cm-accordion-item-body" ref="body">
+                <div className='cm-accordion-item-head' onClick={this.onClick.bind(this)}>{icon}{title}</div>
+                <div className='cm-accordion-item-body' ref='body'>
                     {children}
                 </div>
             </li>
@@ -174,7 +179,6 @@ class Item extends BaseComponent{
  * @extend BaseComponent
  */
 class Accordion extends BaseComponent {
-
     propTypes: {
         /**
          * 展开回调函数
@@ -215,7 +219,7 @@ class Accordion extends BaseComponent {
      * @param index
      */
     activeByIndex(index){
-        if(this.items[index]){
+        if (this.items[index]) {
             this.items[index].open();
         }
     }
@@ -226,11 +230,11 @@ class Accordion extends BaseComponent {
      * @return {void}
      */
     activeItem(item){
-        if(typeof item == "string"){
+        if (typeof item == 'string') {
             item = this.getItem(item);
         }
 
-        if(item){
+        if (item) {
             item.open();
         }
     }
@@ -241,8 +245,8 @@ class Accordion extends BaseComponent {
      * @return {[type]}     [description]
      */
     getItem(key){
-        for(let i in this.items){
-            if(this.items[i].key === key){
+        for (let i in this.items) {
+            if (this.items[i].key === key) {
                 return this.items[i];
             }
         }
@@ -254,16 +258,16 @@ class Accordion extends BaseComponent {
      * @param item
      */
     onOpen(item){
-        if(this.lastOpenItem){
+        if (this.lastOpenItem) {
             this.lastOpenItem.collapse();
         }
         this.lastOpenItem = item;
 
-        if(this.props.onOpen){
+        if (this.props.onOpen) {
             this.props.onOpen(item);
         }
 
-        this.emit("open", item);
+        this.emit('open', item);
     }
 
     /**
@@ -272,10 +276,10 @@ class Accordion extends BaseComponent {
      */
     onCollapse(item){
         this.lastOpenItem = null;
-        if(this.props.onCollapse){
+        if (this.props.onCollapse) {
             this.props.onCollapse(item);
         }
-        this.emit("collapse", item);
+        this.emit('collapse', item);
     }
 
     renderItems(){
@@ -295,16 +299,16 @@ class Accordion extends BaseComponent {
     }
 
     render(){
-        let className = classNames("cm-accordion", this.state.theme, this.props.className,{
-          "cm-accordion-bordered": this.props.bordered
+        let className = classNames('cm-accordion', this.state.theme, this.props.className, {
+            'cm-accordion-bordered': this.props.bordered
         });
 
         let items = this.renderItems();
 
         return (
             <div className={className} style={this.props.style}>
-                <ul className="cm-accordion-wrap">
-                {items}
+                <ul className='cm-accordion-wrap'>
+                    {items}
                 </ul>
             </div>
         );

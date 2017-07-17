@@ -31,18 +31,18 @@ class Upload extends BaseComponent {
         });
     }
 
-    selectedFile(event){
+    selectedFile(){
         let file = ReactDOM.findDOMNode(this.refs.file);
         let path = file.value;
-        let index = path.lastIndexOf("\\");
-        path = path.substr(index+1);
+        let index = path.lastIndexOf('\\');
+        path = path.substr(index + 1);
         this.setState({
             fileName: path
         });
 
-        Dom.attr(file, "title", path);
+        Dom.attr(file, 'title', path);
 
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(path, file);
         }
     }
@@ -54,21 +54,22 @@ class Upload extends BaseComponent {
     render(){
         let {disabled, readOnly, className, style, grid} = this.props;
 
-        className = classNames("cm-upload", className, getGrid(grid), {
+        className = classNames('cm-upload', className, getGrid(grid), {
             disabled: disabled || readOnly
         });
 
-        let icon = "upload";
+        let icon = 'upload';
 
         let txt = this.state.fileName || this.props.placeHolder;
-        txt = (<div className="cm-upload-fileName">{txt}</div>);
+        txt = (<div className='cm-upload-fileName'>{txt}</div>);
         return (
             <div className={className} style={style}>
-                <input type="file" name={this.props.name} ref="file" onChange={this.selectedFile.bind(this)} className="cm-upload-pick-helper"/>
-                <div className="cm-upload-pick-btn">
+                <input type='file' name={this.props.name} ref='file'
+                    onChange={this.selectedFile.bind(this)} className='cm-upload-pick-helper' />
+                <div className='cm-upload-pick-btn'>
                     {txt}
                 </div>
-                <FontIcon icon={icon} title="上传" ref="uploadBtn"></FontIcon>
+                <FontIcon icon={icon} title='上传' ref='uploadBtn' />
             </div>
         );
     }
@@ -119,6 +120,6 @@ Upload.propTypes = {
     placeholder: PropTypes.string
 };
 
-FormControl.register(Upload, "file");
+FormControl.register(Upload, 'file');
 
 export default Upload;

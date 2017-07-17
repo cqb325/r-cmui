@@ -30,7 +30,7 @@ class AutoComplete extends BaseComponent {
         super(props);
 
         this.selectedItems = {};
-        let valueField = props.valueField || "id";
+        let valueField = props.valueField || 'id';
         let data = this._rebuildData(props.data, props.value, valueField);
         this.data = data;
 
@@ -56,24 +56,24 @@ class AutoComplete extends BaseComponent {
      * @private
      */
     _rebuildData(data, defaultValue, valueField){
-        if(!data){
+        if (!data) {
             return null;
         }
-        if(Core.isArray(data)){
+        if (Core.isArray(data)) {
             let one = data[0];
-            if(Core.isString(one)){
+            if (Core.isString(one)) {
                 return data.map(function(item){
                     let option = {id: item, text: item};
-                    if(item == defaultValue){
+                    if (item == defaultValue) {
                         this.selectedItems[item] = option;
                     }
                     return option;
                 });
             }
-            if(Core.isObject(one)){
-                if(defaultValue != undefined) {
+            if (Core.isObject(one)) {
+                if (defaultValue != undefined) {
                     data.forEach(function (item) {
-                        if(item[valueField] == defaultValue){
+                        if (item[valueField] == defaultValue) {
                             this.selectedItems[defaultValue] = item;
                         }
                     }, this);
@@ -83,11 +83,11 @@ class AutoComplete extends BaseComponent {
 
             return null;
         }
-        if(Core.isObject(data)){
+        if (Core.isObject(data)) {
             let ret = [];
-            for(var id in data){
+            for (var id in data) {
                 let item = {id: id, text: data[id]};
-                if(id == defaultValue){
+                if (id == defaultValue) {
                     this.selectedItems[defaultValue] = item;
                 }
                 ret.push(item);
@@ -107,32 +107,37 @@ class AutoComplete extends BaseComponent {
      */
     _renderValues(){
         let item = this.selectedItems[this.state.value];
-        let textField = this.props.textField || "text",
-            label = item ? item[textField] : (this.props.placeholder ? this.props.placeholder+"" : ""),
-            className = classNames("cm-select-value", {
-                placeholder: !item && this.props.placeholder
-            });
+        let textField = this.props.textField || 'text';
+        let label = item ? item[textField] : (this.props.placeholder ? this.props.placeholder + '' : '');
+        let className = classNames('cm-select-value', {
+            placeholder: !item && this.props.placeholder
+        });
 
-        return(<Input type="text" className={className} name={this.props.name} value={label} trigger="change" onChange={(value)=>{
-            if(this.timer){
-                window.clearTimeout(this.timer);
-            }
-            this.timer = setTimeout(()=>{
-                this.filter(value);
-                this.timer = null;
-            },200);
-        }}/>);
+        return (<Input type='text' className={className}
+            name={this.props.name}
+            value={label}
+            trigger='change'
+            onChange={(value)=>{
+                if (this.timer) {
+                    window.clearTimeout(this.timer);
+                }
+                this.timer = setTimeout(()=>{
+                    this.filter(value);
+                    this.timer = null;
+                }, 200);
+            }}
+        />);
     }
 
     filter(value){
-        if(this.props.filterurl){
+        if (this.props.filterurl) {
             let scope = this;
             Ajax.get(this.props.filterurl, {keyword: value}, function(data){
-                if(data) {
+                if (data) {
                     scope.setState({data: data});
                 }
             });
-        }else {
+        } else {
             if (!this.data) {
                 return;
             }
@@ -157,14 +162,14 @@ class AutoComplete extends BaseComponent {
      * @private
      */
     _selectItem(item){
-        let valueField = this.props.valueField || "id";
+        let valueField = this.props.valueField || 'id';
 
         let value = null;
-        if(!item){
+        if (!item) {
             if (!this.props.multi) {
                 this.hideOptions();
             }
-        }else {
+        } else {
             if (this.props.multi) {
                 this.selectedItems[item[valueField]] = item;
                 value = this.getSelectedValues();
@@ -180,11 +185,11 @@ class AutoComplete extends BaseComponent {
             value: value
         });
 
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(value, item);
         }
 
-        this.emit("change", value, item);
+        this.emit('change', value, item);
     }
 
     /**
@@ -193,14 +198,14 @@ class AutoComplete extends BaseComponent {
      * @returns {string}
      */
     getSelectedValues(){
-        if(this.selectedItems){
+        if (this.selectedItems) {
             let ret = [];
-            for(let value in this.selectedItems){
+            for (let value in this.selectedItems) {
                 ret.push(value);
             }
-            return ret.join(",");
+            return ret.join(',');
         }
-        return "";
+        return '';
     }
 
     getValue(){
@@ -208,13 +213,13 @@ class AutoComplete extends BaseComponent {
     }
 
     setValue(value){
-        let valueField = this.props.valueField || "id";
+        let valueField = this.props.valueField || 'id';
         let data = this.state.data;
-        if(value == null || value == undefined || value == ""){
+        if (value == null || value == undefined || value == '') {
             this.selectedItems = {};
             this.setState({value});
         }
-        if(value != undefined) {
+        if (value != undefined) {
             for (let i in data) {
                 let item = data[i];
                 if (item[valueField] == value) {
@@ -233,36 +238,36 @@ class AutoComplete extends BaseComponent {
      * @private
      */
     _renderOptions(){
-        let {disabled, readOnly, textField, valueField, optionsTpl} = this.props;
+        let {textField, valueField, optionsTpl} = this.props;
 
         let data = this.state.data;
-        if(!data){
-            return "";
+        if (!data) {
+            return '';
         }
         let ret = [];
         if (!this.props.multi && this.props.hasEmptyOption) {
             ret.push(<li key={-1} onClick={this._selectItem.bind(this, null)}>
-                <a href="javascript:void(0)">
-					{this.props.choiceText || "--请选择--"}
+                <a href='javascript:void(0)'>
+                    {this.props.choiceText || '--请选择--'}
                 </a>
             </li>);
         }
         data.forEach(function(item, index){
-            textField = textField || "text";
-            valueField = valueField || "id";
-            let text = item[textField],
-                value = item[valueField];
+            textField = textField || 'text';
+            valueField = valueField || 'id';
+            let text = item[textField];
+            let value = item[valueField];
             let liClassName = classNames({
                 active: !!this.selectedItems[value]
             });
 
             let html = text;
-            if(optionsTpl){
+            if (optionsTpl) {
                 html = substitute(optionsTpl, item);
             }
             ret.push(<li className={liClassName} key={index} onClick={this._selectItem.bind(this, item)}>
-                <a href="javascript:void(0)">
-                    <span dangerouslySetInnerHTML={{__html: html}}></span>
+                <a href='javascript:void(0)'>
+                    <span dangerouslySetInnerHTML={{__html: html}} />
                 </a>
             </li>);
         }, this);
@@ -286,15 +291,15 @@ class AutoComplete extends BaseComponent {
         if (this.props.readOnly || this.props.disabled) {
             return;
         }
-        if(this.state.active){
-            //this.hideOptions();
+        if (this.state.active) {
+            // this.hideOptions();
             return;
         }
 
         let options = ReactDOM.findDOMNode(this.refs.options);
         options.style.display = 'block';
 
-        let container = Dom.closest(options, ".cm-select");
+        let container = Dom.closest(options, '.cm-select');
         let offset = Dom.getOuterHeight(options) + 5;
         let dropup = Dom.overView(container, offset);
 
@@ -320,7 +325,7 @@ class AutoComplete extends BaseComponent {
         this.unbindClickAway();
 
         let time = 500;
-        if(this.isLtIE9()){
+        if (this.isLtIE9()) {
             time = 0;
         }
 
@@ -341,15 +346,15 @@ class AutoComplete extends BaseComponent {
         this.data = data;
         this.setState({
             data: data,
-            value: ""
+            value: ''
         });
     }
 
     componentWillMount(){
-        if(this.props.url){
+        if (this.props.url) {
             let scope = this;
             Ajax.get(this.props.url, {}, function(data){
-                if(data) {
+                if (data) {
                     scope.setData(data);
                 }
             });
@@ -358,7 +363,7 @@ class AutoComplete extends BaseComponent {
 
     render(){
         let {className, disabled, readOnly, style, grid} = this.props;
-        className = classNames("cm-select", "cm-autocomplete", getGrid(grid), {
+        className = classNames('cm-select', 'cm-autocomplete', getGrid(grid), {
             active: this.state.active,
             disabled: disabled || readOnly,
             dropup: this.state.dropup,
@@ -367,13 +372,13 @@ class AutoComplete extends BaseComponent {
 
         let text = this._renderValues();
         let options = this._renderOptions();
-        return(
+        return (
             <div className={className} style={style} onClick={this.showOptions}>
                 {text}
-                <span className="cm-select-cert"></span>
+                <span className='cm-select-cert' />
 
-                <div className="cm-select-options-wrap">
-                    <div ref="options" className="cm-select-options">
+                <div className='cm-select-options-wrap'>
+                    <div ref='options' className='cm-select-options'>
                         <ul>{options}</ul>
                     </div>
                 </div>
@@ -453,6 +458,6 @@ AutoComplete.propTypes = {
     placeholder: PropTypes.string
 };
 
-FormControl.register(AutoComplete, "autocomplete");
+FormControl.register(AutoComplete, 'autocomplete');
 
 export default AutoComplete;
