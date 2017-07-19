@@ -23,7 +23,9 @@ class Demo extends BaseDemo{
         return (
             <div>
                 <div className='code-box-demo'>
-                    <Tree data={treeData} enableCheckbox enableSmartCheckbox />
+                    <Tree data={treeData} ref='tree' enableCheckbox enableSmartCheckbox onCheck={()=>{
+                        console.log(this.refs.tree.getAllChecked());
+                    }} />
                 </div>
                 <div className='code-box-desc'>
                     <div className='code-box-title'>基本用法</div>

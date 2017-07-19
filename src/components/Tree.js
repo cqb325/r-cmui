@@ -481,8 +481,19 @@ class Tree extends BaseComponent {
      */
     setSubChecked(item) {
         if (item.children && item.children.length) {
+            let checkedItems = this.checkedItems;
             item.children.forEach(function(child) {
                 child._checked = item._checked;
+
+                if (child._checked === 0) {
+                    delete checkedItems[child.id];
+                }
+                if (child._checked === 1) {
+                    checkedItems[child.id] = child;
+                }
+                if (child._checked === 2) {
+                    delete checkedItems[child.id];
+                }
                 child._node.updateState();
             });
         }
@@ -1020,6 +1031,16 @@ class Tree extends BaseComponent {
 
         if (checked !== parent._checked) {
             parent._checked = checked;
+            let checkedItems = this.checkedItems;
+            if (parent._checked === 0) {
+                delete checkedItems[parent.id];
+            }
+            if (parent._checked === 1) {
+                checkedItems[parent.id] = parent;
+            }
+            if (parent._checked === 2) {
+                delete checkedItems[parent.id];
+            }
             parent._node.updateState();
             this.updateParentCheckStatus(parent);
         }
