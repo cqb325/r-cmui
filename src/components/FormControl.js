@@ -285,8 +285,8 @@ class FormControl extends BaseComponent {
             if (typeof url === 'function') {
                 url = url();
             } else {
-                url = this._URLParse(url);
-                url = this._rebuildURL(url, {name: value});
+                url = this._URLParse(url, {name: value});
+                url = this._rebuildURL(url);
             }
 
             result = this.validByRemote(value, url, messages);
@@ -370,7 +370,7 @@ class FormControl extends BaseComponent {
             url: url,
             type: 'GET',
             dataType: 'text',
-            async: 'false',
+            async: false,
             success: function(ret){
                 remoteRet = ret === 'true';
             },

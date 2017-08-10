@@ -8,6 +8,7 @@ import BaseComponent from './core/BaseComponent';
 import PropTypes from 'prop-types';
 import shallowEqual from './utils/shallowEqual';
 import Ajax from './core/Ajax';
+import UUID from './utils/UUID';
 
 /**
  * TreeNode 类
@@ -274,11 +275,11 @@ class TreeSubNodes extends BaseComponent{
             this.props.parent._subNodes = this;
         }
 
-        let nodes = items.map(function(item, index) {
+        let nodes = items.map(function(item) {
             item._parent = this.props.parent;
             return (
                 <TreeNode
-                    key={index}
+                    key={UUID.v4()}
                     item={item}
                     onSelect={this.props.onSelect}
                     onOpenClose={this.props.onOpenClose}
@@ -412,7 +413,7 @@ class Tree extends BaseComponent {
             this.selectedItem = item;
 
             if (this.props.onSelect) {
-                this.props.onSelect(item);
+                this.props.onSelect(item, this);
             }
 
             this.emit('select', item);
@@ -427,7 +428,7 @@ class Tree extends BaseComponent {
      */
     _openClose(item) {
         if (this.props.onOpen) {
-            this.props.onOpen(item);
+            this.props.onOpen(item, this);
         }
         this.emit('open', item);
     }
@@ -455,7 +456,7 @@ class Tree extends BaseComponent {
         }
 
         if (this.props.onCheck) {
-            this.props.onCheck(item);
+            this.props.onCheck(item, this);
         }
         this.emit('check', item);
     }
@@ -527,7 +528,7 @@ class Tree extends BaseComponent {
         }
 
         if (this.props.onCheck) {
-            this.props.onCheck(item);
+            this.props.onCheck(item, this);
         }
         this.emit('check', item);
     }
@@ -1054,6 +1055,7 @@ class Tree extends BaseComponent {
             let scope = this;
             this.req = Ajax.get(this.state.url, {}, function(data) {
                 if (data) {
+                    scope._reBuildData(data);
                     scope.setState({
                         data: data
                     });
@@ -1076,6 +1078,7 @@ class Tree extends BaseComponent {
      */
     componentWillReceiveProps (nextProps) {
         if (!shallowEqual(nextProps.data, this.props.data)) {
+            this._reBuildData(nextProps.data);
             this.setState({ data: nextProps.data });
         }
     }
@@ -1092,6 +1095,7 @@ class Tree extends BaseComponent {
             parent = this.getItem(parent);
         }
         if (parent) {
+            this._reBuildData(json);
             if (parent.children) {
                 parent.children = parent.children.concat(json);
                 parent._subNodes.updateState(parent.children);
@@ -1101,6 +1105,20 @@ class Tree extends BaseComponent {
             }
             cback ? cback(this) : false;
         }
+    }
+
+    /**
+     * 设置数据
+     * @param {[type]} data [description]
+     */
+    setData(data){
+        this.idData = {};
+        this._reBuildData(data);
+        this.selectedItem = null;
+        this.checkedItems = {};
+        this.setState({
+            data: data
+        });
     }
 
     render() {

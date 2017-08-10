@@ -102,7 +102,7 @@ class CheckBoxGroup extends BaseComponent {
         return data.map(function(item, index){
             let valueKey = valueField || 'id';
             let textKey = textField || 'text';
-            let value = item[valueKey];
+            let value = item[valueKey] + '';
             let text = item[textKey];
             let checked = values.indexOf(value) != -1;
             item._checked = checked;

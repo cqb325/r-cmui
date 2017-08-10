@@ -13,8 +13,8 @@ class Demo extends BaseDemo{
                         <Button disabled className='ml-10'>Default</Button>
                     </div>
                     <div className='mt-15'>
-                        <Button theme='primary' icon='cloud' />
-                        <Button theme='primary' disabled icon='cloud' className='ml-10' />
+                        <Button theme='primary' icon='cloud' circle />
+                        <Button theme='primary' disabled icon='cloud' className='ml-10' circle />
                     </div>
                     <div className='mt-15'>
                         <Button theme='primary' raised>Raised</Button>

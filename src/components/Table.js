@@ -456,7 +456,7 @@ class Row extends BaseComponent{
             }
             if (col.type === 'checkbox'){
                 return <td data-row={this.props.row} data-col={index} key={index}>
-                    <CheckBox ref='checkbox' checked={false} onChange={this.checkRow.bind(this)} />
+                    <CheckBox key={UUID.v4()} ref='checkbox' checked={false} onChange={this.checkRow.bind(this)} />
                 </td>;
             }
             if (col.type === 'index'){

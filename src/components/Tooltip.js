@@ -22,7 +22,8 @@ class Tooltip extends BaseComponent {
 
         this.addState({
             title: props.title,
-            theme: props.theme
+            theme: props.theme,
+            show: false
         });
 
         // 鼠标移走后延迟隐藏
@@ -87,6 +88,19 @@ class Tooltip extends BaseComponent {
      */
     hide(){
         this.refs.trigger.setPopupVisible(false);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if (nextProps.title !== this.props.title) {
+            this.setTitle(nextProps.title);
+        }
+        if (nextProps.show !== this.props.show) {
+            if (nextProps.show) {
+                this.show();
+            } else {
+                this.hide();
+            }
+        }
     }
 
     render(){

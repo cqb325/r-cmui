@@ -48,7 +48,7 @@ class CheckBox extends BaseComponent {
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps.checked != this.state.checked) {
+        if (nextProps.checked != this.props.checked) {
             this.setState({
                 checked: nextProps.checked
             });
@@ -76,6 +76,9 @@ class CheckBox extends BaseComponent {
      * @param state {Object} state对象
      */
     updateState(state){
+        if (this.state.disabled) {
+            return;
+        }
         this.setState(state);
     }
 

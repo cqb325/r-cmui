@@ -255,7 +255,6 @@ class DateRange extends BaseComponent {
         if (this.props.onSelected) {
             this.props.onSelected(this._selectedDate[0], this._selectedDate[1]);
         }
-        this._selectedDate = [];
 
         if (this.props.onChange) {
             let sep = this.props.sep || '~';
@@ -263,6 +262,8 @@ class DateRange extends BaseComponent {
             let end = moment(this._selectedDate[1]).format('YYYY-MM-DD');
             this.props.onChange(start + sep + end);
         }
+
+        this._selectedDate = [];
     }
 
     /**

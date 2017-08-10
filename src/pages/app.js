@@ -23,10 +23,13 @@ import routers from '../routers/routers';
 // )
 // // pages
 // import Button from './Button';
+let router;
 
-let gotoPage;
+let gotoPage = function(item){
+    router.history.push(item.props.href);
+};
 
-let router = render((
+router = render((
     <Router>
         <div style={{height: '100%'}}>
             <Layout className='layout-wrap'>
@@ -40,6 +43,7 @@ let router = render((
                                 <Menu.Item href='/checkbox'>CheckBox</Menu.Item>
                                 <Menu.Item href='/tree'>Tree</Menu.Item>
                                 <Menu.Item href='/form'>Form</Menu.Item>
+                                <Menu.Item href='/card'>Card</Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
@@ -51,8 +55,3 @@ let router = render((
         </div>
     </Router>
 ), document.getElementById('app'));
-
-
-gotoPage = function(item){
-    router.history.push(item.props.href);
-};

@@ -86,7 +86,10 @@ class ButtonGroup extends BaseComponent {
         const className = classNames(
             this.props.className,
             'cm-button-group',
-            this.props.size
+            this.props.size,
+            {
+                'cm-button-group-circle': this.props.circle
+            }
         );
 
         var btns = this.renderButtons();

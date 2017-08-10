@@ -10,17 +10,17 @@ class Demo extends BaseDemo{
                 <div className='code-box-demo'>
                     <div>
                         <Button theme='default' className='mr-5'>Default</Button>
-                        <Button theme='primary' className='mr-5'>Primary</Button>
+                        <Button theme='primary' className='mr-5' circle>Primary</Button>
                         <Button theme='success' className='mr-5'>Success</Button>
                     </div>
                     <div className='mt-15'>
                         <Button theme='default' size='large' className='mr-5'>Default</Button>
-                        <Button theme='primary' size='large' className='mr-5'>Primary</Button>
+                        <Button theme='primary' size='large' className='mr-5' circle>Primary</Button>
                         <Button theme='success' size='large' className='mr-5'>Success</Button>
                     </div>
                     <div className='mt-15'>
                         <Button theme='default' size='small' className='mr-5'>Default</Button>
-                        <Button theme='primary' size='small' className='mr-5'>Primary</Button>
+                        <Button theme='primary' size='small' className='mr-5' circle>Primary</Button>
                         <Button theme='success' size='small' className='mr-5'>Success</Button>
                     </div>
                 </div>

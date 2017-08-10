@@ -26,7 +26,7 @@ class ArrowSteps extends BaseComponent {
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps.current !== this.state.current) {
+        if (nextProps.current !== this.props.current) {
             this.setState({
                 current: nextProps.current
             });

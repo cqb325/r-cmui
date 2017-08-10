@@ -27,6 +27,11 @@ class Progress extends BaseComponent {
         });
     }
 
+    /**
+     * 更新值
+     * @param  {[type]} value [description]
+     * @return {[type]}       [description]
+     */
     update(value){
         if (this._isMounted) {
             this.setState({
@@ -35,14 +40,34 @@ class Progress extends BaseComponent {
         }
     }
 
+    /**
+     * 获取当前值
+     * @return {[type]} [description]
+     */
     getValue(){
         return this.state.value;
     }
 
+    /**
+     * 设置当前值
+     * @param {[type]} value [description]
+     */
+    setValue(value){
+        this.update(value);
+    }
+
+    /**
+     * 获取最大值
+     * @return {[type]} [description]
+     */
     getMax(){
         return this.state.max;
     }
 
+    /**
+     * 获取最小值
+     * @return {[type]} [description]
+     */
     getMin(){
         return this.state.min;
     }
@@ -108,6 +133,13 @@ class Progress extends BaseComponent {
                 />
             </svg>
         );
+    }
+
+    componentWillReceiveProps (nextProps) {
+        let value = nextProps.value;
+        if (value !== this.props.value) {
+            this.setState({ value });
+        }
     }
 
     render(){

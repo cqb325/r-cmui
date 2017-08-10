@@ -12,6 +12,18 @@ a:focus{
   outline: none;
 }
 .cm-button-group{
+    &.cm-button-group-circle{
+      .cm-button{
+          &:first-child{
+            border-top-left-radius: 24px;
+            border-bottom-left-radius: 24px;
+          }
+          &:last-child{
+            border-top-right-radius: 24px;
+            border-bottom-right-radius: 24px;
+          }
+      }
+    }
   .cm-button{
     border-radius: 0;
     -webkit-box-shadow: none;
@@ -20,6 +32,9 @@ a:focus{
     border-top: 1px solid #53b6ff!important;
     border-bottom: 1px solid #53b6ff!important;
     border-left: 1px solid #53b6ff!important;
+    &.cm-button-icon-only{
+        padding: 4px 12px;
+    }
     &:first-child{
       border-top-left-radius: 2px;
       border-bottom-left-radius: 2px;
@@ -30,6 +45,10 @@ a:focus{
       border-right: 1px solid #53b6ff!important;
     }
     &.active{
+      &.default{
+          background: @color-blue;
+          color: #fff;
+      }
       &.primary{
         background: @color-blue-dark;
       }
@@ -57,7 +76,7 @@ a:focus{
 }
 .cm-button {
   position: relative;
-  padding: 4px 15px;
+  padding: 4px 12px;
   -webkit-user-select: none;
   display: inline-block;
   cursor: pointer;
@@ -79,6 +98,14 @@ a:focus{
   -moz-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 
+  &.cm-button-circle{
+    border-radius: 24px;
+  }
+
+  &.cm-button-icon-only{
+    padding: 4px 6px;
+  }
+
   &.large{
     padding: 6px 15px 6px 15px;
     font-size: 14px;
@@ -95,10 +122,10 @@ a:focus{
   }
   i.fa{
     &.left {
-      margin-right: 5px;
+    //   margin-right: 5px;
     }
     &.right {
-      margin-left: 5px;
+    //   margin-left: 5px;
     }
   }
   &.cm-iconButton{

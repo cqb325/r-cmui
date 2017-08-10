@@ -51,6 +51,18 @@ class Card extends BaseComponent {
         );
     }
 
+    componentWillReceiveProps(nextProps){
+        let params = {};
+        if (nextProps.title !== this.props.title) {
+            params.title = nextProps.title;
+        }
+        if (nextProps.content !== this.props.content) {
+            params.content = nextProps.content;
+        }
+
+        this.setState(params);
+    }
+
     render(){
         let {className, style} = this.props;
         className = classNames('cm-card', className, {
