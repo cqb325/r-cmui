@@ -9,7 +9,7 @@ class Demo extends BaseDemo{
             <div>
                 <div className='code-box-demo'>
                     <div>
-                        <ButtonGroup>
+                        <ButtonGroup circle>
                             <Button>Default</Button>
                             <Button>Default</Button>
                             <Button>Default</Button>

@@ -51,6 +51,20 @@ class Switch extends BaseComponent {
         this.emit('change', value);
     }
 
+    getValue(){
+        let value = this.state.checked ? 1 : 0;
+        return value;
+    }
+
+    setValue(checked){
+        if (this.state.disabled) {
+            return;
+        }
+        this.setState({
+            checked: checked
+        });
+    }
+
     render(){
         let {className, style} = this.props;
         className = classNames('cm-switch', className, this.props.size, {

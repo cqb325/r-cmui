@@ -175,27 +175,51 @@ class Button extends BaseComponent {
     }
 
     /**
+     * 主题和disabled属性变化后改变状态
+     * @param  {[type]} nextProps [description]
+     * @return {[type]}           [description]
+     */
+    componentWillReceiveProps(nextProps){
+        let params = {};
+        if (nextProps.theme !== this.props.theme) {
+            params.theme = nextProps.theme;
+        }
+        if (nextProps.disabled !== this.props.disabled) {
+            params.disabled = nextProps.disabled;
+        }
+
+        this.setState(params);
+    }
+
+    /**
      * 渲染
      */
     render(){
+        let props = this.props;
         const className = classNames(
-            this.props.className,
+            props.className,
             'cm-button',
             this.state.theme,
-            this.props.size,
+            props.size,
             {
-                'cm-iconButton': this.props.iconButton,
-                raised: this.props.raised && this.state.raised,
-                flat: this.props.flat,
-                'active': this.state.active
+                'cm-iconButton': props.iconButton,
+                'raised': props.raised && this.state.raised,
+                'flat': props.flat,
+                'active': this.state.active,
+                'cm-button-circle': props.circle,
+                'cm-button-icon-only': !!props.icon && !props.children
             }
         );
 
         let link = this.props.href || 'javascript:void(0)';
 
-        let props = this.props;
-        let iconPosition = this.props.iconAlign || 'left';
-        let icon = this.props.icon ? (<FontIcon icon={this.props.icon} className={iconPosition} />) : null;
+        let iconPosition = props.iconAlign || 'left';
+        let icon = null;
+        if (props.icon) {
+            icon = iconPosition === 'left'
+                ? <FontIcon icon={props.icon} className={iconPosition} style={{marginRight: props.children ? 5 : 0}} />
+                : <FontIcon icon={props.icon} className={iconPosition} style={{marginLeft: props.children ? 5 : 0}} />;
+        }
 
         let nodes = iconPosition === 'left'
             ? (<EnhancedButton>

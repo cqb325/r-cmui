@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Dom from '../utils/Dom';
 import CircleRipple from './CircleRipple';
+import update from 'immutability-helper';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 const Component = React.Component;
 
@@ -17,8 +18,8 @@ const Component = React.Component;
  * @returns {*}
  */
 function push(array, obj) {
-    array.push(obj);
-    return array;
+    const newObj = Array.isArray(obj) ? obj : [obj];
+    return update(array, {$push: newObj});
 }
 
 /**
@@ -27,8 +28,7 @@ function push(array, obj) {
  * @returns {*}
  */
 function shift(array) {
-    array.shift();
-    return array;
+    return update(array, {$splice: [[0, 1]]});
 }
 
 /**

@@ -309,6 +309,17 @@ class Slick extends BaseComponent {
         }
     }
 
+    componentWillReceiveProps (nextProps) {
+        let params = {};
+        if (nextProps.current !== this.props.value) {
+            params.current = nextProps.current;
+        }
+        if (nextProps.autoPlay !== this.props.autoPlay) {
+            params.autoPlay = nextProps.autoPlay;
+        }
+        this.setState(params);
+    }
+
     render(){
         let {className, style, layout} = this.props;
 

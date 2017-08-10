@@ -7,7 +7,8 @@ let links = {
     button: require('bundle-loader?lazy!../pages/Button/index.js'),
     checkbox: require('bundle-loader?lazy!../pages/CheckBox/checkbox.js'),
     form: require('bundle-loader?lazy!../pages/form/form.js'),
-    tree: require('bundle-loader?lazy!../pages/tree/tree.js')
+    tree: require('bundle-loader?lazy!../pages/tree/tree.js'),
+    card: require('bundle-loader?lazy!../pages/card/card.js')
 };
 
 let ret = [];

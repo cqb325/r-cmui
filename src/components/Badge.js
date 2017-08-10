@@ -24,7 +24,7 @@ class Badge extends BaseComponent{
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps.value !== this.state.value) {
+        if (nextProps.value !== this.props.value) {
             this.setState({
                 value: nextProps.value
             });

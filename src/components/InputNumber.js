@@ -226,6 +226,19 @@ class InputNumber extends BaseComponent {
         this.setState(params);
     }
 
+    componentWillReceiveProps (nextProps) {
+        let value = nextProps.value;
+        let params = {};
+        if (value !== this.props.value && value !== this.state.value) {
+            params.value = value;
+        }
+        if (nextProps.disabled !== this.props.disabled) {
+            params.disabled = nextProps.disabled;
+        }
+
+        this.setState(params);
+    }
+
     render(){
         let {className, style, itemClassName} = this.props;
         className = classNames('cm-input-number', className, this.state.theme, {

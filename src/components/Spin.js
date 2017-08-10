@@ -95,6 +95,14 @@ class SVGSpin extends BaseComponent {
         });
     }
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps.spinning !== this.props.spinning) {
+            this.setState({
+                spinning: nextProps.spinning
+            });
+        }
+    }
+
     renderSpin(){
         if (this.state.spinning) {
             return (

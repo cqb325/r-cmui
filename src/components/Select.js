@@ -404,9 +404,10 @@ class Select extends BaseComponent {
     componentWillMount(){
         if (this.props.url) {
             let scope = this;
+            let valueField = this.props.valueField || 'id';
             Ajax.get(this.props.url, {}, function(data){
                 if (data) {
-                    data = scope._rebuildData(data);
+                    data = scope._rebuildData(data, scope.props.value, valueField);
                     scope.setState({
                         data: data
                     });
@@ -417,6 +418,13 @@ class Select extends BaseComponent {
                     scope.emit('dataLoaded');
                 }
             });
+        }
+    }
+
+    componentWillReceiveProps (nextProps) {
+        let value = nextProps.value;
+        if (value !== this.props.value) {
+            this.setState({ value });
         }
     }
 

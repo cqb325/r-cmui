@@ -131,6 +131,14 @@ class Tab extends BaseComponent {
         }, this);
     }
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps.activeIndex !== this.props.activeIndex) {
+            this.setState({
+                activeIndex: nextProps.activeIndex
+            });
+        }
+    }
+
     render(){
         let {className, style} = this.props;
         className = classNames('cm-tab', className);

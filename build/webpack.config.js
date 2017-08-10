@@ -90,7 +90,9 @@ var config = {
     entry: {
         app: [SRC_PATH + '/pages/app.js'],
         lib: [
-            'react', 'react-dom', 'react-router','react-router-dom'
+            'react', 'react-dom', 'react-router','react-router-dom',
+            'classnames', 'prop-types', 'velocity', 'immutability-helper',
+            'react-transition-group/TransitionGroup', 'moment', 'babel-polyfill'
         ]
     },
     output: {
@@ -128,7 +130,7 @@ var config = {
        })
     ],
     devServer: {
-        port: 8083,
+        port: 8085,
         https: false,
         compress: true,
         hot: true,

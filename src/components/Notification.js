@@ -211,6 +211,12 @@ class Notification extends BaseComponent{
         }
     }
 
+    clear(){
+        for (let key in this.panels) {
+            this.close(key);
+        }
+    }
+
     /**
      * 渲染所有的panel
      * @return {[type]} [description]
