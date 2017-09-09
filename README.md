@@ -1,4 +1,5 @@
-# cmui2.0
-cmui2.0
+### cmui
 
-[DEMO](https://cqb325.github.io/cmui/ "DEMO")
+v2.0.1
+
+	cnpm install

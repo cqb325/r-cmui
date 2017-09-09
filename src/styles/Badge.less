@@ -1,0 +1,97 @@
+@import "colors";
+
+.cm-badge{
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  position: relative;
+  margin-right: 16px;
+  &.cm-badge-static{
+    margin-right: 10px;
+    .cm-badge-count{
+      top: auto;
+      display: block;
+      position: relative;
+      -webkit-transform: none!important;
+      -ms-transform: none!important;
+      transform: none!important;
+    }
+  }
+
+  &.success{
+    .cm-badge-count{
+      background: @color-success;
+    }
+  }
+
+  &.light{
+    .cm-badge-count{
+      background: @color-silver-lighter;
+    }
+  }
+}
+.cm-badge-count{
+  position: absolute;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  top: -10px;
+  height: 20px;
+  border-radius: 10px;
+  min-width: 20px;
+  background: @color-danger;
+  color: #fff;
+  line-height: 20px;
+  text-align: center;
+  padding: 0 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  -webkit-transform-origin: -10% center;
+  -ms-transform-origin: -10% center;
+  transform-origin: -10% center;
+  font-family: tahoma;
+  box-shadow: 0 0 0 1px #fff;
+  &.cm-badge-dot{
+    top: -4px;
+    width: 8px;
+    height: 8px;
+    min-width: 0;
+    border-radius: 50%;
+    display: inline-block;
+    padding: 0;
+  }
+}
+
+.cm-badge-status-dot{
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.cm-badge-status-text{
+  margin-left: 5px;
+  color: @color-promote;
+}
+
+.cm-badge{
+  &.cm-badge-status{
+    margin-right: 0;
+  }
+  .cm-badge-status-dot{
+    &.cm-badge-status-default{
+      background: @color-silver-lighter;
+    }
+    &.cm-badge-status-success{
+      background: @color-success;
+    }
+    &.cm-badge-status-danger{
+      background: @color-danger;
+    }
+    &.cm-badge-status-primary{
+      background: @color-blue;
+    }
+    &.cm-badge-status-warning{
+      background: @color-warning;
+    }
+  }
+}
