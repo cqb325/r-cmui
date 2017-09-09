@@ -1,0 +1,77 @@
+@import "colors";
+
+.cm-accordion {
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2),2px 0 10px rgba(0,0,0,.2);
+  background: @color-dark-lighter;
+  color: @color-white;
+
+  &.white{
+    background:#fff;
+    color: @color-dark;
+    &.cm-accordion-bordered{
+      border: 1px solid lighten(@color-silver-lighter, 10%);
+    }
+    .cm-accordion-item{
+      border-bottom: 1px solid lighten(@color-silver-lighter, 10%);
+    }
+    .cm-accordion-item-head{
+        &:hover{
+            background: lighten(@color-silver-lighter, 15%);
+        }
+    }
+    .cm-accordion-item-active{
+      .cm-accordion-item-head{
+        background: lighten(@color-silver-lighter, 15%);
+      }
+    }
+  }
+}
+
+.cm-accordion{
+  &.cm-accordion-bordered{
+    border: 1px solid darken(@color-dark-lighter, 5%);
+    border-radius: 3px;
+  }
+  .cm-accordion-item:last-child{
+      border-bottom: none;
+  }
+}
+.cm-accordion-wrap {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-accordion-item{
+  border-bottom: 1px solid darken(@color-dark-lighter, 5%);
+}
+.cm-accordion-item-head{
+  padding: 12px 20px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all .3s linear;
+  -moz-transition: all .3s linear;
+  -ms-transition: all .3s linear;
+  -o-transition: all .3s linear;
+  transition: all .3s linear;
+
+  &:hover{
+    background: @color-dark-light;
+  }
+}
+.cm-accordion-item-icon{
+  margin-right: 6px;
+}
+
+.cm-accordion-item-body{
+  display: none;
+  padding: 12px;
+}
+.cm-accordion-item-active{
+  .cm-accordion-item-head{
+    background: @color-dark-light;
+  }
+}

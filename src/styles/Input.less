@@ -1,0 +1,128 @@
+@import "arrow";
+
+.cm-form-control{
+  border-radius: 3px;
+  padding: 4px 7px;
+  resize: none;
+  font-size: 12px;
+  height: 28px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  &:focus{
+    border-color: #49a9ee;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(16, 142, 233, 0.2);
+  }
+}
+
+textarea.cm-form-control{
+  padding: 4px 11px;
+}
+
+.cm-form.cm-form-stack{
+  .cm-form-row{
+    display: block;
+  }
+  .cm-form-label{
+    display: block;
+    text-align: left;
+  }
+}
+
+.cm-form-inline{
+  .cm-form-group,
+  &.cm-form-group{
+    display: inline-block;
+  }
+}
+
+.cm-form-label{
+  display: inline-block;
+  text-align: right;
+  margin-right: 8px;
+  &.cm-form-label-top{
+    vertical-align: top;
+  }
+}
+
+.cm-form-row{
+  display: block;
+}
+.cm-form-group{
+  position: relative;
+  margin-bottom: 10px;
+  margin-right: 10px;
+
+  .cm-form-group{
+    margin-bottom: 0!important;
+  }
+
+  &.invalid{
+    .cm-form-control{
+      border: 1px solid #E05B5B;
+    }
+  }
+
+  .error-tip{
+    white-space: nowrap;
+  }
+
+  &.inline{
+    display: inline-block;
+    white-space: nowrap;
+    .error-tip{
+      display: none;
+    }
+
+    &.invalid:hover{
+      .error-tip{
+        display: inline-block;
+      }
+    }
+  }
+
+  &.input-group {
+
+    .input-group-addon {
+      display: inline-block;
+      padding: 4px 12px;
+      height: 28px;
+      font-weight: 400;
+      line-height: normal;
+      color: #555;
+      text-align: center;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      width: auto;
+      vertical-align: initial;
+      &:first-child {
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &:last-child {
+        border-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+    .cm-form-control:last-child{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .cm-form-control:first-child{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .cm-form-control:not(:first-child):not(:last-child){
+      border-radius: 0;
+    }
+  }
+}

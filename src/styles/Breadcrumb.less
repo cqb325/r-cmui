@@ -1,0 +1,26 @@
+@import "colors";
+.cm-breadcrumb {
+  color: rgba(0, 0, 0, 0.43);
+  font-size: 12px;
+  a{
+    color: rgba(0, 0, 0, 0.65);
+    -webkit-transition: color .3s;
+    transition: color .3s;
+    &:hover{
+        color: @color-blue;
+    }
+  }
+
+  .cm-breadcrumb-link > i + span{
+    margin-left: 4px;
+  }
+
+  .cm-breadcrumb-separator{
+    margin: 0 8px;
+    color: #d9d9d9;
+  }
+
+  & > span:last-child .cm-breadcrumb-separator {
+    display: none;
+  }
+}

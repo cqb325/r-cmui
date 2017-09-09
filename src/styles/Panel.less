@@ -1,0 +1,68 @@
+.cm-panel{
+  border-radius: 3px;
+  overflow: hidden;
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+
+  .cm-panel-title{
+    padding: 7px 15px;
+    border-bottom: 1px solid #e9e9e9;
+  }
+  .cm-panel-head-text{
+    min-height: 12px;
+    display: inline-block;
+  }
+
+  .cm-panel-content{
+    padding: 20px;
+  }
+  .cm-panel-tools.right{
+    float: right;
+  }
+
+  .cm-panel-footer{
+    border-top: 1px solid #e9e9e9;
+    padding: 8px 10px;
+    text-align: center;
+  }
+
+  &.cm-messageBox{
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 50000;
+    min-width: 300px;
+  }
+  &.cm-dialog{
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 40000;
+    min-width: 300px;
+  }
+}
+
+.cm-popup-warp{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 50000;
+}
+
+.shadow-backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 49999;
+  background: rgba(0,0,0,0.2);
+  filter: alpha(opacity=20);
+}
