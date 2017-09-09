@@ -7,6 +7,7 @@ import CheckBox from './components/CheckBox/index';
 import CheckBoxGroup from './components/CheckBoxGroup/index';
 import Row from './components/Row/index';
 import Col from './components/Col/index';
+import Label from './components/Label/index';
 import './styles/theme.less';
 
 export {
@@ -18,5 +19,6 @@ export {
     CheckBox,
     CheckBoxGroup,
     Row,
-    Col
+    Col,
+    Label
 };

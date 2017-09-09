@@ -31,6 +31,6 @@ export default async (url = '', data = {}, type = 'GET')=>{
         const responseJson = await response.json();
         return responseJson;
     } catch (error) {
-        throw new Error(error);
+        console.error(error);
     }
 }
