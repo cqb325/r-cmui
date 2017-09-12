@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
-import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup, Row, Col} from 'cmui';
+import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
+    Row, Col, Panel, MessageBox, Dialog, Notification} from 'cmui';
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
 import image from './images/sr-home.svg';
+
 
 class App extends BaseComponent {
     constructor(props){
@@ -43,6 +45,22 @@ class App extends BaseComponent {
 
     disableEnable = ()=>{
         this.refs.cb1.disableItem(0);
+    }
+
+    openMsgBox = ()=>{
+        this.refs.msgbox.show(<div><i className="fa fa-info"/> info message</div>, 'tip');
+    }
+
+    openDialog = ()=>{
+        this.refs.dialog.open();
+    }
+
+    openNotification = ()=>{
+        Notification.success({
+            title: 'tip',
+            desc: 'asdasdasd',
+            duration: 0
+        });
     }
 
   render() {
@@ -92,6 +110,32 @@ class App extends BaseComponent {
             <Col grid={0.5}>1</Col>
             <Col grid={0.5}>2</Col>
         </Row>
+
+        <Panel title="asd"
+            tools={<span><a className="text-link mr-5">save</a><a className="text-link">delete</a></span>}
+            footers={<span><Button theme="primary" className="mr-15">save</Button>
+            <Button className="text-link">delete</Button></span>}
+            >
+            <p>asd</p>
+        </Panel>
+
+
+        <MessageBox ref="msgbox"></MessageBox>
+        <Button raised theme="primary" onClick={this.openMsgBox}>msgbox</Button>
+
+
+        <Dialog ref='dialog' title='Title'
+            useDefaultFooters={false}
+            tools={<a className="text-link mr-5">menu</a>}>
+            <p>dialog Content</p>
+            <p>dialog Content</p>
+            <p>dialog Content</p>
+        </Dialog>
+
+        <Button onClick={this.openDialog} raised theme="primary">dialog</Button>
+        <Button onClick={this.openNotification} raised theme="primary">Notification</Button>
+
+
       </div>
     );
   }
