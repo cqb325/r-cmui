@@ -8,6 +8,10 @@ import CheckBoxGroup from './components/CheckBoxGroup/index';
 import Row from './components/Row/index';
 import Col from './components/Col/index';
 import Label from './components/Label/index';
+import Panel from './components/Panel/index';
+import MessageBox from './components/MessageBox/index';
+import Dialog from './components/Dialog/index';
+import Notification from './components/Notification/index';
 import './styles/theme.less';
 
 export {
@@ -20,5 +24,9 @@ export {
     CheckBoxGroup,
     Row,
     Col,
-    Label
+    Label,
+    Panel,
+    MessageBox,
+    Dialog,
+    Notification
 };
