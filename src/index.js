@@ -12,6 +12,8 @@ import Panel from './components/Panel/index';
 import MessageBox from './components/MessageBox/index';
 import Dialog from './components/Dialog/index';
 import Notification from './components/Notification/index';
+import Input from './components/Input/index';
+import InputNumber from './components/InputNumber/index';
 import './styles/theme.less';
 
 export {
@@ -28,5 +30,7 @@ export {
     Panel,
     MessageBox,
     Dialog,
-    Notification
+    Notification,
+    Input,
+    InputNumber
 };
