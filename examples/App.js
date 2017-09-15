@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
 import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
-    Row, Col, Panel, MessageBox, Dialog, Notification} from 'cmui';
+    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber} from 'cmui';
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
 import image from './images/sr-home.svg';
@@ -135,7 +135,15 @@ class App extends BaseComponent {
         <Button onClick={this.openDialog} raised theme="primary">dialog</Button>
         <Button onClick={this.openNotification} raised theme="primary">Notification</Button>
 
+        <Card>
+            name: <Input name="text" maxLength="10" onChange={(v)=>{console.log(v)}}/><br/>
+            psw: <Input name="password" type="password"/><br/>
+            number: <Input name="number" type="number" /><br/>
+        </Card>
 
+        <Card>
+            <InputNumber value={10} step="2" size="small"/>
+        </Card>
       </div>
     );
   }
