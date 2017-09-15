@@ -34,7 +34,7 @@ class InputNumber extends BaseComponent {
          * @attribute value
          * @type {String}
          */
-        value: PropTypes.string,
+        value: PropTypes.any,
         /**
          * 自定义class
          * @attribute className

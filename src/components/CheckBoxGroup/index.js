@@ -270,6 +270,30 @@ class CheckBoxGroup extends BaseComponent {
     }
 
     /**
+     * 渲染显式的子组件
+     * @return {Array} 子元素
+     */
+    renderChildrenItems(){
+        let {name} = this.props;
+
+        return React.Children.map(this.props.children, (child, index)=>{
+            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+            if (componentName === 'CheckBox') {
+                let props = Object.assign({}, child.props, {
+                    name: name,
+                    ref: this.addCheckBox,
+                    unbind: this.unbind,
+                    onChange: this.handleChange,
+                    disabled: this.state.disabled
+                });
+                return React.cloneElement(child, props);
+            } else {
+                return child;
+            }
+        });
+    }
+
+    /**
      * 渲染子节点
      * @method renderItems
      * @returns {Array} 子对象
@@ -328,6 +352,7 @@ class CheckBoxGroup extends BaseComponent {
 
         return (
             <span className={className} style={style}>
+                {this.renderChildrenItems()}
                 {this.renderItems()}
             </span>
         );
