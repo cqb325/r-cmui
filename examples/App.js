@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
 import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
-    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber} from 'cmui';
+    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select} from 'cmui';
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
 import image from './images/sr-home.svg';
@@ -143,6 +143,15 @@ class App extends BaseComponent {
 
         <Card>
             <InputNumber value={10} step="2" size="small"/>
+            <Select data={['1','2','3']}/>
+
+            <br />
+            <CheckBoxGroup name='11' onChange={(value)=>{
+                console.log(value);
+            }}>
+                <CheckBox label="asd1" value="asd1" />
+                <CheckBox label="asd2" value="asd2" />
+            </CheckBoxGroup>
         </Card>
       </div>
     );

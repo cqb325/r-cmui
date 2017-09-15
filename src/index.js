@@ -14,6 +14,7 @@ import Dialog from './components/Dialog/index';
 import Notification from './components/Notification/index';
 import Input from './components/Input/index';
 import InputNumber from './components/InputNumber/index';
+import Select from './components/Select/index';
 import './styles/theme.less';
 
 export {
@@ -32,5 +33,6 @@ export {
     Dialog,
     Notification,
     Input,
-    InputNumber
+    InputNumber,
+    Select
 };
