@@ -292,11 +292,6 @@ let config = {
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
-    new webpack.ProvidePlugin({
-      plupload: require.resolve(paths.appSrc + '/lib/plupload.min'),
-      mOxie: require.resolve(paths.appSrc + '/lib/moxie')
-    }),
-
     // new webpack.DllPlugin({
     //     context: __dirname,
     //     name: "lib",

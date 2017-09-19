@@ -16,6 +16,9 @@ import Input from './components/Input/index';
 import InputNumber from './components/InputNumber/index';
 import Select from './components/Select/index';
 import Switch from './components/Switch/index';
+import TextArea from './components/TextArea/index';
+import Upload from './components/Upload/index';
+import Uploadify from './components/Uploadify/index';
 import './styles/theme.less';
 
 export {
@@ -36,5 +39,8 @@ export {
     Input,
     InputNumber,
     Select,
-    Switch
+    Switch,
+    TextArea,
+    Upload,
+    Uploadify
 };
