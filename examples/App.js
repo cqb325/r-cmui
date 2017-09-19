@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
 import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
-    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select} from 'cmui';
+    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch} from 'cmui';
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
 import image from './images/sr-home.svg';
@@ -143,7 +143,17 @@ class App extends BaseComponent {
 
         <Card>
             <InputNumber value={10} step="2" size="small"/>
-            <Select data={['1','2','3']}/>
+            <Select data={['1','2','3']} ref='select' value="2" placeholder='请选择' multi/>
+            <Button onClick={()=>{
+                this.refs.select.setValue('2');
+            }}>设置值</Button>
+            <Button onClick={()=>{
+                console.log(this.refs.select.getValue());
+            }}>获取值</Button>
+
+            <Button onClick={()=>{
+                this.refs.select.setData([{id: '1', text: 'IPhone'},{id: '2', text: 'Android'},{id: '3', text: 'Phone'}], '2');
+            }}>重新设置</Button>
 
             <br />
             <CheckBoxGroup name='11' onChange={(value)=>{
@@ -152,6 +162,32 @@ class App extends BaseComponent {
                 <CheckBox label="asd1" value="asd1" />
                 <CheckBox label="asd2" value="asd2" />
             </CheckBoxGroup>
+            asd:
+            <Select value="2" ref='select2' placeholder='请选择' hasEmptyOption multi>
+                <Select.Option empty value='___empty'>请选择</Select.Option>
+                <Select.Option value='1'>1</Select.Option>
+                <Select.Option value='2'>2</Select.Option>
+                <Select.Option value='3'>3</Select.Option>
+            </Select>
+            asd:
+            <Button onClick={()=>{
+                this.refs.select2.setValue('1');
+            }}>设置值</Button>
+            <Button onClick={()=>{
+                this.refs.select2.disable();
+            }}>禁用</Button>
+            <Button onClick={()=>{
+                console.log(this.refs.select2.getValue());
+            }}>获取值</Button>
+
+            <Select value="2" maxWidth={200} url='http://192.168.105.202:8415/mock/test/arr.html' placeholder='请选择' hasEmptyOption multi />
+        </Card>
+        <Card title='sad'>
+            <Switch onChange={(v)=>{
+                console.log(v);
+            }}></Switch>
+            <Switch size="small" />
+            <Switch checkedText="on" unCheckedText="off" />
         </Card>
       </div>
     );

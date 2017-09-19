@@ -10,6 +10,7 @@ import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import Core from '../core/Core';
 // import Ajax from '../core/Ajax';
+import fetch from '../utils/fetch';
 import clickAway from '../utils/ClickAway';
 import strings from '../utils/strings';
 import Dom from '../utils/Dom';
@@ -23,14 +24,99 @@ import './Select.less';
 class Option extends BaseComponent{
     static displayName = "Option";
 
+    constructor(props){
+        super(props);
+
+        let {itemBind, value} = props;
+
+        if(itemBind){
+            itemBind(value, this);
+        }
+
+        this.addState({
+            active: props.active
+        });
+    }
+
+    onSelect = ()=>{
+        let {multi, disabled} = this.props;
+        if(disabled){
+            return false;
+        }
+
+        if(multi){
+            this.setState({
+                active: !this.state.active
+            }, ()=>{
+                if(this.props.onClick){
+                    this.props.onClick(this);
+                }
+            });
+        }else{
+            if(!this.state.active){
+                this.setState({
+                    active: true
+                }, ()=>{
+                    if(this.props.onClick){
+                        this.props.onClick(this);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 获取值
+     * @return {[type]} [description]
+     */
+    getValue(){
+        return this.props.value;
+    }
+
+    getText(){
+        return this.props.children || this.props.html;
+    }
+
+    /**
+     * 是否为空选项
+     * @return {Boolean} [description]
+     */
+    isEmptyOption(){
+        return this.props.empty;
+    }
+
+    /**
+     * 是否选中
+     * @return {Boolean} [description]
+     */
+    isActive(){
+        return this.state.active;
+    }
+
+    /**
+     * 设置选中状态
+     * @param {[type]} active [description]
+     */
+    setActive(active){
+        this.setState({active});
+    }
+
+    componentWillUnmount(){
+        let {itemUnBind} = this.props;
+        if(itemUnBind){
+            itemUnBind(this.props.value);
+        }
+    }
+
     render(){
-        let {active, html, children} = this.props;
+        let {html, children, disabled} = this.props;
         let className = classNames('cm-select-option', {
-            'cm-select-option-active': active
+            'cm-select-option-active': this.state.active,
+            'cm-select-option-disabled': disabled
         });
 
         return (
-            <li className={className} onClick={this.props.onClick}>
+            <li className={className} onClick={this.onSelect}>
                 <a href='javascript:void(0)'>
                     {
                         html ? <span dangerouslySetInnerHTML={{__html: html}} /> : children
@@ -52,7 +138,8 @@ class Select extends BaseComponent {
     static defaultProps = {
         textField: 'text',
         valueField: 'id',
-        sep: ','
+        sep: ',',
+        choiceText: '请选择'
     };
 
     static propTypes = {
@@ -121,17 +208,40 @@ class Select extends BaseComponent {
     constructor(props) {
         super(props);
 
-        this.selectedItems = {};
         this.sep = props.sep;
         this.orignData = props.data;
 
         let data = this._rebuildData(props.data, props.value, props.valueField);
+        this.data = data || [];
 
         this.addState({
             value: props.value,
             active: false,
             data: data
         });
+
+        this.options = {};
+        this.text = [];
+        this.lastSelectItem = null;
+    }
+
+    /**
+     * 绑定
+     * @param  {[type]} value  [description]
+     * @param  {[type]} option [description]
+     * @return {[type]}        [description]
+     */
+    itemBind = (value, option)=>{
+        this.options[value] = option;
+    }
+
+    /**
+     * 取消绑定
+     * @param  {[type]} value [description]
+     * @return {[type]}       [description]
+     */
+    itemUnBind = (value)=>{
+        delete this.options[value];
     }
 
     /**
@@ -155,25 +265,10 @@ class Select extends BaseComponent {
             let one = data[0];
             if (Core.isString(one)) {
                 return data.map(function(item){
-                    let option = {id: item, text: item};
-                    for (let i in defaultValues) {
-                        if (item == defaultValues[i]) {
-                            this.selectedItems[item] = option;
-                        }
-                    }
-                    return option;
+                    return {id: item, text: item};
                 }, this);
             }
             if (Core.isObject(one)) {
-                if (defaultValue !== undefined) {
-                    data.forEach(function (item) {
-                        for (let i in defaultValues) {
-                            if (item[valueField] == defaultValues[i]) {
-                                this.selectedItems[item[valueField]] = item;
-                            }
-                        }
-                    }, this);
-                }
                 return data;
             }
 
@@ -183,11 +278,6 @@ class Select extends BaseComponent {
             let ret = [];
             for (var id in data) {
                 let item = {id: id, text: data[id]};
-                for (let i in defaultValues) {
-                    if (id == defaultValues[i]) {
-                        this.selectedItems[id] = item;
-                    }
-                }
                 ret.push(item);
             }
 
@@ -210,22 +300,7 @@ class Select extends BaseComponent {
             'cm-select-placeholder': !values.length && this.props.placeholder
         });
         if (values.length) {
-            values.forEach((value) => {
-                let item = this.selectedItems[value];
-
-                let textField = this.props.textField;
-                let label = item
-                    ? item[textField]
-                    : (this.props.placeholder ? this.props.placeholder + '&nbsp;' : '&nbsp;');
-
-                let optionsTpl = this.props.optionsTpl;
-
-                if (optionsTpl && item) {
-                    html.push(substitute(optionsTpl, item));
-                } else {
-                    html.push(label);
-                }
-            });
+            html = this.text;
         } else {
             html.push(this.props.placeholder ? this.props.placeholder + '&nbsp;' : '&nbsp;');
         }
@@ -235,7 +310,7 @@ class Select extends BaseComponent {
             (this.props.name || '') + '" value="' + (this.state.value || '') + '">';
 
 
-        return (<span className={className} dangerouslySetInnerHTML={{__html: html}} />);
+        return (<span style={{maxWidth: this.props.maxWidth}} className={className} dangerouslySetInnerHTML={{__html: html}} />);
     }
 
     _renderFilter(){
@@ -245,30 +320,30 @@ class Select extends BaseComponent {
     /**
      * 选中选项
      * @method _selectItem
-     * @param item 选中的选项
+     * @param option 选中的选项
      * @private
      */
-    _selectItem(item){
+    _selectItem = (option)=>{
         let valueField = this.props.valueField;
 
-        let value = null;
-        if (!item) {
+        let value = '';
+        //空选项
+        if (option.isEmptyOption()) {
             if (!this.props.multi) {
                 this.hideOptions();
+                this.text = [];
             }
-            this.selectedItems = {};
         } else {
             if (this.props.multi) {
-                if (this.selectedItems[item[valueField]]) {
-                    delete this.selectedItems[item[valueField]];
-                } else {
-                    this.selectedItems[item[valueField]] = item;
-                }
                 value = this.getSelectedValues();
+                this.text = this.getDisplayText();
             } else {
-                value = item[valueField];
-                this.selectedItems = {};
-                this.selectedItems[value] = item;
+                value = option.getValue();
+                if(this.lastSelectItem){
+                    this.lastSelectItem.setActive(false);
+                }
+                this.lastSelectItem = option;
+                this.text = [option.getText()];
                 this.hideOptions();
             }
         }
@@ -278,10 +353,25 @@ class Select extends BaseComponent {
         });
 
         if (this.props.onChange) {
-            this.props.onChange(value, item);
+            this.props.onChange(value, option);
         }
 
-        this.emit('change', value, item);
+        this.emit('change', value, option);
+    }
+
+    /**
+     * 获取显示内容
+     * @return {[type]} [description]
+     */
+    getDisplayText(){
+        let text = [];
+        for (let value in this.options) {
+            let option = this.options[value];
+            if (option.isActive()) {
+                text.push(option.getText());
+            }
+        }
+        return text;
     }
 
     /**
@@ -290,37 +380,29 @@ class Select extends BaseComponent {
      * @returns {string}
      */
     getSelectedValues(){
-        if (this.selectedItems) {
-            let ret = [];
-            for (let value in this.selectedItems) {
-                ret.push(value);
+        let values = [];
+        for (let value in this.options) {
+            let option = this.options[value];
+            if (option.isActive()) {
+                values.push(option.getValue());
             }
-            return ret.join(this.sep);
         }
-        return '';
+        return values.join(this.sep);
     }
 
     getValue(){
-        return this.getSelectedValues();
+        return this.state.value;
     }
 
     setValue(value){
         let valueField = this.props.valueField;
-        let data = this.state.data;
+        let options = this.options;
         if (value === null || value === undefined || value === '') {
-            this.selectedItems = {};
+            this.text = [];
             this.setState({value});
         }
         if (value != undefined) {
-            for (let i in data) {
-                let item = data[i];
-                let values = (value + '').split(this.sep);
-                for (let j in values) {
-                    if (item[valueField] == values[j]) {
-                        this.selectedItems[values[j]] = item;
-                    }
-                }
-            }
+            this.text = this.getDisplayText();
             this.setState({value});
         }
     }
@@ -340,25 +422,86 @@ class Select extends BaseComponent {
         }
         let ret = [];
         if (!multi && hasEmptyOption) {
-            ret.push(<Option key={-1} onClick={this._selectItem.bind(this, null)}>{choiceText}</Option>);
+            ret.push(<Option key={-1} empty
+                itemBind={this.itemBind}
+                itemUnBind={this.itemUnBind}
+                value="___empty"
+                multi={multi}
+                onClick={this._selectItem}>{choiceText}</Option>);
         }
+        this.text = [];
         data.forEach((item, index)=>{
             let text = item[textField];
             let value = item[valueField];
+            let active = this.isActive(value);
 
             let html = text;
             if (optionsTpl) {
                 html = substitute(optionsTpl, item);
             }
 
-            ret.push(<Option html={html}
+            ret.push(<Option
+                html={html}
                 key={value}
-                onClick={this._selectItem.bind(this, item)}
-                active={!!this.selectedItems[value]}
+                value={value}
+                item={item}
+                multi={multi}
+                itemBind={this.itemBind}
+                itemUnBind={this.itemUnBind}
+                onClick={this._selectItem}
+                active={active}
             />);
+
+            if(active){
+                this.text.push(html);
+            }
         });
 
         return ret;
+    }
+
+    /**
+     * 是否已经选中
+     * @param  {[type]}  value [description]
+     * @return {Boolean}       [description]
+     */
+    isActive(value){
+        let vs = this.state.value ? this.state.value.split(this.sep) : [];
+        return vs.indexOf(value) !== -1;
+    }
+
+    /**
+     * 渲染子元素
+     * @return {[type]} [description]
+     */
+    getChildrenOptions(){
+        this.text = [];
+        return React.Children.map(this.props.children, (child, index)=>{
+            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+            if (componentName === 'Option') {
+                let value = child.props.value;
+                let active = this.isActive(value);
+                if (active) {
+                    this.text.push(child.props.children);
+                }
+                let props = Object.assign({}, child.props, {
+                    itemBind: this.itemBind,
+                    itemUnBind: this.itemUnBind,
+                    active: active,
+                    multi: this.props.multi,
+                    onClick: this._selectItem
+                });
+                if(this.props.multi && child.props.empty){
+                    return null;
+                }
+                if (child.props.empty) {
+                    props.value = '___empty';
+                }
+                return React.cloneElement(child, props);
+            } else {
+                return child;
+            }
+        });
     }
 
     /**
@@ -431,13 +574,14 @@ class Select extends BaseComponent {
     setData(data, value){
         let valueField = this.props.valueField;
         if (value !== undefined) {
-            this.selectedItems = {};
+            this.text = [];
         }
         let val = value === undefined ? this.state.value : value;
-        this.data = data;
-        data = this._rebuildData(data, val, valueField);
+        this.orignData = data;
+        let newData = this._rebuildData(data, val, valueField);
+        this.data = newData;
         this.setState({
-            data: data,
+            data: newData,
             value: val
         });
     }
@@ -472,23 +616,35 @@ class Select extends BaseComponent {
         });
     }
 
+    /**
+     * 加载远程数据
+     * @param  {[type]}  url [description]
+     * @return {Promise}     [description]
+     */
+    async loadFromRemote(url){
+        let data = await fetch(url);
+        this.setData(data);
+
+        if (this.props.onDataLoaded) {
+            this.props.onDataLoaded();
+        }
+        this.emit('dataLoaded');
+    }
+
     componentWillMount(){
         if (this.props.url) {
-            // let scope = this;
-            // let valueField = this.props.valueField || 'id';
-            // Ajax.get(this.props.url, {}, function(data){
-            //     if (data) {
-            //         data = scope._rebuildData(data, scope.props.value, valueField);
-            //         scope.setState({
-            //             data: data
-            //         });
-            //
-            //         if (scope.props.onDataLoaded) {
-            //             scope.props.onDataLoaded();
-            //         }
-            //         scope.emit('dataLoaded');
-            //     }
-            // });
+            this.loadFromRemote(this.props.url);
+        }
+    }
+
+    componentDidMount(){
+        if(!this.props.multi){
+            for(let value in this.options){
+                let option = this.options[value];
+                if(option.isActive()){
+                    this.lastSelectItem = option;
+                }
+            }
         }
     }
 
@@ -500,17 +656,18 @@ class Select extends BaseComponent {
     }
 
     render(){
-        let {className, style, grid} = this.props;
+        let {className, style, grid, multi} = this.props;
         className = classNames('cm-select', getGrid(grid), {
             'cm-select-active': this.state.active,
             'cm-select-disabled': this.state.disabled,
             'cm-select-dropup': this.state.dropup,
-            'cm-select-hasEmptyOption': this.props.hasEmptyOption
+            'cm-select-hasEmptyOption': !multi && this.props.hasEmptyOption
         });
 
-        let text = this._renderValues();
         let filter = this._renderFilter();
+        let childrenOptions = this.getChildrenOptions();
         let options = this._renderOptions();
+        let text = this._renderValues();
         return (
             <div className={className} style={style} onClick={this.showOptions}>
                 {text}
@@ -518,7 +675,7 @@ class Select extends BaseComponent {
                 <div className='cm-select-options-wrap'>
                     <div ref='options' className='cm-select-options'>
                         {filter}
-                        <ul>{options}</ul>
+                        <ul>{childrenOptions}{options}</ul>
                     </div>
                 </div>
             </div>

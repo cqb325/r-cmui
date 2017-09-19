@@ -15,6 +15,7 @@ import Notification from './components/Notification/index';
 import Input from './components/Input/index';
 import InputNumber from './components/InputNumber/index';
 import Select from './components/Select/index';
+import Switch from './components/Switch/index';
 import './styles/theme.less';
 
 export {
@@ -34,5 +35,6 @@ export {
     Notification,
     Input,
     InputNumber,
-    Select
+    Select,
+    Switch
 };

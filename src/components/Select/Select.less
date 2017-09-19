@@ -12,6 +12,7 @@
   font-size: 12px;
   display: inline-block;
   position: relative;
+  top: -1px;
   line-height: initial;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -19,12 +20,13 @@
   user-select: none;
 
   .cm-select-value{
-    padding: 4px 16px 4px 6px;
+    padding: 0 16px 0 6px;
     height: 28px;
     border: 1px solid #ccc;
     border-radius: @border-radius;
     color: @grey-text;
     min-width: 162px;
+    max-width: 162px;
     display: block;
     background-color: #fff;
     background-image: none;
@@ -43,9 +45,10 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
-    line-height: 17px;
+    line-height: 26px;
     vertical-align: middle;
   }
 
@@ -121,7 +124,7 @@
             font-weight: 400;
           }
         }
-        &.active a{
+        &.cm-select-option-active a{
           background-color: #f7f7f7;
           font-weight: 700;
         }
@@ -136,6 +139,10 @@
   }
 
   &.cm-select-active {
+    .cm-select-value{
+        border-color: #49a9ee;
+        box-shadow: 0 0 0 2px rgba(16, 142, 233, 0.2);
+    }
     .cm-select-cert:before {
       .rotate(180deg);
     }
