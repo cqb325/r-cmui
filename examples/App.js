@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
 import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
-    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch} from 'cmui';
+    Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
+    Uploadify
+} from 'cmui';
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
 import image from './images/sr-home.svg';
@@ -188,6 +190,13 @@ class App extends BaseComponent {
             }}></Switch>
             <Switch size="small" />
             <Switch checkedText="on" unCheckedText="off" />
+
+            <TextArea autoHeight height={80} cols={30}></TextArea>
+            <TextArea autoHeight height={80} width='100%' placeholder="enter some words"></TextArea>
+
+            <Upload name='file'/><br></br>
+            <Uploadify url='xxx' multi={false}/>
+            <Uploadify url='xxx' mode='grid' />
         </Card>
       </div>
     );
