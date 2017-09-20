@@ -15,7 +15,6 @@ import MessageBox from '../MessageBox/index';
 import {List} from 'immutable';
 import plupload from '../../lib/plupload.min';
 import mOxie from '../../lib/moxie';
-console.log(mOxie.image.Image);
 
 import './Uploadify.less';
 

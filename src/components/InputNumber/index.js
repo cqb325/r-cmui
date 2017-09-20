@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from '../core/BaseComponent';
 import Button from '../Button/index';
-// import FormControl from './FormControl';
+import FormControl from '../FormControl/index';
 import './InputNumber.less';
 
 
@@ -285,10 +285,10 @@ class InputNumber extends BaseComponent {
     componentWillReceiveProps (nextProps) {
         let value = nextProps.value;
         let params = {};
-        if (value !== this.state.value) {
+        if (value !== this.props.value && value !== this.state.value) {
             params.value = value;
         }
-        if (nextProps.disabled !== this.state.disabled) {
+        if (nextProps.disabled !== this.props.disabled && nextProps.disabled !== this.state.disabled) {
             params.disabled = nextProps.disabled;
         }
 
@@ -315,6 +315,6 @@ class InputNumber extends BaseComponent {
     }
 }
 
-// FormControl.register(InputNumber, 'inputnumber');
+FormControl.register(InputNumber, 'inputnumber');
 
 export default InputNumber;

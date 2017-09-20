@@ -323,11 +323,11 @@ class Dialog extends BaseComponent {
 
     componentWillReceiveProps(nextProps){
         let params = {};
-        if (nextProps.title !== this.state.title) {
+        if (nextProps.title !== this.props.title && nextProps.title !== this.state.title) {
             this.panel.setTitle(nextProps.title);
             params.title = nextProps.title;
         }
-        if (nextProps.content !== this.state.content) {
+        if (nextProps.content !== this.props.content && nextProps.content !== this.state.content) {
             this.panel.setContent(nextProps.content);
             params.content = nextProps.content;
         }

@@ -7,9 +7,10 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from '../core/BaseComponent';
+import FormControl from '../FormControl/index';
 import CheckBox from '../CheckBox/index';
 import fetch from '../utils/fetch';
-// import FormControl from './FormControl';
+
 
 /**
  * CheckBoxGroup 类
@@ -359,6 +360,6 @@ class CheckBoxGroup extends BaseComponent {
     }
 }
 
-// FormControl.register(CheckBoxGroup, 'checkbox', 'array');
+FormControl.register(CheckBoxGroup, 'checkbox', 'array');
 
 export default CheckBoxGroup;

@@ -6,7 +6,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
-// import FormControl from './FormControl';
+import FormControl from '../FormControl/index';
 import './Switch.less';
 
 /**
@@ -33,7 +33,7 @@ class Switch extends BaseComponent {
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps.checked !== this.state.checked) {
+        if (nextProps.checked !== this.props.checked && nextProps.checked !== this.state.checked) {
             this.setState({
                 checked: nextProps.checked
             });
@@ -100,6 +100,6 @@ class Switch extends BaseComponent {
     }
 }
 
-// FormControl.register(Switch, 'switch');
+FormControl.register(Switch, 'switch');
 
 export default Switch;

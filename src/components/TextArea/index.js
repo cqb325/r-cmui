@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import grids from '../utils/grids';
 import filterProps from 'react-valid-props';
 import Dom from '../utils/Dom';
-// import FormControl from './FormControl';
+import FormControl from '../FormControl/index';
 const getGrid = grids.getGrid;
 import './TextArea.less';
 
@@ -74,7 +74,7 @@ class TextArea extends BaseComponent {
 
     componentWillReceiveProps (nextProps) {
         let value = nextProps.value;
-        if (value !== this.state.value) {
+        if (value !== this.props.value && value !== this.state.value) {
             this.setState({ value });
         }
     }
@@ -100,6 +100,15 @@ class TextArea extends BaseComponent {
         if (trigger === 'change') {
             this.handleTrigger(event);
         }
+    }
+
+    onBlur = (event)=>{
+        this.handleChange(event);
+        let value = event.target.value;
+        if(this.props.onChange){
+            this.props.onChange(value, event);
+        }
+        this.emit('change', value, event);
     }
 
     autoHeight(event){
@@ -163,9 +172,8 @@ class TextArea extends BaseComponent {
             style
         };
 
-        if (trigger && trigger !== 'change') {
-            let handle = 'on' + trigger.charAt(0).toUpperCase() + trigger.slice(1);
-            props[handle] = handleChange;
+        if (trigger === 'blur') {
+            props.onBlur = this.onBlur;
         }
 
         return (<textarea {...filterProps(this.props)} {...props} value={this.state.value} />);
@@ -173,6 +181,6 @@ class TextArea extends BaseComponent {
 }
 
 
-// FormControl.register(TextArea, ['textarea']);
+FormControl.register(TextArea, ['textarea']);
 
 export default TextArea;
