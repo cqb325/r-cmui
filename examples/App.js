@@ -4,11 +4,13 @@ import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
 import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
-    Uploadify, Tooltip, FormControl
+    Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab
 } from 'cmui';
+const {SubMenu, Item, MenuItemGroup, Divider} = Menu;
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
 import image from './images/sr-home.svg';
+import pic1 from './images/2504157.jpg';
 
 
 class App extends BaseComponent {
@@ -75,7 +77,7 @@ class App extends BaseComponent {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Button disabled={this.state.btnDisabled} theme={this.state.btnTheme} ref='btn' raised>按钮</Button>
+        {/* <Button disabled={this.state.btnDisabled} theme={this.state.btnTheme} ref='btn' raised>按钮</Button>
         <Button theme="primary" onClick={this.changeButtonProps}>改变</Button>
         asd:
         <Button theme="primary" img={image} style={{fontSize: 16}}>改变</Button>
@@ -141,10 +143,10 @@ class App extends BaseComponent {
             name: <Input name="text" maxLength="10" onChange={(v)=>{console.log(v)}}/><br/>
             psw: <Input name="password" type="password"/><br/>
             number: <Input name="number" type="number" /><br/>
-        </Card>
+        </Card> */}
 
         <Card>
-            <InputNumber value={10} step="2" size="small"/>
+            {/* <InputNumber value={10} step="2" size="small"/>
             <Select data={['1','2','3']} ref='select' value="2" placeholder='请选择' multi/>
             <Button onClick={()=>{
                 this.refs.select.setValue('2');
@@ -164,6 +166,10 @@ class App extends BaseComponent {
                 <CheckBox label="asd1" value="asd1" />
                 <CheckBox label="asd2" value="asd2" />
             </CheckBoxGroup>
+
+            <RadioGroup data={this.data} onChange={(v)=>{
+                console.log(v);
+            }}></RadioGroup>
             asd:
             <Select value="2" ref='select2' placeholder='请选择' hasEmptyOption multi>
                 <Select.Option empty value='___empty'>请选择</Select.Option>
@@ -182,7 +188,7 @@ class App extends BaseComponent {
                 console.log(this.refs.select2.getValue());
             }}>获取值</Button>
 
-            <Select value="2" maxWidth={200} url='http://192.168.105.202:8415/mock/test/arr.html' placeholder='请选择' hasEmptyOption multi />
+            <Select value="2" maxWidth={200} url='http://192.168.105.202:8415/mock/test/arr.html' placeholder='请选择' hasEmptyOption multi /> */}
         </Card>
         <Card title='sad'>
             <Switch onChange={(v)=>{
@@ -200,7 +206,7 @@ class App extends BaseComponent {
         </Card>
 
         <Card title='Tooltip'>
-            <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
+            {/* <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
 
             <FormControl name="username" label='username：' type='text' required />
             <FormControl name="username" label='username：' type='inputnumber' required />
@@ -209,6 +215,69 @@ class App extends BaseComponent {
             <FormControl name="desc" label='desc：' type='textarea' required />
             <FormControl name="file" label='file：' type='file' required />
             <FormControl name="checkbox" label='checkbox：' type='checkbox' required data={[{id: '1', text: 'phone'}]}/>
+            <FormControl name="radio" label='radio：' type='radio' required data={[{id: '1', text: 'phone'}]}/> */}
+        </Card>
+
+        <Card title='xxx'>
+            <Dropdown overlay={<ul><li>aaa</li></ul>}><a>asd</a></Dropdown>
+
+            {/* <Menu theme='black' style={{width: 200}}>
+                <Item>aaaa</Item>
+                <SubMenu title="SubMenu1">
+                    <Item>aa1</Item>
+                    <Divider />
+                    <Item>aa2</Item>
+                </SubMenu>
+                <Divider />
+                <MenuItemGroup title="MenuItemGroup">
+                    <Item>aa1</Item>
+                </MenuItemGroup>
+            </Menu> */}
+        </Card>
+
+        <Card>
+            <Spin.SVGSpin spinning ref='spin'>
+                <Slick effect='fade'>
+                    <Slick.Item><img src={pic1}/></Slick.Item>
+                    <Slick.Item>
+                        <p>asdasd</p>
+                        <p>asdasd</p>
+                        <p>asdasd</p>
+                    </Slick.Item>
+                    <Slick.Item>3</Slick.Item>
+                </Slick>
+            </Spin.SVGSpin>
+            <Switch checked onChange={(v)=>{
+                v ? this.refs.spin.show() : this.refs.spin.hide();
+            }}/>
+
+            <Steps current={1}>
+                <Steps.Step title='step1' description='step1 desc...'></Steps.Step>
+                <Steps.Step title='step2' description='step2 desc...'></Steps.Step>
+                <Steps.Step title='step3' description='step3 desc...'></Steps.Step>
+            </Steps>
+        </Card>
+
+        <Card>
+            <Tab ref='tab' hasClose data={[{text: 'tab1', component: <div>111</div>},{text: 'tab2', component: <div>2222</div>}]}>
+                <Tab.Item title="ttt"><img src={pic1} /></Tab.Item>
+            </Tab>
+
+            <Button onClick={()=>{
+                this.refs.tab.add({
+                    text: 'added',
+                    component: <div>added tab</div>
+                }, true);
+            }}>添加</Button>
+
+            <Button onClick={()=>{
+                this.refs.tab.add(<Tab.Item title='added title'>added content2</Tab.Item>, true);
+            }}>添加元素</Button>
+
+            <Button onClick={()=>{
+                console.log(this.refs.tab.getActiveIndex());
+                this.refs.tab.remove(this.refs.tab.getActiveIndex());
+            }}>删除</Button>
         </Card>
       </div>
     );

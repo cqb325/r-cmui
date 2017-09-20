@@ -164,6 +164,14 @@ class CheckBox extends BaseComponent {
         return this.state.checked;
     }
 
+    /**
+     * 设置选中状态
+     * @param {[type]} checked [description]
+     */
+    setChecked(checked, cb){
+        this.setState({checked}, cb);
+    }
+
     render () {
         let {className, name, type, item, itemClass} = this.props;
         className = classNames(

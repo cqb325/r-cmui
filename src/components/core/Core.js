@@ -111,7 +111,9 @@ class Core {
                 } else {
                     o = {};
                     for (let j in obj) {
-                        o[j] = Core.clone(obj[j]);
+                        if(obj.hasOwnProperty(j)){
+                            o[j] = Core.clone(obj[j]);
+                        }
                     }
                 }
             }
