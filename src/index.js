@@ -19,6 +19,8 @@ import Switch from './components/Switch/index';
 import TextArea from './components/TextArea/index';
 import Upload from './components/Upload/index';
 import Uploadify from './components/Uploadify/index';
+import Tooltip from './components/Tooltip/index';
+import FormControl from './components/FormControl/index';
 import './styles/theme.less';
 
 export {
@@ -27,8 +29,7 @@ export {
     FontIcon,
     Card,
     Breadcrumb,
-    CheckBox,
-    CheckBoxGroup,
+    FormControl,
     Row,
     Col,
     Label,
@@ -38,9 +39,12 @@ export {
     Notification,
     Input,
     InputNumber,
+    CheckBox,
+    CheckBoxGroup,
     Select,
     Switch,
     TextArea,
     Upload,
-    Uploadify
+    Uploadify,
+    Tooltip
 };

@@ -3,7 +3,7 @@
  * @module InnerTrigger
  */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import Popup from './Popup';
 import Events from '../utils/Events';

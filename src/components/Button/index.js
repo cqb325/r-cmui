@@ -188,10 +188,10 @@ class Button extends BaseComponent {
      */
     componentWillReceiveProps(nextProps){
         let params = {};
-        if(nextProps.theme !== this.state.theme){
+        if(nextProps.theme !== this.props.theme && nextProps.theme !== this.state.theme){
             params['theme'] = nextProps.theme;
         }
-        if(nextProps.disabled !== this.state.disabled){
+        if(nextProps.disabled !== this.props.disabled && nextProps.disabled !== this.state.disabled){
             params['disabled'] = nextProps.disabled;
         }
         this.setState(params);

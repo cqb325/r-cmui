@@ -9,12 +9,11 @@ import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import Core from '../core/Core';
-// import Ajax from '../core/Ajax';
 import fetch from '../utils/fetch';
 import clickAway from '../utils/ClickAway';
 import strings from '../utils/strings';
 import Dom from '../utils/Dom';
-// import FormControl from './FormControl';
+import FormControl from '../FormControl/index';
 import grids from '../utils/grids';
 import {fromJS} from 'immutable';
 const getGrid = grids.getGrid;
@@ -650,7 +649,7 @@ class Select extends BaseComponent {
 
     componentWillReceiveProps (nextProps) {
         let value = nextProps.value;
-        if (value !== this.state.value) {
+        if (value !== this.props.value && value !== this.state.value) {
             this.setState({ value });
         }
     }
@@ -687,6 +686,6 @@ Select = clickAway(Select);
 
 Select.Option = Option;
 
-// FormControl.register(Select, 'select');
+FormControl.register(Select, 'select');
 
 export default Select;

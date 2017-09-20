@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import Dom from '../utils/Dom';
 import FontIcon from '../FontIcon/index';
 import grids from '../utils/grids';
-// import FormControl from './FormControl';
+import FormControl from '../FormControl/index';
 const getGrid = grids.getGrid;
 import './Upload.less';
 
@@ -111,6 +111,6 @@ class Upload extends BaseComponent {
     }
 }
 
-// FormControl.register(Upload, 'file');
+FormControl.register(Upload, 'file');
 
 export default Upload;

@@ -4,7 +4,7 @@ import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
 import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
-    Uploadify
+    Uploadify, Tooltip, FormControl
 } from 'cmui';
 import Card from '../src/components/Card';
 import {fromJS} from 'immutable';
@@ -195,8 +195,20 @@ class App extends BaseComponent {
             <TextArea autoHeight height={80} width='100%' placeholder="enter some words"></TextArea>
 
             <Upload name='file'/><br></br>
-            <Uploadify url='xxx' multi={false}/>
-            <Uploadify url='xxx' mode='grid' />
+            {/* <Uploadify url='xxx' multi={false}/>
+            <Uploadify url='xxx' mode='grid' /> */}
+        </Card>
+
+        <Card title='Tooltip'>
+            <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
+
+            <FormControl name="username" label='username：' type='text' required />
+            <FormControl name="username" label='username：' type='inputnumber' required />
+            <FormControl name="province" label='province：' type='select' required data={['全国','浙江']} hasEmptyOption />
+            <FormControl name="checked" label='sure：' type='switch' required />
+            <FormControl name="desc" label='desc：' type='textarea' required />
+            <FormControl name="file" label='file：' type='file' required />
+            <FormControl name="checkbox" label='checkbox：' type='checkbox' required data={[{id: '1', text: 'phone'}]}/>
         </Card>
       </div>
     );

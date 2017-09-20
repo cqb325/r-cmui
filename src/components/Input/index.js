@@ -11,7 +11,7 @@ import grids from '../utils/grids';
 const getGrid = grids.getGrid;
 import filterProps from 'react-valid-props';
 import Regs from '../utils/regs';
-// import FormControl from '../FormControl';
+import FormControl from '../FormControl/index';
 import './Input.less';
 
 /**
@@ -77,13 +77,12 @@ class Input extends BaseComponent {
 
     componentWillReceiveProps (nextProps) {
         let value = nextProps.value;
-        if (value !== this.state.value) {
+        if (value !== this.props.value && value !== this.state.value) {
             this.setState({ value });
         }
     }
 
     handleChange(event){
-        console.log(11);
         const { readOnly, type, trigger } = this.props;
 
         if (readOnly) {
@@ -119,7 +118,7 @@ class Input extends BaseComponent {
         if(this.props.onChange){
             this.props.onChange(value, event);
         }
-        this.emit('change');
+        this.emit('change', value, event);
     }
 
     /**
@@ -171,6 +170,6 @@ class Input extends BaseComponent {
     }
 }
 
-// FormControl.register(Input, ['text']);
+FormControl.register(Input, ['text']);
 
 export default Input;
