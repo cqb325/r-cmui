@@ -5,6 +5,8 @@ import Card from './components/Card/index';
 import Breadcrumb from './components/Breadcrumb/index';
 import CheckBox from './components/CheckBox/index';
 import CheckBoxGroup from './components/CheckBoxGroup/index';
+import Radio from './components/Radio/index';
+import RadioGroup from './components/RadioGroup/index';
 import Row from './components/Row/index';
 import Col from './components/Col/index';
 import Label from './components/Label/index';
@@ -21,6 +23,15 @@ import Upload from './components/Upload/index';
 import Uploadify from './components/Uploadify/index';
 import Tooltip from './components/Tooltip/index';
 import FormControl from './components/FormControl/index';
+import Dropdown from './components/Dropdown/index';
+import Clock from './components/Clock/index';
+import Menu from './components/Menu/index';
+import Layout from './components/Layout/index';
+import Sider from './components/Layout/Sider';
+import Slick from './components/Slick/index';
+import Spin from './components/Spin/index';
+import Steps from './components/Steps/index';
+import Tab from './components/Tab/index';
 import './styles/theme.less';
 
 export {
@@ -41,10 +52,21 @@ export {
     InputNumber,
     CheckBox,
     CheckBoxGroup,
+    Radio,
+    RadioGroup,
     Select,
     Switch,
     TextArea,
     Upload,
     Uploadify,
-    Tooltip
+    Tooltip,
+    Clock,
+    Dropdown,
+    Menu,
+    Layout,
+    Sider,
+    Slick,
+    Spin,
+    Steps,
+    Tab
 };

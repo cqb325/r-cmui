@@ -6,7 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import velocity from '../lib/velocity';
+import velocity from '../../lib/velocity';
 import Popup from './Popup';
 import Events from '../utils/Events';
 import Dom from '../utils/Dom';
@@ -173,11 +173,19 @@ class InnerDropdown extends React.PureComponent{
 
         let newOverlay = null;
         if (this.overlay) {
-            let overlayProps = Object.assign({
-                onSelect: this.onSelect.bind(this),
-                prefix: 'cm-dropdown-menu',
-                startIndex: 0
-            }, this.overlay.props : {});
+            let overlayProps = null;
+            let type = this.overlay.type;
+            let compName = type && type.displayName ? type.displayName : '';
+            if(compName === 'Menu'){
+                overlayProps = Object.assign({
+                    onSelect: this.onSelect.bind(this),
+                    prefix: 'cm-dropdown-menu',
+                    startIndex: 0
+                }, this.overlay.props : {});
+            }else{
+                overlayProps = this.overlay.props;
+            }
+
             newOverlay = React.cloneElement(this.overlay, overlayProps);
         } else {
             newOverlay = <span />;
