@@ -1,4 +1,4 @@
-export default async (url = '', data = {}, type = 'GET')=>{
+export default async (url = '', data = {}, type = 'GET', fail)=>{
     type = type.toUpperCase();
     if (type === 'GET') {
         let dataStr = ''; //数据拼接字符串
@@ -32,5 +32,8 @@ export default async (url = '', data = {}, type = 'GET')=>{
         return responseJson;
     } catch (error) {
         console.error(error);
+        if(fail) {
+            fail(error);
+        }
     }
 }

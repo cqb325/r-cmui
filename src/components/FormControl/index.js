@@ -89,6 +89,7 @@ class FormControl extends BaseComponent {
             //     props['handleChange'] = this.handleChange;
             // } else {
             props.onChange = this.onChange;
+            delete props.required;
             // }
 
             props.style = this.props.itemStyle;
@@ -121,12 +122,14 @@ class FormControl extends BaseComponent {
 
                 props = Object.assign(props, child.props);
 
-                let componentName = child.type && child.type.displayName ? child.type.displayName : '';
-                if (componentName === 'TextArea') {
-                    props['handleChange'] = this.handleChange;
-                } else {
-                    props.onChange = this.onChange;
-                }
+                // let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+                // if (componentName === 'TextArea') {
+                //     props['handleChange'] = this.handleChange;
+                // } else {
+                props.onChange = this.onChange;
+                // }
+
+                delete props.required;
 
                 props.style = this.props.itemStyle;
                 props.className = this.props.itemClass;

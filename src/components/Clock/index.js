@@ -6,6 +6,7 @@
 import React from 'react';
 import BaseComponent from '../core/BaseComponent';
 import moment from 'moment';
+import TimePicker from '../TimePicker/index';
 import './Clock.less';
 
 /**
@@ -17,19 +18,24 @@ import './Clock.less';
 class Clock extends BaseComponent {
     static displayName = "Clock";
 
+    static defaultProps = {
+        value: '00:00:00',
+        format: 'HH:mm:ss',
+        hourStep: 1,
+        minute: 1,
+        secondStep: 1
+    }
     constructor(props) {
         super(props);
 
-        let current = props.value ? moment(props.value) : '';
-        if (current === '') {
-            current = moment();
-            current.set('hour', 0);
-            current.set('minute', 0);
-            current.set('second', 0);
-        }
+        let arr = props.value.split(':');
+        let time = moment();
+        time.set('hour', parseInt(arr[0], 10));
+        time.set('minute', parseInt(arr[1], 10));
+        time.set('second', parseInt(arr[2], 10));
 
         this.state = {
-            current: current
+            current: time
         };
     }
 
@@ -81,19 +87,17 @@ class Clock extends BaseComponent {
 
 
         let secondStyle = {
-            'transform': 'rotateZ(' + sr + 'deg)'
+            'transform': 'rotateZ(' + sr + 'deg)',
+            'msTransform': 'rotate(' + sr + 'deg)'
         };
         let minuteStyle = {
-            'transform': 'rotateZ(' + mr + 'deg)'
+            'transform': 'rotateZ(' + mr + 'deg)',
+            'msTransform': 'rotate(' + mr + 'deg)'
         };
         let hourStyle = {
-            'transform': 'rotateZ(' + hr + 'deg)'
+            'transform': 'rotateZ(' + hr + 'deg)',
+            'msTransform': 'rotate(' + hr + 'deg)'
         };
-        if (this.isLtIE9()) {
-            this._calcFilter(sr, secondStyle, 52);
-            this._calcFilter(mr, minuteStyle, 42);
-            this._calcFilter(hr, hourStyle, 32);
-        }
         return (
             <div className='click-hands'>
                 <div className='hourHand' style={hourStyle} />
@@ -104,54 +108,19 @@ class Clock extends BaseComponent {
     }
 
     /**
-     * 计算IE9以下的filter和位置
-     * @method _calcFilter
-     * @param deg {Number} 需要旋转的度数
-     * @param style {Object} 样式对象
-     * @param width {Number} 指针旋转的半径
-     * @private
-     */
-    _calcFilter(deg, style, width) {
-        let rad = deg * (Math.PI / 180);
-        let m11 = Math.cos(rad);
-        let m12 = -1 * Math.sin(rad);
-        let m21 = Math.sin(rad);
-        let m22 = m11;
-
-        let dx = m11;
-        let dy = m21;
-        if (deg > 270) {
-            deg = deg - 360;
-        }
-        if (deg < 0 && deg >= -90) {
-            dx = 0;
-            dy = m21 * width;
-        } else if (deg >= 0 && deg <= 90) {
-            dx = -8 * m11;
-            dy = -m21 * 2;
-        } else if (deg > 90 && deg <= 180) {
-            dx = width * m11;
-            dy = -1;
-        } else if (deg > 180 && deg <= 270) {
-            dx = width * m11;
-            dy = m21 * width;
-        }
-        style.filter = 'progid:DXImageTransform.Microsoft.Matrix(M11=' +
-            m11 + ',M12=' + m12 + ',M21=' + m21 + ',M22=' + m22 + ',SizingMethod="auto expand")';
-        style['marginTop'] = dy + 'px';
-        style['marginLeft'] = dx + 'px';
-    }
-
-    /**
      * 设置值
      * @method setValue
      * @param value {moment} moment对象
      */
     setValue(value){
-        let d = {time: value};
+        this.setState({
+            current: value
+        });
         if (this.props.onChange) {
-            this.props.onChange(d);
+            this.props.onChange(value);
         }
+
+        this.emit('change', value);
     }
 
     /**
@@ -165,80 +134,16 @@ class Clock extends BaseComponent {
     }
 
     /**
-     * 添加一小时
-     * @method addHour
-     */
-    addHour() {
-        let current = this.state.current;
-        current.add(1, 'hour');
-        let new1 = moment(current);
-        console.log(current == new1);
-
-        this.setValue(new1);
-    }
-
-    /**
-     * 减少一小时
-     * @method subHour
-     */
-    subHour(){
-        let current = this.state.current;
-        current.add(-1, 'hour');
-
-        this.setValue(current);
-    }
-
-    /**
-     * 添加一分钟
-     * @method addMinute
-     */
-    addMinute() {
-        let current = this.state.current;
-        current.add(1, 'minute');
-
-        this.setValue(current);
-    }
-
-    /**
-     * 减少一分钟
-     * @method subMinute
-     */
-    subMinute() {
-        let current = this.state.current;
-        current.add(-1, 'minute');
-
-        this.setValue(current);
-    }
-
-    /**
-     * 添加一秒
-     * @method addSecond
-     */
-    addSecond() {
-        let current = this.state.current;
-        current.add(1, 'second');
-
-        this.setValue(current);
-    }
-
-    /**
-     * 减少一秒
-     * @method subSecond
-     */
-    subSecond() {
-        let current = this.state.current;
-        current.add(-1, 'second');
-
-        this.setValue(current);
-    }
-
-    /**
      * 获取当前的时刻
      * @method getTime
      * @returns {String} 当前的时刻
      */
     getTime() {
         return this.state.current.format('HH:mm:ss');
+    }
+
+    onChange = (v, time)=>{
+        this.setValue(moment(time));
     }
 
     /**
@@ -250,9 +155,7 @@ class Clock extends BaseComponent {
         let nums = this._renderNumbers();
         let hands = this._renderHands();
         let current = this.state.current;
-        let hour = current.get('hour');
-        let minute = current.get('minute');
-        let second = current.get('second');
+        let value = current.format(this.props.format);
 
         let close = this.props.view === 'time' ? ''
             : (<div className='clock-close' onClick={this.close.bind(this)}>
@@ -272,33 +175,14 @@ class Clock extends BaseComponent {
                     {hands}
                 </div>
                 <div className='spinners'>
-                    <div className='hourSpinner spinner'>
-                        <span className='spinner-value'>{hour}</span>
-                        <span className='spinner-plus' onClick={this.addHour.bind(this)}>
-                            <i className='fa fa-angle-up' />
-                        </span>
-                        <span className='spinner-subs' onClick={this.subHour.bind(this)}>
-                            <i className='fa fa-angle-down' />
-                        </span>
-                    </div>
-                    <div className='minuteSpinner spinner'>
-                        <span className='spinner-value'>{minute}</span>
-                        <span className='spinner-plus' onClick={this.addMinute.bind(this)}>
-                            <i className='fa fa-angle-up' />
-                        </span>
-                        <span className='spinner-subs' onClick={this.subMinute.bind(this)}>
-                            <i className='fa fa-angle-down' />
-                        </span>
-                    </div>
-                    <div className='secondSpinner spinner'>
-                        <span className='spinner-value'>{second}</span>
-                        <span className='spinner-plus' onClick={this.addSecond.bind(this)}>
-                            <i className='fa fa-angle-up' />
-                        </span>
-                        <span className='spinner-subs' onClick={this.subSecond.bind(this)}>
-                            <i className='fa fa-angle-down' />
-                        </span>
-                    </div>
+                    <TimePicker
+                        format={this.props.format}
+                        value={value}
+                        onChange={this.onChange}
+                        hourStep={this.props.hourStep}
+                        minuteStep={this.props.minuteStep}
+                        secondStep={this.props.secondStep}
+                    />
                 </div>
             </div>
         );

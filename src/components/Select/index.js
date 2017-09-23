@@ -37,7 +37,14 @@ class Option extends BaseComponent{
         });
     }
 
-    onSelect = ()=>{
+    onSelect = (e)=>{
+        if(e && e.preventDefault){
+            e.preventDefault();
+        }
+        if(e && e.stopPropagation){
+            e.stopPropagation();
+        }
+
         let {multi, disabled} = this.props;
         if(disabled){
             return false;
@@ -138,7 +145,8 @@ class Select extends BaseComponent {
         textField: 'text',
         valueField: 'id',
         sep: ',',
-        choiceText: '请选择'
+        choiceText: '请选择',
+        active: false
     };
 
     static propTypes = {
@@ -215,13 +223,15 @@ class Select extends BaseComponent {
 
         this.addState({
             value: props.value,
-            active: false,
+            active: props.active,
             data: data
         });
 
         this.options = {};
         this.text = [];
         this.lastSelectItem = null;
+
+        this._selectItem = this._selectItem.bind(this);
     }
 
     /**
@@ -322,7 +332,7 @@ class Select extends BaseComponent {
      * @param option 选中的选项
      * @private
      */
-    _selectItem = (option)=>{
+    _selectItem(option){
         let valueField = this.props.valueField;
 
         let value = '';
@@ -488,7 +498,8 @@ class Select extends BaseComponent {
                     itemUnBind: this.itemUnBind,
                     active: active,
                     multi: this.props.multi,
-                    onClick: this._selectItem
+                    onClick: this._selectItem,
+                    key: value
                 });
                 if(this.props.multi && child.props.empty){
                     return null;
