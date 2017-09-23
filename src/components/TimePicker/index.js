@@ -23,16 +23,17 @@ class TimePicker extends BaseComponent{
     constructor(props){
         super(props);
 
-        let arr = props.value.split(':');
-        let time = moment();
-        time.set('hour', parseInt(arr[0], 10));
-        time.set('minute', parseInt(arr[1], 10));
-        time.set('second', parseInt(arr[2], 10));
-
-        let value = time.format(props.format);
         this.hasHour = props.format.indexOf('H') > -1;
         this.hasMinute = props.format.indexOf('m') > -1;
         this.hasSecond = props.format.indexOf('s') > -1;
+
+        let arr = props.value.split(':');
+        let time = moment();
+        this.hasHour ? time.set('hour', parseInt(arr[0], 10)) : time.set('hour', 0);
+        this.hasMinute ? time.set('minute', parseInt(arr[1], 10)) : time.set('minute', 0);
+        this.hasSecond ? time.set('second', parseInt(arr[2], 10)) : time.set('second', 0);
+
+        let value = time.format(props.format);
 
         this.addState({
             value: value,
@@ -40,36 +41,43 @@ class TimePicker extends BaseComponent{
         });
     }
 
-    hourChange = (v)=>{
-        let time = this.state.current;
-        v = time.set('hour', v).format(this.props.format);
-        this.setState({value: v});
-
-        this.emitChange(v, time);
+    plusHour = (v, step)=>{
+        this.timeChange(step, 'hour', 'plus');
     }
 
-    minuteChange = (v)=>{
-        let time = this.state.current;
-        v = time.set('minute', v).format(this.props.format);
-        this.setState({value: v});
-
-        this.emitChange(v, time);
+    subHour = (v, step)=>{
+        this.timeChange(-step, 'hour', 'sub');
     }
 
-    secondChange = (v)=>{
-        let time = this.state.current;
-        v = time.set('second', v).format(this.props.format);
-        this.setState({value: v});
-
-        this.emitChange(v, time);
+    plusMinute = (v, step)=>{
+        this.timeChange(step, 'minute', 'plus');
     }
 
-    emitChange(v, time){
+    subMinute = (v, step)=>{
+        this.timeChange(-step, 'minute', 'sub');
+    }
+
+    plusSecond = (v, step)=>{
+        this.timeChange(step, 'second', 'plus');
+    }
+
+    subSecond = (v, step)=>{
+        this.timeChange(-step, 'second', 'sub');
+    }
+
+    timeChange(step, type, op){
+        let time = this.state.current;
+        let v = time.add(step, type).format(this.props.format);
+        this.setState({value: v, current: moment(time)});
+        this.emitChange(v, time, type, op);
+    }
+
+    emitChange(v, time, type, op){
         if(this.props.onChange){
-            this.props.onChange(v, time);
+            this.props.onChange(v, time, type, op);
         }
 
-        this.emit('change', v, time);
+        this.emit('change', v, time, type, op);
     }
 
     renderTime(){
@@ -78,13 +86,19 @@ class TimePicker extends BaseComponent{
         let minute = time.get('minute');
         let second = time.get('second');
         let h = this.hasHour 
-            ? <Spinner loop size={this.props.size} value={hour} key='hour' max={23} step={this.props.hourStep} onChange={this.hourChange}/>
+            ? <Spinner loop size={this.props.size} value={hour} key='hour' max={23} step={this.props.hourStep}
+                onSub={this.subHour} onPlus={this.plusHour}
+            />
             : null;
         let m = this.hasMinute
-            ? <Spinner loop size={this.props.size} value={minute} key='munite' max={59} step={this.props.minuteStep} onChange={this.minuteChange} />
+            ? <Spinner loop size={this.props.size} value={minute} key='munite' max={59} step={this.props.minuteStep}
+                onSub={this.subMinute} onPlus={this.plusMinute}
+            />
             : null;
         let s = this.hasSecond
-            ? <Spinner loop size={this.props.size} value={second} key='second' max={59} step={this.props.secondStep} onChange={this.secondChange}/>
+            ? <Spinner loop size={this.props.size} value={second} key='second' max={59} step={this.props.secondStep}
+                onSub={this.subSecond} onPlus={this.plusSecond}
+            />
             : null;
 
         return [h, m, s];

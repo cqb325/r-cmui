@@ -27,7 +27,10 @@ class Date extends BaseComponent {
         startDate: '',
         endDate: '',
         prevBtn: true,
-        nextBtn: true
+        nextBtn: true,
+        hourStep: 1,
+        minute: 1,
+        secondStep: 1
     };
 
     constructor (props) {
@@ -35,7 +38,7 @@ class Date extends BaseComponent {
 
         let current = props.value ? moment(props.value, props.format) : moment();
 
-        this.view = props.view || 'datetime';
+        this.format = props.format;
         let stage = 1;
         let minStage = 0;
         let maxStage = 3;
@@ -44,12 +47,15 @@ class Date extends BaseComponent {
         }
         if (props.dateOnly){
             minStage = 1;
+            stage = minStage;
         }
         if (props.monthOnly){
             minStage = 2;
+            stage = minStage;
         }
         if (props.yearOnly){
             minStage = 3;
+            stage = minStage;
         }
         this.minStage = minStage;
         this.maxStage = maxStage;
@@ -57,7 +63,6 @@ class Date extends BaseComponent {
         this.addState({
             stage: stage,
             value: props.value,
-            format: props.format,
             current: current,
             startDate: props.startDate,
             endDate: props.endDate,
@@ -125,8 +130,9 @@ class Date extends BaseComponent {
      * @returns {String} 格式化后的日期
      */
     formatValue(value){
-        if (this.state.format){
-            return moment(value).format(this.state.format);
+        // console.log('this.props.format', value.getTime());
+        if (this.props.format){
+            return moment(value).format(this.props.format);
         }
 
         let view = this.view;
@@ -539,10 +545,14 @@ class Date extends BaseComponent {
         }else{
             f = 'HH:mm:ss';
         }
+        console.log(f);
         return (
             <Clock ref='clock'
-                value={this.state.current.format(f)}
+                value={this.state.current.format('HH:mm:ss')}
                 format={f}
+                hourStep={this.props.hourStep}
+                minuteStep={this.props.minuteStep}
+                secondStep={this.props.secondStep}
                 onChange={this.timeChange}
                 onTimeClose={this.timeClose} />
         );
