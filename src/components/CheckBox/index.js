@@ -172,6 +172,15 @@ class CheckBox extends BaseComponent {
         this.setState({checked}, cb);
     }
 
+    /**
+     * 是否禁用
+     * @returns 
+     * @memberof CheckBox
+     */
+    isDisabled(){
+        return this.state.disabled;
+    }
+
     render () {
         let {className, name, type, item, itemClass} = this.props;
         className = classNames(

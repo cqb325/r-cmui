@@ -32,6 +32,17 @@ import Slick from './components/Slick/index';
 import Spin from './components/Spin/index';
 import Steps from './components/Steps/index';
 import Tab from './components/Tab/index';
+import Table from './components/Table/index';
+import Toast from './components/Toast/index';
+import Progress from './components/Progress/index';
+import Pagination from './components/Pagination/index';
+import IconButton from './components/IconButton/index';
+import Form from './components/Form/index';
+import Badge from './components/Badge/index';
+import Accordion from './components/Accordion/index';
+import AutoComplete from './components/AutoComplete/index';
+import Spinner from './components/Spinner/index';
+import TimePicker from './components/TimePicker/index';
 import './styles/theme.less';
 
 export {
@@ -68,5 +79,16 @@ export {
     Slick,
     Spin,
     Steps,
-    Tab
+    Tab,
+    Table,
+    Toast,
+    Progress,
+    Pagination,
+    IconButton,
+    Form,
+    Badge,
+    Accordion,
+    AutoComplete,
+    Spinner,
+    TimePicker
 };

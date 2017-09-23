@@ -2,22 +2,25 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import BaseComponent from '../src/components/core/BaseComponent';
-import {Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
+import {
+    Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
-    Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab
+    Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
+    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker
 } from 'cmui';
-const {SubMenu, Item, MenuItemGroup, Divider} = Menu;
+const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
 import Card from '../src/components/Card';
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 import image from './images/sr-home.svg';
 import pic1 from './images/2504157.jpg';
+import Date from '../src/components/DateTime/Date';
 
 
 class App extends BaseComponent {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.changeButtonProps = this.changeButtonProps.bind(this);
-        this.data = [{id: 1, text: 'phone'}, {id: 2, text: 'apple'}];
+        this.data = [{ id: 1, text: 'phone' }, { id: 2, text: 'apple' }];
 
         this.state = {
             btnTheme: 'default',
@@ -25,41 +28,41 @@ class App extends BaseComponent {
         }
     }
 
-    changeButtonProps(){
+    changeButtonProps() {
         this.setState({
             btnTheme: 'success',
             btnDisabled: false
         });
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log(React);
     }
 
-    setCBData = ()=>{
-        this.data = fromJS(this.data).push({id: Math.random(), text: '111'}).toJS();
+    setCBData = () => {
+        this.data = fromJS(this.data).push({ id: Math.random(), text: '111' }).toJS();
         console.log(this.data);
         this.refs.cb.setData(this.data);
     }
 
-    delCBData = ()=>{
+    delCBData = () => {
         this.data = fromJS(this.data).pop().toJS();
         this.refs.cb.setData(this.data);
     }
 
-    disableEnable = ()=>{
+    disableEnable = () => {
         this.refs.cb1.disableItem(0);
     }
 
-    openMsgBox = ()=>{
-        this.refs.msgbox.show(<div><i className="fa fa-info"/> info message</div>, 'tip');
+    openMsgBox = () => {
+        this.refs.msgbox.show(<div><i className="fa fa-info" /> info message</div>, 'tip');
     }
 
-    openDialog = ()=>{
+    openDialog = () => {
         this.refs.dialog.open();
     }
 
-    openNotification = ()=>{
+    openNotification = () => {
         Notification.success({
             title: 'tip',
             desc: 'asdasdasd',
@@ -67,17 +70,17 @@ class App extends BaseComponent {
         });
     }
 
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+    render() {
+        return (
+            <div className="App">
+                <div className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <h2>Welcome to React</h2>
+                </div>
+                <p className="App-intro">
+                    To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        {/* <Button disabled={this.state.btnDisabled} theme={this.state.btnTheme} ref='btn' raised>按钮</Button>
+                {/* <Button disabled={this.state.btnDisabled} theme={this.state.btnTheme} ref='btn' raised>按钮</Button>
         <Button theme="primary" onClick={this.changeButtonProps}>改变</Button>
         asd:
         <Button theme="primary" img={image} style={{fontSize: 16}}>改变</Button>
@@ -145,8 +148,8 @@ class App extends BaseComponent {
             number: <Input name="number" type="number" /><br/>
         </Card> */}
 
-        <Card>
-            {/* <InputNumber value={10} step="2" size="small"/>
+                <Card>
+                    {/* <InputNumber value={10} step="2" size="small"/>
             <Select data={['1','2','3']} ref='select' value="2" placeholder='请选择' multi/>
             <Button onClick={()=>{
                 this.refs.select.setValue('2');
@@ -189,24 +192,24 @@ class App extends BaseComponent {
             }}>获取值</Button>
 
             <Select value="2" maxWidth={200} url='http://192.168.105.202:8415/mock/test/arr.html' placeholder='请选择' hasEmptyOption multi /> */}
-        </Card>
-        <Card title='sad'>
-            <Switch onChange={(v)=>{
-                console.log(v);
-            }}></Switch>
-            <Switch size="small" />
-            <Switch checkedText="on" unCheckedText="off" />
+                </Card>
+                <Card title='sad'>
+                    <Switch onChange={(v) => {
+                        console.log(v);
+                    }}></Switch>
+                    <Switch size="small" />
+                    <Switch checkedText="on" unCheckedText="off" />
 
-            <TextArea autoHeight height={80} cols={30}></TextArea>
-            <TextArea autoHeight height={80} width='100%' placeholder="enter some words"></TextArea>
+                    <TextArea autoHeight height={80} cols={30}></TextArea>
+                    <TextArea autoHeight height={80} width='100%' placeholder="enter some words"></TextArea>
 
-            <Upload name='file'/><br></br>
-            {/* <Uploadify url='xxx' multi={false}/>
+                    <Upload name='file' /><br></br>
+                    {/* <Uploadify url='xxx' multi={false}/>
             <Uploadify url='xxx' mode='grid' /> */}
-        </Card>
+                </Card>
 
-        <Card title='Tooltip'>
-            {/* <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
+                <Card title='Tooltip'>
+                    {/* <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
 
             <FormControl name="username" label='username：' type='text' required />
             <FormControl name="username" label='username：' type='inputnumber' required />
@@ -216,12 +219,12 @@ class App extends BaseComponent {
             <FormControl name="file" label='file：' type='file' required />
             <FormControl name="checkbox" label='checkbox：' type='checkbox' required data={[{id: '1', text: 'phone'}]}/>
             <FormControl name="radio" label='radio：' type='radio' required data={[{id: '1', text: 'phone'}]}/> */}
-        </Card>
+                </Card>
 
-        <Card title='xxx'>
-            <Dropdown overlay={<ul><li>aaa</li></ul>}><a>asd</a></Dropdown>
+                <Card title='xxx'>
+                    <Dropdown overlay={<ul><li>aaa</li></ul>}><a>asd</a></Dropdown>
 
-            {/* <Menu theme='black' style={{width: 200}}>
+                    {/* <Menu theme='black' style={{width: 200}}>
                 <Item>aaaa</Item>
                 <SubMenu title="SubMenu1">
                     <Item>aa1</Item>
@@ -233,55 +236,143 @@ class App extends BaseComponent {
                     <Item>aa1</Item>
                 </MenuItemGroup>
             </Menu> */}
-        </Card>
+                </Card>
 
-        <Card>
-            <Spin.SVGSpin spinning ref='spin'>
-                <Slick effect='fade'>
-                    <Slick.Item><img src={pic1}/></Slick.Item>
-                    <Slick.Item>
-                        <p>asdasd</p>
-                        <p>asdasd</p>
-                        <p>asdasd</p>
-                    </Slick.Item>
-                    <Slick.Item>3</Slick.Item>
-                </Slick>
-            </Spin.SVGSpin>
-            <Switch checked onChange={(v)=>{
-                v ? this.refs.spin.show() : this.refs.spin.hide();
-            }}/>
+                <Card>
+                    <Spin.SVGSpin spinning ref='spin'>
+                        <Slick effect='fade'>
+                            <Slick.Item><img src={pic1} /></Slick.Item>
+                            <Slick.Item>
+                                <p>asdasd</p>
+                                <p>asdasd</p>
+                                <p>asdasd</p>
+                            </Slick.Item>
+                            <Slick.Item>3</Slick.Item>
+                        </Slick>
+                    </Spin.SVGSpin>
+                    <Switch checked onChange={(v) => {
+                        v ? this.refs.spin.show() : this.refs.spin.hide();
+                    }} />
 
-            <Steps current={1}>
-                <Steps.Step title='step1' description='step1 desc...'></Steps.Step>
-                <Steps.Step title='step2' description='step2 desc...'></Steps.Step>
-                <Steps.Step title='step3' description='step3 desc...'></Steps.Step>
-            </Steps>
-        </Card>
+                    <Steps current={1}>
+                        <Steps.Step title='step1' description='step1 desc...'></Steps.Step>
+                        <Steps.Step title='step2' description='step2 desc...'></Steps.Step>
+                        <Steps.Step title='step3' description='step3 desc...'></Steps.Step>
+                    </Steps>
+                </Card>
 
-        <Card>
-            <Tab ref='tab' hasClose data={[{text: 'tab1', component: <div>111</div>},{text: 'tab2', component: <div>2222</div>}]}>
-                <Tab.Item title="ttt"><img src={pic1} /></Tab.Item>
-            </Tab>
+                <Card>
+                    <Tab ref='tab' hasClose data={[{ text: 'tab1', component: <div>111</div> }, { text: 'tab2', component: <div>2222</div> }]}>
+                        <Tab.Item title="ttt"><img src={pic1} /></Tab.Item>
+                    </Tab>
 
-            <Button onClick={()=>{
-                this.refs.tab.add({
-                    text: 'added',
-                    component: <div>added tab</div>
-                }, true);
-            }}>添加</Button>
+                    <Button onClick={() => {
+                        this.refs.tab.add({
+                            text: 'added',
+                            component: <div>added tab</div>
+                        }, true);
+                    }}>添加</Button>
 
-            <Button onClick={()=>{
-                this.refs.tab.add(<Tab.Item title='added title'>added content2</Tab.Item>, true);
-            }}>添加元素</Button>
+                    <Button onClick={() => {
+                        this.refs.tab.add(<Tab.Item title='added title'>added content2</Tab.Item>, true);
+                    }}>添加元素</Button>
 
-            <Button onClick={()=>{
-                console.log(this.refs.tab.getActiveIndex());
-                this.refs.tab.remove(this.refs.tab.getActiveIndex());
-            }}>删除</Button>
-        </Card>
-      </div>
-    );
-  }
+                    <Button onClick={() => {
+                        console.log(this.refs.tab.getActiveIndex());
+                        this.refs.tab.remove(this.refs.tab.getActiveIndex());
+                    }}>删除</Button>
+                </Card>
+
+                <Card>
+                    <Table ref='table'
+                        bordered
+                        columns={[{ type: 'checkbox' }, { name: 'field1', text: 'field1', sort: true }, { name: 'field2', text: 'field2', sort: true }]}
+                        data={[{ field1: '111', field2: '222' }, { field1: '333', field2: '444' }]}
+                    >
+                    </Table>
+
+                    <Button onClick={() => {
+                        console.log(this.refs.table.getAllChecked());
+                        console.log(this.refs.table.orignData);
+                    }}>获取勾选的数据</Button>
+                    <Button onClick={() => {
+                        this.refs.table.addRow({
+                            field1: 'asd', field2: 'lkj'
+                        });
+                    }}>添加数据</Button>
+                    <Button onClick={() => {
+                        let length = this.refs.table.getData().length;
+                        this.refs.table.removeRow(length - 1);
+                    }}>删除数据</Button>
+                    <Button onClick={() => {
+                        this.refs.table.setData([{ field1: '111', field2: '222' }, { field1: '333', field2: '444' }]);
+                    }}>添加数据</Button>
+                </Card>
+
+                <Card>
+                    <Progress value={50} strokeWidth={1} type='circle'></Progress>
+                    <Pagination current={1} total={50} pageSize={10} />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <IconButton><FontIcon icon='save'></FontIcon></IconButton>
+                </Card>
+
+                <Card>
+                    <Form action='xxx' method='get' labelWidth={80} layout='stack-inline' ajax>
+                        <FormControl type='text' name='user' required label='User'/>
+                        <FormControl type='select' name='select' required label='Select' data={['1','2','3']}/>
+                        <FormControl type='checkbox' name='check' required label='check' data={[{id: '1', text: '1'},{id: '2', text: '2'}]}/>
+                        <FormControl type='textarea' name='address' required label='Text' height={70}/>
+                        <Form.Row>
+                            <FormControl label='&nbsp;' type='text'/>
+                            <Form.Promote italic>xxxxxxxxxx</Form.Promote>
+                        </Form.Row>
+                    </Form>
+
+                    <Badge count={111}><FontIcon icon='list' size='3x'></FontIcon></Badge>
+                    <Badge dot><FontIcon icon='list' size='3x'></FontIcon></Badge>
+                    <Badge status='success' text='success'></Badge>
+
+                    <Accordion>
+                        <Accordion.Item title='Ac1'>
+                            <p>asdadasdasdasd</p>
+                            <p>asdadasdasdasd</p>
+                            <p>asdadasdasdasd</p>
+                            <p>asdadasdasdasd</p>
+                        </Accordion.Item>
+                        <Accordion.Item title='Ac2'>
+                            <p>asdadasdasdasd</p>
+                            <p>asdadasdasdasd</p>
+                            <p>asdadasdasdasd</p>
+                            <p>asdadasdasdasd</p>
+                        </Accordion.Item>
+                    </Accordion>
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <AutoComplete data={['a','aa','ab','b','bc']}></AutoComplete>
+
+                    <Clock value='16:12:50' secondStep={10}></Clock>
+                    <br/>
+                    <Spinner max={12} step={2} size='small' loop></Spinner>
+                    <br/>
+                    <br/>
+
+                    <TimePicker value='16:30:30' secondStep={5} onChange={(v)=>{
+                        console.log(v);
+                        }}></TimePicker>
+
+                    <div className='cm-datetime'>
+                        <Date value='2017-09-22'></Date>
+                    </div>
+                </Card>
+            </div>
+        );
+    }
 }
 
 export default App;

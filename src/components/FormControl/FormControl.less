@@ -1,18 +1,17 @@
 .cm-form-label{
   display: inline-block;
   text-align: right;
-  margin-right: 8px;
+  padding-right: 8px;
   &.cm-form-label-top{
     vertical-align: top;
   }
   &.cm-form-label-required{
     padding-left: 8px;
     position: relative;
-    &:after{
+    &:before{
         content: '*';
         color: red;
-        position: absolute;
-        left: 0;
+        margin-right: 3px;
     }
   }
 }
