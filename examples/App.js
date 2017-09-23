@@ -367,7 +367,9 @@ class App extends BaseComponent {
                         }}></TimePicker>
 
                     <div className='cm-datetime'>
-                        <Date value='2017-09-22'></Date>
+                        <Date value='2017-09-22' format='YYYY-MM-DD' minuteStep={15} onSelectDate={(v, date)=>{
+                            console.log(v, date);
+                        }}></Date>
                     </div>
                 </Card>
             </div>

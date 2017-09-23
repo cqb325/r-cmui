@@ -50,6 +50,12 @@ class Spinner extends BaseComponent{
         if(this.props.onChange){
             this.props.onChange(value);
         }
+        this.emit('change', value);
+
+        if(this.props.onPlus){
+            this.props.onPlus(value, this.props.step);
+        }
+        this.emit('plus', this.props.step);
     }
 
     /**
@@ -68,6 +74,12 @@ class Spinner extends BaseComponent{
         if(this.props.onChange){
             this.props.onChange(value);
         }
+        this.emit('change', value);
+
+        if(this.props.onSub){
+            this.props.onSub(value, this.props.step);
+        }
+        this.emit('sub', this.props.step);
     }
 
     /**
@@ -120,6 +132,13 @@ class Spinner extends BaseComponent{
         }
         m = Math.pow(10, Math.max(r1, r2));
         return (num1 * m + num2 * m) / m;
+    }
+
+    componentWillReceiveProps (nextProps) {
+        let value = nextProps.value;
+        if (value !== this.props.value && value !== this.state.value) {
+            this.setState({ value });
+        }
     }
 
     render(){

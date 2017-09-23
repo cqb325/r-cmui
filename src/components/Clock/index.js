@@ -34,14 +34,22 @@ class Clock extends BaseComponent {
         time.set('minute', parseInt(arr[1], 10));
         time.set('second', parseInt(arr[2], 10));
 
+        this.lastCurrent = time;
         this.state = {
             current: time
         };
+
+        this.op = '';
     }
 
     componentWillReceiveProps (nextProps) {
         if (nextProps.value !== this.props.value) {
-            this.setState({ current: moment(nextProps.value) });
+            let arr = nextProps.value.split(':');
+            let time = moment();
+            time.set('hour', parseInt(arr[0], 10));
+            time.set('minute', parseInt(arr[1], 10));
+            time.set('second', parseInt(arr[2], 10));
+            this.setState({ current: time });
         }
     }
 
@@ -81,11 +89,35 @@ class Clock extends BaseComponent {
         let hour = current.get('hour');
         let minute = current.get('minute');
         let second = current.get('second');
-        let sr = -90 + 6 * second;
-        let mr = -90 + 6 * (minute + second / 60);
-        let hr = -90 + 30 * (hour + minute / 60 + second / 3600);
 
+        let sr; let mr; let hr;
+        if(this.lastSecondDeg === undefined){
+            sr = 6 * second - 90;
+            this.lastSecondDeg = sr;
+        }else{
+            let off = current.diff(this.lastCurrent, 'seconds') % 60;
+            sr = this.lastSecondDeg + off * 6;
+            this.lastSecondDeg = sr;
+        }
 
+        if(this.lastMinuteDeg === undefined){
+            mr = 6 * (minute + second / 60) - 90;
+            this.lastMinuteDeg = mr;
+        }else{
+            let off = current.diff(this.lastCurrent, 'seconds') / 60 % 60;
+            mr = this.lastMinuteDeg + off * 6;
+            this.lastMinuteDeg = mr;
+        }
+
+        if(this.lastHourDeg === undefined){
+            hr = 30 * (hour + minute / 60 + second / 3600) - 90;
+            this.lastHourDeg = hr;
+        }else{
+            let off = current.diff(this.lastCurrent, 'seconds') / 3600 % 60;
+            hr = this.lastHourDeg + off * 30;
+            this.lastHourDeg = hr;
+        }
+        
         let secondStyle = {
             'transform': 'rotateZ(' + sr + 'deg)',
             'msTransform': 'rotate(' + sr + 'deg)'
@@ -108,11 +140,29 @@ class Clock extends BaseComponent {
     }
 
     /**
+     * 重新计算角度
+     * @param {*} lastDeg 
+     * @param {*} deg 
+     */
+    calDeg(lastDeg, deg){
+        if(lastDeg !== undefined){
+            if(lastDeg > deg && this.op === 'plus'){
+                deg =  deg + 360;
+            }
+            if(lastDeg < deg && this.op === 'sub'){
+                deg =  deg - 360;
+            }
+        }
+        return deg;
+    }
+
+    /**
      * 设置值
      * @method setValue
      * @param value {moment} moment对象
      */
     setValue(value){
+        this.lastCurrent = this.state.current;
         this.setState({
             current: value
         });
@@ -142,7 +192,9 @@ class Clock extends BaseComponent {
         return this.state.current.format('HH:mm:ss');
     }
 
-    onChange = (v, time)=>{
+    onChange = (v, time, type, op)=>{
+        this.op = op;
+        this.type = type;
         this.setValue(moment(time));
     }
 
