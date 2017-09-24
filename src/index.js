@@ -43,6 +43,7 @@ import Accordion from './components/Accordion/index';
 import AutoComplete from './components/AutoComplete/index';
 import Spinner from './components/Spinner/index';
 import TimePicker from './components/TimePicker/index';
+import DateTime from './components/DateTime/index';
 import './styles/theme.less';
 
 export {
@@ -90,5 +91,6 @@ export {
     Accordion,
     AutoComplete,
     Spinner,
-    TimePicker
+    TimePicker,
+    DateTime
 };

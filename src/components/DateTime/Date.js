@@ -9,7 +9,6 @@ import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Clock from '../Clock/index';
-import './DateTime.less';
 
 /**
  * Date 类
@@ -123,6 +122,14 @@ class Date extends BaseComponent {
         this.setState({current});
     }
 
+    setStage(stage){
+        this.setState({stage});
+    }
+
+    getStage(){
+        return this.state.stage;
+    }
+
     /**
      * 格式化值
      * @method formatValue
@@ -130,30 +137,9 @@ class Date extends BaseComponent {
      * @returns {String} 格式化后的日期
      */
     formatValue(value){
-        // console.log('this.props.format', value.getTime());
         if (this.props.format){
             return moment(value).format(this.props.format);
         }
-
-        let view = this.view;
-        let format = null;
-        if (view === 'datetime'){
-            format = 'YYYY-MM-DD HH:mm:ss';
-        }
-        if (view === 'date'){
-            format = 'YYYY-MM-DD';
-        }
-        if (view === 'time'){
-            format = 'HH:mm:ss';
-        }
-
-        if (view === 'month'){
-            format = 'YYYY-MM-01';
-        }
-        if (view === 'year'){
-            format = 'YYYY-01-01';
-        }
-        return format ? moment(value).format(format) : '';
     }
 
     /**
