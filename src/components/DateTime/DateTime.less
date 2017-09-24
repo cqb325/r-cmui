@@ -2,7 +2,7 @@
 @lighter-white-text: #8A9095;
 @disabled-text: #ccc;
 
-@border-radius: 12px;
+@border-radius: 2px;
 @highlight-color: #3498DB;
 
 .cm-datetime{
@@ -103,7 +103,6 @@
     padding: 2px 4px;
     width: 100%;
     text-align: center;
-    white-space: nowrap;
     a{
       display: inline-block;
       padding: 4px;
@@ -118,8 +117,8 @@
           background: #fff;
         }
       }
-      &.prev{float: left; cursor: pointer; font-family: Consolas,cursive,monospace,serif; -webkit-user-select: none; user-select: none; margin-top: 4px;}
-      &.next{float: right; cursor: pointer; font-family: Consolas,cursive,monospace,serif; -webkit-user-select: none; user-select: none; margin-top: 4px;}
+      &.prev{float: left; width: 15px; cursor: pointer; font-family: Consolas,cursive,monospace,serif; -webkit-user-select: none; user-select: none; margin-top: 4px;}
+      &.next{float: right; width: 15px; cursor: pointer; font-family: Consolas,cursive,monospace,serif; -webkit-user-select: none; user-select: none; margin-top: 4px;}
     }
   }
 
@@ -166,7 +165,7 @@
   }
   .month{
     cursor: pointer;
-    width: 45px;
+    width: 36px;
     padding: 6px 0;
     margin: 4px 10px;
     border-radius: 3px;

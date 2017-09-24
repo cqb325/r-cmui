@@ -6,7 +6,7 @@ import {
     Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
     Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
-    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker
+    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
 import Card from '../src/components/Card';
@@ -371,6 +371,8 @@ class App extends BaseComponent {
                             console.log(v, date);
                         }}></Date>
                     </div>
+
+                    <DateTime dateOnly format='YYYY-MM-DD'></DateTime>
                 </Card>
             </div>
         );
