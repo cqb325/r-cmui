@@ -6,7 +6,7 @@ import {
     Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
     Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
-    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime
+    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
 import Card from '../src/components/Card';
@@ -325,6 +325,8 @@ class App extends BaseComponent {
                         <FormControl type='text' name='user' required label='User'/>
                         <FormControl type='select' name='select' required label='Select' data={['1','2','3']}/>
                         <FormControl type='checkbox' name='check' required label='check' data={[{id: '1', text: '1'},{id: '2', text: '2'}]}/>
+                        <FormControl type='datetime' name='datetime' required label='datetime'/>
+                        <FormControl type='daterange' name='daterange' required label='daterange'/>
                         <FormControl type='textarea' name='address' required label='Text' height={70}/>
                         <Form.Row>
                             <FormControl label='&nbsp;' type='text'/>
@@ -373,6 +375,8 @@ class App extends BaseComponent {
                     </div>
 
                     <DateTime dateOnly format='YYYY-MM-DD'></DateTime>
+
+                    <DateRange clear shortcuts={['一周内']} showTime maxRange={7} endDate='2017-09-24 17:00' value='2017-09-24 15:00:00~2017-09-30 14:30:30' format='YYYY-MM-DD HH:00'></DateRange>
                 </Card>
             </div>
         );
