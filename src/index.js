@@ -45,6 +45,7 @@ import Spinner from './components/Spinner/index';
 import TimePicker from './components/TimePicker/index';
 import DateTime from './components/DateTime/index';
 import DateRange from './components/DateRange/index';
+import Tree from './components/Tree/index';
 import './styles/theme.less';
 
 export {
@@ -94,5 +95,6 @@ export {
     Spinner,
     TimePicker,
     DateTime,
-    DateRange
+    DateRange,
+    Tree
 };

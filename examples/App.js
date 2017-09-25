@@ -6,7 +6,7 @@ import {
     Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
     Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
-    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange
+    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange, Tree
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
 import Card from '../src/components/Card';
@@ -71,6 +71,21 @@ class App extends BaseComponent {
     }
 
     render() {
+        let treeData = [{
+            id: 0,
+            text: "中国",
+            open: true,
+            children: [
+                {
+                    id: '1',
+                    text: "北京",
+                    children: [{id: '11', text: "海淀"},{id: '12', text: "朝阳"}]
+                },{
+                    id: '2',
+                    text: "上海"
+                }
+            ]
+        }];
         return (
             <div className="App">
                 <div className="App-header">
@@ -377,6 +392,10 @@ class App extends BaseComponent {
                     <DateTime dateOnly format='YYYY-MM-DD'></DateTime>
 
                     <DateRange clear shortcuts={['一周内']} showTime maxRange={7} endDate='2017-09-24 17:00' value='2017-09-24 15:00:00~2017-09-30 14:30:30' format='YYYY-MM-DD HH:00'></DateRange>
+                </Card>
+
+                <Card>
+                    <Tree data={treeData}></Tree>
                 </Card>
             </div>
         );
