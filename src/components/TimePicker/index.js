@@ -68,8 +68,9 @@ class TimePicker extends BaseComponent{
     timeChange(step, type, op){
         let time = this.state.current;
         let v = time.add(step, type).format(this.props.format);
-        this.setState({value: v, current: moment(time)});
-        this.emitChange(v, time, type, op);
+        this.setState({value: v, current: moment(time)}, ()=>{
+            this.emitChange(v, time, type, op);
+        });
     }
 
     emitChange(v, time, type, op){
@@ -78,6 +79,38 @@ class TimePicker extends BaseComponent{
         }
 
         this.emit('change', v, time, type, op);
+    }
+
+    getValue(){
+        return this.state.value;
+    }
+
+    getCurrent(){
+        return this.state.current;
+    }
+
+    setValue(value){
+        let arr = value.split(':');
+        let time = moment();
+        arr[0] = arr[0] || 0;
+        arr[1] = arr[1] || 0;
+        arr[2] = arr[2] || 0;
+        time.set('hour', arr[0]);
+        time.set('minute', arr[1]);
+        time.set('second', arr[2]);
+        value = time.format(this.props.format);
+
+        this.setState({
+            value: value,
+            current: time
+        })
+    }
+
+    componentWillReceiveProps (nextProps) {
+        let value = nextProps.value;
+        if (value !== this.props.value && value !== this.state.value) {
+            this.setValue(value);
+        }
     }
 
     renderTime(){

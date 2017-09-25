@@ -335,6 +335,9 @@ class Date extends BaseComponent {
         let year = current.year();
         let month = current.month();
         let first = moment(current.set('date', 1));
+        first.set('hour', 0);
+        first.set('minute', 0);
+        first.set('second', 0);
         let end = moment(first).add(1, 'months').add(-1, 'days');
         let min = 1 - first.weekday();
         let max = (Math.ceil((end.get('date') - min + 1) / 7) * 7);
@@ -377,8 +380,8 @@ class Date extends BaseComponent {
                 let d = days[index];
 
                 // 日期过滤
-                let disabled = (startDate && moment(d.format(startDate._f)).diff(startDate) < 0);
-                disabled = disabled || ((endDate && moment(d.format(endDate._f)).diff(endDate) > 0));
+                let disabled = (startDate && d.isBefore(moment(startDate)));
+                disabled = disabled || ((endDate && d.isAfter(moment(endDate))));
 
                 let rangeSelect = false;
                 let isRangeStart = false;

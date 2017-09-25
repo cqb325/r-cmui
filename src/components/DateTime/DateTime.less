@@ -8,7 +8,7 @@
 .cm-datetime{
   display: inline-block;
   position: relative;
-  vertical-align: top;
+  vertical-align: middle;
 
   .cm-datetime-wrap{
     overflow: hidden;
@@ -23,41 +23,24 @@
     box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
     display: none;
   }
-  &.cm-dateRange{
-    border: 1px solid #e9e9e9;
-    border-radius: 2px;
-    color: #787878;
-    .cm-datetime-wrap{
-      width: 452px;
-    }
-    .date-text{
-      width: auto;
-      min-width: 90px;
-      padding: 4px 10px;
-      border: 0;
-    }
-    .cm-date-month-line{
-      width: 218px;
-    }
-    .cm-date-year-line{
-      width: 218px;
-    }
-  }
   .tools-info{
     font-size: 12px;
     padding: 5px 20px 7px;
     border-bottom: 1px dashed #ccc;
     text-align: left;
+    overflow: hidden;
 
     .date-range-shortcut{
       margin-left: 10px;
       color: gray;
     }
+    .cm-button{
+      padding: 4px 7px;
+    }
   }
   .cm-date-picker{
     display: inline-block;
     font-size: 12px;
-    float: left;
   }
   &.dropup{
     .cm-datetime-wrap{
@@ -66,20 +49,20 @@
     }
   }
   .date-text{
-    padding: 4px 30px 4px 10px;
-    border: 1px solid #e9e9e9;
+    padding: 0 30px 0 6px;
+    border: 1px solid #d9d9d9;
     border-radius: @border-radius;
     color: @greyText;
     width: 100%;
-    min-width: 161px;
+    min-width: 168px;
     display: inline-block;
     background-color: #fff;
     background-image: none;
     font-size: 13px;
     transition: border-color ease-in-out .15s;
     cursor: pointer;
-    height: 26px;
-    line-height: 17px;
+    height: 28px;
+    line-height: 26px;
   }
 
   &.disabled{
@@ -148,7 +131,7 @@
     padding: 5px 0;
     margin: 0 3px;
     border-radius: 50%;
-    font-family: Consolas,cursive,monospace,serif;
+    font-family: Consolas,cursive,monospace,serif,楷体;
     background-color: transparent;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
@@ -322,7 +305,7 @@
   }
 }
 
-.invalid {
+.cm-group-invalid {
   .cm-datetime .date-text{
     border-color: #E05B5B;
   }

@@ -44,6 +44,7 @@ import AutoComplete from './components/AutoComplete/index';
 import Spinner from './components/Spinner/index';
 import TimePicker from './components/TimePicker/index';
 import DateTime from './components/DateTime/index';
+import DateRange from './components/DateRange/index';
 import './styles/theme.less';
 
 export {
@@ -92,5 +93,6 @@ export {
     AutoComplete,
     Spinner,
     TimePicker,
-    DateTime
+    DateTime,
+    DateRange
 };
