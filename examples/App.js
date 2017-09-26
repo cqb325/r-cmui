@@ -395,7 +395,63 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Tree data={treeData}></Tree>
+                    <Tree ref='tree' data={treeData} enableCheckbox enableSmartCheckbox></Tree>
+
+                    <Button onClick={()=>{
+                        this.refs.tree.selectItem('1');
+                    }}>选中</Button>
+                    <Button onClick={()=>{
+                        this.refs.tree.openItem('1');
+                    }}>打开</Button>
+                    <Button onClick={()=>{
+                        this.refs.tree.openAllItem();
+                    }}>打开所有</Button>
+                    <Button onClick={()=>{
+                        this.refs.tree.closeItem('1');
+                    }}>关闭</Button>
+
+                    <Button onClick={()=>{
+                        this.refs.tree.setItemText('1', '北京1');
+                    }}>设置文字</Button>
+                    <Button onClick={()=>{
+                        console.log(this.refs.tree.getItemText('1'));
+                    }}>获取文字</Button>
+                    <Button onClick={()=>{
+                        console.log(this.refs.tree.getOpenState('1'));
+                    }}>获取打开状态</Button>
+                    <Button onClick={()=>{
+                        console.log(this.refs.tree.getSelectedItem('1'));
+                    }}>当前选中节点</Button>
+                    <Button onClick={()=>{
+                        console.log(this.refs.tree.getAllChecked());
+                    }}>所有勾选的节点</Button>
+                    <Button onClick={()=>{
+                        this.refs.tree.addItem('1', {
+                            id: Math.random(),
+                            text: 'asd'
+                        });
+                    }}>addItem</Button>
+
+                    <Button onClick={()=>{
+                        this.refs.tree.deleteChildItems('1');
+                    }}>deleteChildItems</Button>
+
+                    <Button onClick={()=>{
+                        this.refs.tree.removeItem('1');
+                    }}>removeItem</Button>
+
+                    <Button onClick={()=>{
+                        this.refs.tree.setData([
+                {
+                    id: '1',
+                    text: "北京",
+                    children: [{id: '11', text: "海淀"},{id: '12', text: "朝阳"}]
+                },{
+                    id: '2',
+                    text: "上海"
+                }
+            ]);
+                    }}>resetData</Button>
                 </Card>
             </div>
         );
