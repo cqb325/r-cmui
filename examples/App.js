@@ -6,7 +6,8 @@ import {
     Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
     Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
-    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange, Tree
+    Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange, Tree,
+    Marqueen
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
 import Card from '../src/components/Card';
@@ -452,6 +453,24 @@ class App extends BaseComponent {
                 }
             ]);
                     }}>resetData</Button>
+                </Card>
+
+
+
+                <Card>
+                    <Marqueen dir='down'>
+                        <p>1asdasdasdasdasdasdasdasdasdasd</p>
+                        <p>2asdasdasdasdasdasdasdasdasdasd</p>
+                        <p>3asdasdasdasdasdasdasdasdasdasd</p>
+                        <p>4asdasdasdasdasdasdasdasdasdasd</p>
+                    </Marqueen>
+
+                    <Marqueen dir='right'>
+                        <div className='pull-left' style={{padding: 3}}>1asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className='pull-left'>2asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className='pull-left'>3asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className='pull-left'>4asdasdasdasdasdasdasdasdasdasd</div>
+                    </Marqueen>
                 </Card>
             </div>
         );

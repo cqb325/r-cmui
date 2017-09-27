@@ -46,6 +46,7 @@ import TimePicker from './components/TimePicker/index';
 import DateTime from './components/DateTime/index';
 import DateRange from './components/DateRange/index';
 import Tree from './components/Tree/index';
+import Marqueen from './components/Marqueen/index';
 import './styles/theme.less';
 
 export {
@@ -96,5 +97,6 @@ export {
     TimePicker,
     DateTime,
     DateRange,
-    Tree
+    Tree,
+    Marqueen
 };

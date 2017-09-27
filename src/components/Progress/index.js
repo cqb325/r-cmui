@@ -9,7 +9,7 @@ import BaseComponent from '../core/BaseComponent';
 import FontIcon from '../FontIcon/index';
 import grids from '../utils/grids';
 const getGrid = grids.getGrid;
-import './progress.less';
+import './Progress.less';
 
 /**
  * Progress 类
