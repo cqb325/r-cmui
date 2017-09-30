@@ -33,6 +33,7 @@ class Clock extends BaseComponent {
         time.set('hour', parseInt(arr[0], 10));
         time.set('minute', parseInt(arr[1], 10));
         time.set('second', parseInt(arr[2], 10));
+        time.set('millisecond', 0);
 
         this.lastCurrent = time;
         this.state = {
@@ -49,6 +50,8 @@ class Clock extends BaseComponent {
             time.set('hour', parseInt(arr[0], 10));
             time.set('minute', parseInt(arr[1], 10));
             time.set('second', parseInt(arr[2], 10));
+            time.set('millisecond', 0);
+
             this.setState({ current: time });
         }
     }
@@ -117,7 +120,7 @@ class Clock extends BaseComponent {
             hr = this.lastHourDeg + off * 30;
             this.lastHourDeg = hr;
         }
-        
+
         let secondStyle = {
             'transform': 'rotateZ(' + sr + 'deg)',
             'msTransform': 'rotate(' + sr + 'deg)'
@@ -141,8 +144,8 @@ class Clock extends BaseComponent {
 
     /**
      * 重新计算角度
-     * @param {*} lastDeg 
-     * @param {*} deg 
+     * @param {*} lastDeg
+     * @param {*} deg
      */
     calDeg(lastDeg, deg){
         if(lastDeg !== undefined){
@@ -166,6 +169,7 @@ class Clock extends BaseComponent {
         this.setState({
             current: value
         });
+
         if (this.props.onChange) {
             this.props.onChange(value);
         }
