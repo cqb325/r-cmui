@@ -32,6 +32,7 @@ class TimePicker extends BaseComponent{
         this.hasHour ? time.set('hour', parseInt(arr[0], 10)) : time.set('hour', 0);
         this.hasMinute ? time.set('minute', parseInt(arr[1], 10)) : time.set('minute', 0);
         this.hasSecond ? time.set('second', parseInt(arr[2], 10)) : time.set('second', 0);
+        time.set('millisecond', 0);
 
         let value = time.format(props.format);
 
@@ -98,6 +99,7 @@ class TimePicker extends BaseComponent{
         time.set('hour', arr[0]);
         time.set('minute', arr[1]);
         time.set('second', arr[2]);
+        time.set('millisecond', 0);
         value = time.format(this.props.format);
 
         this.setState({
@@ -118,7 +120,7 @@ class TimePicker extends BaseComponent{
         let hour = time.get('hour');
         let minute = time.get('minute');
         let second = time.get('second');
-        let h = this.hasHour 
+        let h = this.hasHour
             ? <Spinner loop size={this.props.size} value={hour} key='hour' max={23} step={this.props.hourStep}
                 onSub={this.subHour} onPlus={this.plusHour}
             />

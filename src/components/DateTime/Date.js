@@ -43,6 +43,7 @@ class Date extends BaseComponent {
         let maxStage = 3;
         if (props.timeOnly){
             maxStage = 0;
+            stage = minStage;
         }
         if (props.dateOnly){
             minStage = 1;
@@ -534,7 +535,6 @@ class Date extends BaseComponent {
         }else{
             f = 'HH:mm:ss';
         }
-        console.log(f);
         return (
             <Clock ref='clock'
                 value={this.state.current.format('HH:mm:ss')}

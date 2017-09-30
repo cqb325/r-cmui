@@ -9,7 +9,9 @@ import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import Radio from '../Radio/index';
 import Core from '../core/Core';
+import fetch from '../utils/fetch';
 import FormControl from '../FormControl/index';
+import './RadioGroup.less';
 
 /**
  * RadioGroup 类
