@@ -166,7 +166,10 @@ class Input extends BaseComponent {
             props[handle] = this.onBlur;
         }
 
-        return (<input {...filterProps(this.props)} {...props} />);
+        let others = filterProps(this.props);
+        delete others['data-valueType'];
+
+        return (<input {...others} {...props} />);
     }
 }
 

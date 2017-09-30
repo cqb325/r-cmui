@@ -144,7 +144,7 @@ class Form extends BaseComponent {
      * @method submit
      */
     submit = ()=>{
-        let {customParams, success, error, ajax} = this.props;
+        let {customParams, ajax} = this.props;
         let method = this.method;
         if (this.isValid()) {
             if (ajax) {
@@ -162,7 +162,7 @@ class Form extends BaseComponent {
 
     /**
      * ajax 提交数据
-     * @param {any} params 
+     * @param {any} params
      * @memberof Form
      */
     async submitData(params){
