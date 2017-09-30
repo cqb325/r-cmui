@@ -176,7 +176,10 @@ class TextArea extends BaseComponent {
             props.onBlur = this.onBlur;
         }
 
-        return (<textarea {...filterProps(this.props)} {...props} value={this.state.value} />);
+        let others = filterProps(this.props);
+        delete others['data-valueType'];
+
+        return (<textarea {...others} {...props} value={this.state.value} />);
     }
 }
 
