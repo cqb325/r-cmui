@@ -84,7 +84,7 @@ class TreeNode extends BaseComponent{
 
     /**
      * 勾选状态
-     * @param {any} checked 
+     * @param {any} checked
      * @memberof TreeNode
      */
     setChecked(checked){
@@ -138,7 +138,7 @@ class TreeNode extends BaseComponent{
         let item = this.state.item;
         if (item.open) {
             item.open = false;
-            
+
             this.setState({
                 open: false
             }, ()=>{
@@ -192,7 +192,7 @@ class TreeNode extends BaseComponent{
 
     /**
      * 清空孩子节点
-     * @param {any} callback 
+     * @param {any} callback
      * @memberof TreeNode
      */
     clearChildren(callback){
@@ -229,6 +229,27 @@ class TreeNode extends BaseComponent{
         this.setState({children: children, open: opened}, callback);
     }
 
+    /**
+     * 添加子节点
+     * @param {any} children
+     * @param {any} callback
+     * @memberof TreeNode
+     */
+    addChildren(children, callback){
+        let item = this.state.item;
+        let childs = this.state.children;
+
+        let arr = List(childs);
+        if(childs && childs.length){
+            childs = arr.concat(children).toJS();
+        }else{
+            childs = children;
+        }
+        item.children = childs;
+
+        this.setState({children: childs}, callback);
+    }
+
     render() {
         let item = this.state.item;
         item._node = this;
@@ -254,7 +275,7 @@ class TreeNode extends BaseComponent{
                     parent={item}
                     visible={this.state.open}
                     onSelect={this.props.onSelect}
-                    ref='subNodes'
+                    ref="subNodes"
                     onOpenClose={this.props.onOpenClose}
                     enableCheckbox={this.props.enableCheckbox}
                     enableSmartCheckbox={this.props.enableSmartCheckbox}
@@ -277,13 +298,13 @@ class TreeNode extends BaseComponent{
             node_selected: this.state.selected
         });
         return (
-            <div className='tree_node'>
+            <div className="tree_node">
                 <span className={nodeClassName}>
-                    <span className='tree_arrow' onClick={this._openClose.bind(this)} />
+                    <span className="tree_arrow" onClick={this._openClose.bind(this)} />
                     {checkboxEle}
                     <span className={contClassName} onClick={this._select.bind(this)}>
                         <span className={iconClassName} />
-                        <span className='tree_text' title={this.state.text}>{this.state.text}</span>
+                        <span className="tree_text" title={this.state.text}>{this.state.text}</span>
                     </span>
                 </span>
                 {subNodes}
@@ -1024,7 +1045,7 @@ class Tree extends BaseComponent {
 
     /**
      * 删除节点后从checkedItems中清除记录
-     * @param {any} item 
+     * @param {any} item
      * @memberof Tree
      */
     removeCheckedItems(item){
@@ -1041,8 +1062,8 @@ class Tree extends BaseComponent {
     }
 
     /**
-     * 
-     * @param {any} item 
+     *
+     * @param {any} item
      * @memberof Tree
      */
     removeCheckedItem(item){
@@ -1119,8 +1140,8 @@ class Tree extends BaseComponent {
 
     /**
      * 更新Item状态
-     * @param {any} parent 
-     * @returns 
+     * @param {any} parent
+     * @returns
      * @memberof Tree
      */
     updateItemCheckStatus(parent){
@@ -1235,14 +1256,9 @@ class Tree extends BaseComponent {
         if (parent) {
             let data = List(json).toJS();
             this._reBuildData(data);
-            if (parent.children) {
-                parent.children = parent.children.concat(data);
-                parent._subNodes.updateState(parent.children);
-            } else {
-                parent.children = data;
-                parent._node.updateState(parent);
-            }
-            cback ? cback(this, data) : false;
+            parent._node.addChildren(data, ()=>{
+                cback ? cback(this, data) : false;
+            });
         }
     }
 
