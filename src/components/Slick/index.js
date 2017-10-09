@@ -310,6 +310,10 @@ class Slick extends BaseComponent {
             } else {
                 this._stack.css('width', totalWidth + 'px');
                 this._stack.css('height', '100%');
+                list.css({
+                    width: this._width + 'px',
+                    height: '100%'
+                });
                 items.css({
                     width: this._width + 'px',
                     height: '100%'
@@ -341,13 +345,13 @@ class Slick extends BaseComponent {
         });
         return (
             <div className={className} style={style}>
-                <div className='cm-slick-slider'>
-                    <div className='cm-slick-list'>
-                        <div className='cm-slick-stack'>
+                <div className="cm-slick-slider">
+                    <div className="cm-slick-list">
+                        <div className="cm-slick-stack">
                             {this.renderChildren()}
                         </div>
                     </div>
-                    <ul className='cm-slick-dots'>
+                    <ul className="cm-slick-dots">
                         {this.dots}
                     </ul>
                 </div>
