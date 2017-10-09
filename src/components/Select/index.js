@@ -21,7 +21,7 @@ const substitute = strings.substitute;
 import './Select.less';
 
 class Option extends BaseComponent{
-    static displayName = "Option";
+    static displayName = 'Option';
 
     constructor(props){
         super(props);
@@ -123,7 +123,7 @@ class Option extends BaseComponent{
 
         return (
             <li className={className} onClick={this.onSelect}>
-                <a href='javascript:void(0)'>
+                <a href="javascript:void(0)">
                     {
                         html ? <span dangerouslySetInnerHTML={{__html: html}} /> : children
                     }
@@ -140,7 +140,7 @@ class Option extends BaseComponent{
  * @extend BaseComponent
  */
 class Select extends BaseComponent {
-    static displayName = "Select";
+    static displayName = 'Select';
     static defaultProps = {
         textField: 'text',
         valueField: 'id',
@@ -333,12 +333,14 @@ class Select extends BaseComponent {
      * @private
      */
     _selectItem(option){
-        let valueField = this.props.valueField;
-
         let value = '';
         //空选项
         if (option.isEmptyOption()) {
             if (!this.props.multi) {
+                if(this.lastSelectItem){
+                    this.lastSelectItem.setActive(false);
+                }
+                this.lastSelectItem = option;
                 this.hideOptions();
                 this.text = [];
             }
@@ -362,10 +364,10 @@ class Select extends BaseComponent {
         });
 
         if (this.props.onChange) {
-            this.props.onChange(value, option);
+            this.props.onChange(value, option.props.item, option);
         }
 
-        this.emit('change', value, option);
+        this.emit('change', value, option.props.item, option);
     }
 
     /**
@@ -485,7 +487,7 @@ class Select extends BaseComponent {
      */
     getChildrenOptions(){
         this.text = [];
-        return React.Children.map(this.props.children, (child, index)=>{
+        return React.Children.map(this.props.children, (child)=>{
             let componentName = child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Option') {
                 let value = child.props.value;
@@ -543,13 +545,17 @@ class Select extends BaseComponent {
         let dropup = Dom.overView(container, offset);
 
         Dom.withoutTransition(container, () => {
-            this.setState({ dropup });
+            if(this._isMounted){
+                this.setState({ dropup });
+            }
         });
 
         this.bindClickAway();
 
         setTimeout(() => {
-            this.setState({ active: true });
+            if(this._isMounted){
+                this.setState({ active: true });
+            }
         }, 0);
     }
 
@@ -590,10 +596,12 @@ class Select extends BaseComponent {
         this.orignData = data;
         let newData = this._rebuildData(data, val, valueField);
         this.data = newData;
-        this.setState({
-            data: newData,
-            value: val
-        });
+        if(this._isMounted){
+            this.setState({
+                data: newData,
+                value: val
+            });
+        }
     }
 
     /**
@@ -648,6 +656,7 @@ class Select extends BaseComponent {
     }
 
     componentDidMount(){
+        this._isMounted = true;
         if(!this.props.multi){
             for(let value in this.options){
                 let option = this.options[value];
@@ -656,6 +665,10 @@ class Select extends BaseComponent {
                 }
             }
         }
+    }
+
+    componentWillUnmount(){
+        this._isMounted = false;
     }
 
     componentWillReceiveProps (nextProps) {
@@ -681,9 +694,9 @@ class Select extends BaseComponent {
         return (
             <div className={className} style={style} onClick={this.showOptions}>
                 {text}
-                <span className='cm-select-cert' />
-                <div className='cm-select-options-wrap'>
-                    <div ref='options' className='cm-select-options'>
+                <span className="cm-select-cert" />
+                <div className="cm-select-options-wrap">
+                    <div ref="options" className="cm-select-options">
                         {filter}
                         <ul>{childrenOptions}{options}</ul>
                     </div>
