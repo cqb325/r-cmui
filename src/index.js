@@ -47,6 +47,7 @@ import DateTime from './components/DateTime/index';
 import DateRange from './components/DateRange/index';
 import Tree from './components/Tree/index';
 import Marqueen from './components/Marqueen/index';
+import Business from './components/Business/index';
 import './styles/theme.less';
 
 export {
@@ -98,5 +99,6 @@ export {
     DateTime,
     DateRange,
     Tree,
-    Marqueen
+    Marqueen,
+    Business
 };
