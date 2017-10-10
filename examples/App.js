@@ -10,7 +10,7 @@ import {
     Marqueen, Business
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
-const {SimpleListPage, SimpleForm} = Business;
+const {SimpleListPage, SimpleForm, TableForm} = Business;
 import Card from '../src/components/Card';
 import { fromJS } from 'immutable';
 import image from './images/sr-home.svg';
@@ -505,6 +505,17 @@ class App extends BaseComponent {
                         select: 1,
                         daterange: '2017-10-10~2017-10-15'
                     }}></SimpleForm>
+
+                    <TableForm ref='tableform' columns={[
+                        {name: 'name', text: '姓名', type: 'text'},
+                        {name: 'select', text: '性别', type: 'select', props: {data: ['男', '女']}}
+                    ]}></TableForm>
+                    <Button onClick={()=>{
+                        this.refs.tableform.addRow();
+                    }}>添加一行</Button>
+                    <Button onClick={()=>{
+                        this.refs.tableform.removeRow(1);
+                    }}>删除一行</Button>
                 </Card>
             </div>
         );
