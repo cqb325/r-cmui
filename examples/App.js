@@ -7,9 +7,10 @@ import {
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
     Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
     Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange, Tree,
-    Marqueen
+    Marqueen, Business
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
+const {SimpleListPage, SimpleForm} = Business;
 import Card from '../src/components/Card';
 import { fromJS } from 'immutable';
 import image from './images/sr-home.svg';
@@ -471,6 +472,39 @@ class App extends BaseComponent {
                         <div className='pull-left'>3asdasdasdasdasdasdasdasdasdasd</div>
                         <div className='pull-left'>4asdasdasdasdasdasdasdasdasdasd</div>
                     </Marqueen>
+                </Card>
+
+
+                {/* <Card>
+                    <div>
+                        <Input className='searchItem' name='searchParam1'></Input>
+                        <Button ref='searchBtn'>查询</Button>
+                    </div>
+                    <SimpleListPage pagination columns={[{type: 'checkbox'}, {name: 'field1', text: 'Name'}]}
+                    action='http://192.168.105.202:8415/mock/test/main/getPageList.do'
+                    searchBtn={()=>{
+                        return this.refs.searchBtn;
+                    }}
+                    ></SimpleListPage>
+                </Card> */}
+
+                <Card>
+                    <SimpleForm data={{
+                        layout: 'stack-inline',
+                        labelWidth: 80,
+                        items: [
+                            {type: 'text', name: 'input', label: 'Input', required: true},
+                            {type: 'select', name: 'select', label: 'select', data: ['1', '2']},
+                            {type: 'daterange', name: 'daterange', label: 'daterange'},
+                            {type: 'row', className: 'stack-inline', children: [
+                                {type: 'textarea', label: '&nbsp;', name: 'textarea', height: 80},
+                                {type: 'promote', label: 'xxxxxxxxx'},
+                            ]},
+                        ]
+                    }} initData={{
+                        select: 1,
+                        daterange: '2017-10-10~2017-10-15'
+                    }}></SimpleForm>
                 </Card>
             </div>
         );

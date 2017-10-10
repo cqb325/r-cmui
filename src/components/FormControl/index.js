@@ -28,8 +28,6 @@ class FormControl extends BaseComponent {
     static displayName = 'FormControl';
 
     static defaultProps = {
-        rules: {},
-        messages: {},
         isFormItem: true,
         tipAlign: 'right',
         tipAuto: false,
@@ -42,8 +40,8 @@ class FormControl extends BaseComponent {
     constructor(props) {
         super(props);
 
-        this.rules = props.rules;
-        this.messages = props.messages;
+        this.rules = props.rules || {};
+        this.messages = props.messages || {};
         this._isFormItem = props.isFormItem;
         this._name = props.name;
         this._areaLabel = false;
@@ -452,6 +450,7 @@ class FormControl extends BaseComponent {
                 isFormItem: this.isFormItem()
             });
         }
+        console.log(this._name, this.rules);
     }
 
     /**
