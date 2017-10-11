@@ -556,6 +556,10 @@ class Select extends BaseComponent {
             if(this._isMounted){
                 this.setState({ active: true });
             }
+            if(this.props.onShow){
+                this.props.onShow();
+            }
+            this.emit('show');
         }, 0);
     }
 
@@ -578,6 +582,10 @@ class Select extends BaseComponent {
             if (this.state.active === false) {
                 options.style.display = 'none';
             }
+            if(this.props.onHide){
+                this.props.onHide();
+            }
+            this.emit('hide');
         }, time);
     }
 
