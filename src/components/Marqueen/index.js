@@ -56,7 +56,7 @@ class Marqueen extends BaseComponent{
             ReactDOM.findDOMNode(this).style.height = ele.offsetHeight /2 + 'px';
         }
         // 如果是左右滚动就给滚动元素加上宽度
-        if (this.dir == "left" || this.dir == "right") {
+        if (this.dir == 'left' || this.dir == 'right') {
             let totalWidth = 0;
             for(let i = 0; i < childrens.length; i++) {
                 if(childrens[i].getBoundingClientRect){
@@ -68,28 +68,28 @@ class Marqueen extends BaseComponent{
                 }
             }
             
-            ele.style.width = totalWidth + "px";
+            ele.style.width = totalWidth + 'px';
             ReactDOM.findDOMNode(this).style.width = totalWidth / 2.0 + 'px';
             ReactDOM.findDOMNode(this).style.height = ele.offsetHeight + 'px';
         }
 
         // 如果是向右滚动，初始时将滚动元素的left设置为负的自身宽度的一半
-        if (this.dir == "right" && ele.offsetLeft == 0) {
-            ele.style.left = -ele.offsetWidth / 2 + "px";
+        if (this.dir == 'right' && ele.offsetLeft == 0) {
+            ele.style.left = -ele.offsetWidth / 2 + 'px';
         }
 
         // 如果是向左滚动，初始时将滚动元素的left设置为0
-        if (this.dir == "left" && ele.offsetLeft == -ele.offsetWidth / 2) {
+        if (this.dir == 'left' && ele.offsetLeft == -ele.offsetWidth / 2) {
             ele.style.left = 0;
         }
 
         // 如果是向下滚动，初始时将滚动元素的top设置为负的自向高度的一半
-        if (this.dir == "down" && ele.offsetTop == 0) {
-            ele.style.top = -ele.offsetHeight / 2 + "px";
+        if (this.dir == 'down' && ele.offsetTop == 0) {
+            ele.style.top = -ele.offsetHeight / 2 + 'px';
         }
 
         // 如果是向上滚动，初始时将滚动元素的top设置为0
-        if (this.dir == "up" && ele.offsetTop == -ele.offsetHeight / 2) {
+        if (this.dir == 'up' && ele.offsetTop == -ele.offsetHeight / 2) {
             ele.style.top = 0;
         }
     }
@@ -104,19 +104,19 @@ class Marqueen extends BaseComponent{
         var style, offset, target, step, elemSize;
         let ele = ReactDOM.findDOMNode(this.refs.wrap);
 
-        if (this.dir == "left" || this.dir == "right") {
+        if (this.dir == 'left' || this.dir == 'right') {
             // element.style[ "left" | "top" ]
-            style = "left";
-            offset = "offsetLeft";
+            style = 'left';
+            offset = 'offsetLeft';
             elemSize = ele.offsetWidth / 2;
         } else {
             // element[ offset[Left|Top] ];
-            style = "top";
-            offset = "offsetTop";
+            style = 'top';
+            offset = 'offsetTop';
             elemSize = ele.offsetHeight / 2;
         }
 
-        step = (this.dir == "left" || this.dir == "up") ? -this.step : this.step;
+        step = (this.dir == 'left' || this.dir == 'up') ? -this.step : this.step;
 
         if (this.stepInterval == 0) {
             // 滚动效果执行时间为0时，进入无缝滚动模式
@@ -125,10 +125,10 @@ class Marqueen extends BaseComponent{
             }
             target = ele[offset] + step;
             target = this.fixTarget(step, ele[offset] + step, elemSize);
-            ele.style[style] = target + "px";
+            ele.style[style] = target + 'px';
         } else {
 
-            if (this.timerStep != null) return;
+            if (this.timerStep != null) {return;}
 
             //先停止掉this.timer，在滚动执行完过后再开启
             this.stop();
@@ -141,7 +141,7 @@ class Marqueen extends BaseComponent{
                 seed = seed > 0 ? Math.min(seed, step) : Math.max(seed, step);
 
                 target = this.fixTarget(seed, ele[offset] + seed, elemSize);
-                ele.style[style] = target + "px";
+                ele.style[style] = target + 'px';
 
                 step -= seed;
                 if (step == 0) {
@@ -200,7 +200,7 @@ class Marqueen extends BaseComponent{
         className = classNames('cm-marqueen', className);
         return (
             <div className={className} style={style}>
-                <div ref='wrap' className='cm-marqueen-wrap'>
+                <div ref="wrap" className="cm-marqueen-wrap">
                     {this.props.children}
                 </div>
             </div>

@@ -15,7 +15,7 @@ import BaseComponent from '../core/BaseComponent';
  * @extend BaseComponent
  */
 class ButtonGroup extends BaseComponent {
-    static displayName = "ButtonGroup";
+    static displayName = 'ButtonGroup';
 
     static propTypes = {
         /**

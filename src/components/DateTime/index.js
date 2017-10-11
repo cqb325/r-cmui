@@ -141,14 +141,6 @@ class Datetime extends BaseComponent {
         this.emit('change', value, date);
     }
 
-    componentWillReceiveProps(newProps){
-        // if (!shallowEqual(newProps, this.props)){
-        //     let propsChangeFlag = this.state.propsChangeFlag || 0;
-        //     this.setState({
-        //         propsChangeFlag: propsChangeFlag + 1
-        //     });
-        // }
-    }
 
     componentDidMount(){
         let dateComp = this.refs.date;
@@ -195,20 +187,20 @@ class Datetime extends BaseComponent {
             ? this.state.value
             : '';
         text = text
-            ? (<span className='date-text'>
-                <input type='hidden' name={name} defaultValue={this.state.value} />{text}
+            ? (<span className="date-text">
+                <input type="hidden" name={name} defaultValue={this.state.value} />{text}
             </span>)
-            : (<span className='date-text'>
-                <input type='hidden' name={name} defaultValue={this.state.value} />{placeholder}&nbsp;
+            : (<span className="date-text">
+                <input type="hidden" name={name} defaultValue={this.state.value} />{placeholder}&nbsp;
             </span>);
 
         let others = omit(this.props, ['className', 'grid', 'readOnly', 'disabled', 'style']);
         return (
-            <div ref='datetime' onClick={this.show.bind(this)} className={className} style={style || {}}>
+            <div ref="datetime" onClick={this.show.bind(this)} className={className} style={style || {}}>
                 {text}
-                <i className='fa fa-calendar' />
-                <div className='cm-datetime-wrap' ref='datePicker'>
-                    <Date ref='date' {...others} onSelectDate={this._selectDate.bind(this)} />
+                <i className="fa fa-calendar" />
+                <div className="cm-datetime-wrap" ref="datePicker">
+                    <Date ref="date" {...others} onSelectDate={this._selectDate.bind(this)} />
                 </div>
             </div>
         );

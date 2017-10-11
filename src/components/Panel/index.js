@@ -18,7 +18,7 @@ import './Panel.less';
  * @extend BaseComponent
  */
 class Panel extends BaseComponent {
-    static displayName = "Panel";
+    static displayName = 'Panel';
 
     static propTypes = {
         /**
@@ -102,13 +102,13 @@ class Panel extends BaseComponent {
         let toolsCont = null;
         if (tools) {
             toolsCont = (
-                <span key='tools' className='cm-panel-tools'>
+                <span key="tools" className="cm-panel-tools">
                     {tools}
                 </span>
             );
         }
 
-        let text = <span key='text' className='cm-panel-head-text'>{this.state.title}</span>;
+        let text = <span key="text" className="cm-panel-head-text">{this.state.title}</span>;
         if (toolsCont) {
             return [text, toolsCont];
         } else {
@@ -125,8 +125,8 @@ class Panel extends BaseComponent {
         let toolsCont = null;
         if (tools) {
             toolsCont = (
-                <div className='cm-panel-footer'>
-                    <span className='cm-panel-footer-tools'>
+                <div className="cm-panel-footer">
+                    <span className="cm-panel-footer-tools">
                         {tools}
                     </span>
                 </div>
@@ -171,10 +171,10 @@ class Panel extends BaseComponent {
         let headContent = this.renderHeader();
         return (
             <div className={className} style={style}>
-                <div className='cm-panel-title'>
+                <div className="cm-panel-title">
                     {headContent}
                 </div>
-                <div className='cm-panel-content'>
+                <div className="cm-panel-content">
                     {this.renderContent() || this.props.children}
                 </div>
                 {this.renderFooter()}

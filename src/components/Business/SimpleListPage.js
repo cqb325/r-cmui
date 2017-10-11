@@ -27,25 +27,25 @@ class SimpleListPage extends React.Component{
         let sort = [];
         for(let key in this.sort){
             if(this.sort[key]){
-                sort.push(key + " "+ this.sort[key]);
+                sort.push(key + ' '+ this.sort[key]);
             }
         }
         if(sort.length){
-            params["sort"] = sort.join(",");
+            params['sort'] = sort.join(',');
         }
 
-        let searchClazz = this.props.searchClass || "searchItem";
+        let searchClazz = this.props.searchClass || 'searchItem';
         let doms = Dom.queryAll('.' + searchClazz);
         if(doms && doms.length){
             let els = Dom.dom(doms);
             els.each((el)=>{
-                let name = el.attr("name");
+                let name = el.attr('name');
                 let value = el.value();
 
-                if(el.attr("type") === "radio"){
-                    value = Dom.queryAll("input[name='"+name+"']:checked").value;
+                if(el.attr('type') === 'radio'){
+                    value = Dom.queryAll('input[name=\''+name+'\']:checked').value;
                 }
-                if(value != "") {
+                if(value != '') {
                     params[name] = value;
                 }
             });
@@ -60,7 +60,7 @@ class SimpleListPage extends React.Component{
 
     search = async (page, pageSize)=>{
         let ret = await fetch(this.props.action, this.getSearchParams(page, pageSize), 'GET', (error)=>{
-            console.log("get Table Data error!", error);
+            console.log('get Table Data error!', error);
         });
         if(ret){
             this.refs.table.setData(ret.data);
@@ -145,9 +145,9 @@ class SimpleListPage extends React.Component{
                 <Table ref="table" columns={this.props.columns} onSort={this.sortColumn} data={this.props.data || []} bordered hover striped />
 
                 <div className="cm-row">
-                {
-                    this.props.pagination ? <Pagination className="pull-right" ref="pagination" current={1} pageSize={10} total={0} onChange={this.search} onShowSizeChange={this.search} /> : null
-                }
+                    {
+                        this.props.pagination ? <Pagination className="pull-right" ref="pagination" current={1} pageSize={10} total={0} onChange={this.search} onShowSizeChange={this.search} /> : null
+                    }
                 </div>
             </div>
         );

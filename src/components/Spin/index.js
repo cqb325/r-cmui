@@ -56,14 +56,14 @@ class WaterSpin extends BaseComponent {
         let top = (100 - this.state.percent) + '%';
         let fontSize = this.props.size / 250 * 75;
         return (
-            <div className='cm-water-spin-wrap' style={{width: this.props.size, height: this.props.size}}>
-                <div className='cm-water-spin-inner'>
-                    <div className='cm-water-spin-text' style={{
+            <div className="cm-water-spin-wrap" style={{width: this.props.size, height: this.props.size}}>
+                <div className="cm-water-spin-inner">
+                    <div className="cm-water-spin-text" style={{
                         fontSize: fontSize,
                         lineHeight: (this.props.size - 10) + 'px'}}>{this.state.percent + '%'}
                     </div>
-                    <div className='cm-water-spin' style={{top: top}} />
-                    <div className='cm-water-glare' />
+                    <div className="cm-water-spin" style={{top: top}} />
+                    <div className="cm-water-glare" />
                 </div>
             </div>
         );
@@ -111,18 +111,18 @@ class SVGSpin extends BaseComponent {
     renderSpin(){
         if (this.state.spinning) {
             return (
-                <div className='cm-svg-spin-inner'>
-                    <div className='cm-svg-spin'>
-                        <svg className='lds-gears' width='32px' height='32px' xmlns='http://www.w3.org/2000/svg'
-                            viewBox='0 0 100 100' preserveAspectRatio='xMidYMid'>
-                            <g transform='translate(50 50)'>
-                                <g transform='translate(-19 -19) scale(0.6)'>
-                                    <g transform='rotate(177)'>
-                                        <animateTransform attributeName='transform' type='rotate' values='0;360'
-                                            keyTimes='0;1' dur='2s' begin='0s' repeatCount='indefinite'
+                <div className="cm-svg-spin-inner">
+                    <div className="cm-svg-spin">
+                        <svg className="lds-gears" width="32px" height="32px" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <g transform="translate(50 50)">
+                                <g transform="translate(-19 -19) scale(0.6)">
+                                    <g transform="rotate(177)">
+                                        <animateTransform attributeName="transform" type="rotate" values="0;360"
+                                            keyTimes="0;1" dur="2s" begin="0s" repeatCount="indefinite"
                                         />
-                                        <path fill='#20a0ff'
-                                            d='M37.3496987939662 -7 L47.3496987939662 -7 L47.3496987939662 7
+                                        <path fill="#20a0ff"
+                                            d="M37.3496987939662 -7 L47.3496987939662 -7 L47.3496987939662 7
                                             L37.3496987939662 7 A38 38 0 0 1 31.359972760794346 21.46047782418268
                                             L31.359972760794346 21.46047782418268 L38.431040572659825 28.531545636048154
                                             L28.531545636048154 38.431040572659825 L21.46047782418268 31.359972760794346
@@ -144,17 +144,17 @@ class SVGSpin extends BaseComponent {
                                             -31.359972760794342 L21.460477824182686 -31.359972760794342
                                             L28.531545636048158 -38.43104057265982 L38.4310405726598 -28.53154563604818
                                             L31.35997276079433 -21.4604778241827 A38 38 0 0 1 37.3496987939662
-                                            -6.999999999999995 M0 -23A23 23 0 1 0 0 23 A23 23 0 1 0 0 -23'
+                                            -6.999999999999995 M0 -23A23 23 0 1 0 0 23 A23 23 0 1 0 0 -23"
                                         />
                                     </g>
                                 </g>
-                                <g transform='translate(19 19) scale(0.6)'>
-                                    <g transform='rotate(160.5)'>
-                                        <animateTransform attributeName='transform' type='rotate' values='360;0'
-                                            keyTimes='0;1' dur='2s' begin='-0.125s' repeatCount='indefinite'
+                                <g transform="translate(19 19) scale(0.6)">
+                                    <g transform="rotate(160.5)">
+                                        <animateTransform attributeName="transform" type="rotate" values="360;0"
+                                            keyTimes="0;1" dur="2s" begin="-0.125s" repeatCount="indefinite"
                                         />
-                                        <path fill='rgba(12.549019607843137%,62.74509803921568%,100%,0.382)'
-                                            d='M37.3496987939662 -7 L47.3496987939662 -7 L47.3496987939662 7
+                                        <path fill="rgba(12.549019607843137%,62.74509803921568%,100%,0.382)"
+                                            d="M37.3496987939662 -7 L47.3496987939662 -7 L47.3496987939662 7
                                             L37.3496987939662 7 A38 38 0 0 1 31.359972760794346 21.46047782418268
                                             L31.359972760794346 21.46047782418268 L38.431040572659825 28.531545636048154
                                             L28.531545636048154 38.431040572659825
@@ -179,14 +179,14 @@ class SVGSpin extends BaseComponent {
                                             -31.359972760794342 L21.460477824182686 -31.359972760794342
                                             L28.531545636048158 -38.43104057265982 L38.4310405726598 -28.53154563604818
                                             L31.35997276079433 -21.4604778241827 A38 38 0 0 1 37.3496987939662
-                                            -6.999999999999995 M0 -23A23 23 0 1 0 0 23 A23 23 0 1 0 0 -23'
+                                            -6.999999999999995 M0 -23A23 23 0 1 0 0 23 A23 23 0 1 0 0 -23"
                                         />
                                     </g>
                                 </g>
                             </g>
                         </svg>
                     </div>
-                    <div className='cm-svg-spin-text'>{this.props.title || 'loading...'}</div>
+                    <div className="cm-svg-spin-text">{this.props.title || 'loading...'}</div>
                 </div>
             );
         } else {
@@ -212,19 +212,19 @@ class SVGSpin extends BaseComponent {
 let SpinMap = {
     mask:
     <span>
-        <div className='cm-mask cm-mask-top'>
-            <div className='cm-mask-plane' />
+        <div className="cm-mask cm-mask-top">
+            <div className="cm-mask-plane" />
         </div>
-        <div className='cm-mask cm-mask-middle'>
-            <div className='cm-mask-plane' />
+        <div className="cm-mask cm-mask-middle">
+            <div className="cm-mask-plane" />
         </div>
-        <div className='cm-mask cm-mask-bottom'>
-            <div className='cm-mask-plane' />
+        <div className="cm-mask cm-mask-bottom">
+            <div className="cm-mask-plane" />
         </div>
     </span>,
 
     waves:
-    <div className='cm-waves' />
+    <div className="cm-waves" />
 };
 
 /**
@@ -269,11 +269,11 @@ class CssSpin extends BaseComponent {
     renderSpin(){
         if (this.state.spinning) {
             return (
-                <div className='cm-spin-inner'>
-                    <div className='cm-spin'>
+                <div className="cm-spin-inner">
+                    <div className="cm-spin">
                         {SpinMap[this.props.type]}
                     </div>
-                    <div className='cm-spin-text'>{this.props.title || 'loading...'}</div>
+                    <div className="cm-spin-text">{this.props.title || 'loading...'}</div>
                 </div>
             );
         } else {
@@ -344,11 +344,11 @@ class GIFSpin extends BaseComponent {
     renderSpin(){
         if (this.state.spinning) {
             return (
-                <div className='cm-spin-inner'>
-                    <div className='cm-spin'>
-                        <img src={this.props.src} width={this.props.size} height={this.props.size} />
+                <div className="cm-spin-inner">
+                    <div className="cm-spin">
+                        <img src={this.props.src} width={this.props.size} height={this.props.size} alt="" />
                     </div>
-                    <div className='cm-spin-text'>{this.props.title || 'loading...'}</div>
+                    <div className="cm-spin-text">{this.props.title || 'loading...'}</div>
                 </div>
             );
         } else {

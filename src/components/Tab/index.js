@@ -42,7 +42,7 @@ class Tab extends BaseComponent {
      */
     prepare(){
         let items = [];
-        React.Children.forEach(this.props.children, (child, index)=>{
+        React.Children.forEach(this.props.children, (child)=>{
             let componentName = child.type && child.type.displayName ? child.type.displayName : '';
             if(componentName === 'Item'){
                 items.push({
@@ -138,9 +138,9 @@ class Tab extends BaseComponent {
             });
             return (
                 <li key={index} className={className} onClick={()=>{ this._selectTab(item); }}>
-                    {this.props.hasClose ? <a className='cm-tab-close' onClick={this._removeItem.bind(this, item)}>&times;</a> : null}
+                    {this.props.hasClose ? <a className="cm-tab-close" onClick={this._removeItem.bind(this, item)}>&times;</a> : null}
                     <EnhancedButton initFull touchRippleColor={'rgba(0, 0, 0, 0.1)'}>
-                        <a href='javascript:void(0)'>{item.text}</a>
+                        <a href="javascript:void(0)">{item.text}</a>
                     </EnhancedButton>
                 </li>
             );
@@ -272,10 +272,10 @@ class Tab extends BaseComponent {
         let contents = this._getContent();
         return (
             <div className={className} style={style}>
-                <ul className='cm-tab-header'>
+                <ul className="cm-tab-header">
                     {headers}
                 </ul>
-                <div className='cm-tab-content'>
+                <div className="cm-tab-content">
                     {contents}
                 </div>
             </div>

@@ -19,7 +19,7 @@ import './InputNumber.less';
  * @extend BaseComponent
  */
 class InputNumber extends BaseComponent {
-    static displayName = "InputNumber";
+    static displayName = 'InputNumber';
 
     static defaultProps = {
         value: 0,
@@ -308,7 +308,7 @@ class InputNumber extends BaseComponent {
             <span className={className} style={style}>
                 <Button onClick={this.subtract}>-</Button>
                 <input className={itemClassName} name={this.props.name} value={this.formatter(this.state.value)}
-                    type='text' onChange={this.handleChange} />
+                    type="text" onChange={this.handleChange} />
                 <Button onClick={this.plus}>+</Button>
             </span>
         );

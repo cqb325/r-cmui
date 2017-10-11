@@ -47,7 +47,7 @@ class Dropdown extends BaseComponent {
 
         return (
             <InnerDropdown
-                ref='trigger'
+                ref="trigger"
                 action={this.action}
                 overlay={this.props.overlay}
                 align={this.props.align || 'bottomLeft'}
@@ -60,7 +60,7 @@ class Dropdown extends BaseComponent {
             >
                 {React.isValidElement(this.props.children)
                     ? this.props.children
-                    : <span className='cm-dropdown-helper'>{this.props.children}</span>
+                    : <span className="cm-dropdown-helper">{this.props.children}</span>
                 }
             </InnerDropdown>
         );

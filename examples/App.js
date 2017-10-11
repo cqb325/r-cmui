@@ -27,7 +27,7 @@ class App extends BaseComponent {
         this.state = {
             btnTheme: 'default',
             btnDisabled: true
-        }
+        };
     }
 
     changeButtonProps() {
@@ -75,16 +75,16 @@ class App extends BaseComponent {
     render() {
         let treeData = [{
             id: 0,
-            text: "中国",
+            text: '中国',
             open: true,
             children: [
                 {
                     id: '1',
-                    text: "北京",
-                    children: [{id: '11', text: "海淀"},{id: '12', text: "朝阳"}]
+                    text: '北京',
+                    children: [{id: '11', text: '海淀'},{id: '12', text: '朝阳'}]
                 },{
                     id: '2',
-                    text: "上海"
+                    text: '上海'
                 }
             ]
         }];
@@ -96,7 +96,7 @@ class App extends BaseComponent {
                 </div>
                 <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+                </p>
                 {/* <Button disabled={this.state.btnDisabled} theme={this.state.btnTheme} ref='btn' raised>按钮</Button>
         <Button theme="primary" onClick={this.changeButtonProps}>改变</Button>
         asd:
@@ -210,7 +210,7 @@ class App extends BaseComponent {
 
             <Select value="2" maxWidth={200} url='http://192.168.105.202:8415/mock/test/arr.html' placeholder='请选择' hasEmptyOption multi /> */}
                 </Card>
-                <Card title='sad'>
+                <Card title="sad">
                     <Switch onChange={(v) => {
                         console.log(v);
                     }}></Switch>
@@ -218,14 +218,14 @@ class App extends BaseComponent {
                     <Switch checkedText="on" unCheckedText="off" />
 
                     <TextArea autoHeight height={80} cols={30}></TextArea>
-                    <TextArea autoHeight height={80} width='100%' placeholder="enter some words"></TextArea>
+                    <TextArea autoHeight height={80} width="100%" placeholder="enter some words"></TextArea>
 
-                    <Upload name='file' /><br></br>
+                    <Upload name="file" /><br></br>
                     {/* <Uploadify url='xxx' multi={false}/>
             <Uploadify url='xxx' mode='grid' /> */}
                 </Card>
 
-                <Card title='Tooltip'>
+                <Card title="Tooltip">
                     {/* <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
 
             <FormControl name="username" label='username：' type='text' required />
@@ -238,7 +238,7 @@ class App extends BaseComponent {
             <FormControl name="radio" label='radio：' type='radio' required data={[{id: '1', text: 'phone'}]}/> */}
                 </Card>
 
-                <Card title='xxx'>
+                <Card title="xxx">
                     <Dropdown overlay={<ul><li>aaa</li></ul>}><a>asd</a></Dropdown>
 
                     {/* <Menu theme='black' style={{width: 200}}>
@@ -256,8 +256,8 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Spin.SVGSpin spinning ref='spin'>
-                        <Slick effect='fade'>
+                    <Spin.SVGSpin spinning ref="spin">
+                        <Slick effect="fade">
                             <Slick.Item><img src={pic1} /></Slick.Item>
                             <Slick.Item>
                                 <p>asdasd</p>
@@ -272,14 +272,14 @@ class App extends BaseComponent {
                     }} />
 
                     <Steps current={1}>
-                        <Steps.Step title='step1' description='step1 desc...'></Steps.Step>
-                        <Steps.Step title='step2' description='step2 desc...'></Steps.Step>
-                        <Steps.Step title='step3' description='step3 desc...'></Steps.Step>
+                        <Steps.Step title="step1" description="step1 desc..."></Steps.Step>
+                        <Steps.Step title="step2" description="step2 desc..."></Steps.Step>
+                        <Steps.Step title="step3" description="step3 desc..."></Steps.Step>
                     </Steps>
                 </Card>
 
                 <Card>
-                    <Tab ref='tab' hasClose data={[{ text: 'tab1', component: <div>111</div> }, { text: 'tab2', component: <div>2222</div> }]}>
+                    <Tab ref="tab" hasClose data={[{ text: 'tab1', component: <div>111</div> }, { text: 'tab2', component: <div>2222</div> }]}>
                         <Tab.Item title="ttt"><img src={pic1} /></Tab.Item>
                     </Tab>
 
@@ -291,7 +291,7 @@ class App extends BaseComponent {
                     }}>添加</Button>
 
                     <Button onClick={() => {
-                        this.refs.tab.add(<Tab.Item title='added title'>added content2</Tab.Item>, true);
+                        this.refs.tab.add(<Tab.Item title="added title">added content2</Tab.Item>, true);
                     }}>添加元素</Button>
 
                     <Button onClick={() => {
@@ -301,7 +301,7 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Table ref='table'
+                    <Table ref="table"
                         bordered
                         columns={[{ type: 'checkbox' }, { name: 'field1', text: 'field1', sort: true }, { name: 'field2', text: 'field2', sort: true }]}
                         data={[{ field1: '111', field2: '222' }, { field1: '333', field2: '444' }]}
@@ -327,42 +327,42 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Progress value={50} strokeWidth={1} type='circle'></Progress>
+                    <Progress value={50} strokeWidth={1} type="circle"></Progress>
                     <Pagination current={1} total={50} pageSize={10} />
                     <br />
                     <br />
                     <br />
                     <br />
 
-                    <IconButton><FontIcon icon='save'></FontIcon></IconButton>
+                    <IconButton><FontIcon icon="save"></FontIcon></IconButton>
                 </Card>
 
                 <Card>
-                    <Form action='xxx' method='get' labelWidth={80} layout='stack-inline' ajax>
-                        <FormControl type='text' name='user' required label='User'/>
-                        <FormControl type='select' name='select' required label='Select' data={['1','2','3']}/>
-                        <FormControl type='checkbox' name='check' required label='check' data={[{id: '1', text: '1'},{id: '2', text: '2'}]}/>
-                        <FormControl type='datetime' name='datetime' required label='datetime'/>
-                        <FormControl type='daterange' name='daterange' required label='daterange'/>
-                        <FormControl type='textarea' name='address' required label='Text' height={70}/>
+                    <Form action="xxx" method="get" labelWidth={80} layout="stack-inline" ajax>
+                        <FormControl type="text" name="user" required label="User"/>
+                        <FormControl type="select" name="select" required label="Select" data={['1','2','3']}/>
+                        <FormControl type="checkbox" name="check" required label="check" data={[{id: '1', text: '1'},{id: '2', text: '2'}]}/>
+                        <FormControl type="datetime" name="datetime" required label="datetime"/>
+                        <FormControl type="daterange" name="daterange" required label="daterange"/>
+                        <FormControl type="textarea" name="address" required label="Text" height={70}/>
                         <Form.Row>
-                            <FormControl label='&nbsp;' type='text'/>
+                            <FormControl label="&nbsp;" type="text"/>
                             <Form.Promote italic>xxxxxxxxxx</Form.Promote>
                         </Form.Row>
                     </Form>
 
-                    <Badge count={111}><FontIcon icon='list' size='3x'></FontIcon></Badge>
-                    <Badge dot><FontIcon icon='list' size='3x'></FontIcon></Badge>
-                    <Badge status='success' text='success'></Badge>
+                    <Badge count={111}><FontIcon icon="list" size="3x"></FontIcon></Badge>
+                    <Badge dot><FontIcon icon="list" size="3x"></FontIcon></Badge>
+                    <Badge status="success" text="success"></Badge>
 
                     <Accordion>
-                        <Accordion.Item title='Ac1'>
+                        <Accordion.Item title="Ac1">
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                         </Accordion.Item>
-                        <Accordion.Item title='Ac2'>
+                        <Accordion.Item title="Ac2">
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
@@ -375,29 +375,29 @@ class App extends BaseComponent {
                     <br/>
                     <AutoComplete data={['a','aa','ab','b','bc']}></AutoComplete>
 
-                    <Clock value='16:12:50' secondStep={10}></Clock>
+                    <Clock value="16:12:50" secondStep={10}></Clock>
                     <br/>
-                    <Spinner max={12} step={2} size='small' loop></Spinner>
+                    <Spinner max={12} step={2} size="small" loop></Spinner>
                     <br/>
                     <br/>
 
-                    <TimePicker value='16:30:30' secondStep={5} onChange={(v)=>{
+                    <TimePicker value="16:30:30" secondStep={5} onChange={(v)=>{
                         console.log(v);
-                        }}></TimePicker>
+                    }}></TimePicker>
 
-                    <div className='cm-datetime'>
-                        <Date value='2017-09-22' format='YYYY-MM-DD' minuteStep={15} onSelectDate={(v, date)=>{
+                    <div className="cm-datetime">
+                        <Date value="2017-09-22" format="YYYY-MM-DD" minuteStep={15} onSelectDate={(v, date)=>{
                             console.log(v, date);
                         }}></Date>
                     </div>
 
-                    <DateTime dateOnly format='YYYY-MM-DD'></DateTime>
+                    <DateTime dateOnly format="YYYY-MM-DD"></DateTime>
 
-                    <DateRange clear shortcuts={['一周内']} showTime maxRange={7} endDate='2017-09-24 17:00' value='2017-09-24 15:00:00~2017-09-30 14:30:30' format='YYYY-MM-DD HH:00'></DateRange>
+                    <DateRange clear shortcuts={['一周内']} showTime maxRange={7} endDate="2017-09-24 17:00" value="2017-09-24 15:00:00~2017-09-30 14:30:30" format="YYYY-MM-DD HH:00"></DateRange>
                 </Card>
 
                 <Card>
-                    <Tree ref='tree' data={treeData} enableCheckbox enableSmartCheckbox></Tree>
+                    <Tree ref="tree" data={treeData} enableCheckbox enableSmartCheckbox></Tree>
 
                     <Button onClick={()=>{
                         this.refs.tree.selectItem('1');
@@ -444,33 +444,33 @@ class App extends BaseComponent {
 
                     <Button onClick={()=>{
                         this.refs.tree.setData([
-                {
-                    id: '1',
-                    text: "北京",
-                    children: [{id: '11', text: "海淀"},{id: '12', text: "朝阳"}]
-                },{
-                    id: '2',
-                    text: "上海"
-                }
-            ]);
+                            {
+                                id: '1',
+                                text: '北京',
+                                children: [{id: '11', text: '海淀'},{id: '12', text: '朝阳'}]
+                            },{
+                                id: '2',
+                                text: '上海'
+                            }
+                        ]);
                     }}>resetData</Button>
                 </Card>
 
 
 
                 <Card>
-                    <Marqueen dir='down'>
+                    <Marqueen dir="down">
                         <p>1asdasdasdasdasdasdasdasdasdasd</p>
                         <p>2asdasdasdasdasdasdasdasdasdasd</p>
                         <p>3asdasdasdasdasdasdasdasdasdasd</p>
                         <p>4asdasdasdasdasdasdasdasdasdasd</p>
                     </Marqueen>
 
-                    <Marqueen dir='right'>
-                        <div className='pull-left' style={{padding: 3}}>1asdasdasdasdasdasdasdasdasdasd</div>
-                        <div className='pull-left'>2asdasdasdasdasdasdasdasdasdasd</div>
-                        <div className='pull-left'>3asdasdasdasdasdasdasdasdasdasd</div>
-                        <div className='pull-left'>4asdasdasdasdasdasdasdasdasdasd</div>
+                    <Marqueen dir="right">
+                        <div className="pull-left" style={{padding: 3}}>1asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className="pull-left">2asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className="pull-left">3asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className="pull-left">4asdasdasdasdasdasdasdasdasdasd</div>
                     </Marqueen>
                 </Card>
 
@@ -506,7 +506,7 @@ class App extends BaseComponent {
                         daterange: '2017-10-10~2017-10-15'
                     }}></SimpleForm>
 
-                    <TableForm ref='tableform' columns={[
+                    <TableForm ref="tableform" columns={[
                         {name: 'name', text: '姓名', type: 'text'},
                         {name: 'select', text: '性别', type: 'select', props: {data: ['男', '女']}}
                     ]}></TableForm>

@@ -45,7 +45,7 @@ class SimpleForm extends BaseComponent{
             this.props.onChange(item, value, selectItem);
         }
 
-        this.emit("change", item, value, selectItem);
+        this.emit('change', item, value, selectItem);
     }
 
     /**
@@ -58,13 +58,13 @@ class SimpleForm extends BaseComponent{
                 if(item.type === 'button'){
                     return <Button {...item} key={this.itemIndex++}>{item.label}</Button>;
                 }
-                if(item.type === "label"){
+                if(item.type === 'label'){
                     return <span key={this.itemIndex++} style={item.style} {...item.props}>{item.label}</span>;
                 }
-                if(item.type === "promote"){
-                    return <Form.Promote key={this.itemIndex++} {...item}>{item.label}</Form.Promote>
+                if(item.type === 'promote'){
+                    return <Form.Promote key={this.itemIndex++} {...item}>{item.label}</Form.Promote>;
                 }
-                if(item.type !== "row"){
+                if(item.type !== 'row'){
                     let itemProps = Object.assign({}, item.props||{});
                     itemProps = Object.assign(itemProps, item);
                     itemProps.key = this.itemIndex++;
@@ -74,8 +74,8 @@ class SimpleForm extends BaseComponent{
                         val = itemProps.value(initData);
                     }
                     itemProps.value = val == undefined ? itemProps.value : val;
-                    itemProps.value = (itemProps.value == undefined || itemProps.value == null) ? undefined : itemProps.value+"";
-                    return <FormControl {...itemProps} label={item.label} onChange={this.onChange.bind(this, item)}/>
+                    itemProps.value = (itemProps.value == undefined || itemProps.value == null) ? undefined : itemProps.value+'';
+                    return <FormControl {...itemProps} label={item.label} onChange={this.onChange.bind(this, item)}/>;
                 }else{
                     return this.renderFormRow(item);
                 }
@@ -93,7 +93,7 @@ class SimpleForm extends BaseComponent{
         let props = Object.assign({}, item.props, item);
         return <Form.Row {...props} key={this.itemIndex++}>
             {items}
-        </Form.Row>
+        </Form.Row>;
     }
 
     /**
@@ -159,7 +159,7 @@ class SimpleForm extends BaseComponent{
         formProps = Object.assign(formProps, formData);
         return <Form ref="form" {...formProps}>
             {this.renderItems(formData.items)}
-        </Form>
+        </Form>;
     }
 }
 

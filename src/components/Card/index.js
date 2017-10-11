@@ -16,7 +16,7 @@ import './Card.less';
  * @extend BaseComponent
  */
 class Card extends BaseComponent {
-    static displayName = "Card";
+    static displayName = 'Card';
 
     static propTypes = {
         /**
@@ -101,9 +101,9 @@ class Card extends BaseComponent {
         }
 
         return (
-            <div className='cm-card-head'>
-                <h3 className='cm-card-head-title'>{this.state.title}</h3>
-                <div className='cm-card-tools'>
+            <div className="cm-card-head">
+                <h3 className="cm-card-head-title">{this.state.title}</h3>
+                <div className="cm-card-tools">
                     {this.props.tools}
                 </div>
             </div>
@@ -133,23 +133,23 @@ class Card extends BaseComponent {
         if (loadding && !this.state.content) {
             content = (
                 <div>
-                    <p className='cm-card-loading-block' style={{width: '94%'}} />
+                    <p className="cm-card-loading-block" style={{width: '94%'}} />
                     <p>
-                        <span className='cm-card-loading-block' style={{width: '28%'}} />
-                        <span className='cm-card-loading-block' style={{width: '62%'}} />
+                        <span className="cm-card-loading-block" style={{width: '28%'}} />
+                        <span className="cm-card-loading-block" style={{width: '62%'}} />
                     </p>
                     <p>
-                        <span className='cm-card-loading-block' style={{width: '22%'}} />
-                        <span className='cm-card-loading-block' style={{width: '66%'}} />
+                        <span className="cm-card-loading-block" style={{width: '22%'}} />
+                        <span className="cm-card-loading-block" style={{width: '66%'}} />
                     </p>
                     <p>
-                        <span className='cm-card-loading-block' style={{width: '56%'}} />
-                        <span className='cm-card-loading-block' style={{width: '39%'}} />
+                        <span className="cm-card-loading-block" style={{width: '56%'}} />
+                        <span className="cm-card-loading-block" style={{width: '39%'}} />
                     </p>
                     <p>
-                        <span className='cm-card-loading-block' style={{width: '21%'}} />
-                        <span className='cm-card-loading-block' style={{width: '15%'}} />
-                        <span className='cm-card-loading-block' style={{width: '40%'}} />
+                        <span className="cm-card-loading-block" style={{width: '21%'}} />
+                        <span className="cm-card-loading-block" style={{width: '15%'}} />
+                        <span className="cm-card-loading-block" style={{width: '40%'}} />
                     </p>
                 </div>
             );
@@ -160,7 +160,7 @@ class Card extends BaseComponent {
         return (
             <div className={className} style={style}>
                 {head}
-                <div className='cm-card-body' style={bodyStyle}>
+                <div className="cm-card-body" style={bodyStyle}>
                     {content}
                 </div>
             </div>

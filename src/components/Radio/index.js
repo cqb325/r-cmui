@@ -3,7 +3,6 @@
  * @module Radio
  */
 
-import React from 'react';
 import CheckBox from '../CheckBox/index';
 
 class Radio extends CheckBox{

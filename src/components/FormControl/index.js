@@ -82,7 +82,7 @@ class FormControl extends BaseComponent {
                 ref: 'formItem',
                 'data-valueType': component.valueType
             }, others);
-            let componentName = component.component && component.component.displayName ? component.component.displayName : '';
+            // let componentName = component.component && component.component.displayName ? component.component.displayName : '';
             // if (componentName === 'TextArea') {
             //     props['handleChange'] = this.handleChange;
             // } else {
@@ -589,7 +589,7 @@ class FormControl extends BaseComponent {
             <div className={className} style={style}>
                 {labelEle}
                 <Tooltip theme={tipTheme} className={'error-tip'}
-                    align={this._tipAlign} ref='tooltip' title={this.state.errorTip}>
+                    align={this._tipAlign} ref="tooltip" title={this.state.errorTip}>
                     {items}
                     {customChildren}
                 </Tooltip>

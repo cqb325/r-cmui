@@ -36,7 +36,7 @@ class AutoComplete extends Select {
      * @private
      */
     _renderValues(){
-        let {textField, name, placeholder} = this.props;
+        let {name, placeholder} = this.props;
         let values = this.state.value ? (this.state.value + '').split(this.sep) : [];
 
         let html = [];
@@ -47,11 +47,11 @@ class AutoComplete extends Select {
             'cm-select-placeholder': !values.length && placeholder
         });
 
-        return (<Input ref='input' type='text' className={className}
+        return (<Input ref="input" type="text" className={className}
             name={name}
             value={html.join(this.sep)}
             placeholder={placeholder}
-            trigger='change'
+            trigger="change"
             onChange={(value)=>{
                 if (this.timer) {
                     window.clearTimeout(this.timer);

@@ -5,17 +5,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import UUID from '../utils/UUID';
-import velocity from '../../lib/velocity';
 import FontIcon from '../FontIcon/index';
 import {fromJS} from 'immutable';
 import NotificationPanel from './NotificationPanel';
 import './Notification.less';
 
 class Notification extends BaseComponent{
-    static displayName = "Notification";
+    static displayName = 'Notification';
 
     constructor(props){
         super(props);
@@ -39,7 +37,7 @@ class Notification extends BaseComponent{
      * @return {[type]}        [description]
      */
     success(config){
-        config.icon = <FontIcon icon='success' font='cmui' />;
+        config.icon = <FontIcon icon="success" font="cmui" />;
         this.open(config);
     }
 
@@ -49,7 +47,7 @@ class Notification extends BaseComponent{
      * @return {[type]}        [description]
      */
     info(config){
-        config.icon = <FontIcon icon='info' font='cmui' />;
+        config.icon = <FontIcon icon="info" font="cmui" />;
         this.open(config);
     }
 
@@ -59,7 +57,7 @@ class Notification extends BaseComponent{
      * @return {[type]}        [description]
      */
     warning(config){
-        config.icon = <FontIcon icon='warning' font='cmui' />;
+        config.icon = <FontIcon icon="warning" font="cmui" />;
         this.open(config);
     }
 
@@ -69,7 +67,7 @@ class Notification extends BaseComponent{
      * @return {[type]}        [description]
      */
     error(config){
-        config.icon = <FontIcon icon='error' font='cmui' />;
+        config.icon = <FontIcon icon="error" font="cmui" />;
         this.open(config);
     }
 
@@ -79,7 +77,7 @@ class Notification extends BaseComponent{
      * @return {[type]}        [description]
      */
     question(config){
-        config.icon = <FontIcon icon='question' font='cmui' />;
+        config.icon = <FontIcon icon="question" font="cmui" />;
         this.open(config);
     }
 
@@ -219,7 +217,7 @@ class Notification extends BaseComponent{
         let panels = this.renderPanels();
 
         return (
-            <div className='cm-notification'>
+            <div className="cm-notification">
                 {panels}
             </div>
         );

@@ -22,7 +22,7 @@ import './TextArea.less';
  * @extend BaseComponent
  */
 class TextArea extends BaseComponent {
-    static displayName = "TextArea";
+    static displayName = 'TextArea';
 
     static defaultProps = {
         value: '',

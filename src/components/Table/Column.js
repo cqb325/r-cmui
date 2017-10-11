@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
-import PropTypes from 'prop-types';
 import CheckBox from '../CheckBox/index';
 
 /**
@@ -119,7 +118,7 @@ class Column extends BaseComponent{
         }
         
         if (type === 'checkbox') {
-            text = <CheckBox ref='checkbox' checked={false} onChange={this.onChecked} />;
+            text = <CheckBox ref="checkbox" checked={false} onChange={this.onChecked} />;
             className = classNames(className, 'cm-table-col-checkbox');
         } 
         if (type === 'index') {

@@ -17,7 +17,7 @@ class Row extends React.Component{
                 return React.cloneElement(child, props);
             } else if (componentName === 'Promote') {
                 let props = Object.assign({
-                    labelWidth: this.props.labelWidth ? this.props.labelWidth : props.labelWidth
+                    labelWidth: this.props.labelWidth ? this.props.labelWidth : child.props.labelWidth
                 }, child.props);
                 return React.cloneElement(child, props);
             } else {

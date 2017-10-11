@@ -16,7 +16,7 @@ import './Clock.less';
  * @extend BaseComponent
  */
 class Clock extends BaseComponent {
-    static displayName = "Clock";
+    static displayName = 'Clock';
 
     static defaultProps = {
         value: '00:00:00',
@@ -134,10 +134,10 @@ class Clock extends BaseComponent {
             'msTransform': 'rotate(' + hr + 'deg)'
         };
         return (
-            <div className='click-hands'>
-                <div className='hourHand' style={hourStyle} />
-                <div className='minuteHand' style={minuteStyle} />
-                <div className='secondHand' style={secondStyle} />
+            <div className="click-hands">
+                <div className="hourHand" style={hourStyle} />
+                <div className="minuteHand" style={minuteStyle} />
+                <div className="secondHand" style={secondStyle} />
             </div>
         );
     }
@@ -214,23 +214,23 @@ class Clock extends BaseComponent {
         let value = current.format(this.props.format);
 
         let close = this.props.view === 'time' ? ''
-            : (<div className='clock-close' onClick={this.close.bind(this)}>
-                <span className='fa-stack text-center'>
-                    <i className='fa fa-circle-o fa-stack-2x' />
-                    <i className='fa fa-close fa-stack-1x' />
+            : (<div className="clock-close" onClick={this.close.bind(this)}>
+                <span className="fa-stack text-center">
+                    <i className="fa fa-circle-o fa-stack-2x" />
+                    <i className="fa fa-close fa-stack-1x" />
                 </span>
             </div>);
 
         return (
-            <div className='clock-container'>
+            <div className="clock-container">
                 {close}
-                <div className='clock-face'>
-                    <div className='clock-numbers'>
+                <div className="clock-face">
+                    <div className="clock-numbers">
                         {nums}
                     </div>
                     {hands}
                 </div>
-                <div className='spinners'>
+                <div className="spinners">
                     <TimePicker
                         format={this.props.format}
                         value={value}

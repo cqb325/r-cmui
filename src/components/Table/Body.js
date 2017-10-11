@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import Row from './Row';
 
