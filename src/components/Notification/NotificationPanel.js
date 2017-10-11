@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import velocity from '../../lib/velocity';
 
 class NotificationPanel extends PureComponent{
-    static displayName = "NotificationPanel";
+    static displayName = 'NotificationPanel';
 
     /**
      * 关闭消息
@@ -61,15 +61,15 @@ class NotificationPanel extends PureComponent{
         });
         return (
             <div className={className} style={style}>
-                <a className='cm-notification-close' onClick={this.close}>x</a>
+                <a className="cm-notification-close" onClick={this.close}>x</a>
                 {
-                    icon ? <div className='cm-notification-icon'>{icon}</div> : null
+                    icon ? <div className="cm-notification-icon">{icon}</div> : null
                 }
-                <div className='cm-notification-content'>
-                    <div className='cm-notification-head'>{this.props.config.title}</div>
-                    <div className='cm-notification-body'>{this.props.config.desc}</div>
+                <div className="cm-notification-content">
+                    <div className="cm-notification-head">{this.props.config.title}</div>
+                    <div className="cm-notification-body">{this.props.config.desc}</div>
                     { btn
-                        ? <span className='cm-notification-btn-wrap'>
+                        ? <span className="cm-notification-btn-wrap">
                             {btn}
                         </span>
                         : null

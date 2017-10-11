@@ -16,7 +16,7 @@ import './Breadcrumb.less';
  * @constructor
  */
 class Breadcrumb extends BaseComponent {
-    static displayName = "Breadcrumb";
+    static displayName = 'Breadcrumb';
 
     static propTypes = {
         /**
@@ -78,7 +78,7 @@ class Breadcrumb extends BaseComponent {
  * @constructor
  */
 class Item extends BaseComponent{
-    static displayName = "Item";
+    static displayName = 'Item';
 
     static propTypes = {
         /**
@@ -116,7 +116,7 @@ class Item extends BaseComponent{
         return (
             <span>
                 {linkEle}
-                <span className='cm-breadcrumb-separator'>{this.props.separator}</span>
+                <span className="cm-breadcrumb-separator">{this.props.separator}</span>
             </span>
         );
     }

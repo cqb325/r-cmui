@@ -88,7 +88,7 @@ class IconButton extends BaseComponent {
         }, this.props.style);
 
         return (
-            <a href={link} ref='button'
+            <a href={link} ref="button"
                 disabled={this.state.disabled}
                 onClick={this._handleClick}
                 className={className}

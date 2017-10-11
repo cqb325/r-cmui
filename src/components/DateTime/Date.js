@@ -416,16 +416,16 @@ class Date extends BaseComponent {
                 );
 
                 if (!completion && d.get('month') !== month){
-                    line.push(<button type='button' key={index} className='day empty' />);
+                    line.push(<button type="button" key={index} className="day empty" />);
                 } else {
-                    line.push(<button type='button' onClick={() => {
+                    line.push(<button type="button" onClick={() => {
                         this.dayChange(d);
                     }} onMouseOver={() => {
                         this.hoverDay(d);
                     }} key={index} className={className}><span>{d.get('date')}</span></button>);
                 }
             }
-            lines.push(<li key={i} className='cm-date-line'>{line}</li>);
+            lines.push(<li key={i} className="cm-date-line">{line}</li>);
         }
         return lines;
     }
@@ -444,7 +444,7 @@ class Date extends BaseComponent {
             let className = classNames('year', {
                 'active': i === year
             });
-            ret.push(<button type='button' onClick={() => { this.yearChange(i); }} key={i}
+            ret.push(<button type="button" onClick={() => { this.yearChange(i); }} key={i}
                 className={className}>{i}</button>);
         }
 
@@ -455,7 +455,7 @@ class Date extends BaseComponent {
                 let index = i * 5 + j;
                 line.push(ret[index]);
             }
-            lines.push(<div className='cm-date-line' key={i}>{line}</div>);
+            lines.push(<div className="cm-date-line" key={i}>{line}</div>);
         }
 
         return lines;
@@ -502,7 +502,7 @@ class Date extends BaseComponent {
                 disabled: disabled,
                 active: i === month
             });
-            ret.push(<button type='button' onClick={() => { this.monthChange(i); }} key={i} className={className}>
+            ret.push(<button type="button" onClick={() => { this.monthChange(i); }} key={i} className={className}>
                 {months[i]}</button>);
         }
 
@@ -536,7 +536,7 @@ class Date extends BaseComponent {
             f = 'HH:mm:ss';
         }
         return (
-            <Clock ref='clock'
+            <Clock ref="clock"
                 value={this.state.current.format('HH:mm:ss')}
                 format={f}
                 hourStep={this.props.hourStep}
@@ -589,7 +589,7 @@ class Date extends BaseComponent {
      */
     _getWeek() {
         return ['日', '一', '二', '三', '四', '五', '六'].map(function (w, i) {
-            return <div key={i} className='week'>{w}</div>;
+            return <div key={i} className="week">{w}</div>;
         });
     }
 
@@ -607,22 +607,22 @@ class Date extends BaseComponent {
 
         let prev = (this.state.stage === 3 || !this.state.prevBtn)
             ? null
-            : <a className='prev' onClick={this.prev}>{'<'}</a>;
+            : <a className="prev" onClick={this.prev}>{'<'}</a>;
         let next = (this.state.stage === 3 || !this.state.nextBtn)
             ? null
-            : <a className='next' onClick={this.next}>{'>'}</a>;
+            : <a className="next" onClick={this.next}>{'>'}</a>;
         let month = this.state.stage > 1
             ? null
-            : <a className='month' onClick={() => { this.stageChange(2); }}>
+            : <a className="month" onClick={() => { this.stageChange(2); }}>
                 {now.format('MM')}
             </a>;
         let year = this.state.stage >= 3
             ? null
-            : <a className='year' onClick={() => { this.stageChange(3); }}>
+            : <a className="year" onClick={() => { this.stageChange(3); }}>
                 {now.format('YYYY')}
             </a>;
         return (
-            <div style={this.props.style} className='date-picker-header'>
+            <div style={this.props.style} className="date-picker-header">
                 {prev}
                 {year}
                 {month}
@@ -640,11 +640,11 @@ class Date extends BaseComponent {
     _getFooter() {
         if (this.state.stage === 1 && this.props.tools) {
             return (
-                <div className='date-picker-footer'>
-                    <a className='clear' onClick={this.clear.bind(this)}>
+                <div className="date-picker-footer">
+                    <a className="clear" onClick={this.clear.bind(this)}>
                         清除
                     </a>
-                    <a className='today-btn' onClick={this.today.bind(this)}>
+                    <a className="today-btn" onClick={this.today.bind(this)}>
                         今天
                     </a>
                 </div>
@@ -667,35 +667,38 @@ class Date extends BaseComponent {
                 let weeks = this._getWeek();
                 let cont = this.renderDays();
                 return (
-                    <div className='inner'>
-                        <div className='cm-date-week-line'>{weeks}</div>
-                        <ul className='cm-date-lines'>{cont}</ul>
+                    <div className="inner">
+                        <div className="cm-date-week-line">{weeks}</div>
+                        <ul className="cm-date-lines">{cont}</ul>
                     </div>
                 );
             }
             case 3: {
                 let cont = this.renderYears();
                 return (
-                    <div className='inner'>
-                        <ul className='cm-date-lines cm-date-year-line'>{cont}</ul>
+                    <div className="inner">
+                        <ul className="cm-date-lines cm-date-year-line">{cont}</ul>
                     </div>
                 );
             }
             case 2: {
                 let cont = this.renderMonths();
                 return (
-                    <div className='inner'>
-                        <ul className='cm-date-lines cm-date-month-line'>{cont}</ul>
+                    <div className="inner">
+                        <ul className="cm-date-lines cm-date-month-line">{cont}</ul>
                     </div>
                 );
             }
             case 0: {
                 let cont = this.renderClock();
                 return (
-                    <div className='inner'>
-                        <ul className='cm-date-lines'>{cont}</ul>
+                    <div className="inner">
+                        <ul className="cm-date-lines">{cont}</ul>
                     </div>
                 );
+            }
+            default : {
+                return null;
             }
         }
     }
@@ -749,8 +752,8 @@ class Date extends BaseComponent {
      * @returns {XML}
      */
     render() {
-        let {lassName, style} = this.props;
-        let className = classNames(
+        let {className, style} = this.props;
+        className = classNames(
             className,
             'cm-date-picker'
         );

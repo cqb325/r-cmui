@@ -149,15 +149,15 @@ class Progress extends BaseComponent {
             color = 'danger';
         }
         return (
-            <svg width='100%' height='100%' version='1.1'
-                xmlns='http://www.w3.org/2000/svg' style={{width: 2 * r + strokeWidth, height: 2 * r + strokeWidth}}>
-                <circle cx={tx} cy={tx} r={r} stroke='#f3f3f3'
-                    strokeWidth={strokeWidth} fillOpacity='0' />
-                <path className='cm-progress-bar-path'
+            <svg width="100%" height="100%" version="1.1"
+                xmlns="http://www.w3.org/2000/svg" style={{width: 2 * r + strokeWidth, height: 2 * r + strokeWidth}}>
+                <circle cx={tx} cy={tx} r={r} stroke="#f3f3f3"
+                    strokeWidth={strokeWidth} fillOpacity="0" />
+                <path className="cm-progress-bar-path"
                     d={descriptions.join(' ')}
-                    strokeLinecap='round'
+                    strokeLinecap="round"
                     strokeWidth={strokeWidth}
-                    fillOpacity='0'
+                    fillOpacity="0"
                     stroke={colorMap[color]}
                     transform={`translate(${tx},${tx})`}
                     style={{strokeDashoffset: offset, strokeDasharray: dd}}
@@ -207,19 +207,19 @@ class Progress extends BaseComponent {
             bar = this.renderCircle();
             fontSize = fontSize * this.props.radius / 60;
         } else {
-            bar = <div className='cm-progress-bar' style={{width: width, height: this.props.strokeWidth}} />;
+            bar = <div className="cm-progress-bar" style={{width: width, height: this.props.strokeWidth}} />;
         }
         return (
             <div className={className} style={style}>
-                <div className='cm-progress-outer'>
-                    <div className='cm-progress-inner'>
+                <div className="cm-progress-outer">
+                    <div className="cm-progress-inner">
                         {bar}
-                        {type === 'circle' ? <span className='cm-progress-info' style={{fontSize: fontSize}}>
+                        {type === 'circle' ? <span className="cm-progress-info" style={{fontSize: fontSize}}>
                             {percent}
                         </span> : null}
                     </div>
                 </div>
-                {type === 'circle' ? null : <span className='cm-progress-info'>{percent}</span>}
+                {type === 'circle' ? null : <span className="cm-progress-info">{percent}</span>}
             </div>
         );
     }

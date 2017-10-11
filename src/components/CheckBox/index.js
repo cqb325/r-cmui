@@ -16,7 +16,7 @@ import './CheckBox.less';
  * @extend BaseComponent
  */
 class CheckBox extends BaseComponent {
-    static displayName = "CheckBox";
+    static displayName = 'CheckBox';
 
     static propTypes = {
         /**
@@ -198,7 +198,7 @@ class CheckBox extends BaseComponent {
 
         return (
             <span className={className} onClick={this.handleChange}>
-                <input ref='input'
+                <input ref="input"
                     checked={this.props.checked}
                     type={type}
                     name={name}
@@ -208,7 +208,7 @@ class CheckBox extends BaseComponent {
                     onChange={()=>{}}
                 />
                 <span style={{position: 'relative'}}>
-                    <span className='cm-checkbox-icon' />
+                    <span className="cm-checkbox-icon" />
                 </span>
                 <label>{this.props.label}</label>
             </span>

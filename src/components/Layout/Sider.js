@@ -83,8 +83,8 @@ class Sider extends React.Component {
         }, style);
 
         const iconObj = {
-            'expanded': <FontIcon icon='angle-left' />,
-            'collapsed': <FontIcon icon='angle-right' />
+            'expanded': <FontIcon icon="angle-left" />,
+            'collapsed': <FontIcon icon="angle-right" />
         };
         const status = this.state.collapsed ? 'collapsed' : 'expanded';
         const defaultTrigger = iconObj[status];

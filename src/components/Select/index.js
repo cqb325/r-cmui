@@ -262,14 +262,14 @@ class Select extends BaseComponent {
      * @returns {*}
      * @private
      */
-    _rebuildData(data, defaultValue, valueField){
+    _rebuildData(data){
         if (!data) {
             return null;
         }
         //生成一个新的数据， 防止后续操作影响到改数据
         data = fromJS(data).toJS();
 
-        let defaultValues = defaultValue ? (defaultValue + '').split(this.sep) : [];
+        // let defaultValues = defaultValue ? (defaultValue + '').split(this.sep) : [];
         if (Core.isArray(data)) {
             let one = data[0];
             if (Core.isString(one)) {
@@ -406,8 +406,8 @@ class Select extends BaseComponent {
     }
 
     setValue(value){
-        let valueField = this.props.valueField;
-        let options = this.options;
+        // let valueField = this.props.valueField;
+        // let options = this.options;
         if (value === null || value === undefined || value === '') {
             this.text = [];
             this.setState({value});
@@ -441,7 +441,7 @@ class Select extends BaseComponent {
                 onClick={this._selectItem}>{choiceText}</Option>);
         }
         this.text = [];
-        data.forEach((item, index)=>{
+        data.forEach((item)=>{
             let text = item[textField];
             let value = item[valueField];
             let active = this.isActive(value);

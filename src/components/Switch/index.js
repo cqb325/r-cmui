@@ -16,7 +16,7 @@ import './Switch.less';
  * @extend BaseComponent
  */
 class Switch extends BaseComponent {
-    static displayName = "Switch";
+    static displayName = 'Switch';
 
     static defaultProps = {
         checked: false,
@@ -92,9 +92,9 @@ class Switch extends BaseComponent {
         let text = this.state.checked ? checkedText : unCheckedText;
 
         return (
-            <span className={className} style={style} tabIndex='0' onClick={this.toggleSwitch}>
-                <span className='cm-switch-inner'>{text}</span>
-                <input name={name} type='hidden' value={this.state.checked ? 1 : 0} />
+            <span className={className} style={style} tabIndex="0" onClick={this.toggleSwitch}>
+                <span className="cm-switch-inner">{text}</span>
+                <input name={name} type="hidden" value={this.state.checked ? 1 : 0} />
             </span>
         );
     }

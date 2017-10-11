@@ -7,9 +7,7 @@ import React from 'react';
 import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
-import Dom from '../utils/Dom';
 import UUID from '../utils/UUID';
-import CheckBox from '../CheckBox/index';
 import Header from './Header';
 import Body from './Body';
 import {List} from 'immutable';
@@ -264,10 +262,10 @@ class Table extends BaseComponent {
             'table-hover': this.props.hover
         });
         return (
-            <div className='table-responsive'>
+            <div className="table-responsive">
                 <table className={className} style={this.props.style}>
-                    <Header sortMode={this.props.sortMode} ref='header' columns={this.state.columns} table={this} />
-                    <Body ref='body' data={this.state.data} columns={this.state.columns} table={this} />
+                    <Header sortMode={this.props.sortMode} ref="header" columns={this.state.columns} table={this} />
+                    <Body ref="body" data={this.state.data} columns={this.state.columns} table={this} />
                 </table>
             </div>
         );

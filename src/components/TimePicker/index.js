@@ -105,7 +105,7 @@ class TimePicker extends BaseComponent{
         this.setState({
             value: value,
             current: time
-        })
+        });
     }
 
     componentWillReceiveProps (nextProps) {
@@ -121,17 +121,17 @@ class TimePicker extends BaseComponent{
         let minute = time.get('minute');
         let second = time.get('second');
         let h = this.hasHour
-            ? <Spinner loop size={this.props.size} value={hour} key='hour' max={23} step={this.props.hourStep}
+            ? <Spinner loop size={this.props.size} value={hour} key="hour" max={23} step={this.props.hourStep}
                 onSub={this.subHour} onPlus={this.plusHour}
             />
             : null;
         let m = this.hasMinute
-            ? <Spinner loop size={this.props.size} value={minute} key='munite' max={59} step={this.props.minuteStep}
+            ? <Spinner loop size={this.props.size} value={minute} key="munite" max={59} step={this.props.minuteStep}
                 onSub={this.subMinute} onPlus={this.plusMinute}
             />
             : null;
         let s = this.hasSecond
-            ? <Spinner loop size={this.props.size} value={second} key='second' max={59} step={this.props.secondStep}
+            ? <Spinner loop size={this.props.size} value={second} key="second" max={59} step={this.props.secondStep}
                 onSub={this.subSecond} onPlus={this.plusSecond}
             />
             : null;

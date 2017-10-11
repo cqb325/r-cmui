@@ -49,17 +49,17 @@ class TableForm extends BaseComponent{
      */
     buildColumn(column){
         let scope = this;
-        column.format = function(value, col, row){
+        column.format = function(value, col){
             let itemProps = Object.assign({}, column.props||{});
-            scope.mergeProps(itemProps, column, ["rules","messages","name"]);
-            itemProps.value = value || itemProps.defaultValue || "";
+            scope.mergeProps(itemProps, column, ['rules','messages','name']);
+            itemProps.value = value || itemProps.defaultValue || '';
             return <FormControl ref={(ref)=>{
                 let refs = scope.getLastRefs();
                 if(refs) {
                     refs[column.name] = ref;
                 }
-            }} onChange={scope.onChange.bind(scope, col, scope.getLastRefs(), itemProps.name)} type={column.type} {...itemProps}/>
-        }
+            }} onChange={scope.onChange.bind(scope, col, scope.getLastRefs(), itemProps.name)} type={column.type} {...itemProps}/>;
+        };
     }
 
     /**
@@ -106,8 +106,8 @@ class TableForm extends BaseComponent{
         }else{
             row = this.props.columns.map((column)=>{
                 return {
-                    [`${column.name}`]: column.defaultValue || ""
-                }
+                    [`${column.name}`]: column.defaultValue || ''
+                };
             });
             row.id = UUID.v4();
             row.__rowItems = rowItems;

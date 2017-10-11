@@ -23,7 +23,7 @@ import './Upload.less';
  * @extend BaseComponent
  */
 class Upload extends BaseComponent {
-    static displayName = "Upload";
+    static displayName = 'Upload';
 
     static propTypes = {
         /**
@@ -97,15 +97,15 @@ class Upload extends BaseComponent {
         let icon = 'upload';
 
         let txt = this.state.fileName || this.props.placeHolder;
-        txt = (<div className='cm-upload-fileName'>{txt}</div>);
+        txt = (<div className="cm-upload-fileName">{txt}</div>);
         return (
             <div className={className} style={style}>
-                <input type='file' name={name} ref='file'
-                    onChange={this.selectedFile} className='cm-upload-pick-helper' />
-                <div className='cm-upload-pick-btn'>
+                <input type="file" name={name} ref="file"
+                    onChange={this.selectedFile} className="cm-upload-pick-helper" />
+                <div className="cm-upload-pick-btn">
                     {txt}
                 </div>
-                <FontIcon icon={icon} title='上传' ref='uploadBtn' />
+                <FontIcon icon={icon} title="上传" ref="uploadBtn" />
             </div>
         );
     }

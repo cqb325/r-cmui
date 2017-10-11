@@ -1,0 +1,71 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser" : true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 7,
+        "sourceType": "module"
+    },
+    "plugins": ["react"],
+    "extends": ["react-app"],
+    "globals": {
+        "plupload": false,
+        "mOxie": false,
+        "requirejs": false
+    },
+    "rules": {
+        "no-multiple-empty-lines": 0,
+        "space-before-function-paren": 0,
+        "no-mixed-spaces-and-tabs": [2, false],
+        "unicode-bom":0,
+        "indent": [1, 4, { "SwitchCase": 1 }],
+        "linebreak-style": [0, "windows"],
+        "eol-last": ["error", "always"],
+        "max-len": [0, 120],
+        "semi": [2, "always"],
+        "curly": [2, "all"],
+        "no-use-before-define": ["error", { "functions": false, "classes": true }],
+        "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+        "no-loop-func": "error",
+        "radix": "error",
+        "quotes": [1, "single", {"allowTemplateLiterals": true}],
+        "no-multi-str": "error",
+        "no-new-wrappers":2,
+        "no-new-object": "error",
+        "no-new-func": 1,
+        "no-array-constructor":2,
+        "guard-for-in": 0,
+        "no-inner-declarations": [2, "functions"],
+        "no-prototype-builtins":2,
+        "no-extend-native": 2,
+        "no-proto": 2,
+        "no-eval": 0,
+        "no-with": 2,
+        "no-delete-var": "error",
+        "space-before-blocks": 0,
+        "arrow-spacing": 0,
+        "jsx-quotes": 1,
+        "react/jsx-no-bind": 0,
+        "react/prop-types": 0,
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "import/first": 0,
+        "no-class-assign": 0,
+        "standard/no-callback-literal": 0,
+        "no-sequences": 0,
+        "no-useless-escape": 0,
+        "no-mixed-operators": 0,
+        "no-unexpected-multiline": 0,
+        "no-unmodified-loop-condition": 0,
+        "no-cond-assign": 0,
+        "eqeqeq": 0,
+        "no-unused-expressions": 0,
+        "import/no-webpack-loader-syntax": 0
+    }
+}

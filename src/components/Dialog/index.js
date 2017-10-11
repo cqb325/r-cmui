@@ -21,15 +21,9 @@ import './Dialog.less';
  * @extend BaseComponent
  */
 class Dialog extends BaseComponent {
-    static displayName = "Dialog";
+    static displayName = 'Dialog';
 
     static propTypes = {
-        /**
-         * 标题
-         * @attribute title
-         * @type {String}
-         */
-        title: PropTypes.string,
         /**
          * 信息
          * @attribute msg
@@ -282,8 +276,8 @@ class Dialog extends BaseComponent {
         document.body.appendChild(this.container);
         Dom.dom(this.container).addClass('cm-popup-warp');
 
-        let {className, style, hasCloseBtn, footers, useDefaultFooters, okButtonText, okButtonTheme, okButtonIcon,
-        cancelButtonText, cancelButtonTheme, cancelButtonIcon} = this.props;
+        let {className, style, hasCloseBtn, useDefaultFooters, okButtonText, okButtonTheme, okButtonIcon,
+            cancelButtonText, cancelButtonTheme, cancelButtonIcon} = this.props;
         className = classNames('cm-dialog', className);
         let props = Object.assign({}, this.props);
         props.className = className;
@@ -294,7 +288,7 @@ class Dialog extends BaseComponent {
                     {okButtonText}
                 </Button>
                 <Button theme={cancelButtonTheme} raised onClick={this.cancelBtnHandler}
-                    icon={cancelButtonIcon} className='ml-10'>
+                    icon={cancelButtonIcon} className="ml-10">
                     {cancelButtonText}
                 </Button>
             </div>;
@@ -303,8 +297,8 @@ class Dialog extends BaseComponent {
         if (hasCloseBtn) {
             props.tools = <span>
                 {props.tools}
-                <a href='javascript:void(0)' onClick={this.close}
-                    className='cm-dialog-close'>&times;</a>
+                <a href="javascript:void(0)" onClick={this.close}
+                    className="cm-dialog-close">&times;</a>
             </span>;
         }
 

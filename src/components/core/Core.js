@@ -111,7 +111,7 @@ class Core {
                 } else {
                     o = {};
                     for (let j in obj) {
-                        if(obj.hasOwnProperty(j)){
+                        if({}.propertyIsEnumerable.call(obj, j)){
                             o[j] = Core.clone(obj[j]);
                         }
                     }

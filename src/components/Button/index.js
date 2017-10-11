@@ -19,7 +19,7 @@ import './Button.less';
  * @extends BaseComponent
  */
 class Button extends BaseComponent {
-    static displayName = "Button";
+    static displayName = 'Button';
 
     static propTypes = {
         /**
@@ -209,7 +209,7 @@ class Button extends BaseComponent {
      */
     render(){
         let {id, className, style, target, size, iconButton, circle,
-            iconAlign, raised, flat, props, icon, href, children, img} = this.props;
+            iconAlign, raised, flat, icon, href, children, img} = this.props;
         className = classNames(
             className,
             'cm-button',
@@ -236,7 +236,7 @@ class Button extends BaseComponent {
         }
 
         if (img) {
-            img = <img src={img} className="cm-button-img" alt="" style={{marginRight: !!children ? 5 : 0}} />
+            img = <img src={img} className="cm-button-img" alt="" style={{marginRight: !!children ? 5 : 0}} />;
         }
 
         let nodes = iconPosition === 'left'
@@ -252,7 +252,7 @@ class Button extends BaseComponent {
             </EnhancedButton>);
 
         return (
-            <a ref='button'
+            <a ref="button"
                 href={link}
                 id={id}
                 disabled={this.state.disabled}

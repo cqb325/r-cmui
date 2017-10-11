@@ -18,7 +18,7 @@ import './Tooltip.less';
  * @extend BaseComponent
  */
 class Tooltip extends BaseComponent {
-    static displayName = "Tooltip";
+    static displayName = 'Tooltip';
 
     static defaultProps = {
         delay: 0,
@@ -96,9 +96,9 @@ class Tooltip extends BaseComponent {
      */
     getPopupElement(title){
         return (
-            <div className='cm-tooltip-body'>
-                <div className='cm-tooltip-arrow' />
-                <div className='cm-tooltip-inner'>
+            <div className="cm-tooltip-body">
+                <div className="cm-tooltip-arrow" />
+                <div className="cm-tooltip-inner">
                     {title || this.state.title}
                 </div>
             </div>
@@ -159,7 +159,7 @@ class Tooltip extends BaseComponent {
 
         return (
             <InnerTrigger
-                ref='trigger'
+                ref="trigger"
                 action={this.action}
                 hideAction={this.hideAction}
                 showAction={this.showAction}
@@ -177,7 +177,7 @@ class Tooltip extends BaseComponent {
                 {
                     React.isValidElement(this.props.children)
                         ? this.props.children
-                        : <span className='cm-tooltip-helper'>{this.props.children}</span>
+                        : <span className="cm-tooltip-helper">{this.props.children}</span>
                 }
             </InnerTrigger>
         );

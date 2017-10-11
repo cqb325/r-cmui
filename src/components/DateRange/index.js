@@ -319,7 +319,7 @@ class DateRange extends BaseComponent {
         // this._selectedDate = [];
     }
 
-    onChangeTime = (v, time, type, op)=>{
+    onChangeTime = ()=>{
         this.updateRange();
         this._selectDate();
 
@@ -531,8 +531,8 @@ class DateRange extends BaseComponent {
     renderTools(){
         let {clear} = this.props;
         if (clear) {
-            return <span className='pull-right'>
-                <Button theme='info' size='small' raised onClick={this.clear}>清除</Button>
+            return <span className="pull-right">
+                <Button theme="info" size="small" raised onClick={this.clear}>清除</Button>
             </span>;
         } else {
             return null;
@@ -554,7 +554,7 @@ class DateRange extends BaseComponent {
                 }
 
                 if (callback) {
-                    return (<a href='javascript:void(0)' className='date-range-shortcut' key={index}
+                    return (<a href="javascript:void(0)" className="date-range-shortcut" key={index}
                         onClick={this.selectShortCuts.bind(this, callback)}>{name}</a>);
                 } else {
                     return null;
@@ -590,11 +590,11 @@ class DateRange extends BaseComponent {
         let endTime = end.split(' ')[1];
         let startName = this.props.startName || 'startDate';
         let endName = this.props.endName || 'endDate';
-        let startText = (<span className='date-text'>
-            <input type='hidden' name={startName} value={start} className={this.props.startClass}/>
+        let startText = (<span className="date-text">
+            <input type="hidden" name={startName} value={start} className={this.props.startClass}/>
             {start}&nbsp;</span>);
-        let endText = (<span className='date-text'>
-            <input type='hidden' name={endName} value={end} className={this.props.endClass}/>{end}&nbsp;</span>);
+        let endText = (<span className="date-text">
+            <input type="hidden" name={endName} value={end} className={this.props.endClass}/>{end}&nbsp;</span>);
 
         let startProps = {
             dateOnly: true,
@@ -615,29 +615,29 @@ class DateRange extends BaseComponent {
         let tools = this.renderTools();
         let hasToolsCont = shortcuts || tools;
 
-        return (<div ref='datetime' onClick={this.show} className={className} style={this.props.style || {}}>
+        return (<div ref="datetime" onClick={this.show} className={className} style={this.props.style || {}}>
             {startText}
             {sep}
             {endText}
-            <div className='cm-datetime-wrap' ref='datePicker'
+            <div className="cm-datetime-wrap" ref="datePicker"
                 style={{display: this.state.visibility ? 'block' : 'none'}}>
                 {
                     hasToolsCont
-                    ? <div className='tools-info'>
-                        {shortcuts}
-                        {tools}
-                    </div>
-                    : null
-                }
-                <Date ref='startDate' {...startProps} onSelectDate={this._selectStartDate} />
-                <Date ref='endDate' {...endProps} onSelectDate={this._selectEndDate} />
-                {this.props.showTime ?
-                    <div className='cm-row mt-10 mb-5'>
-                        <div className='cm-col-sm-12 text-center'>
-                            <TimePicker format={f} ref='startTime' onChange={this.onChangeTime} size='small' value={startTime} />
+                        ? <div className="tools-info">
+                            {shortcuts}
+                            {tools}
                         </div>
-                        <div className='cm-col-sm-12 text-center'>
-                            <TimePicker format={f} ref='endTime' onChange={this.onChangeTime} size='small' value={endTime} />
+                        : null
+                }
+                <Date ref="startDate" {...startProps} onSelectDate={this._selectStartDate} />
+                <Date ref="endDate" {...endProps} onSelectDate={this._selectEndDate} />
+                {this.props.showTime ?
+                    <div className="cm-row mt-10 mb-5">
+                        <div className="cm-col-sm-12 text-center">
+                            <TimePicker format={f} ref="startTime" onChange={this.onChangeTime} size="small" value={startTime} />
+                        </div>
+                        <div className="cm-col-sm-12 text-center">
+                            <TimePicker format={f} ref="endTime" onChange={this.onChangeTime} size="small" value={endTime} />
                         </div>
                     </div>
                     : null

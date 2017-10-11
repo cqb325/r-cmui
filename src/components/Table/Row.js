@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import UUID from '../utils/UUID';
 import CheckBox from '../CheckBox/index';
@@ -29,7 +28,7 @@ class Row extends BaseComponent{
         this.identify = props.identify;
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(){
         // if (!shallowEqual(nextProps.data, this.state.data)) {
         //     this.setState({
         //         data: nextProps.data
@@ -81,7 +80,7 @@ class Row extends BaseComponent{
         return columns.map((col, index)=>{
             if (col.type === 'checkbox'){
                 return <td data-row={this.props.row} data-col={index} key={index}>
-                    <CheckBox key={UUID.v4()} ref='checkbox' checked={false} onChange={this.checkRow} />
+                    <CheckBox key={UUID.v4()} ref="checkbox" checked={false} onChange={this.checkRow} />
                 </td>;
             }
             if (col.type === 'index'){

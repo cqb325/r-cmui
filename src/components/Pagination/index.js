@@ -23,8 +23,8 @@ class PagePrev extends Component {
         let className = classNames('prev', {
             disabled: this.props.current === 1
         });
-        return (<li onClick={this.props.onClick} className={className}><a href='javascript:void(0)'>
-            <FontIcon icon='angle-left' />
+        return (<li onClick={this.props.onClick} className={className}><a href="javascript:void(0)">
+            <FontIcon icon="angle-left" />
         </a></li>);
     }
 }
@@ -38,8 +38,8 @@ class PageNext extends Component {
             disabled: this.props.disabled
         });
 
-        return (<li onClick={this.props.onClick} className={className}><a href='javascript:void(0)'>
-            <FontIcon icon='angle-right' />
+        return (<li onClick={this.props.onClick} className={className}><a href="javascript:void(0)">
+            <FontIcon icon="angle-right" />
         </a></li>);
     }
 }
@@ -53,7 +53,7 @@ class PageItem extends Component {
             active: this.props.active
         });
         return (<li onClick={this.props.onClick} className={className}>
-            <a href='javascript:void(0)'>{this.props.currentIndex}</a>
+            <a href="javascript:void(0)">{this.props.currentIndex}</a>
         </li>);
     }
 }
@@ -361,7 +361,7 @@ class Pagination extends BaseComponent {
                     currentIndex={i + 1} />);
             }
             if (edges < interval.start && (interval.start - edges !== 1)) {
-                pagerList.push(<li key={'...1'} className='disabled'><span className='ellipse'>•••</span></li>);
+                pagerList.push(<li key={'...1'} className="disabled"><span className="ellipse">•••</span></li>);
             } else if (interval.start - edges === 1) {
                 pagerList.push(<PageItem key={edges + 1} onClick={this._handleChange.bind(this, edges + 1)}
                     currentIndex={edges + 1} />);
@@ -375,7 +375,7 @@ class Pagination extends BaseComponent {
 
             if (interval.end < pages && edges > 0) {
                 if (pages - edges > interval.end && (pages - edges - interval.end !== 1)) {
-                    pagerList.push(<li key={'...2'} className='disabled'><span className='ellipse'>•••</span></li>);
+                    pagerList.push(<li key={'...2'} className="disabled"><span className="ellipse">•••</span></li>);
                 } else if (pages - edges - interval.end === 1) {
                     pagerList.push(<PageItem key={interval.end + 1}
                         onClick={this._handleChange.bind(this, interval.end + 1)}
@@ -392,15 +392,15 @@ class Pagination extends BaseComponent {
         let className = classNames('cm-pagination', this.state.theme, this.props.className, this.props.shape);
         return (
             <div className={className}>
-                <ul style={{float: 'left'}} className='cm-pagination-num-list'>
+                <ul style={{float: 'left'}} className="cm-pagination-num-list">
                     <PagePrev current={current} onClick={this._prev.bind(this, null)} />
                     {pagerList}
                     <PageNext current={current} onClick={this._next.bind(this, null)} disabled={current === pages} />
                 </ul>
                 {this.state.displayInfo
-                    ? <div className='pagination-info'>
-                        <span className='page-code ml-5'>
-                            <Select ref='pageSize' value={this.state.pageSize + ''}
+                    ? <div className="pagination-info">
+                        <span className="page-code ml-5">
+                            <Select ref="pageSize" value={this.state.pageSize + ''}
                                 onChange={this._selectPageSize.bind(this)}
                                 style={{width: 65}} data={[
                                     {id: '10', text: '10/页'},
@@ -409,15 +409,15 @@ class Pagination extends BaseComponent {
                                 ]}
                             />
                         </span>
-                        <span className='page-code mr-10'>
+                        <span className="page-code mr-10">
                             <span>到第</span>
-                            <Input ref='pageNum' type='number' autoComplete='off' value={this.state.current+''}
+                            <Input ref="pageNum" type="number" autoComplete="off" value={this.state.current+''}
                                 onKeyUp={this.keyUp.bind(this)}
                                 onChange={this.handlerInput.bind(this)}
                             />
                             <span>/{pages}页</span>
                         </span>
-                        <Button theme='primary' flat onClick={this.goToPage.bind(this, null)}>确定</Button>
+                        <Button theme="primary" flat onClick={this.goToPage.bind(this, null)}>确定</Button>
                     </div>
                     : null
                 }

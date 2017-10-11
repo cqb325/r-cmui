@@ -166,11 +166,11 @@ class Item extends BaseComponent{
         className = classNames('cm-accordion-item', className, {
             'cm-accordion-item-active': this.state.active
         });
-        icon = icon ? <FontIcon className='cm-accordion-item-icon' icon={icon} /> : null;
+        icon = icon ? <FontIcon className="cm-accordion-item-icon" icon={icon} /> : null;
         return (
             <li className={className} style={style}>
-                <div className='cm-accordion-item-head' onClick={this.onClick}>{icon}{title}</div>
-                <div className='cm-accordion-item-body' ref='body'>
+                <div className="cm-accordion-item-head" onClick={this.onClick}>{icon}{title}</div>
+                <div className="cm-accordion-item-body" ref="body">
                     {children}
                 </div>
             </li>
@@ -315,7 +315,7 @@ class Accordion extends BaseComponent {
 
         return (
             <div className={className} style={this.props.style}>
-                <ul className='cm-accordion-wrap'>
+                <ul className="cm-accordion-wrap">
                     {items}
                 </ul>
             </div>

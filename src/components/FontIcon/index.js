@@ -14,7 +14,7 @@ import BaseComponent from '../core/BaseComponent';
  * @extend BaseComponent
  */
 class FontIcon extends BaseComponent {
-    static displayName = "FontIcon";
+    static displayName = 'FontIcon';
 
     static propTypes = {
         /**

@@ -17,14 +17,14 @@ export default async (url = '', data = {}, type = 'GET', fail)=>{
         headers: {
             'Accept': 'application/json'
         },
-        mode: "cors",
-        cache: "force-cache"
-    }
+        mode: 'cors',
+        cache: 'force-cache'
+    };
 
     if (type == 'POST') {
         Object.defineProperty(requestConfig, 'body', {
             value: JSON.stringify(data)
-        })
+        });
     }
     try {
         const response = await fetch(url, requestConfig);
@@ -36,4 +36,4 @@ export default async (url = '', data = {}, type = 'GET', fail)=>{
             fail(error);
         }
     }
-}
+};

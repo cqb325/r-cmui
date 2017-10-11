@@ -25,7 +25,7 @@ import './Uploadify.less';
  * @extend BaseComponent
  */
 class Uploadify extends BaseComponent {
-    static displayName = "Uploadify";
+    static displayName = 'Uploadify';
     static defaultProps = {
         buttonText: 'upload',
         files: [],
@@ -56,12 +56,12 @@ class Uploadify extends BaseComponent {
     getButton(){
         let mode = this.props.mode;
         if (mode === 'grid') {
-            return <div className='cm-uploadify-button' ref='button'>
-                <span className='cm-uploadify-plus'>+</span>
+            return <div className="cm-uploadify-button" ref="button">
+                <span className="cm-uploadify-plus">+</span>
                 <span>{this.buttonText}</span>
             </div>;
         } else {
-            return <div className='cm-uploadify-button' ref='button'><Button icon='upload' theme='primary'>
+            return <div className="cm-uploadify-button" ref="button"><Button icon="upload" theme="primary">
                 {this.buttonText}</Button></div>;
         }
     }
@@ -244,30 +244,30 @@ class Uploadify extends BaseComponent {
         if (this.props.mode === 'falls') {
             let picture = null;
             if (this.props.thumbnail) {
-                picture = <span className='cm-uploadify-thumbnail'>
-                    <img ref={'prev_' + file.id} onClick={this.openLightBox.bind(this, file)} />
+                picture = <span className="cm-uploadify-thumbnail">
+                    <img ref={'prev_' + file.id} onClick={this.openLightBox.bind(this, file)} alt="" />
                 </span>;
                 this.preloadImage(file);
             } else {
-                picture = <i className='fa fa-paperclip mr-5' />;
+                picture = <i className="fa fa-paperclip mr-5" />;
             }
-            return <div className='cm-uploadify-item' key={index} id={file.id}>
+            return <div className="cm-uploadify-item" key={index} id={file.id}>
                 {picture}
-                <span className='cm-uploadify-name' title={file.name}>{file.name}</span>
-                <i className='fa fa-trash-o cm-uploadify-close' onClick={this.removeFile.bind(this, file)} />
-                <div className='cm-uploadify-progress' />
+                <span className="cm-uploadify-name" title={file.name}>{file.name}</span>
+                <i className="fa fa-trash-o cm-uploadify-close" onClick={this.removeFile.bind(this, file)} />
+                <div className="cm-uploadify-progress" />
             </div>;
         }
 
         if (this.props.mode === 'grid') {
             this.preloadImage(file);
-            return <div className='cm-uploadify-item' key={index} id={file.id}>
-                <span className='cm-uploadify-thumbnail'>
-                    <img ref={'prev_' + file.id} />
+            return <div className="cm-uploadify-item" key={index} id={file.id}>
+                <span className="cm-uploadify-thumbnail">
+                    <img ref={'prev_' + file.id} alt="" />
                 </span>
-                <i className='fa fa-eye cm-uploadify-view' onClick={this.openLightBox.bind(this, file)} />
-                <i className='fa fa-trash-o cm-uploadify-close' onClick={this.removeFile.bind(this, file)} />
-                <div className='cm-uploadify-progress' />
+                <i className="fa fa-eye cm-uploadify-view" onClick={this.openLightBox.bind(this, file)} />
+                <i className="fa fa-trash-o cm-uploadify-close" onClick={this.removeFile.bind(this, file)} />
+                <div className="cm-uploadify-progress" />
             </div>;
         }
 
@@ -385,13 +385,13 @@ class Uploadify extends BaseComponent {
         return (
             <div className={className} style={style}>
                 {this.getButton()}
-                <div className={listClass} ref='list'>
+                <div className={listClass} ref="list">
                     {this.renderFiles()}
                 </div>
-                <Dialog title={' '} ref='dialog' useDefaultFooters={false} footers={null}>
-                    <img ref='lightBox' className='cm-uploadify-lightbox' />
+                <Dialog title={' '} ref="dialog" useDefaultFooters={false} footers={null}>
+                    <img ref="lightBox" className="cm-uploadify-lightbox" alt="" />
                 </Dialog>
-                <MessageBox ref='msg' title='提示' />
+                <MessageBox ref="msg" title="提示" />
             </div>
         );
     }

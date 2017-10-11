@@ -491,7 +491,7 @@ class SubMenu extends BaseComponent{
                         {this.props.title}
                     </span>
                 </div>
-                <ul ref='subMenu' className={`${this.prefix}-sub ${this.prefix}`}
+                <ul ref="subMenu" className={`${this.prefix}-sub ${this.prefix}`}
                     style={{display: this.props.open ? 'block' : 'none'}}>
                     {this.renderChildren()}
                 </ul>

@@ -44,8 +44,8 @@ class Badge extends BaseComponent{
                 [`cm-badge-status-${this.state.status}`]: this.state.status
             });
             return [
-                <span key='1' className={countName} />,
-                <span key='2' className='cm-badge-status-text'>{this.props.text}</span>
+                <span key="1" className={countName} />,
+                <span key="2" className="cm-badge-status-text">{this.props.text}</span>
             ];
         } else {
             let countName = classNames('cm-badge-count', {

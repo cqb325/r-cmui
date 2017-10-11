@@ -21,7 +21,7 @@ import './Input.less';
  * @extend BaseComponent
  */
 class Input extends BaseComponent {
-    static displayName = "Input";
+    static displayName = 'Input';
     static defaultProps = {
         trigger: 'blur',
         value: '',

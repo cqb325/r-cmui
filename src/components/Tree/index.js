@@ -8,8 +8,7 @@ import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import fetch from '../utils/fetch';
-import UUID from '../utils/UUID';
-import {List, Map} from 'immutable';
+import {List} from 'immutable';
 import velocity from '../../lib/velocity';
 import './Tree.less';
 
@@ -414,7 +413,6 @@ class TreeSubNodes extends BaseComponent{
 
     render() {
         let items = this.state.items;
-        let visible = this.props.visible;
 
         if (this.props.parent) {
             this.props.parent._subNodes = this;
@@ -1034,7 +1032,6 @@ class Tree extends BaseComponent {
         if (typeof (item) === 'string') {
             item = this.getItem(item);
         }
-        let checkedItems = this.checkedItems;
         if (item) {
             this.removeCheckedItems(item);
             item._node.clearChildren(()=>{
@@ -1196,7 +1193,7 @@ class Tree extends BaseComponent {
     }
 
     async loadRemoteData(){
-        let data = await fetch(this.state.url, {}, 'get', (err)=>{
+        let data = await fetch(this.state.url, {}, 'get', ()=>{
             console.log('get remote tree data error');
         });
 

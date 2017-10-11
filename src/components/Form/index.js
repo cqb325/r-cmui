@@ -130,7 +130,7 @@ class Form extends BaseComponent {
                 return React.cloneElement(child, props);
             } else if (componentName === 'Promote') {
                 let props = Object.assign({
-                    labelWidth: this.props.labelWidth ? this.props.labelWidth : props.labelWidth
+                    labelWidth: this.props.labelWidth ? this.props.labelWidth : child.props.labelWidth
                 }, child.props);
                 return React.cloneElement(child, props);
             } else {
@@ -224,7 +224,7 @@ class Form extends BaseComponent {
 
         if (this.props.component && this.props.component === 'div') {
             return (
-                <div ref='form' className={className} style={style}>
+                <div ref="form" className={className} style={style}>
                     {this.renderChildren()}
                     <div style={{'textAlign': 'center'}}>
                         {this.renderSubmit()}
@@ -233,7 +233,7 @@ class Form extends BaseComponent {
             );
         } else {
             return (
-                <form ref='form' className={className} style={style} encType={encType} action={this.action}
+                <form ref="form" className={className} style={style} encType={encType} action={this.action}
                     method={this.method || 'post'} target={this.target}>
                     {this.renderChildren()}
                     <div style={{'textAlign': 'center'}}>

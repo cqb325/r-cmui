@@ -44,7 +44,7 @@ class Basic extends React.Component {
  */
 class Layout extends React.Component {
     render(){
-        return <Basic prefixCls='cm-layout' name='Layout' {...this.props} />;
+        return <Basic prefixCls="cm-layout" name="Layout" {...this.props} />;
     }
 }
 
@@ -57,7 +57,7 @@ class Layout extends React.Component {
  */
 class Header extends React.Component {
     render(){
-        return <Basic prefixCls='cm-layout-header' name='Header' {...this.props} />;
+        return <Basic prefixCls="cm-layout-header" name="Header" {...this.props} />;
     }
 }
 
@@ -70,7 +70,7 @@ class Header extends React.Component {
  */
 class Footer extends React.Component {
     render(){
-        return <Basic prefixCls='cm-layout-footer' name='Footer' {...this.props} />;
+        return <Basic prefixCls="cm-layout-footer" name="Footer" {...this.props} />;
     }
 }
 
@@ -83,7 +83,7 @@ class Footer extends React.Component {
  */
 class Content extends React.Component {
     render(){
-        return <Basic prefixCls='cm-layout-content' name='Content' {...this.props} />;
+        return <Basic prefixCls="cm-layout-content" name="Content" {...this.props} />;
     }
 }
 

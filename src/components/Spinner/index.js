@@ -5,7 +5,6 @@
 
 import React from 'react';
 import BaseComponent from '../core/BaseComponent';
-import moment from 'moment';
 import classNames from 'classnames';
 import Input from '../Input/index';
 import './Spinner.less';
@@ -148,14 +147,14 @@ class Spinner extends BaseComponent{
         });
         return (
             <div className={className}>
-                <span className='cm-spinner-value'>
+                <span className="cm-spinner-value">
                     <Input name={this.props.name} value={this.state.value + ''} onChange={this.inputChange} />
                 </span>
-                <span className='cm-spinner-plus' onClick={this.plus}>
-                    <i className='fa fa-angle-up' />
+                <span className="cm-spinner-plus" onClick={this.plus}>
+                    <i className="fa fa-angle-up" />
                 </span>
-                <span className='cm-spinner-subs' onClick={this.sub}>
-                    <i className='fa fa-angle-down' />
+                <span className="cm-spinner-subs" onClick={this.sub}>
+                    <i className="fa fa-angle-down" />
                 </span>
             </div>
         );

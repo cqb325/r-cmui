@@ -116,7 +116,7 @@ class RadioGroup extends BaseComponent {
      * @param event     {Event} 事件对象
      * @param item  {Object} 当前操作对象
      */
-    handleChange = (value, checked, event, item)=>{
+    handleChange = (value)=>{
         const {disabled} = this.props;
 
         if (disabled) {
@@ -271,7 +271,7 @@ class RadioGroup extends BaseComponent {
                     key={index}
                     disabled={this.props.disabled}
                     ref={this.addCheckBox}
-                    type='radio'
+                    type="radio"
                     value={value}
                     label={text}
                     checked={checked}
@@ -285,7 +285,7 @@ class RadioGroup extends BaseComponent {
     renderChildrenItems(){
         let {name} = this.props;
 
-        return React.Children.map(this.props.children, (child, index)=>{
+        return React.Children.map(this.props.children, (child)=>{
             let componentName = child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Radio') {
                 let props = Object.assign({}, child.props, {

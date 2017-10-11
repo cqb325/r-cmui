@@ -221,18 +221,18 @@ class Step extends BaseComponent {
 
         return (
             <div className={className} style={style}>
-                <div className='cm-step-tail'>
+                <div className="cm-step-tail">
                     <i />
                 </div>
-                <div className='cm-steps-step'>
-                    <div className='cm-step-head'>
-                        <div className='cm-step-head-inner'>
+                <div className="cm-steps-step">
+                    <div className="cm-step-head">
+                        <div className="cm-step-head-inner">
                             {inner}
                         </div>
                     </div>
-                    <div className='cm-step-main'>
-                        <div className='cm-step-title'>{this.state.title}</div>
-                        <div className='cm-step-description'>{this.state.description}</div>
+                    <div className="cm-step-main">
+                        <div className="cm-step-title">{this.state.title}</div>
+                        <div className="cm-step-description">{this.state.description}</div>
                     </div>
                 </div>
             </div>

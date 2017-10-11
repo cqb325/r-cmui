@@ -21,7 +21,7 @@ import './MessageBox.less';
  * @extend BaseComponent
  */
 class MessageBox extends BaseComponent {
-    static displayName = "MessageBox";
+    static displayName = 'MessageBox';
 
     static propTypes = {
         /**
@@ -89,7 +89,7 @@ class MessageBox extends BaseComponent {
                     icon={props.confirmIcon} onClick={this.confirm}>{props.confirmText}</Button>
                 { props.type === 'confirm'
                     ? <Button theme={props.cancelTheme} raised icon={props.cancelIcon}
-                        className='ml-10' onClick={this.cancle}>{props.cancelText}</Button>
+                        className="ml-10" onClick={this.cancle}>{props.cancelText}</Button>
                     : null
                 }
             </span>;

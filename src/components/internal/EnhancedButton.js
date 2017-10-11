@@ -21,7 +21,7 @@ class EnhancedButton extends Component {
 
         const touchRipple = !disabled ? (
             <TouchRipple
-                key='touchRipple'
+                key="touchRipple"
                 centerRipple={centerRipple}
                 color={touchRippleColor}
                 opacity={touchRippleOpacity}
