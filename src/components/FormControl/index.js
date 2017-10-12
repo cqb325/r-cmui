@@ -228,12 +228,12 @@ class FormControl extends BaseComponent {
      * @method onChange
      * @param value 当前的值
      */
-    onChange = (value)=>{
-        this.check(value);
-        if (this.props.onChange) {
-            this.props.onChange.apply(this, arguments);
-        }
-    }
+     onChange = (value, selectItem, option)=>{
+         this.check(value);
+         if (this.props.onChange) {
+             this.props.onChange.apply(this, [value, selectItem, option]);
+         }
+     }
 
     /**
      * 验证元素

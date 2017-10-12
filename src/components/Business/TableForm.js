@@ -143,8 +143,10 @@ class TableForm extends BaseComponent{
      * @param index
      */
     removeRow(index){
-        this.items.splice(index, 1);
         this.refs.table.removeRow(index);
+        window.setTimeout(()=>{
+            this.items.splice(index, 1);
+        }, 0);
     }
 
     /**
