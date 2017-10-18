@@ -114,6 +114,14 @@ class Option extends BaseComponent{
         }
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.active !== this.props.active) {
+            this.setState({
+                active: nextProps.active
+            });
+        }
+    }
+
     render(){
         let {html, children, disabled} = this.props;
         let className = classNames('cm-select-option', {
@@ -319,7 +327,7 @@ class Select extends BaseComponent {
             (this.props.name || '') + '" value="' + (this.state.value || '') + '">';
 
 
-        return (<span style={{maxWidth: this.props.maxWidth}} className={className} dangerouslySetInnerHTML={{__html: html}} />);
+        return (<span style={{maxWidth: this.props.maxWidth, minWidth: this.props.minWidth}} className={className} dangerouslySetInnerHTML={{__html: html}} />);
     }
 
     _renderFilter(){
