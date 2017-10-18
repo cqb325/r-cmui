@@ -127,7 +127,7 @@ class DateRange extends BaseComponent {
         });
 
         velocity(ele, 'fadeIn', {duration: 500});
-        //this.updateRange();
+        this.updateRange();
         if (!this.state.visibility) {
             super.show();
             this.bindClickAway();
