@@ -272,7 +272,7 @@ class TreeNode extends BaseComponent{
                 <TreeSubNodes
                     items={children}
                     parent={item}
-                    visible={this.state.open}
+                    visible={!!this.state.open}
                     onSelect={this.props.onSelect}
                     ref="subNodes"
                     onOpenClose={this.props.onOpenClose}
