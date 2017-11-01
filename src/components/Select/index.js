@@ -11,13 +11,12 @@ import PropTypes from 'prop-types';
 import Core from '../core/Core';
 import fetch from '../utils/fetch';
 import clickAway from '../utils/ClickAway';
-import strings from '../utils/strings';
+import substitute from '../utils/strings';
 import Dom from '../utils/Dom';
 import FormControl from '../FormControl/index';
 import grids from '../utils/grids';
 import {fromJS} from 'immutable';
 const getGrid = grids.getGrid;
-const substitute = strings.substitute;
 import './Select.less';
 
 class Option extends BaseComponent{
