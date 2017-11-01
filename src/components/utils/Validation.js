@@ -1,5 +1,4 @@
-import strings from './strings';
-const substitute = strings.substitute;
+import substitute from './strings';
 
 
 let format = function(str){
