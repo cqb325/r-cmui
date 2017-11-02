@@ -65,6 +65,19 @@ class Menu extends BaseComponent{
     }
 
     /**
+     * 设置layout
+     * @param {*} layout 
+     */
+    setLayout(layout){
+        this.setState({layout});
+        for(let i in this.items){
+            if(this.items[i].setLayout){
+                this.items[i].setLayout(layout);
+            }
+        }
+    }
+
+    /**
      * 选中回调
      * @param item
      */
@@ -246,7 +259,8 @@ class SubMenu extends BaseComponent{
         this.prefix = props.prefix;
         this.addState({
             hover: false,
-            collapsed: !props.open || false
+            collapsed: !props.open || false,
+            layout: this.props.layout
         });
 
         this.identify = props.identify || 'SubMenu_level_' +
@@ -255,6 +269,10 @@ class SubMenu extends BaseComponent{
         this.name = 'SubMenu';
 
         this.isAnimating = false;
+    }
+
+    setLayout(layout){
+        this.setState({layout});
     }
 
     appendChild(item){
@@ -474,7 +492,7 @@ class SubMenu extends BaseComponent{
             [`${this.prefix}-submenu-active`]: !this.state.collapsed
         });
 
-        let paddingLeft = this.props.layout === 'inline' ? 24 * this.props.level : 0;
+        let paddingLeft = this.state.layout === 'inline' ? 24 * this.props.level : 0;
         let style = paddingLeft ? {paddingLeft: paddingLeft} : null;
         return (
             <li className={className2}
@@ -560,7 +578,8 @@ class Item extends BaseComponent{
         this.prefix = props.prefix;
 
         this.addState({
-            active: props.select || false
+            active: props.select || false,
+            layout: this.props.layout
         });
         this.name = 'Item';
     }
@@ -582,6 +601,16 @@ class Item extends BaseComponent{
         let parent = this.props.root;
         if (parent.lastSelect && parent.lastSelect != this) {
             parent.lastSelect.unSelect();
+        }
+        if(this.state.layout === 'vertical'){
+            let children = this.props.parent.children;
+            children.forEach((child)=>{
+                if(child.name === 'SubMenu'){
+                    if(child.isOpen()){
+                        child.collapse(true);
+                    }
+                }
+            });
         }
         this.select();
     }
@@ -639,13 +668,17 @@ class Item extends BaseComponent{
         this.props.parent.appendChild(this);
     }
 
+    setLayout(layout){
+        this.setState({layout});
+    }
+
     render(){
         let className = classNames(this.props.className, `${this.prefix}-item`, {
             [`${this.prefix}-item-active`]: this.state.active,
             [`${this.prefix}-disabled`]: this.props.disabled
         });
 
-        let paddingLeft = this.props.layout === 'inline' ? 24 * this.props.level : 0;
+        let paddingLeft = this.state.layout === 'inline' ? 24 * this.props.level : 0;
         let style = paddingLeft ? {paddingLeft: paddingLeft} : null;
         return (
             <li className={className}

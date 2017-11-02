@@ -7,10 +7,11 @@ import {
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
     Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
     Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange, Tree,
-    Marqueen, Business
+    Marqueen, Business, Layout, Sider
 } from 'cmui';
 const { SubMenu, Item, MenuItemGroup, Divider } = Menu;
 const {SimpleListPage, SimpleForm, TableForm} = Business;
+const {Header, Content, Footer} = Layout;
 import Card from '../src/components/Card';
 import { fromJS } from 'immutable';
 import image from './images/sr-home.svg';
@@ -26,7 +27,9 @@ class App extends BaseComponent {
 
         this.state = {
             btnTheme: 'default',
-            btnDisabled: true
+            btnDisabled: true,
+            menuWidth: 200,
+            menuMin: false
         };
     }
 
@@ -72,6 +75,53 @@ class App extends BaseComponent {
         });
     }
 
+    collapseMenu = (collapse)=>{
+        // this.refs.menu.setMinin(cllapse);
+        this.setState({
+            menuWidth: collapse ? 80 : 200,
+            menuMin: collapse
+        });
+
+        this.refs.menu.setState({
+            layout: collapse ? 'vertical' : 'inline'
+        });
+    }
+
+    renderMenu(){
+        let menuMin = this.state.menuMin;
+        return <Menu ref="menu" theme="dark" style={{width: this.state.menuWidth}}>
+            <SubMenu title={<span><FontIcon icon="save" className="mr-5"></FontIcon>{menuMin ? '' : 'Menu1'}</span>}>
+                <SubMenu title={<span><FontIcon icon="save" className="mr-5"></FontIcon>{'Menu11'}</span>}>
+                    <Item>aa1</Item>
+                    <Item>aa2</Item>
+                </SubMenu>
+                <Item>asdasdasd</Item>
+            </SubMenu>
+            <SubMenu title={<span><FontIcon icon="save" className="mr-5"></FontIcon>{menuMin ? '' : 'Menu2'}</span>}>
+                <Item>aa1</Item>
+                <Item>aa2</Item>
+            </SubMenu>
+        </Menu>;
+    }
+
+    close = ()=>{
+        this.refs.sider.setCollapsed(true);
+        this.setState({
+            menuWidth: 60,
+            menuMin: true
+        });
+        this.refs.menu.setLayout('vertical');
+    }
+
+    open = ()=>{
+        this.refs.sider.setCollapsed(false);
+        this.setState({
+            menuWidth: 200,
+            menuMin: false
+        });
+        this.refs.menu.setLayout('inline');
+    }
+
     render() {
         let treeData = [{
             id: 0,
@@ -97,6 +147,23 @@ class App extends BaseComponent {
                 <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
+
+                <Card>
+                    <Layout>
+                        <Sider ref="sider" collapsedWidth={this.state.menuWidth}>
+                            <div style={{height: 64, background: '#414956'}}>LOGO</div>
+                            {this.renderMenu()}
+                        </Sider>
+                        <Layout>
+                            <Header>
+                                <FontIcon icon="dedent" style={{fontSize: 20, color: '#fff'}} onClick={this.close}></FontIcon>
+                                <FontIcon icon="indent" style={{fontSize: 20, color: '#fff'}} onClick={this.open}></FontIcon>
+                            </Header>
+                            <Content style={{height: 200}}>asdasd</Content>
+                            <Footer></Footer>
+                        </Layout>
+                    </Layout>
+                </Card>
                 {/* <Button disabled={this.state.btnDisabled} theme={this.state.btnTheme} ref='btn' raised>按钮</Button>
         <Button theme="primary" onClick={this.changeButtonProps}>改变</Button>
         asd:
