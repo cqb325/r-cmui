@@ -83,6 +83,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  white-space: nowrap;
   .fa{
     margin-right: 8px;
   }
@@ -123,15 +124,19 @@
 .cm-menu-vertical{
   >.cm-menu-submenu>.cm-menu-submenu-title{
     padding-left: 24px;
+    &:after{
+      display: none;
+    }
   }
   .cm-menu-sub{
     display: none;
     background: @color-white;
-    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+    box-shadow: 0 1px 15px rgba(0,0,0,.3);
     position: absolute;
     left: 100%;
     top: 0;
     margin-left: 4px;
+    
     .cm-menu-submenu-title{
       padding: 0 26px 0 10px;
     }
