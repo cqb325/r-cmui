@@ -270,14 +270,14 @@ class DateRange extends BaseComponent {
      * @private
      */
     _selectDate(){
-        this._selectedDate.sort(function(a, b){
-            return moment(a).toDate().getTime() - moment(b).toDate().getTime();
-        });
-
         let startTime = this.refs.startTime;
         let endTime = this.refs.endTime;
         this._selectedDate[0] = this.getRealDateTime(this._selectedDate[0], startTime);
         this._selectedDate[1] = this.getRealDateTime(this._selectedDate[1], endTime);
+
+        this._selectedDate.sort(function(a, b){
+            return moment(a).toDate().getTime() - moment(b).toDate().getTime();
+        });
         
         this.setState({
             start: moment(this._selectedDate[0]),
@@ -633,10 +633,10 @@ class DateRange extends BaseComponent {
                 <Date ref="endDate" {...endProps} onSelectDate={this._selectEndDate} />
                 {this.props.showTime ?
                     <div className="cm-row mt-10 mb-5">
-                        <div className="cm-col-sm-12 text-center">
+                        <div className="cm-col-xs-12 text-center">
                             <TimePicker format={f} ref="startTime" onChange={this.onChangeTime} size="small" value={startTime} />
                         </div>
-                        <div className="cm-col-sm-12 text-center">
+                        <div className="cm-col-xs-12 text-center">
                             <TimePicker format={f} ref="endTime" onChange={this.onChangeTime} size="small" value={endTime} />
                         </div>
                     </div>
