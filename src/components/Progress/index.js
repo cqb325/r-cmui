@@ -219,7 +219,7 @@ class Progress extends BaseComponent {
                         </span> : null}
                     </div>
                 </div>
-                {type === 'circle' ? null : <span className="cm-progress-info">{percent}</span>}
+                {(type === 'circle' || !showPercent) ? null : <span className="cm-progress-info">{percent}</span>}
             </div>
         );
     }
