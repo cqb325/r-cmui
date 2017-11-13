@@ -18,7 +18,8 @@ export default async (url = '', data = {}, type = 'GET', fail)=>{
             'Accept': 'application/json'
         },
         mode: 'cors',
-        cache: 'force-cache'
+        cache: 'force-cache',
+        credentials: 'include'
     };
 
     if (type == 'POST') {
