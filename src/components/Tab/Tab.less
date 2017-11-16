@@ -61,10 +61,22 @@
 
   .cm-tab-content{
     .cm-tab-panel{
-      display: none;
-      &.active{
-        display: block;
-      }
     }
   }
+}
+
+.cm-tab-scroll-wrap{
+  overflow: hidden;
+  .cm-tab-scroll-inner{
+    transition: transform 0.3s linear;
+    &:after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+}
+
+.cm-tab-tools{
+  float: right;
 }

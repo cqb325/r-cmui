@@ -1,15 +1,15 @@
 import React from 'react';
-import UUID from '../utils/UUID';
 
-class Item extends React.PureComponent {
+class Item extends React.Component {
     static displayName = 'Item';
+
     static defaultProps = {
-        title: 'Tab',
-        id: UUID.v4()
+        title: 'Tab'
     };
-    render(){
+
+    render () {
         return (
-            <div>
+            <div className={this.props.className} style={this.props.style}>
                 {this.props.children}
             </div>
         );
