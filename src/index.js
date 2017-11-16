@@ -32,6 +32,7 @@ import Slick from './components/Slick/index';
 import Spin from './components/Spin/index';
 import Steps from './components/Steps/index';
 import Tab from './components/Tab/index';
+import Tabs from './components/Tab/tabs';
 import Table from './components/Table/index';
 import Toast from './components/Toast/index';
 import Progress from './components/Progress/index';
@@ -85,6 +86,7 @@ export {
     Spin,
     Steps,
     Tab,
+    Tabs,
     Table,
     Toast,
     Progress,

@@ -7,8 +7,8 @@ import React from 'react';
 import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import EnhancedButton from '../internal/EnhancedButton';
+import ScrollInner from './scrollinner';
 import Item from './Item';
-import {List} from 'immutable';
 import './Tab.less';
 
 /**
@@ -21,262 +21,126 @@ class Tab extends BaseComponent {
     static displayName = 'Tab';
 
     static defaultProps = {
-        activeIndex: 0,
         hasClose: false
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
-        let data = this.prepare();
-
         this.addState({
-            data: data,
-            activeIndex: props.activeIndex
+            activeKey: props.activeKey || this.getDefaultActiveKey()
         });
     }
 
-    /**
-     * 准备工作，将孩子节点中Item抽取为data
-     * @return {[type]} [description]
-     */
-    prepare(){
-        let items = [];
-        React.Children.forEach(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
-            if(componentName === 'Item'){
-                items.push({
-                    id: child.props.id,
-                    text: child.props.title,
-                    component: child,
-                    data: child.props.data
-                });
+    getDefaultActiveKey () {
+        let activeKey = '';
+        React.Children.forEach(this.props.children, (child) => {
+            if (!activeKey && child && child.key) {
+                activeKey = child.key;
             }
         });
-        let data = this.props.data || [];
-        if(items.length){
-            data = data.concat(items);
-        }
-
-        return data;
+        return activeKey;
     }
 
-    _selectTab(item){
-        if (!item.active) {
-            let data = this.state.data;
-            let index = data.indexOf(item);
-            item.active = true;
-            let last = this.state.activeIndex;
+    _selectTab (key, disabled, event) {
+        if (event.stopPropagation()) {
+            event.stopPropagation();
+        }
+        if (disabled) {
+            return false;
+        }
+        this.setState({
+            activeKey: key
+        });
+        this.refs.scroll.jumpToKey(key);
 
-            data[last].active = false;
-            this.emit('beforeSelect', item);
-            if (this.props.onBeforeSelect) {
-                this.props.onBeforeSelect(item);
-            }
-            this.setState({activeIndex: index});
-            this.emit('select', item);
-            if (this.props.onSelect) {
-                this.props.onSelect(item);
-            }
+        if (this.props.onSelect) {
+            this.props.onSelect(key);
         }
     }
 
     /**
-     * 根据索引选择tab
-     * @param index {Number} 选择的索引
-     */
-    selectByIndex(index){
-        if (index >= 0 && index < this.state.data.length) {
-            let data = this.state.data;
-            data.forEach((item, ind)=>{
-                if (ind !== index) {
-                    item.active = false;
-                }
-            });
-            this.setState({
-                activeIndex: index
-            });
-        }
-    }
-
-    /**
-     * 获取tab对象
-     * @param index
+     * 获取激活的tab的key
+     * @method getActiveKey
      * @returns {*}
      */
-    getItem(index){
-        return this.state.data[index];
+    getActiveKey () {
+        return this.state.activeKey;
     }
 
-    /**
-     * 激活选项的索引
-     * @return {[type]} [description]
-     */
-    getActiveIndex(){
-        return this.state.activeIndex;
-    }
+    _getHeader () {
+        const activeKey = this.state.activeKey;
+        return React.Children.map(this.props.children, (child) => {
+            const {title, disabled} = child.props;
+            const key = child.key;
+            const active = activeKey === key;
 
-    /**
-     * 获取激活的tab
-     * @method getActiveItem
-     * @returns {*}
-     */
-    getActiveItem(){
-        return this.state.data[this.state.activeIndex];
-    }
-
-    _getHeader(){
-        let data = this.state.data;
-        let activeIndex = this.state.activeIndex;
-        return data.map(function(item, index){
-            if (activeIndex === index) {
-                item.active = true;
-            }
-
-            let className = classNames({
-                active: item.active
+            const className = classNames({
+                active
             });
             return (
-                <li key={index} className={className} onClick={()=>{ this._selectTab(item); }}>
-                    {this.props.hasClose ? <a className="cm-tab-close" onClick={this._removeItem.bind(this, item)}>&times;</a> : null}
+                <li key={key} className={className} onClick={(e) => { this._selectTab(key, disabled, e); }}>
+                    {this.props.hasClose ? <a className="cm-tab-close" onClick={this._removeItem.bind(this, key)}>&times;</a> : null}
                     <EnhancedButton initFull touchRippleColor={'rgba(0, 0, 0, 0.1)'}>
-                        <a href="javascript:void(0)">{item.text}</a>
+                        <a href="javascript:void(0)">{title}</a>
                     </EnhancedButton>
                 </li>
             );
-        }, this);
-    }
-
-    _getContent(){
-        let data = this.state.data;
-        let activeIndex = this.state.activeIndex;
-
-        return data.map(function(item, index){
-            if (activeIndex === index) {
-                item.active = true;
-            }
-
-            let className = classNames('cm-tab-panel', {
-                active: item.active
-            });
-
-            let component = item.component;
-            let tabPanel = null;
-            if (React.isValidElement(component)) {
-                let newProps = Object.assign({ref: item.id, data: item.data}, component.props);
-                tabPanel = React.cloneElement(component, newProps);
-            } else {
-                tabPanel = React.createElement(component, {ref: item.id, data: item.data});
-            }
-
-            return (
-                <div key={index} className={className}>
-                    {tabPanel}
-                </div>
-            );
-        }, this);
-    }
-
-    /**
-     * 添加一个tab项
-     * @param {[type]}  item     [description]
-     * @param {Boolean} isActive 当前添加的激活
-     */
-    add(item, isActive){
-        if(React.isValidElement(item)){
-            let data = {
-                id: item.props.id,
-                text: item.props.title,
-                data: item.props.data,
-                component: item
-            };
-
-            this.addItem(data, isActive);
-        }else{
-            this.addItem(item, isActive);
-        }
-    }
-
-    /**
-     * 添加tab项
-     * @param {[type]}  item     [description]
-     * @param {Boolean} isActive [description]
-     */
-    addItem(item, isActive){
-        let data = this.state.data;
-        data = data.concat(item);
-        this.setState({data}, ()=>{
-            if(isActive){
-                this._selectTab(item);
-            }
         });
     }
 
-    /**
-     * 删除选项
-     * @param  {[type]} item [description]
-     * @return {[type]}      [description]
-     */
-    remove(item){
-        let data = this.state.data;
-        let index = -1;
-        let isActive = false;
-        if(typeof item === 'number'){
-            index = item;
-            isActive = this.getItem(index).active;
-        }else{
-            index = data.indexOf(item);
-            isActive = item.active;
-        }
+    _getContent () {
+        const activeKey = this.state.activeKey;
+        return React.Children.map(this.props.children, (child) => {
+            const key = child.key;
+            const active = activeKey === key;
 
-        let shouldRemove = true;
-        if(this.props.onBeforeRemove){
-            shouldRemove = this.props.onBeforeRemove(index);
-        }
-
-        if(shouldRemove && index > -1){
-            let newData = List(data).delete(index).toJS();
-            this.setState({data: newData}, ()=>{
-                if(isActive){
-                    this.selectByIndex(index - 1);
-                }
-                if(this.props.onRemove){
-                    this.props.onRemove(index);
-                }
+            const className = classNames('cm-tab-panel', child.className, {
+                active
             });
-        }
+            const props = Object.assign({className, identify: key}, child.props);
+            return React.cloneElement(child, props);
+        });
     }
 
-    _removeItem(item, event){
-        if(event.stopPropagation()){
+    _removeItem (key, event) {
+        if (event.stopPropagation()) {
             event.stopPropagation();
         }
 
-        this.remove(item);
+        if (this.props.onRemove) {
+            this.props.onRemove(key);
+        }
+
         return false;
     }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.activeIndex !== this.state.activeIndex && nextProps.activeIndex !== this.props.activeIndex) {
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.activeKey !== this.props.activeKey) {
             this.setState({
-                activeIndex: nextProps.activeIndex
+                activeKey: nextProps.activeKey
             });
         }
     }
 
-    render(){
+    render () {
         let {className, style} = this.props;
         className = classNames('cm-tab', className);
 
-        let headers = this._getHeader();
-        let contents = this._getContent();
+        const headers = this._getHeader();
+        const contents = this._getContent();
         return (
             <div className={className} style={style}>
                 <ul className="cm-tab-header">
                     {headers}
+                    <div className="cm-tab-tools">
+                        {this.props.tools}
+                    </div>
                 </ul>
                 <div className="cm-tab-content">
-                    {contents}
+                    <ScrollInner ref="scroll" activeKey={this.state.activeKey}>
+                        {contents}
+                    </ScrollInner>
                 </div>
             </div>
         );

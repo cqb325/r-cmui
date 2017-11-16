@@ -5,7 +5,7 @@ import BaseComponent from '../src/components/core/BaseComponent';
 import {
     Button, ButtonGroup, Breadcrumb, FontIcon, CheckBox, CheckBoxGroup,
     Row, Col, Panel, MessageBox, Dialog, Notification, Input, InputNumber, Select, Switch, TextArea, Upload,
-    Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Table, Progress,
+    Uploadify, Tooltip, FormControl, RadioGroup, Clock, Dropdown, Menu, Slick, Spin, Steps, Tab, Tabs, Table, Progress,
     Pagination, IconButton, Form, Badge, Accordion, AutoComplete, Spinner, TimePicker, DateTime, DateRange, Tree,
     Marqueen, Business, Layout, Sider
 } from 'cmui';
@@ -346,24 +346,22 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Tab ref="tab" hasClose data={[{ text: 'tab1', component: <div>111</div> }, { text: 'tab2', component: <div>2222</div> }]}>
-                        <Tab.Item title="ttt"><img src={pic1} /></Tab.Item>
-                    </Tab>
+
+                    <Tabs ref="tab" hasClose items={[{ title: 'tab1', key: 'tab1', content: <div>111</div> }, { text: 'tab2', key: 'tab2', content: <div>2222</div> }]}
+                        tools={<a>menu</a>}
+                    >
+                    </Tabs>
 
                     <Button onClick={() => {
                         this.refs.tab.add({
-                            text: 'added',
-                            component: <div>added tab</div>
-                        }, true);
+                            title: 'added',
+                            key: Math.random()+'',
+                            content: <div>added tab</div>
+                        });
                     }}>添加</Button>
 
                     <Button onClick={() => {
-                        this.refs.tab.add(<Tab.Item title="added title">added content2</Tab.Item>, true);
-                    }}>添加元素</Button>
-
-                    <Button onClick={() => {
-                        console.log(this.refs.tab.getActiveIndex());
-                        this.refs.tab.remove(this.refs.tab.getActiveIndex());
+                        this.refs.tab.remove('tab1');
                     }}>删除</Button>
                 </Card>
 
