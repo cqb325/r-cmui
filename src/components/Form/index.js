@@ -116,7 +116,7 @@ class Form extends BaseComponent {
      */
     renderChildren(){
         return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+            let componentName = (child && child.type && child.type.displayName) ? child.type.displayName : '';
             if (componentName === 'FormControl' || componentName === 'Row') {
                 let props = Object.assign({
                     'itemBind': this.itemBind,
