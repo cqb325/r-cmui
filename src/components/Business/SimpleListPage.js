@@ -6,6 +6,12 @@ import Events from '../utils/Events';
 import fetch from '../utils/fetch';
 
 class SimpleListPage extends React.Component{
+    static defaultProps = {
+        displayInfo: true,
+        pageSize: 10,
+        bordered: true
+    }
+
     constructor(props){
         super(props);
         this.sort = {};
@@ -52,7 +58,11 @@ class SimpleListPage extends React.Component{
         }
 
         if(this.props.searchParams){
-            params = Object.assign(params, this.props.searchParams);
+            if (typeof this.props.searchParams === 'function') {
+                params = Object.assign(params, this.props.searchParams());
+            } else{
+                params = Object.assign(params, this.props.searchParams);
+            }
         }
 
         return params;
@@ -74,7 +84,7 @@ class SimpleListPage extends React.Component{
     }
 
     componentDidMount(){
-        this.search(1, 10);
+        this.search(1, this.props.pageSize);
         let searchBtn;
         if(this.props.searchBtn && typeof this.props.searchBtn === 'function'){
             searchBtn = this.props.searchBtn();
@@ -84,7 +94,7 @@ class SimpleListPage extends React.Component{
         if(searchBtn){
             if(typeof searchBtn === 'string'){
                 Events.on(searchBtn, 'click', ()=>{
-                    let pageSize = 10;
+                    let pageSize = this.props.pageSize;
                     if(this.refs.pagination) {
                         pageSize = this.refs.pagination.state.pageSize;
                     }
@@ -92,7 +102,7 @@ class SimpleListPage extends React.Component{
                 });
             }else{
                 searchBtn.on('click', ()=>{
-                    let pageSize = 10;
+                    let pageSize = this.props.pageSize;
                     if(this.refs.pagination) {
                         pageSize = this.refs.pagination.state.pageSize;
                     }
@@ -103,7 +113,7 @@ class SimpleListPage extends React.Component{
     }
 
     refresh(){
-        let pageSize = 10;
+        let pageSize = this.props.pageSize;
         let current = 1;
         if(this.refs.pagination) {
             pageSize = this.refs.pagination.state.pageSize;
@@ -134,19 +144,19 @@ class SimpleListPage extends React.Component{
         this.refs.table.checkRow(field, value);
     }
 
-    sortColumn = (column, type)=>{
-        this.sort[column.name] = type;
+    sortColumn = (column, type, sorts)=>{
+        this.sort = sorts;
         this.refresh();
     }
 
     render(){
         return (
             <div>
-                <Table ref="table" columns={this.props.columns} onSort={this.sortColumn} data={this.props.data || []} bordered hover striped />
+                <Table ref="table" columns={this.props.columns} onSort={this.sortColumn} data={this.props.data || []} bordered={this.props.bordered} hover striped />
 
                 <div className="cm-row">
                     {
-                        this.props.pagination ? <Pagination className="pull-right" ref="pagination" current={1} pageSize={10} total={0} onChange={this.search} onShowSizeChange={this.search} /> : null
+                        this.props.pagination ? <Pagination displayInfo={this.props.displayInfo} className="pull-right" ref="pagination" current={1} pageSize={this.props.pageSize} total={0} onChange={this.search} onShowSizeChange={this.search} /> : null
                     }
                 </div>
             </div>
