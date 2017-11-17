@@ -133,7 +133,7 @@ class Progress extends BaseComponent {
         // path 属性 A 61 61 0 1 1 -0 61 A 61 61 0 1 1 -0 -61
         let descriptions = ['M', 0, -r, 'A', r, r, 0, 1, 1, x, -y, 'A', r, r, 0, 1, 1, x, y];
 
-        let strokeWidth = 6;
+        let strokeWidth = this.props.strokeWidth;
         let tx = r + strokeWidth / 2;
 
         let percent = (this.state.value - this.state.min) / (this.state.max - this.state.min);
