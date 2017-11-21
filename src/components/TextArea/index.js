@@ -155,7 +155,7 @@ class TextArea extends BaseComponent {
         let handleChange = this.props.handleChange
             ? (event)=>{ this.props.handleChange(event, {component: this}); }
             : this.handleChange.bind(this);
-        style = style || {};
+        style = Object.assign({}, style || {});
         if (height !== undefined && height !== null) {
             style['height'] = height;
         }
