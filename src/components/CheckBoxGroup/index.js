@@ -96,7 +96,8 @@ class CheckBoxGroup extends BaseComponent {
 
         this.addState({
             data: props.data,
-            value: props.value + ''
+            value: props.value + '',
+            disabled: false,
         });
 
         this.items = [];
@@ -136,7 +137,7 @@ class CheckBoxGroup extends BaseComponent {
      * @param item  {Object} 当前操作对象
      */
     handleChange = ()=>{
-        const {disabled} = this.props;
+        const {disabled} = this.state;
 
         if (disabled) {
             return;
@@ -191,6 +192,20 @@ class CheckBoxGroup extends BaseComponent {
      */
     getValue(){
         return this.state.value;
+    }
+
+    disable(){
+        super.disable();
+        this.items.forEach((item)=>{
+            item.disable();
+        });
+    }
+
+    enable(){
+        super.enable();
+        this.items.forEach((item)=>{
+            item.enable();
+        });
     }
 
     /**
@@ -303,18 +318,18 @@ class CheckBoxGroup extends BaseComponent {
         let {valueField, textField, name} = this.props;
 
         let data = this.state.data || [];
-        let values = this.state.value.split(',');
-        return data.map((item, index)=>{
+        let values = this.state.value === undefined ? [] : this.state.value.split(',');
+        return data.map((item)=>{
             let itemData = JSON.parse(JSON.stringify(item));
             let value = itemData[valueField] + '';
             let text = itemData[textField];
             let checked = values.indexOf(value) != -1;
             itemData._checked = checked;
 
-            return (<CheckBox key={index}
+            return (<CheckBox key={value}
                 name={name}
                 ref={this.addCheckBox}
-                disabled={this.props.disabled}
+                disabled={this.state.disabled}
                 value={value}
                 label={text}
                 checked={checked}
