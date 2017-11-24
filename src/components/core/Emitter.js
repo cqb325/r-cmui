@@ -101,9 +101,9 @@ class Emitter{
             let args = arguments;
             Array.prototype.splice.apply(args, [0, 1]);
             let len = handler.length;
-            let ret;
+            let ret = [];
             for (let i = 0; i < len; i++) {
-                ret = ret && handler[i].apply(this, args);
+                ret.push(handler[i].apply(this, args));
             }
             return ret;
         }
