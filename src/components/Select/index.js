@@ -13,6 +13,7 @@ import fetch from '../utils/fetch';
 import clickAway from '../utils/ClickAway';
 import substitute from '../utils/strings';
 import Dom from '../utils/Dom';
+import Input from '../Input/index';
 import FormControl from '../FormControl/index';
 import grids from '../utils/grids';
 import {fromJS} from 'immutable';
@@ -129,7 +130,7 @@ class Option extends BaseComponent{
         });
 
         return (
-            <li className={className} onClick={this.onSelect}>
+            <li className={className} onClick={this.onSelect} style={{display: this.props.show ? 'block' : 'none'}}>
                 <a href="javascript:void(0)">
                     {
                         html ? <span dangerouslySetInnerHTML={{__html: html}} /> : children
@@ -231,7 +232,8 @@ class Select extends BaseComponent {
         this.addState({
             value: props.value,
             active: props.active,
-            data: data
+            data: data,
+            filterKey: ''
         });
 
         this.options = {};
@@ -330,7 +332,17 @@ class Select extends BaseComponent {
     }
 
     _renderFilter(){
-        return '';
+        if(this.props.filter){
+            return <Input onKeyUp={this.filter}></Input>;
+        }else{
+            return null;
+        }
+    }
+
+    filter = (e) => {
+        this.setState({
+            filterKey: e.target.value
+        });
     }
 
     /**
@@ -452,6 +464,7 @@ class Select extends BaseComponent {
             let text = item[textField];
             let value = item[valueField];
             let active = this.isActive(value);
+            let show = text.indexOf(this.state.filterKey) !== -1;
 
             let html = text;
             if (optionsTpl) {
@@ -464,6 +477,7 @@ class Select extends BaseComponent {
                 value={value}
                 item={item}
                 multi={multi}
+                show={show}
                 itemBind={this.itemBind}
                 itemUnBind={this.itemUnBind}
                 onClick={this._selectItem}
@@ -499,6 +513,7 @@ class Select extends BaseComponent {
             if (componentName === 'Option') {
                 let value = child.props.value;
                 let active = this.isActive(value);
+                let show = text.indexOf(this.state.filterKey) !== -1;
                 if (active) {
                     this.text.push(child.props.children);
                 }
@@ -508,7 +523,8 @@ class Select extends BaseComponent {
                     active: active,
                     multi: this.props.multi,
                     onClick: this._selectItem,
-                    key: value
+                    key: value,
+                    show: show
                 });
                 if(this.props.multi && child.props.empty){
                     return null;
