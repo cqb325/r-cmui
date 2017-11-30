@@ -513,7 +513,7 @@ class Select extends BaseComponent {
             if (componentName === 'Option') {
                 let value = child.props.value;
                 let active = this.isActive(value);
-                let show = text.indexOf(this.state.filterKey) !== -1;
+                let show = child.props.children.indexOf(this.state.filterKey) !== -1;
                 if (active) {
                     this.text.push(child.props.children);
                 }

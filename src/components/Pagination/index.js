@@ -64,6 +64,11 @@ class PageItem extends Component {
  * @extend BaseComponent
  */
 class Pagination extends BaseComponent {
+    static defaultProps = {
+        min: false,
+        pageSize: 10
+    };
+
     constructor(props) {
         super(props);
 
@@ -344,47 +349,48 @@ class Pagination extends BaseComponent {
     render(){
         let pages = this._calcPage();
         let pagerList = [];
-
         let current = this.state.current;
-        let interval = this._getInterval();
-        if (pages <= 9) {
-            for (let i = 0; i < pages; i++) {
-                let active = current === i + 1;
-                pagerList.push((<PageItem key={i + 1} onClick={this._handleChange.bind(this, i + 1)}
-                    active={active} currentIndex={i + 1} />));
-            }
-        } else {
-            let edges = 2;
-            let end = Math.min(edges, interval.start);
-            for (let i = 0; i < end; i++) {
-                pagerList.push(<PageItem key={i + 1} onClick={this._handleChange.bind(this, i + 1)}
-                    currentIndex={i + 1} />);
-            }
-            if (edges < interval.start && (interval.start - edges !== 1)) {
-                pagerList.push(<li key={'...1'} className="disabled"><span className="ellipse">•••</span></li>);
-            } else if (interval.start - edges === 1) {
-                pagerList.push(<PageItem key={edges + 1} onClick={this._handleChange.bind(this, edges + 1)}
-                    currentIndex={edges + 1} />);
-            }
-
-            for (let j = interval.start; j < interval.end; j++) {
-                let active = current === j + 1;
-                pagerList.push(<PageItem key={j + 1} onClick={this._handleChange.bind(this, j + 1)}
-                    currentIndex={j + 1} active={active} />);
-            }
-
-            if (interval.end < pages && edges > 0) {
-                if (pages - edges > interval.end && (pages - edges - interval.end !== 1)) {
-                    pagerList.push(<li key={'...2'} className="disabled"><span className="ellipse">•••</span></li>);
-                } else if (pages - edges - interval.end === 1) {
-                    pagerList.push(<PageItem key={interval.end + 1}
-                        onClick={this._handleChange.bind(this, interval.end + 1)}
-                        currentIndex={interval.end + 1} />);
+        if(!this.props.min){
+            let interval = this._getInterval();
+            if (pages <= 9) {
+                for (let i = 0; i < pages; i++) {
+                    let active = current === i + 1;
+                    pagerList.push((<PageItem key={i + 1} onClick={this._handleChange.bind(this, i + 1)}
+                        active={active} currentIndex={i + 1} />));
                 }
-                let begin = Math.max(pages - edges, interval.end);
-                for (let k = begin; k < pages; k++) {
-                    pagerList.push(<PageItem key={k + 1} onClick={this._handleChange.bind(this, k + 1)}
-                        currentIndex={k + 1} />);
+            } else {
+                let edges = 2;
+                let end = Math.min(edges, interval.start);
+                for (let i = 0; i < end; i++) {
+                    pagerList.push(<PageItem key={i + 1} onClick={this._handleChange.bind(this, i + 1)}
+                        currentIndex={i + 1} />);
+                }
+                if (edges < interval.start && (interval.start - edges !== 1)) {
+                    pagerList.push(<li key={'...1'} className="disabled"><span className="ellipse">•••</span></li>);
+                } else if (interval.start - edges === 1) {
+                    pagerList.push(<PageItem key={edges + 1} onClick={this._handleChange.bind(this, edges + 1)}
+                        currentIndex={edges + 1} />);
+                }
+
+                for (let j = interval.start; j < interval.end; j++) {
+                    let active = current === j + 1;
+                    pagerList.push(<PageItem key={j + 1} onClick={this._handleChange.bind(this, j + 1)}
+                        currentIndex={j + 1} active={active} />);
+                }
+
+                if (interval.end < pages && edges > 0) {
+                    if (pages - edges > interval.end && (pages - edges - interval.end !== 1)) {
+                        pagerList.push(<li key={'...2'} className="disabled"><span className="ellipse">•••</span></li>);
+                    } else if (pages - edges - interval.end === 1) {
+                        pagerList.push(<PageItem key={interval.end + 1}
+                            onClick={this._handleChange.bind(this, interval.end + 1)}
+                            currentIndex={interval.end + 1} />);
+                    }
+                    let begin = Math.max(pages - edges, interval.end);
+                    for (let k = begin; k < pages; k++) {
+                        pagerList.push(<PageItem key={k + 1} onClick={this._handleChange.bind(this, k + 1)}
+                            currentIndex={k + 1} />);
+                    }
                 }
             }
         }
