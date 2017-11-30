@@ -4,7 +4,7 @@ import classNames from 'classnames';
 class Row extends PureComponent{
     renderCols(){
         return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+            let componentName = child && child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Col') {
                 let props = Object.assign({
                     'gutter': this.props.gutter
