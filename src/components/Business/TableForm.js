@@ -104,10 +104,9 @@ class TableForm extends BaseComponent{
             this.refs.table.addRow(row);
             row.__rowItems = rowItems;
         }else{
-            row = this.props.columns.map((column)=>{
-                return {
-                    [`${column.name}`]: column.defaultValue || ''
-                };
+            row = {};
+			this.props.columns.forEach((column)=>{
+                row[`${column.name}`] = column.defaultValue || '';
             });
             row.id = UUID.v4();
             row.__rowItems = rowItems;
