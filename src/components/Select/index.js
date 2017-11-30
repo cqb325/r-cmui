@@ -555,6 +555,9 @@ class Select extends BaseComponent {
         if (this.props.readOnly || this.state.disabled) {
             return;
         }
+        if(this.props.filter && e.target == ReactDOM.findDOMNode(this.filterInputField)){
+            return;
+        }
         if (this.state.active && !this.props.multi) {
             this.hideOptions();
             return;
