@@ -173,6 +173,7 @@ class Popup extends PureComponent{
      * @param ele
      */
     getScrollElements(ele){
+        this.scrollElements = [];
         let parent = ele.parentNode;
 
         while (parent !== null && parent.tagName !== 'HTML'){
@@ -209,6 +210,7 @@ class Popup extends PureComponent{
     }
 
     render(){
+        this.getScrollElements(this.props.baseEle);
         let className = classNames({
             visible: this.state.visible
         }, this.props.extraProps ? this.props.extraProps.className : '', this.props.align);
