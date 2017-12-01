@@ -28,7 +28,6 @@ function get(url){
     let xhr = makeXhr();
 
     xhr.open('GET', url, false);
-    xhr.send();
     let response;
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -38,6 +37,7 @@ function get(url){
             
         }
     }
+    xhr.send();
     return response;
 }
 
