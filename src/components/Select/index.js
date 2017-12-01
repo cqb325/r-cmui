@@ -551,7 +551,7 @@ class Select extends BaseComponent {
      * 显示下拉框
      * @method showOptions
      */
-    showOptions = ()=>{
+    showOptions = (e)=>{
         if (this.props.readOnly || this.state.disabled) {
             return;
         }
