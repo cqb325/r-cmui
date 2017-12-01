@@ -379,19 +379,6 @@ class FormControl extends BaseComponent {
      */
      validByRemote(value, url, messages){
         let remoteRet = Ajax.get(url);
-        //  let remoteRet = await fetch(url, {}, 'get');
-         // Ajax.ajax({
-         //     url: url,
-         //     type: 'GET',
-         //     dataType: 'text',
-         //     async: false,
-         //     success: function(ret){
-         //         remoteRet = ret === 'true';
-         //     },
-         //     error: function(){
-         //         remoteRet = false;
-         //     }
-         // });
 
          var errorTip;
          if (remoteRet && !remoteRet.success) {
@@ -401,12 +388,12 @@ class FormControl extends BaseComponent {
                  this.refs.tooltip.setTitle(errorTip);
              }
              if (this.props.onValid) {
-                 this.props.onValid(value, remoteRet, this);
+                 this.props.onValid(value, remoteRet.success, this);
              }
-             this.emit('valid', value, remoteRet, this);
+             this.emit('valid', value, remoteRet.success, this);
          }
 
-         return remoteRet;
+         return remoteRet.success;
      }
 
      validByMethod(value, rule, messages){
