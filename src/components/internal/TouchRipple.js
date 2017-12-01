@@ -237,6 +237,7 @@ class TouchRipple extends Component {
             position: 'absolute',
             top: 0,
             left: 0,
+            zIndex: -1,
             overflow: 'hidden'
         }, style);
         if (hasRipples) {
