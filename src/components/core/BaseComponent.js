@@ -13,7 +13,9 @@ import Emitter from './Emitter';
  * @extend Component
  * @extend Emitter
  */
-class BaseComponent extends PureComponent{
+class BaseComponent extends PureComponent {
+    displayName = 'BaseComponent';
+    
     static defaultProps = {
         theme: 'default',
 
@@ -37,11 +39,11 @@ class BaseComponent extends PureComponent{
      * @method addState
      * @param params
      */
-    addState(params){
-        if (!this.state){
+    addState (params) {
+        if (!this.state) {
             this.state = {};
         }
-        for (var i in params) {
+        for (const i in params) {
             if ({}.hasOwnProperty.call(params, i)) {
                 this.state[i] = params[i];
             }
@@ -57,7 +59,7 @@ class BaseComponent extends PureComponent{
      * @chain
      * @return {Object}
      */
-    show(){
+    show () {
         let ret = this.emit('beforeShow');
         ret = ret === undefined ? true : ret;
         if (ret && !this.state.visibility) {
@@ -77,7 +79,7 @@ class BaseComponent extends PureComponent{
      * @chain
      * @return {Object}
      */
-    hide() {
+    hide () {
         let ret = this.emit('beforeHide');
         ret = ret === undefined ? true : ret;
         if (ret && this.state.visibility) {
@@ -93,7 +95,7 @@ class BaseComponent extends PureComponent{
      * @method getValue
      * @returns {null}
      */
-    getValue() {
+    getValue () {
         return null;
     }
 
@@ -102,7 +104,7 @@ class BaseComponent extends PureComponent{
      * @method setValue
      * @param args {*}
      */
-    setValue() {
+    setValue () {
 
     }
 
@@ -111,8 +113,8 @@ class BaseComponent extends PureComponent{
      * @method setTheme
      * @param theme {String} 主题标示可取default primary dark
      */
-    setTheme(theme) {
-        this.setState({theme: theme});
+    setTheme (theme) {
+        this.setState({theme});
     }
 
     /**
@@ -120,7 +122,7 @@ class BaseComponent extends PureComponent{
      * @method getTheme
      * @returns {String}
      */
-    getTheme() {
+    getTheme () {
         return this.state.theme;
     }
 
@@ -129,7 +131,7 @@ class BaseComponent extends PureComponent{
      * @method disable
      * @return {Boolean} 禁用状态
      */
-    disable(){
+    disable () {
         this.setState({disabled: true});
     }
 
@@ -138,7 +140,7 @@ class BaseComponent extends PureComponent{
      * @method disable
      * @return {Boolean} 禁用状态
      */
-    enable(){
+    enable () {
         this.setState({disabled: false});
     }
 
@@ -146,7 +148,7 @@ class BaseComponent extends PureComponent{
      * 销毁当前组件，需要组件中重构该方法
      * @method destroy
      */
-    destroy() {
+    destroy () {
 
     }
 
@@ -155,7 +157,7 @@ class BaseComponent extends PureComponent{
      * @method isLtIE9
      * @returns {boolean}
      */
-    isLtIE9() {
+    isLtIE9 () {
         if (navigator.userAgent.indexOf('MSIE') > 0) {
             if (navigator.userAgent.indexOf('MSIE 6.0') > 0) {
                 return true;
@@ -178,7 +180,7 @@ class BaseComponent extends PureComponent{
      * @method render
      * @returns {XML}
      */
-    render() {
+    render () {
         return (<div />);
     }
 }
