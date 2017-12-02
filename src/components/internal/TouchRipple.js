@@ -17,7 +17,7 @@ const Component = React.PureComponent;
  * @param obj
  * @returns {*}
  */
-function push(array, obj) {
+function push (array, obj) {
     const newObj = Array.isArray(obj) ? obj : [obj];
     return update(array, {$push: newObj});
 }
@@ -27,7 +27,7 @@ function push(array, obj) {
  * @param array
  * @returns {*}
  */
-function shift(array) {
+function shift (array) {
     return update(array, {$splice: [[0, 1]]});
 }
 
@@ -37,6 +37,8 @@ function shift(array) {
  * @extend Component
  */
 class TouchRipple extends Component {
+    displayName = 'TouchRipple';
+
     static propTypes = {
         abortOnScroll: PropTypes.bool,
         centerRipple: PropTypes.bool,
@@ -50,7 +52,7 @@ class TouchRipple extends Component {
         abortOnScroll: true
     };
 
-    constructor(props, context) {
+    constructor (props, context) {
         super(props, context);
         // Touch start produces a mouse down event for compat reasons. To avoid
         // showing ripples twice we skip showing a ripple for the first mouse down
@@ -73,7 +75,7 @@ class TouchRipple extends Component {
      * @param event {Event} 事件对象
      * @param isRippleTouchGenerated
      */
-    start(event, isRippleTouchGenerated) {
+    start (event, isRippleTouchGenerated) {
         if (this.ignoreNextMouseDown && !isRippleTouchGenerated) {
             this.ignoreNextMouseDown = false;
             return;
@@ -96,7 +98,7 @@ class TouchRipple extends Component {
         this.setState({
             hasRipples: true,
             nextKey: this.state.nextKey + 1,
-            ripples: ripples
+            ripples
         });
     }
 
@@ -104,7 +106,7 @@ class TouchRipple extends Component {
      * 结束动画
      * @method end
      */
-    end() {
+    end () {
         const currentRipples = this.state.ripples;
         this.setState({
             ripples: shift(currentRipples)
@@ -114,7 +116,7 @@ class TouchRipple extends Component {
         }
     }
 
-    handleMouseDown(event) {
+    handleMouseDown (event) {
         // only listen to left clicks
         if (event.button === 0) {
             this.start(event, false);
@@ -174,7 +176,7 @@ class TouchRipple extends Component {
         }
     };
 
-    startListeningForScrollAbort(event) {
+    startListeningForScrollAbort (event) {
         this.firstTouchY = event.touches[0].clientY;
         this.firstTouchX = event.touches[0].clientX;
         // Note that when scolling Chrome throttles this event to every 200ms
@@ -185,13 +187,13 @@ class TouchRipple extends Component {
         }
     }
 
-    stopListeningForScrollAbort() {
+    stopListeningForScrollAbort () {
         if (document.removeEventListener) {
             document.body.removeEventListener('touchmove', this.handleTouchMove);
         }
     }
 
-    getRippleStyle(event) {
+    getRippleStyle (event) {
         const style = {};
         const el = ReactDOM.findDOMNode(this);
         const elHeight = el.parentNode.parentNode.offsetHeight;
@@ -221,13 +223,13 @@ class TouchRipple extends Component {
         return style;
     }
 
-    calcDiag(a, b) {
+    calcDiag (a, b) {
         return Math.sqrt((a * a) + (b * b));
     }
 
-    render() {
+    render () {
         const {children, style} = this.props;
-        let {hasRipples, ripples} = this.state;
+        const {hasRipples, ripples} = this.state;
 
         let rippleGroup;
 
@@ -237,7 +239,7 @@ class TouchRipple extends Component {
             position: 'absolute',
             top: 0,
             left: 0,
-            zIndex: -1,
+            zIndex: 0,
             overflow: 'hidden'
         }, style);
         if (hasRipples) {
@@ -264,7 +266,7 @@ class TouchRipple extends Component {
                 style={style}
             >
                 {rippleGroup}
-                {children}
+                <span style={{position: 'relative', zIndex: 1}}>{children}</span>
             </div>
         );
     }
