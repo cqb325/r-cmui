@@ -67,7 +67,7 @@
 }
 .cm-button {
   position: relative;
-  padding: 4px 12px;
+  padding: 4px 15px;
   // height: 26px;
   -webkit-user-select: none;
   display: inline-block;
@@ -78,7 +78,7 @@
   border-radius: 2px;
   background: transparent;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  line-height: 1.15;
+  line-height: normal;
 
   -webkit-transition: background0.2s linear ,-webkit-box-shadow 0.2s linear;
   -moz-transition: background 0.2s linear,-moz-box-shadow 0.2s linear;
@@ -132,11 +132,16 @@
     background: rgba(153,153,153,.2);
   }
   &.cm-button-flat{
-    padding: 0 5px !important;
+    // padding: 0 !important;
+    color: @color-blue-light;
     height: auto;
     -webkit-box-shadow: initial;
     -moz-box-shadow: initial;
     box-shadow: initial;
+    &:hover{
+      color: @color-blue;
+      background: transparent;
+    }
   }
 
   &.primary{
@@ -145,6 +150,14 @@
     border-color: @color-blue;
     &:hover{
       background-color: lighten(@color-blue, 10%);
+    }
+  }
+  &.second{
+    color: #fff;
+    background-color: @color-blue-light;
+    border-color: @color-blue-light;
+    &:hover{
+      background-color: lighten(@color-blue-light, 10%);
     }
   }
   &.success{
@@ -169,6 +182,14 @@
     border-color: @color-danger;
     &:hover{
       background-color: lighten(@color-danger, 10%);
+    }
+  }
+  &.info{
+    color: #fff;
+    background-color: @color-info;
+    border-color: @color-info;
+    &:hover{
+      background-color: lighten(@color-info, 10%);
     }
   }
 
