@@ -49,6 +49,17 @@
     border-color: transparent;
     z-index: 1;
   }
+
+  &.cm-card-no-animation {
+    &:hover {
+      box-shadow: none;
+    }
+    &.cm-card-bordered{
+      &:hover{
+        border: 1px solid #e9e9e9;
+      }
+    }
+  }
   .cm-card-loading-block {
     display: inline-block;
     margin: 5px 1% 0;
