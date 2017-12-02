@@ -56,16 +56,16 @@ class FontIcon extends BaseComponent {
         spin: PropTypes.bool
     }
 
-    render(){
+    render () {
         let {icon,spin,pulse,title,font,className,size,rotate,style,color} = this.props;
 
         // 自定义字体
         if (font) {
-            className = classNames(font, font + '-' + icon, className);
+            className = classNames(font, `${font}-${icon}`, className);
         } else {
-            size = size ? 'fa-' + size : false;
-            rotate = rotate ? 'fa-rotate-' + rotate : false;
-            className = classNames('fa', 'fa-' + icon, size, className, {
+            size = size ? `fa-${size}` : false;
+            rotate = rotate ? `fa-rotate-${rotate}` : false;
+            className = classNames('fa', `fa-${icon}`, size, className, {
                 'fa-spin': spin,
                 'fa-pulse': pulse
             }, rotate);
