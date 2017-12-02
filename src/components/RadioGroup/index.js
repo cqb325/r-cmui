@@ -21,13 +21,14 @@ import './RadioGroup.less';
  */
 class RadioGroup extends BaseComponent {
     static displayName = 'RadioGroup';
+    
     static defaultProps = {
         value: '',
         layout: 'inline',
         valueField: 'id',
         textField: 'text'
     };
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         let data = props.data ? Core.clone(props.data) : null;
@@ -35,7 +36,7 @@ class RadioGroup extends BaseComponent {
         data = this._rebuildData(data);
 
         this.addState({
-            data: data,
+            data,
             value: props.value
         });
 
@@ -50,15 +51,15 @@ class RadioGroup extends BaseComponent {
      * @param data
      * @private
      */
-    _rebuildData(data){
+    _rebuildData (data) {
         if (!data) {
             return null;
         }
         if (Object.prototype.toString.apply(data) === '[object Array]') {
-            let one = data[0];
+            const one = data[0];
             if (Object.prototype.toString.apply(one) === '[object String]') {
-                return data.map(function(item, index){
-                    let option = {id: index + '', text: item};
+                return data.map((item, index) => {
+                    const option = {id: `${index}`, text: item};
                     return option;
                 });
             }
@@ -69,9 +70,9 @@ class RadioGroup extends BaseComponent {
         }
 
         if (Object.prototype.toString.apply(data) === '[object Object]') {
-            let ret = [];
-            for (var id in data) {
-                let item = {id: id, text: data[id]};
+            const ret = [];
+            for (const id in data) {
+                const item = {id, text: data[id]};
                 ret.push(item);
             }
             return ret;
@@ -84,12 +85,13 @@ class RadioGroup extends BaseComponent {
      * 记录当前的checkbox对象
      * @param {[type]} ref [description]
      */
-    addCheckBox = (ref)=>{
-        if(ref){
+    addCheckBox = (ref) => {
+        if (ref) {
             this.items.push(ref);
             this.itemMap[ref.getValue()] = ref;
 
-            if(ref.getValue() === this.state.value){
+            if (ref.getValue() === this.state.value) {
+                console.log(111);
                 this._lastChecked = ref;
             }
         }
@@ -100,8 +102,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
-    unbind = (item)=>{
-        this.items = this.items.filter((aitem)=>{
+    unbind = (item) => {
+        this.items = this.items.filter((aitem) => {
             return aitem != item;
         });
 
@@ -116,23 +118,23 @@ class RadioGroup extends BaseComponent {
      * @param event     {Event} 事件对象
      * @param item  {Object} 当前操作对象
      */
-    handleChange = (value)=>{
+    handleChange = (value) => {
         const {disabled} = this.props;
 
         if (disabled) {
             return;
         }
 
-        if(this._lastChecked){
-            this._lastChecked.setChecked(false, ()=>{
-                this.items.forEach((theItem)=>{
+        if (this._lastChecked) {
+            this._lastChecked.setChecked(false, () => {
+                this.items.forEach((theItem) => {
                     if (theItem.isChecked()) {
                         this._lastChecked = theItem;
                     }
                 });
             });
-        }else{
-            this.items.forEach((theItem)=>{
+        } else {
+            this.items.forEach((theItem) => {
                 if (theItem.isChecked()) {
                     this._lastChecked = theItem;
                 }
@@ -147,7 +149,7 @@ class RadioGroup extends BaseComponent {
      * @method handleTrigger
      * @param value {String} 当前值
      */
-    handleTrigger(value){
+    handleTrigger (value) {
         this.state.value = value;
         if (this.props.onChange) {
             this.props.onChange(value);
@@ -161,8 +163,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} index [description]
      * @return {[type]}       [description]
      */
-    getItem(index){
-        let item = this.items[index];
+    getItem (index) {
+        const item = this.items[index];
         return item;
     }
 
@@ -171,8 +173,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    getItemByValue(value){
-        let item = this.itemMap[value];
+    getItemByValue (value) {
+        const item = this.itemMap[value];
         return item;
     }
 
@@ -180,7 +182,7 @@ class RadioGroup extends BaseComponent {
      * 获取所有的checkbox项
      * @return {[type]} [description]
      */
-    getItems(){
+    getItems () {
         return this.items;
     }
 
@@ -189,8 +191,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} index [description]
      * @return {[type]}       [description]
      */
-    disableItem(index){
-        let item = this.getItem(index);
+    disableItem (index) {
+        const item = this.getItem(index);
         if (item) {
             item.disable();
         }
@@ -201,8 +203,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    disableItemByValue(value){
-        let item = this.getItemByValue(value);
+    disableItemByValue (value) {
+        const item = this.getItemByValue(value);
         if (item) {
             item.disable();
         }
@@ -213,8 +215,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} index [description]
      * @return {[type]}       [description]
      */
-    enableItem(index){
-        let item = this.getItem(index);
+    enableItem (index) {
+        const item = this.getItem(index);
         if (item) {
             item.enable();
         }
@@ -225,8 +227,8 @@ class RadioGroup extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    enableItemByValue(value){
-        let item = this.getItemByValue(value);
+    enableItemByValue (value) {
+        const item = this.getItemByValue(value);
         if (item) {
             item.enable();
         }
@@ -237,8 +239,8 @@ class RadioGroup extends BaseComponent {
      * @method setValue
      * @param value {String} 要设置的值
      */
-    setValue(value){
-        this.setState({value: value});
+    setValue (value) {
+        this.setState({value});
     }
 
     /**
@@ -246,7 +248,7 @@ class RadioGroup extends BaseComponent {
      * @method getValue
      * @returns {*}
      */
-    getValue(){
+    getValue () {
         return this.state.value;
     }
 
@@ -256,45 +258,46 @@ class RadioGroup extends BaseComponent {
      * @returns {Array} 子对象
      * @private
      */
-    _renderItems(){
-        let data = this.state.data || [];
-        let {valueField, textField} = this.props;
-        let currentValue = this.state.value;
-        let name = this.props.name || 'radio_' + new Date().getTime();
-        return data.map(function(item, index){
-            let value = item[valueField];
-            let text = item[textField];
-            let checked = currentValue === value;
+    _renderItems () {
+        const data = this.state.data || [];
+        const {valueField, textField} = this.props;
+        const currentValue = `${this.state.value}`;
+        const name = this.props.name || `radio_${new Date().getTime()}`;
+        return data.map(function (item, index) {
+            const value = `${item[valueField]}`;
+            const text = item[textField];
+            const checked = currentValue === value;
 
             return (
                 <Radio
                     key={index}
                     disabled={this.props.disabled}
                     ref={this.addCheckBox}
-                    type="radio"
+                    type='radio'
                     value={value}
                     label={text}
                     checked={checked}
-                    item={item}
                     name={name}
                     onChange={this.handleChange}
                 />);
         }, this);
     }
 
-    renderChildrenItems(){
-        let {name} = this.props;
-
-        return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+    renderChildrenItems () {
+        const {name} = this.props;
+        const currentValue = `${this.state.value}`;
+        return React.Children.map(this.props.children, (child) => {
+            const componentName = child && child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Radio') {
-                let props = Object.assign({}, child.props, {
-                    name: name,
+                const checked = currentValue == child.props.value;
+                const props = Object.assign({}, child.props, {
+                    name,
                     ref: this.addCheckBox,
                     unbind: this.unbind,
+                    checked,
                     onChange: this.handleChange,
                     type: 'radio',
-                    disabled: this.state.disabled
+                    disabled: this.state.disabled || child.props.disabled
                 });
                 return React.cloneElement(child, props);
             } else {
@@ -303,7 +306,7 @@ class RadioGroup extends BaseComponent {
         });
     }
 
-    componentWillMount(){
+    componentWillMount () {
         if (this.props.url) {
             this.loadRemoteData();
         }
@@ -313,7 +316,7 @@ class RadioGroup extends BaseComponent {
      * 加载远程数据
      * @return {Promise} [description]
      */
-    async loadRemoteData(){
+    async loadRemoteData () {
         let data = await fetch(this.props.url);
         data = this._rebuildData(data);
         this.setState({data});
@@ -325,7 +328,7 @@ class RadioGroup extends BaseComponent {
             className,
             'cm-radio-group',
             {
-                stack: layout === 'stack',
+                'cm-radio-group-stack': layout === 'stack',
                 'cm-radio-group-stick': this.props.stick
             }
         );

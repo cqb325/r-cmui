@@ -1,0 +1,22 @@
+@import "../../styles/colors";
+
+.cm-radio.cm-checkbox{
+    .cm-checkbox-outter{
+        border-radius: 50%;
+    }
+    .cm-checkbox-inner{
+        width: 6px;
+        height: 6px;
+        background: @color-blue;
+        left: 3px;
+        top: 3px;
+        border-radius: 50%;
+        border: 0;
+    }
+
+    &.cm-checkbox-checked{
+        .cm-checkbox-outter{
+            background-color: transparent;
+        }
+    }
+}
