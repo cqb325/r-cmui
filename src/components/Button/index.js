@@ -105,55 +105,32 @@ class Button extends BaseComponent {
         raised: false,
         flat: false,
         circle: false,
-        active: false
+        active: false,
+        animation: true,
+        loadding: false
     }
 
-    /**
-     * 构造函数
-     * @param  {[type]} props [description]
-     * @return {[type]}       [description]
-     */
-    constructor(props) {
-        super(props);
-
-        this.addState({
-            raised: false,
-            active: props.active
-        });
-    }
+    state = {
+        raised: this.props.raised,
+        active: this.props.active
+    };
 
     /**
      * 点击回调
      * @private
-     * @method _handleClick
+     * @method handleClick
      */
-    _handleClick = e => {
-        if (this.state.disabled) {
+    handleClick = e => {
+        if (this.props.disabled) {
+            return;
+        }
+        if (this.props.loadding) {
             return;
         }
         if (this.props.onClick) {
             this.props.onClick(e);
         }
-        this.emit('click');
-        if (this.props.once) {
-            this.disable();
-        }
-    }
-
-    /**
-     * set active
-     * @param {Boolean} active [description]
-     */
-    setActive(active){
-        this.setState({active: active});
-    }
-
-    /**
-     * get is active
-     * @return {[type]} [description]
-     */
-    getActive(){
-        return this.state.active;
+        this.emit('click', e);
     }
 
     /**
@@ -162,7 +139,7 @@ class Button extends BaseComponent {
      * @return {[type]}       [description]
      */
     handleMouseDown = (event) => {
-        if (event.button === 0 && !this.state.disabled && this.props.raised) {
+        if (event.button === 0 && !this.props.disabled && this.props.raised) {
             this.setState({
                 raised: true
             });
@@ -174,7 +151,7 @@ class Button extends BaseComponent {
      * @return {[type]} [description]
      */
     handleMouseUp = () => {
-        if (!this.state.disabled && this.props.raised) {
+        if (!this.props.disabled && this.props.raised) {
             this.setState({
                 raised: false
             });
@@ -182,22 +159,22 @@ class Button extends BaseComponent {
     };
 
     /**
-     * theme和disabled属性变化的时候重新渲染
-     * @param  {[type]} nextProps [description]
-     * @return {[type]}           [description]
+     * set active
+     * @param {Boolean} active [description]
      */
-    componentWillReceiveProps(nextProps){
-        let params = {};
-        if(nextProps.theme !== this.props.theme && nextProps.theme !== this.state.theme){
-            params['theme'] = nextProps.theme;
-        }
-        if(nextProps.disabled !== this.props.disabled && nextProps.disabled !== this.state.disabled){
-            params['disabled'] = nextProps.disabled;
-        }
-        this.setState(params);
+    setActive (active) {
+        this.setState({active});
     }
 
-    componentDidMount(){
+    /**
+     * get is active
+     * @return {[type]} [description]
+     */
+    isActive () {
+        return this.state.active;
+    }
+
+    componentDidMount () {
         this._isMounted = true;
         if (this.props['itemBind']) {
             this.props['itemBind'](this);
@@ -207,13 +184,13 @@ class Button extends BaseComponent {
     /**
      * 渲染
      */
-    render(){
+    render () {
         let {id, className, style, target, size, iconButton, circle,
             iconAlign, raised, flat, icon, href, children, img} = this.props;
         className = classNames(
             className,
             'cm-button',
-            this.state.theme,
+            this.props.theme,
             {
                 [`cm-button-${size}`]: size,
                 'cm-iconButton': iconButton,
@@ -225,44 +202,45 @@ class Button extends BaseComponent {
             }
         );
 
-        let link = href || null;
+        const link = href || null;
 
-        let iconPosition = iconAlign || 'left';
+        const iconPosition = iconAlign || 'left';
         let fontIcon = null;
         if (icon) {
             fontIcon = iconPosition === 'left'
-                ? <FontIcon icon={icon} className={iconPosition} style={{marginRight: !!children ? 5 : 0}} />
-                : <FontIcon icon={icon} className={iconPosition} style={{marginLeft: !!children ? 5 : 0}} />;
+                ? <FontIcon icon={icon} className={iconPosition} style={{marginRight: children ? 5 : 0}} />
+                : <FontIcon icon={icon} className={iconPosition} style={{marginLeft: children ? 5 : 0}} />;
         }
 
         if (img) {
-            img = <img src={img} className="cm-button-img" alt="" style={{marginRight: !!children ? 5 : 0}} />;
+            img = <img src={img} className='cm-button-img' alt='' style={{marginRight: children ? 5 : 0}} />;
         }
 
-        let nodes = iconPosition === 'left'
-            ? (<EnhancedButton>
+        const nodes = iconPosition === 'left'
+            ? (<EnhancedButton disabled={!this.props.animation}>
                 {img}
                 {fontIcon}
                 {children}
             </EnhancedButton>)
-            : (<EnhancedButton>
+            : (<EnhancedButton disabled={!this.props.animation}>
                 {img}
                 {children}
                 {fontIcon}
             </EnhancedButton>);
 
         return (
-            <a ref="button"
+            <a ref={(f) => this.button = f}
                 href={link}
                 id={id}
-                disabled={this.state.disabled}
-                onClick={this._handleClick}
+                disabled={this.props.disabled}
+                onClick={this.handleClick}
                 onMouseUp={this.handleMouseUp}
                 onMouseDown={this.handleMouseDown}
                 className={className}
                 style={style}
                 target={target}>
                 {nodes}
+                {this.props.loadding ? <FontIcon icon='spinner' spin pulse className='ml-5' /> : null}
             </a>
         );
     }
