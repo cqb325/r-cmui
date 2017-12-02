@@ -47,11 +47,11 @@ class Breadcrumb extends BaseComponent {
      * 渲染子元素
      * @return {[type]} [description]
      */
-    renderItems(){
-        return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+    renderItems () {
+        return React.Children.map(this.props.children, (child) => {
+            const componentName = child && child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Item') {
-                let props = Object.assign({
+                const props = Object.assign({
                     'separator': this.props.separator
                 }, child.props);
                 return React.cloneElement(child, props);
@@ -61,8 +61,8 @@ class Breadcrumb extends BaseComponent {
         });
     }
 
-    render(){
-        let className = classNames('cm-breadcrumb', this.props.className);
+    render () {
+        const className = classNames('cm-breadcrumb', this.props.className);
         return (
             <div className={className} style={this.props.style}>
                 {this.renderItems()}
@@ -77,7 +77,7 @@ class Breadcrumb extends BaseComponent {
  * @extends BaseComponent
  * @constructor
  */
-class Item extends BaseComponent{
+class Item extends BaseComponent {
     static displayName = 'Item';
 
     static propTypes = {
@@ -107,16 +107,16 @@ class Item extends BaseComponent{
         separator: PropTypes.string
     }
 
-    render(){
-        let className = classNames('cm-breadcrumb-link', this.props.className);
-        let link = this.props.link;
-        let linkEle = link ? (<a className={className} href={this.props.link}>
+    render () {
+        const className = classNames('cm-breadcrumb-link', this.props.className);
+        const link = this.props.link;
+        const linkEle = link ? (<a className={className} href={this.props.link}>
             {this.props.children}
         </a>) : <span className={className}>{this.props.children}</span>;
         return (
             <span>
                 {linkEle}
-                <span className="cm-breadcrumb-separator">{this.props.separator}</span>
+                <span className='cm-breadcrumb-separator'>{this.props.separator}</span>
             </span>
         );
     }
