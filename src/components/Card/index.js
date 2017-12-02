@@ -65,102 +65,64 @@ class Card extends BaseComponent {
         loadding: false
     }
 
-    constructor(props) {
-        super(props);
-
-        this.addState({
-            title: props.title || null,
-            content: null
-        });
-    }
-
-    /**
-     * 设置标题
-     * @param {[type]} title [description]
-     */
-    setTitle(title){
-        this.setState({title});
-    }
-
-    /**
-     * 设置内容
-     * @param {[type]} content [description]
-     */
-    setContent(content){
-        this.setState({content});
-    }
-
     /**
      * 渲染头部
      * @method _renderHeader
      * @private
      */
-    _renderHeader(){
+    _renderHeader () {
         if (!this.props.title && !this.props.tools) {
             return null;
         }
 
         return (
-            <div className="cm-card-head">
-                <h3 className="cm-card-head-title">{this.state.title}</h3>
-                <div className="cm-card-tools">
+            <div className='cm-card-head'>
+                <h3 className='cm-card-head-title'>{this.props.title}</h3>
+                <div className='cm-card-tools'>
                     {this.props.tools}
                 </div>
             </div>
         );
     }
 
-    componentWillReceiveProps(nextProps){
-        let params = {};
-        if (nextProps.title !== this.props.title) {
-            params.title = nextProps.title;
-        }
-        if (nextProps.content !== this.props.content) {
-            params.content = nextProps.content;
-        }
-
-        this.setState(params);
-    }
-
-    render(){
-        let {className, style, border, loadding, children, bodyStyle} = this.props;
+    render () {
+        let {className, style, border, loadding, children, bodyStyle, noAnimation} = this.props;
         className = classNames('cm-card', className, {
-            'cm-card-bordered': border
+            'cm-card-bordered': border,
+            'cm-card-no-animation': noAnimation
         });
 
-        let head = this._renderHeader();
-        let content = null;
-        if (loadding && !this.state.content) {
+        const head = this._renderHeader();
+        let content = this.props.content || children;
+        if (loadding && !content) {
             content = (
                 <div>
-                    <p className="cm-card-loading-block" style={{width: '94%'}} />
+                    <p className='cm-card-loading-block' style={{width: '94%'}} />
                     <p>
-                        <span className="cm-card-loading-block" style={{width: '28%'}} />
-                        <span className="cm-card-loading-block" style={{width: '62%'}} />
+                        <span className='cm-card-loading-block' style={{width: '28%'}} />
+                        <span className='cm-card-loading-block' style={{width: '62%'}} />
                     </p>
                     <p>
-                        <span className="cm-card-loading-block" style={{width: '22%'}} />
-                        <span className="cm-card-loading-block" style={{width: '66%'}} />
+                        <span className='cm-card-loading-block' style={{width: '22%'}} />
+                        <span className='cm-card-loading-block' style={{width: '66%'}} />
                     </p>
                     <p>
-                        <span className="cm-card-loading-block" style={{width: '56%'}} />
-                        <span className="cm-card-loading-block" style={{width: '39%'}} />
+                        <span className='cm-card-loading-block' style={{width: '56%'}} />
+                        <span className='cm-card-loading-block' style={{width: '39%'}} />
                     </p>
                     <p>
-                        <span className="cm-card-loading-block" style={{width: '21%'}} />
-                        <span className="cm-card-loading-block" style={{width: '15%'}} />
-                        <span className="cm-card-loading-block" style={{width: '40%'}} />
+                        <span className='cm-card-loading-block' style={{width: '21%'}} />
+                        <span className='cm-card-loading-block' style={{width: '15%'}} />
+                        <span className='cm-card-loading-block' style={{width: '40%'}} />
                     </p>
                 </div>
             );
-        } else {
-            content = this.state.content || children;
         }
 
         return (
             <div className={className} style={style}>
                 {head}
-                <div className="cm-card-body" style={bodyStyle}>
+                <div className='cm-card-body' style={bodyStyle}>
                     {content}
                 </div>
             </div>
