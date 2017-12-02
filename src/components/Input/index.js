@@ -7,8 +7,6 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from '../core/BaseComponent';
-import grids from '../utils/grids';
-const getGrid = grids.getGrid;
 import filterProps from 'react-valid-props';
 import Regs from '../utils/regs';
 import FormControl from '../FormControl/index';
@@ -22,6 +20,11 @@ import './Input.less';
  */
 class Input extends BaseComponent {
     static displayName = 'Input';
+
+    state = {
+        _value: this.props.value || ''
+    };
+
     static defaultProps = {
         trigger: 'blur',
         value: '',
@@ -34,7 +37,7 @@ class Input extends BaseComponent {
          * @attribute value
          * @type {String}
          */
-        value: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         /**
          * 自定义class
          * @attribute className
@@ -67,22 +70,7 @@ class Input extends BaseComponent {
         onChange: PropTypes.func
     };
 
-    constructor(props) {
-        super(props);
-
-        this.addState({
-            value: props.value
-        });
-    }
-
-    componentWillReceiveProps (nextProps) {
-        let value = nextProps.value;
-        if (value !== this.props.value && value !== this.state.value) {
-            this.setState({ value });
-        }
-    }
-
-    handleChange(event){
+    onChange = (event) => {
         const { readOnly, type, trigger } = this.props;
 
         if (readOnly) {
@@ -97,79 +85,84 @@ class Input extends BaseComponent {
             }
         }
 
-        this.setState({ value });
-
-        if (trigger === 'change') {
-            this.handleTrigger(event);
+        if (trigger === event.type) {
+            if (this.props.onChange) {
+                this.props.onChange(value, event);
+            }
+            if (trigger === 'blur') {
+                if (this.props.onBlur) {
+                    this.props.onBlur(value, event);
+                    this.emit('blur', value, event);
+                }
+            }
+            this.emit('change', value, event);
         }
+
+        this.setState({
+            _value: value
+        });
     }
 
-    handleTrigger(event){
-        let value = event.target.value;
-        if(this.props.onChange){
-            this.props.onChange(value, event);
+    onKeyPress = (e) => {
+        const {onPressEnter} = this.props;
+        if (e.key === 'Enter' && onPressEnter) {
+            onPressEnter(e);
         }
-        this.emit('change');
-    }
-
-    onBlur = (event)=>{
-        this.handleChange(event);
-        let value = event.target.value;
-        if(this.props.onChange){
-            this.props.onChange(value, event);
-        }
-        this.emit('change', value, event);
     }
 
     /**
      * 获取值
      * @return {[type]} [description]
      */
-    getValue(){
-        return this.state.value;
+    getValue () {
+        return this.input.value;
     }
 
-    /**
-     * 设置值
-     * @param {[type]} value [description]
-     */
-    setValue(value){
-        this.setState({ value });
+    focus () {
+        this.input.focus();
+    }
+
+    blur () {
+        this.input.blur();
     }
 
     /**
      * 获取名称
      * @return {[type]} [description]
      */
-    getName(){
+    getName () {
         return this.props.name;
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state._value) {
+            this.setState({_value: nextProps.value});
+        }
+    }
+
     render () {
-        const {className, grid, type, trigger} = this.props;
-        let handleChange = this.props['handleChange']
-            ? (event)=>{ this.props['handleChange'](event, {component: this}); }
-            : this.handleChange.bind(this);
+        const {className, type} = this.props;
+
         const props = {
             className: classNames(
                 className,
                 'cm-form-control',
-                getGrid(grid)
+                {
+                    'cm-form-control-disabled': this.props.disabled
+                }
             ),
-            onChange: handleChange,
+            onChange: this.onChange,
             type: (type === 'password' || type === 'hidden') ? type : 'text',
-            value: this.state.value
+            value: this.state._value,
+            onKeyPress: this.onKeyPress
         };
 
-        if (trigger && trigger === 'blur') {
-            let handle = 'on' + trigger.charAt(0).toUpperCase() + trigger.slice(1);
-            props[handle] = this.onBlur;
-        }
+        props.onBlur = this.onChange;
 
-        let others = filterProps(this.props);
+        const others = filterProps(this.props);
         delete others['data-valueType'];
 
-        return (<input {...others} {...props} />);
+        return (<input ref={(f) => this.input = f} {...others} {...props} />);
     }
 }
 
