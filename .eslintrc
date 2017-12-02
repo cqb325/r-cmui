@@ -13,59 +13,92 @@
         "sourceType": "module"
     },
     "plugins": ["react"],
-    "extends": ["react-app"],
+    "extends": ["eslint:recommended"],
     "globals": {
         "plupload": false,
         "mOxie": false,
         "requirejs": false
     },
     "rules": {
-        "no-multiple-empty-lines": 0,
-        "space-before-function-paren": 0,
-        "no-mixed-spaces-and-tabs": [2, false],
-        "unicode-bom":0,
-        "indent": [1, 4, { "SwitchCase": 1 }],
-        "linebreak-style": [0, "windows"],
-        "eol-last": ["error", "always"],
-        "max-len": [0, 120],
-        "semi": [2, "always"],
-        "curly": [2, "all"],
-        "no-use-before-define": ["error", { "functions": false, "classes": true }],
-        "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
-        "no-loop-func": "error",
-        "radix": "error",
-        "quotes": [1, "single", {"allowTemplateLiterals": true}],
-        "no-multi-str": "error",
-        "no-new-wrappers":2,
-        "no-new-object": "error",
-        "no-new-func": 1,
-        "no-array-constructor":2,
-        "guard-for-in": 0,
-        "no-inner-declarations": [2, "functions"],
-        "no-prototype-builtins":2,
-        "no-extend-native": 2,
-        "no-proto": 2,
-        "no-eval": 0,
-        "no-with": 2,
-        "no-delete-var": "error",
-        "space-before-blocks": 0,
-        "arrow-spacing": 0,
-        "jsx-quotes": 1,
-        "react/jsx-no-bind": 0,
-        "react/prop-types": 0,
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4],
-        "import/first": 0,
-        "no-class-assign": 0,
-        "standard/no-callback-literal": 0,
-        "no-sequences": 0,
-        "no-useless-escape": 0,
-        "no-mixed-operators": 0,
-        "no-unexpected-multiline": 0,
-        "no-unmodified-loop-condition": 0,
-        "no-cond-assign": 0,
-        "eqeqeq": 0,
-        "no-unused-expressions": 0,
-        "import/no-webpack-loader-syntax": 0
+        "unicode-bom":0,// 要求或禁止 Unicode BOM
+        "indent": [1, 4, { "SwitchCase": 1 }],//缩进风格，4个空格
+        "linebreak-style": [0, "windows"],//关闭换行风格
+        "eol-last": ["error", "always"],// 文件末尾强制换行
+        "max-len": [1, 120], //长度1-120
+        "semi": [2, "always"],// 要求或禁止使用分号而不是 ASI（这个才是控制行尾部分号的，）
+        "curly": [2, "all"],// 强制所有控制语句使用一致的括号风格
+        "no-use-before-define": ["error", { "functions": false, "classes": true }],// 不允许在变量定义之前使用它们
+        "no-loop-func": "error",// 禁止在循环中出现 function 声明和表达式
+        "radix": "error",// 强制在parseInt()使用基数参数
+        "quotes": [1, "single", "avoid-escape"],// 强制使用一致的反勾号、双引号或单引号
+        "no-multi-str": "error",// 禁止使用多行字符串，在 JavaScript 中，可以在新行之前使用斜线创建多行字符串
+        "no-new-wrappers":2,// 禁止对 String，Number 和 Boolean 使用 new 操作符
+        "no-new-object": "error",// 禁止使用 Object 的构造函数
+        "no-new-func": 1,// 禁止对 Function 对象使用 new 操作符
+        "no-array-constructor":2,// 禁止使用 Array 构造函数
+        "guard-for-in": 1,// 要求 for-in 循环中有一个 if 语句
+        "no-prototype-builtins":2,// 禁止直接使用 Object.prototypes 的内置属性
+        "no-extend-native": 2,// 禁止扩展原生类型
+        "no-proto":2,// 禁用 __proto__ 属性
+        "no-eval":2,// 禁用 eval()
+        "no-with":2,// 禁用 with 语句
+        //+overwrite eslint:recommended
+        "no-useless-escape": "off", //覆盖eslint:recommended中的规则，避免过多的不合理检查结果
+        //+refine
+        "comma-dangle": "error", //要求对象或数组成员的最后不能添加逗号
+        //+new code style
+        "space-infix-ops": ["error", {"int32Hint": true}], //中间的运算符左右要添加空格
+        "space-before-function-paren": ["error", "always"], //方法括号前统一加空格，增加代码可读性
+        "block-spacing": ["error", "always"], //单行内间距一致，增加代码可读性
+        "space-before-blocks": ["error", "always"], //不是单独一行的{}前添加空格，增加代码可读性
+        "keyword-spacing": ["error", {"before": true, "after": true }], //关键字左右添加空格，增加代码可读性
+        "spaced-comment": ["error", "always"], //注释符号和注释内容直接添加一个空格
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }], //文档中连续空行不得超过2行，文件开头不能有空行，文件结尾最多一个空行
+        "operator-linebreak": ["error", "before"], //运算符在换行时放在下一行的开始
+        "padded-blocks": ["error", "never"], //在代码块内开始和结束无需添加空格，使代码更简洁
+        "jsx-quotes": ["error", "prefer-single"], //jsx属性推荐使用单引号，与全局规则统一
+        //+es6
+        "arrow-spacing": ["error", { "before": true, "after": true }], //箭头符号前后要有空格，增加代码可读性
+        "no-confusing-arrow": ["error", {"allowParens": true}], //箭头函数不能与条件表达式混用，容易造成代码意图不明确，不便于维护
+        "no-useless-constructor": "error", //不需要编写无用的构造方法
+        "generator-star-spacing": ["error", "both"], //使用构造器函数时，* 号左右添加空格，增强代码可读性
+        "no-duplicate-imports": ["error", { "includeExports": true }], //避免模块重复引入和导出
+        "no-useless-computed-key": "error", //避免使用无必要的计算属性key
+        "no-useless-rename": "error", //避免无必要的重命名
+        "no-var": "warn", //建议逐渐使用let和const替代var声明变量和常量
+        "object-shorthand": "warn", //object属性声明尽量简洁明了，能简化的代码推荐使用简写
+        "prefer-arrow-callback": "warn", //建议回调函数尽量使用箭头函数声明
+        "prefer-const": "warn", //声明后不做改变的变量尽量使用const声明为常量
+        "prefer-spread": "warn", //建议使用Spread特性替换只为传递数组参数时调用apply
+        "prefer-template": "warn", //建议使用template替代字符串拼接
+        "rest-spread-spacing": "error", //rest和spread符号后不要添加空格
+        "symbol-description": "error", //方在创建Symbol类型时要添加描述
+        "template-curly-spacing": ["error", "never"], //template摸板中${符号后和}符号前不添加空格
+        "yield-star-spacing": ["error", "both"], //yield表达式 * 号左右添加空格
+        //……………
+        //配置定义在插件中的一个规则的时候，你必须使用 插件名/规则ID 的形式
+        //+react
+        "react/display-name":["warn", { "ignoreTranspilerName": true }],//要求定义React组件时设置displayName属性
+        "react/jsx-key":"error",//如果元素是被数组渲染，则需要元素上需要携带key值
+        "react/jsx-no-comment-textnodes":"error",//禁止注释作为文本节点被插入
+        "react/jsx-no-target-blank":"error",//禁止使用不安全的 target='_blank' 
+        "react/jsx-no-duplicate-props":"error",//防止重复的属性 
+        "react/jsx-no-undef": ["error", { "allowGlobals": true }],//防止未声明的变量使用
+        "react/jsx-uses-react": "warn",//防止引入react后未使用
+        "react/jsx-uses-vars": "error",//防止在JSX中引入的变量未被使用 
+        "react/no-children-prop":"error",//禁止通过属性传递子元素
+        "react/no-danger-with-children":"error",//禁止Children和dangerouslySetInnerHTML属性同时使用
+        "react/no-deprecated":"error",//禁止使用废弃的方法 
+        "react/no-direct-mutation-state":"error",//禁止组件状态this.state直接变更,使用setState()，唯一可以使用的是在es6组件的构造函数中
+        "react/no-find-dom-node": 0,//禁止使用findDOMNode
+        "react/no-is-mounted":"error",//禁止使用isMounted
+        "react/no-render-return-value":"error",//禁止使用React.render的返回值 
+        "react/no-string-refs":"warn",//防止使用字符串引用
+        "react/no-unescaped-entities":"error",//禁止无效字符出现在标记中 ，必要的特殊字符需要进行转义
+        "react/no-unknown-property":"error",//禁止使用未知属性
+        "react/prop-types":["warn", { "ignore": ["className","children","dispatch"]}],//校验组件属性合法性
+        "react/react-in-jsx-scope":"warn",//防止遗漏引入React当使用JSX的时候
+        "react/require-render-return":"error",
+        "no-console": 0
     }
 }
