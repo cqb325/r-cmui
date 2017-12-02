@@ -41,15 +41,16 @@ class ButtonGroup extends BaseComponent {
     }
 
     static defaultProps = {
-        size: null,
+        size: 'default',
         circle: false,
         current: 0
     }
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.buttons = [];
+        this.buttonsMap = {};
 
         this.addState({
             current: props.current
@@ -60,7 +61,7 @@ class ButtonGroup extends BaseComponent {
      * 获取激活的索引
      * @return {[type]} [description]
      */
-    getActive(){
+    getActive () {
         return this.state.current;
     }
 
@@ -68,7 +69,7 @@ class ButtonGroup extends BaseComponent {
      * 获取当前激活的Button对象
      * @return {[type]} [description]
      */
-    getActiveBtn(){
+    getActiveBtn () {
         return this.buttons[this.state.current];
     }
 
@@ -76,38 +77,63 @@ class ButtonGroup extends BaseComponent {
      * 设置激活状态
      * @param {[type]} current [description]
      */
-    setActive(current){
+    setActive (current) {
         this.setState({
             current
         });
     }
 
-    itemBind(button){
+    // itemBind (button) {
+    //     this.buttons.push(button);
+    //     button.on('click', () => {
+    //         if (!button.getActive()) {
+    //             this.buttons.forEach((btn) => {
+    //                 if (btn != button) {
+    //                     btn.setActive(false);
+    //                 } else {
+    //                     if (this.props.onSelect) {
+    //                         this.props.onSelect(btn);
+    //                     }
+    //                     this.emit('select', btn);
+    //                     btn.setActive(true);
+    //                 }
+    //             });
+    //         }
+    //     });
+    // }
+
+    addButton = (key, button) => {
         this.buttons.push(button);
-        button.on('click', ()=>{
-            if (!button.getActive()) {
-                this.buttons.forEach((btn)=> {
-                    if (btn != button) {
-                        btn.setActive(false);
-                    } else {
-                        if (this.props.onSelect) {
-                            this.props.onSelect(btn);
-                        }
-                        this.emit('select', btn);
-                        btn.setActive(true);
-                    }
-                });
-            }
-        });
+        this.buttonsMap[key] = button;
     }
 
-    renderButtons(){
-        return React.Children.map(this.props.children, (child, index)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+    onClick = (key) => {
+        const button = this.buttonsMap[key];
+        if (!button.isActive()) {
+            this.buttons.forEach((btn) => {
+                if (btn != button) {
+                    btn.setActive(false);
+                } else {
+                    if (this.props.onSelect) {
+                        this.props.onSelect(button);
+                    }
+                    this.emit('select', button);
+                    button.setActive(true);
+                }
+            });
+        }
+    }
+
+    renderButtons () {
+        return React.Children.map(this.props.children, (child, index) => {
+            const componentName = child && child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Button') {
-                let props = Object.assign({}, child.props, {
-                    'itemBind': this.itemBind.bind(this),
+                const key = `btn_${index}`;
+                const props = Object.assign({}, child.props, {
+                    ref: this.addButton.bind(this, key),
                     size: this.props.size,
+                    onClick: this.onClick.bind(this, key),
+                    key,
                     active: this.state.current === index
                 });
                 return React.cloneElement(child, props);
@@ -120,7 +146,7 @@ class ButtonGroup extends BaseComponent {
     /**
      * 渲染
      */
-    render(){
+    render () {
         let {className, size, circle, style} = this.props;
         className = classNames(
             className,
@@ -131,7 +157,7 @@ class ButtonGroup extends BaseComponent {
             }
         );
 
-        var btns = this.renderButtons();
+        const btns = this.renderButtons();
         return (
             <span className={className} style={style}>
                 {btns}
