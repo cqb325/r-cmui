@@ -86,18 +86,20 @@ class CheckBoxGroup extends BaseComponent {
 
     static defaultProps = {
         value: '',
+        data: [],
         layout: 'inline',
         valueField: 'id',
-        textField: 'text'
+        textField: 'text',
+        disabled: false
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
             data: props.data,
-            value: props.value + '',
-            disabled: false,
+            value: `${props.value}`,
+            disabled: props.disabled
         });
 
         this.items = [];
@@ -108,8 +110,8 @@ class CheckBoxGroup extends BaseComponent {
      * 记录当前的checkbox对象
      * @param {[type]} ref [description]
      */
-    addCheckBox = (ref)=>{
-        if(ref){
+    addCheckBox = (ref) => {
+        if (ref) {
             this.items.push(ref);
             this.itemMap[ref.getValue()] = ref;
         }
@@ -120,8 +122,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
-    unbind = (item)=>{
-        this.items = this.items.filter((aitem)=>{
+    unbind = (item) => {
+        this.items = this.items.filter((aitem) => {
             return aitem != item;
         });
 
@@ -136,16 +138,16 @@ class CheckBoxGroup extends BaseComponent {
      * @param event     {Event} 事件对象
      * @param item  {Object} 当前操作对象
      */
-    handleChange = ()=>{
+    handleChange = () => {
         const {disabled} = this.state;
 
         if (disabled) {
             return;
         }
 
-        let ret = [];
+        const ret = [];
 
-        this.items.forEach((theItem)=>{
+        this.items.forEach((theItem) => {
             if (theItem.isChecked()) {
                 ret.push(theItem.getValue());
             }
@@ -159,7 +161,7 @@ class CheckBoxGroup extends BaseComponent {
      * @method handleTrigger
      * @param value {String} 当前值
      */
-    handleTrigger(value){
+    handleTrigger (value) {
         this.state.value = value;
         if (this.props.onChange) {
             this.props.onChange(value);
@@ -172,7 +174,7 @@ class CheckBoxGroup extends BaseComponent {
      * 设置新数据
      * @param {[type]} newData [description]
      */
-    setData(newData){
+    setData (newData) {
         this.setState({data: newData});
     }
 
@@ -181,8 +183,8 @@ class CheckBoxGroup extends BaseComponent {
      * @method setValue
      * @param value {String} 要设置的值
      */
-    setValue(value){
-        this.setState({value: value});
+    setValue (value) {
+        this.setState({value});
     }
 
     /**
@@ -190,20 +192,19 @@ class CheckBoxGroup extends BaseComponent {
      * @method getValue
      * @returns {*}
      */
-    getValue(){
+    getValue () {
         return this.state.value;
     }
 
-    disable(){
-        super.disable();
-        this.items.forEach((item)=>{
+    disable () {
+        this.items.forEach((item) => {
             item.disable();
         });
     }
 
-    enable(){
+    enable () {
         super.enable();
-        this.items.forEach((item)=>{
+        this.items.forEach((item) => {
             item.enable();
         });
     }
@@ -213,8 +214,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} index [description]
      * @return {[type]}       [description]
      */
-    disableItem(index){
-        let item = this.getItem(index);
+    disableItem (index) {
+        const item = this.getItem(index);
         if (item) {
             item.disable();
         }
@@ -225,8 +226,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    disableItemByValue(value){
-        let item = this.getItemByValue(value);
+    disableItemByValue (value) {
+        const item = this.getItemByValue(value);
         if (item) {
             item.disable();
         }
@@ -237,8 +238,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} index [description]
      * @return {[type]}       [description]
      */
-    enableItem(index){
-        let item = this.getItem(index);
+    enableItem (index) {
+        const item = this.getItem(index);
         if (item) {
             item.enable();
         }
@@ -249,8 +250,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    enableItemByValue(value){
-        let item = this.getItemByValue(value);
+    enableItemByValue (value) {
+        const item = this.getItemByValue(value);
         if (item) {
             item.enable();
         }
@@ -261,8 +262,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} index [description]
      * @return {[type]}       [description]
      */
-    getItem(index){
-        let item = this.items[index];
+    getItem (index) {
+        const item = this.items[index];
         return item;
     }
 
@@ -271,8 +272,8 @@ class CheckBoxGroup extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    getItemByValue(value){
-        let item = this.itemMap[value];
+    getItemByValue (value) {
+        const item = this.itemMap[value];
         return item;
     }
 
@@ -280,7 +281,7 @@ class CheckBoxGroup extends BaseComponent {
      * 获取所有的checkbox项
      * @return {[type]} [description]
      */
-    getItems(){
+    getItems () {
         return this.items;
     }
 
@@ -288,18 +289,21 @@ class CheckBoxGroup extends BaseComponent {
      * 渲染显式的子组件
      * @return {Array} 子元素
      */
-    renderChildrenItems(){
-        let {name} = this.props;
-
-        return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+    renderChildrenItems () {
+        const {name} = this.props;
+        const values = this.state.value === undefined ? [] : this.state.value.split(',');
+        return React.Children.map(this.props.children, (child) => {
+            const componentName = child && child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'CheckBox') {
-                let props = Object.assign({}, child.props, {
-                    name: name,
+                const value = `${child.props.value}`;
+                const checked = values.indexOf(value) != -1;
+                const props = Object.assign({}, child.props, {
+                    name,
                     ref: this.addCheckBox,
                     unbind: this.unbind,
+                    checked,
                     onChange: this.handleChange,
-                    disabled: this.state.disabled
+                    disabled: this.state.disabled || child.props.disabled
                 });
                 return React.cloneElement(child, props);
             } else {
@@ -314,17 +318,16 @@ class CheckBoxGroup extends BaseComponent {
      * @returns {Array} 子对象
      * @private
      */
-    renderItems(){
-        let {valueField, textField, name} = this.props;
+    renderItems () {
+        const {valueField, textField, name} = this.props;
 
-        let data = this.state.data || [];
-        let values = this.state.value === undefined ? [] : this.state.value.split(',');
-        return data.map((item)=>{
-            let itemData = JSON.parse(JSON.stringify(item));
-            let value = itemData[valueField] + '';
-            let text = itemData[textField];
-            let checked = values.indexOf(value) != -1;
-            itemData._checked = checked;
+        const data = this.state.data || [];
+        const values = this.state.value === undefined ? [] : this.state.value.split(',');
+        return data.map((item) => {
+            const value = `${item[valueField]}`;
+            const text = item[textField];
+            const checked = values.indexOf(value) != -1;
+            item._checked = checked;
 
             return (<CheckBox key={value}
                 name={name}
@@ -333,14 +336,13 @@ class CheckBoxGroup extends BaseComponent {
                 value={value}
                 label={text}
                 checked={checked}
-                item={itemData}
                 unbind={this.unbind}
                 onChange={this.handleChange}
             />);
         }, this);
     }
 
-    componentWillMount(){
+    componentWillMount () {
         if (this.props.url) {
             this.loadRemoteData();
         }
@@ -350,9 +352,20 @@ class CheckBoxGroup extends BaseComponent {
      * 加载远程数据
      * @return {Promise} [description]
      */
-    async loadRemoteData(){
-        let data = await fetch(this.props.url);
+    async loadRemoteData () {
+        const data = await fetch(this.props.url);
         this.setState({data});
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const params = {};
+        if (nextProps.value != this.state.value && nextProps.value != this.props.value) {
+            params.value = nextProps.value;
+        }
+        if (nextProps.data != this.state.data && nextProps.data != this.props.data) {
+            params.data = nextProps.data;
+        }
+        this.setState(params);
     }
 
     render () {
@@ -361,7 +374,7 @@ class CheckBoxGroup extends BaseComponent {
             className,
             'cm-checkbox-group',
             {
-                stack: layout === 'stack'
+                'cm-checkbox-group-stack': layout === 'stack'
             }
         );
 

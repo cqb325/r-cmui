@@ -71,27 +71,23 @@ class CheckBox extends BaseComponent {
     };
 
     static defaultProps = {
-        value: null,
+        value: '',
         checked: false,
         type: 'checkbox'
     };
 
-    constructor(props) {
-        super(props);
-
-        this.addState({
-            value: props.value,
-            checked: props.checked
-        });
-    }
+    state = {
+        checked: this.props.checked,
+        disabled: this.props.disabled
+    };
 
     /**
      * 值变化回调
      * @method handleChange
      * @param event {Event} 事件对象
      */
-    handleChange = (event)=>{
-        let disabled = this.state.disabled;
+    handleChange = (event) => {
+        const disabled = this.state.disabled;
 
         if (disabled) {
             return;
@@ -101,39 +97,31 @@ class CheckBox extends BaseComponent {
             return;
         }
 
-        let checked = !this.state.checked;
-        this.setState({ checked: checked }, ()=>{
-            this.handleTrigger(checked, event);
+        const checked = !this.state.checked;
+        this.setState({ checked }, () => {
+            if (this.props.onChange) {
+                this.props.onChange(this.props.value, checked, event);
+            }
+    
+            this.emit('change', this.props.value, checked, event);
         });
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
+        const params = {};
         if (nextProps.checked != this.state.checked && nextProps.checked != this.props.checked) {
-            this.setState({
-                checked: nextProps.checked
-            });
+            params.checked = nextProps.checked;
         }
+        if (nextProps.disabled != this.state.disabled && nextProps.disabled != this.props.disabled) {
+            params.disabled = nextProps.disabled;
+        }
+        this.setState(params);
     }
 
-    componentWillUnmount(){
-        if(this.props.unbind){
+    componentWillUnmount () {
+        if (this.props.unbind) {
             this.props.unbind(this);
         }
-    }
-
-    /**
-     * 处理值变化
-     * @method handleTrigger
-     * @param checked {Boolean} 是否选中
-     * @param event {Event} 事件对象
-     */
-    handleTrigger(checked, event){
-        let value = this.state.value;
-        if (this.props.onChange) {
-            this.props.onChange(value, checked, event, this.props.item);
-        }
-
-        this.emit('change');
     }
 
     /**
@@ -141,7 +129,7 @@ class CheckBox extends BaseComponent {
      * @method updateState
      * @param state {Object} state对象
      */
-    updateState(state){
+    updateState (state) {
         if (this.state.disabled) {
             return;
         }
@@ -152,15 +140,15 @@ class CheckBox extends BaseComponent {
      * 获取当前的值
      * @return {[type]} [description]
      */
-    getValue(){
-        return this.state.value;
+    getValue () {
+        return this.props.value;
     }
 
     /**
      * 是否选中
      * @return {Boolean} [description]
      */
-    isChecked(){
+    isChecked () {
         return this.state.checked;
     }
 
@@ -168,7 +156,7 @@ class CheckBox extends BaseComponent {
      * 设置选中状态
      * @param {[type]} checked [description]
      */
-    setChecked(checked, cb){
+    setChecked (checked, cb) {
         this.setState({checked}, cb);
     }
 
@@ -177,7 +165,7 @@ class CheckBox extends BaseComponent {
      * @returns 
      * @memberof CheckBox
      */
-    isDisabled(){
+    isDisabled () {
         return this.state.disabled;
     }
 
@@ -187,7 +175,7 @@ class CheckBox extends BaseComponent {
             className,
             'cm-checkbox',
             {
-                active: this.state.checked,
+                'cm-checkbox-checked': this.state.checked,
                 disabled: this.state.disabled
             }
         );
@@ -198,17 +186,17 @@ class CheckBox extends BaseComponent {
 
         return (
             <span className={className} onClick={this.handleChange}>
-                <input ref="input"
-                    checked={this.props.checked}
+                <input ref='input'
+                    checked={this.state.checked}
                     type={type}
                     name={name}
                     className={itemClass}
-                    defaultValue={this.state.value}
+                    defaultValue={this.props.value}
                     style={{display: 'none'}}
-                    onChange={()=>{}}
+                    onChange={() => {}}
                 />
-                <span style={{position: 'relative'}}>
-                    <span className="cm-checkbox-icon" />
+                <span style={{position: 'relative'}} className='cm-checkbox-outter'>
+                    <span className='cm-checkbox-inner' />
                 </span>
                 <label>{this.props.label}</label>
             </span>
