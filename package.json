@@ -9,6 +9,7 @@
     "omit.js": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-draggable": "^3.0.4",
     "react-transition-group": "^1.2.1",
     "react-valid-props": "^1.0.12"
   },

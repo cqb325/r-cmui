@@ -9,6 +9,7 @@ import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
 import grids from '../utils/grids';
 const getGrid = grids.getGrid;
+import Draggable from 'react-draggable';
 import './Panel.less';
 
 /**
@@ -58,7 +59,7 @@ class Panel extends BaseComponent {
         footers: null
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -71,7 +72,7 @@ class Panel extends BaseComponent {
      * 设置标题
      * @param title
      */
-    setTitle(title){
+    setTitle (title) {
         this.setState({title});
     }
 
@@ -79,7 +80,7 @@ class Panel extends BaseComponent {
      * 设置内容
      * @param content
      */
-    setContent(content){
+    setContent (content) {
         this.setState({content});
     }
 
@@ -88,7 +89,7 @@ class Panel extends BaseComponent {
      * @param title
      * @param content
      */
-    setTitleAndContent(title, content){
+    setTitleAndContent (title, content) {
         this.setState({title, content});
     }
 
@@ -96,19 +97,19 @@ class Panel extends BaseComponent {
      * title
      * @return {[type]} [description]
      */
-    renderHeader(){
-        let tools = this.props.tools;
+    renderHeader () {
+        const tools = this.props.tools;
 
         let toolsCont = null;
         if (tools) {
             toolsCont = (
-                <span key="tools" className="cm-panel-tools">
+                <span key='tools' className='cm-panel-tools'>
                     {tools}
                 </span>
             );
         }
 
-        let text = <span key="text" className="cm-panel-head-text">{this.state.title}</span>;
+        const text = <span key='text' className='cm-panel-head-text'>{this.state.title}</span>;
         if (toolsCont) {
             return [text, toolsCont];
         } else {
@@ -120,13 +121,13 @@ class Panel extends BaseComponent {
      * footer
      * @return {[type]} [description]
      */
-    renderFooter(){
-        let tools = this.props.footers;
+    renderFooter () {
+        const tools = this.props.footers;
         let toolsCont = null;
         if (tools) {
             toolsCont = (
-                <div className="cm-panel-footer">
-                    <span className="cm-panel-footer-tools">
+                <div className='cm-panel-footer'>
+                    <span className='cm-panel-footer-tools'>
                         {tools}
                     </span>
                 </div>
@@ -140,7 +141,7 @@ class Panel extends BaseComponent {
      *
      * @param nextProps
      */
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
         if (this.state.content !== nextProps.content || this.state.title !== nextProps.title) {
             this.setState({
                 title: nextProps.title,
@@ -153,7 +154,7 @@ class Panel extends BaseComponent {
      * 渲染内容
      * @returns {XML}
      */
-    renderContent(){
+    renderContent () {
         if (this.state.content && this.state.content.substring && this.state.content.substring(0, 1) === '<') {
             return (
                 <div dangerouslySetInnerHTML={{__html: this.state.content}} />
@@ -163,22 +164,24 @@ class Panel extends BaseComponent {
         }
     }
 
-    render(){
+    render () {
         let {className, style, grid} = this.props;
 
         className = classNames('cm-panel', className, getGrid(grid));
 
-        let headContent = this.renderHeader();
+        const headContent = this.renderHeader();
         return (
-            <div className={className} style={style}>
-                <div className="cm-panel-title">
-                    {headContent}
+            <Draggable handle='.cm-panel-title' disabled={!this.props.draggable} cancel='.cm-panel-tools,.cm-panel-head-text'>
+                <div className={className} style={style}>
+                    <div className='cm-panel-title'>
+                        {headContent}
+                    </div>
+                    <div className='cm-panel-content'>
+                        {this.renderContent() || this.props.children}
+                    </div>
+                    {this.renderFooter()}
                 </div>
-                <div className="cm-panel-content">
-                    {this.renderContent() || this.props.children}
-                </div>
-                {this.renderFooter()}
-            </div>
+            </Draggable>
         );
     }
 }
