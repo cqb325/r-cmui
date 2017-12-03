@@ -91,7 +91,7 @@ class InputNumber extends BaseComponent {
         name: PropTypes.string
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         let value = parseFloat(props.value || 0);
@@ -102,14 +102,15 @@ class InputNumber extends BaseComponent {
             value = Math.min(props.max, value);
         }
         this.addState({
-            value: value,
+            value,
             min: props.min,
             max: props.max,
-            step: parseFloat(props.step)
+            step: parseFloat(props.step),
+            focused: false
         });
     }
 
-    handleChange = (event) =>{
+    handleChange = (event) => {
         const {disabled} = this.state;
 
         if (disabled) {
@@ -135,8 +136,8 @@ class InputNumber extends BaseComponent {
      * 减少
      * @return {[type]} [description]
      */
-    subtract = ()=>{
-        let value = this.add(this.parser(this.state.value + ''), -this.state.step);
+    subtract = () => {
+        let value = this.add(this.parser(`${this.state.value}`), -this.state.step);
         if (this.state.min !== undefined) {
             value = Math.max(this.state.min, value);
         }
@@ -147,12 +148,12 @@ class InputNumber extends BaseComponent {
      * 增加
      * @return {[type]} [description]
      */
-    plus = ()=>{
-        let value = this.add(this.parser(this.state.value + ''), this.state.step);
+    plus = () => {
+        let value = this.add(this.parser(`${this.state.value}`), this.state.step);
         if (this.state.max !== undefined) {
             value = Math.min(this.state.max, value);
         }
-        this.setState({value: value});
+        this.setState({value});
     }
 
     /**
@@ -160,9 +161,9 @@ class InputNumber extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    formatter(value){
+    formatter (value) {
         if (this.props.formatter) {
-            return this.props.formatter(value + '');
+            return this.props.formatter(`${value}`);
         }
         return value;
     }
@@ -172,7 +173,7 @@ class InputNumber extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    parser(value){
+    parser (value) {
         if (this.props.parser) {
             return this.props.parser(value);
         }
@@ -184,7 +185,7 @@ class InputNumber extends BaseComponent {
      * @param {[type]} num1 [description]
      * @param {[type]} num2 [description]
      */
-    add(num1, num2){
+    add (num1, num2) {
         let r1;
         let r2;
         let m;
@@ -206,7 +207,7 @@ class InputNumber extends BaseComponent {
      * 获取值
      * @return {[type]} [description]
      */
-    getValue(){
+    getValue () {
         return this.state.value;
     }
 
@@ -214,7 +215,7 @@ class InputNumber extends BaseComponent {
      * 获取格式化值
      * @return {[type]} [description]
      */
-    getFormatedValue(){
+    getFormatedValue () {
         return this.formatter(this.state.value);
     }
 
@@ -222,7 +223,7 @@ class InputNumber extends BaseComponent {
      * 设置值
      * @param {[type]} value [description]
      */
-    setValue(value){
+    setValue (value) {
         if (this.state.min != undefined) {
             value = Math.max(this.state.min, value);
         }
@@ -236,7 +237,7 @@ class InputNumber extends BaseComponent {
      * 设置最大值
      * @param {[type]} max [description]
      */
-    setMax(max){
+    setMax (max) {
         max = parseFloat(max);
         if (this.state.min !== undefined) {
             if (this.state.min > max) {
@@ -244,8 +245,8 @@ class InputNumber extends BaseComponent {
                 return;
             }
         }
-        let params = {
-            max: max
+        const params = {
+            max
         };
         if (this.state.value > max) {
             params.value = max;
@@ -257,7 +258,7 @@ class InputNumber extends BaseComponent {
      * 设置步长
      * @param {[type]} step [description]
      */
-    setStep(step){
+    setStep (step) {
         this.setState({step});
     }
 
@@ -265,7 +266,7 @@ class InputNumber extends BaseComponent {
      * 设置最小值
      * @param {[type]} min [description]
      */
-    setMin(min){
+    setMin (min) {
         min = parseFloat(min);
         if (this.state.max !== undefined) {
             if (this.state.max < min) {
@@ -273,8 +274,8 @@ class InputNumber extends BaseComponent {
                 return;
             }
         }
-        let params = {
-            min: min
+        const params = {
+            min
         };
         if (this.state.value < min) {
             params.value = min;
@@ -283,8 +284,8 @@ class InputNumber extends BaseComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        let value = nextProps.value;
-        let params = {};
+        const value = nextProps.value;
+        const params = {};
         if (value !== this.props.value && value !== this.state.value) {
             params.value = value;
         }
@@ -295,11 +296,29 @@ class InputNumber extends BaseComponent {
         this.setState(params);
     }
 
-    render(){
+    onFocus = () => {
+        this.setState({focused: true});
+    }
+
+    onBlur = () => {
+        this.setState({focused: false});
+    }
+
+    onKeyDown = (e) => {
+        if (e.key === 'ArrowUp') {
+            this.plus();
+        }
+        if (e.key === 'ArrowDown') {
+            this.subtract();
+        }
+    }
+    
+    render () {
         let {className, style, itemClassName} = this.props;
         className = classNames('cm-input-number', className, this.state.theme, {
             'cm-input-number-disabled': this.state.disabled,
-            [`cm-input-number-${this.props.size}`]: this.props.size
+            [`cm-input-number-${this.props.size}`]: this.props.size,
+            'cm-input-number-focus': this.state.focused
         });
         itemClassName = classNames('cm-input-number-field', itemClassName, {
             'cm-input-number-readonly': this.state.readOnly
@@ -307,8 +326,9 @@ class InputNumber extends BaseComponent {
         return (
             <span className={className} style={style}>
                 <Button onClick={this.subtract}>-</Button>
-                <input className={itemClassName} name={this.props.name} value={this.formatter(this.state.value)}
-                    type="text" onChange={this.handleChange} />
+                <input onFocus={this.onFocus} onBlur={this.onBlur} onKeyDown={this.onKeyDown}
+                    className={itemClassName} name={this.props.name} value={this.formatter(this.state.value)}
+                    type='text' onChange={this.handleChange} />
                 <Button onClick={this.plus}>+</Button>
             </span>
         );
