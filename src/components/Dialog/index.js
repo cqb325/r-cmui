@@ -53,7 +53,7 @@ class Dialog extends BaseComponent {
          * @attribute okButtonText
          * @type {String}
          */
-        okButtonText: PropTypes.string,
+        okButtonText: PropTypes.string
     };
 
     static defaultProps = {
@@ -65,10 +65,11 @@ class Dialog extends BaseComponent {
         okButtonTheme: 'primary',
         okButtonIcon: 'check',
         cancelButtonTheme: 'default',
-        cancelButtonIcon: 'close'
+        cancelButtonIcon: 'close',
+        draggable: true
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -87,7 +88,7 @@ class Dialog extends BaseComponent {
      * 设置携带数据
      * @param data
      */
-    setData(data){
+    setData (data) {
         this.data = data;
     }
 
@@ -95,7 +96,7 @@ class Dialog extends BaseComponent {
      * 获取携带数据
      * @returns {*}
      */
-    getData(){
+    getData () {
         return this.data;
     }
 
@@ -103,7 +104,7 @@ class Dialog extends BaseComponent {
      * 设置标题
      * @param title
      */
-    setTitle(title){
+    setTitle (title) {
         this.setState({title});
         this.panel.setTitle(title);
     }
@@ -112,7 +113,7 @@ class Dialog extends BaseComponent {
      * 设置内容
      * @param content
      */
-    setContent(content){
+    setContent (content) {
         this.setState({content});
         this.panel.setContent(content);
     }
@@ -121,7 +122,7 @@ class Dialog extends BaseComponent {
      * 确认按钮点击回调
      * @return {[type]} [description]
      */
-    okBtnHandler = ()=>{
+    okBtnHandler = () => {
         this.btnHandler(true);
     }
 
@@ -129,7 +130,7 @@ class Dialog extends BaseComponent {
      * 取消按钮点击回调
      * @return {[type]} [description]
      */
-    cancelBtnHandler = ()=>{
+    cancelBtnHandler = () => {
         this.btnHandler(false);
     }
 
@@ -137,9 +138,9 @@ class Dialog extends BaseComponent {
      * 按钮点击处理函数
      * @param flag
      */
-    btnHandler(flag){
+    btnHandler (flag) {
         if (this.props.onConfirm) {
-            let ret = this.props.onConfirm(flag);
+            const ret = this.props.onConfirm(flag);
             if (ret) {
                 this.close();
             }
@@ -151,13 +152,13 @@ class Dialog extends BaseComponent {
         return true;
     }
 
-    close = ()=>{
+    close = () => {
         this.setState({
             visibility: false
         });
         if (this.orign) {
-            let offset = Dom.dom(this.orign).offset();
-            let ele = ReactDOM.findDOMNode(this.panel);
+            const offset = Dom.dom(this.orign).offset();
+            const ele = ReactDOM.findDOMNode(this.panel);
 
             velocity(ele, {
                 left: offset.left,
@@ -165,7 +166,7 @@ class Dialog extends BaseComponent {
                 scale: 0
             }, {
                 duration: 300,
-                complete: ()=>{
+                complete: () => {
                     velocity(this.container, 'fadeOut', {duration: 0});
                 }
             });
@@ -177,20 +178,25 @@ class Dialog extends BaseComponent {
             this.props.onClose();
         }
         this.emit('close');
-        this.backdrop.style.display = 'none';
+        let count = this.backdrop.getAttribute('data-count');
+        count = count - 1;
+        this.backdrop.setAttribute('data-count', count);
+        if (count === 0) {
+            this.backdrop.style.display = 'none';
+        }
     }
 
     /**
      * 打开
      * @param orign 打开dialog的元素
      */
-    open(orign){
+    open (orign) {
         this.setState({
             visibility: true
         });
 
         if (!this.backdrop) {
-            let ele = Dom.query('.shadow-backdrop');
+            const ele = Dom.query('.shadow-backdrop');
             if (ele) {
                 this.backdrop = ele;
             } else {
@@ -201,31 +207,34 @@ class Dialog extends BaseComponent {
         }
 
         this.backdrop.style.display = 'block';
+        let count = this.backdrop.getAttribute('data-count');
+        count = count == null ? 1 : parseInt(count, 10) + 1;
+        this.backdrop.setAttribute('data-count', count);
 
-        window.setTimeout(()=>{
+        window.setTimeout(() => {
             Dom.dom(this.container).show();
-            let ele = ReactDOM.findDOMNode(this.panel);
-            let w = ele.clientWidth;
-            let h = ele.clientHeight;
-            ele.style.marginLeft = -w / 2 + 'px';
-            ele.style.marginTop = -h / 2 + 'px';
+            const ele = ReactDOM.findDOMNode(this.panel);
+            const w = ele.clientWidth;
+            const h = ele.clientHeight;
+            ele.style.marginLeft = `${-w / 2}px`;
+            ele.style.marginTop = `${-h / 2}px`;
             Dom.dom(this.container).hide();
 
             if (orign) {
                 velocity(this.container, 'fadeIn', { duration: 0 });
                 this.orign = orign;
-                let offset = Dom.dom(orign).offset();
+                const offset = Dom.dom(orign).offset();
                 Dom.dom(ele).css({
-                    left: offset.left + 'px',
-                    top: offset.top + 'px'
+                    left: `${offset.left}px`,
+                    top: `${offset.top}px`
                 });
-                var bodyw = document.documentElement.clientWidth;
-                var bodyH = document.documentElement.clientHeight;
+                const bodyw = document.documentElement.clientWidth;
+                const bodyH = document.documentElement.clientHeight;
                 velocity(ele, {
                     scale: 0
                 }, {
                     duration: 0,
-                    complete: function(){
+                    complete () {
                         velocity(ele, {
                             scale: 1,
                             left: bodyw / 2,
@@ -248,7 +257,7 @@ class Dialog extends BaseComponent {
      * 是否打开的
      * @returns {Boolean}
      */
-    isOpen(){
+    isOpen () {
         return this.state.visibility;
     }
 
@@ -256,7 +265,7 @@ class Dialog extends BaseComponent {
      * 获取dialog的容器
      * @returns {*}
      */
-    getContainer(){
+    getContainer () {
         return this.container;
     }
 
@@ -264,14 +273,14 @@ class Dialog extends BaseComponent {
      * 获取dialog的panel
      * @returns {*}
      */
-    getPanel(){
+    getPanel () {
         return this.panel;
     }
 
     /**
      *
      */
-    componentDidMount(){
+    componentDidMount () {
         this.container = document.createElement('div');
         document.body.appendChild(this.container);
         Dom.dom(this.container).addClass('cm-popup-warp');
@@ -279,16 +288,16 @@ class Dialog extends BaseComponent {
         let {className, style, hasCloseBtn, useDefaultFooters, okButtonText, okButtonTheme, okButtonIcon,
             cancelButtonText, cancelButtonTheme, cancelButtonIcon} = this.props;
         className = classNames('cm-dialog', className);
-        let props = Object.assign({}, this.props);
+        const props = Object.assign({}, this.props);
         props.className = className;
         props.style = style || {};
-        if(useDefaultFooters){
+        if (useDefaultFooters) {
             props.footers = <div>
                 <Button theme={okButtonTheme} raised onClick={this.okBtnHandler} icon={okButtonIcon}>
                     {okButtonText}
                 </Button>
                 <Button theme={cancelButtonTheme} raised onClick={this.cancelBtnHandler}
-                    icon={cancelButtonIcon} className="ml-10">
+                    icon={cancelButtonIcon} className='ml-10'>
                     {cancelButtonText}
                 </Button>
             </div>;
@@ -297,8 +306,8 @@ class Dialog extends BaseComponent {
         if (hasCloseBtn) {
             props.tools = <span>
                 {props.tools}
-                <a href="javascript:void(0)" onClick={this.close}
-                    className="cm-dialog-close">&times;</a>
+                <a href='javascript:void(0)' onClick={this.close}
+                    className='cm-dialog-close'>&times;</a>
             </span>;
         }
 
@@ -308,15 +317,15 @@ class Dialog extends BaseComponent {
             Dom.dom(this.container).hide();
         }
 
-        window.setTimeout(()=>{
-            ReactDOM.render(<Panel ref={(ref)=>{ this.panel = ref; }} {...props}>
+        window.setTimeout(() => {
+            ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}>
                 {this.props.children}
             </Panel>, this.container);
         }, 0);
     }
 
-    componentWillReceiveProps(nextProps){
-        let params = {};
+    componentWillReceiveProps (nextProps) {
+        const params = {};
         if (nextProps.title !== this.props.title && nextProps.title !== this.state.title) {
             this.panel.setTitle(nextProps.title);
             params.title = nextProps.title;
@@ -329,7 +338,7 @@ class Dialog extends BaseComponent {
         this.setState(params);
     }
 
-    render(){
+    render () {
         return (
             <div />
         );

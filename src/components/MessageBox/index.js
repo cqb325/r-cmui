@@ -66,10 +66,11 @@ class MessageBox extends BaseComponent {
         confirmTheme: 'primary',
         cancelTheme: 'default',
         confirmIcon: 'check',
-        cancelIcon: 'close'
+        cancelIcon: 'close',
+        draggable: true
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -84,12 +85,12 @@ class MessageBox extends BaseComponent {
         if (props.footers) {
             this.footers = props.footers;
         } else {
-            let components = <span>
+            const components = <span>
                 <Button theme={props.confirmTheme} raised
                     icon={props.confirmIcon} onClick={this.confirm}>{props.confirmText}</Button>
                 { props.type === 'confirm'
                     ? <Button theme={props.cancelTheme} raised icon={props.cancelIcon}
-                        className="ml-10" onClick={this.cancle}>{props.cancelText}</Button>
+                        className='ml-10' onClick={this.cancle}>{props.cancelText}</Button>
                     : null
                 }
             </span>;
@@ -109,7 +110,7 @@ class MessageBox extends BaseComponent {
      * 设置数据
      * @param {[type]} data [description]
      */
-    setData(data){
+    setData (data) {
         this.data = data;
     }
 
@@ -117,7 +118,7 @@ class MessageBox extends BaseComponent {
      * 获取数据
      * @return {[type]} [description]
      */
-    getData(){
+    getData () {
         return this.data;
     }
 
@@ -125,7 +126,7 @@ class MessageBox extends BaseComponent {
      * 取消操作
      * @return {[type]} [description]
      */
-    cancle(){
+    cancle () {
         if (this.props.type === 'confirm' && this.props.confirm) {
             this.props.confirm.apply(this, [false]);
             this.hide();
@@ -138,22 +139,28 @@ class MessageBox extends BaseComponent {
      * 隐藏
      * @return {[type]} [description]
      */
-    hide(){
+    hide () {
         velocity(this.container, 'fadeOut', { duration: 300 });
 
         if (this.props.onHide) {
             this.props.onHide();
         }
         this.emit('hide');
-        this.backdrop.style.display = 'none';
+
+        let count = this.backdrop.getAttribute('data-count');
+        count = count - 1;
+        this.backdrop.setAttribute('data-count', count);
+        if (count === 0) {
+            this.backdrop.style.display = 'none';
+        }
     }
 
     /**
      * 确认按钮回调
      * @return {[type]} [description]
      */
-    confirm(){
-        let confirm = this.props.confirm || (this.listeners('confirm').length ? this.listeners('confirm')[0] : null);
+    confirm () {
+        const confirm = this.props.confirm || (this.listeners('confirm').length ? this.listeners('confirm')[0] : null);
         if (confirm) {
             if (this.props.type === 'confirm') {
                 if (confirm.apply(this, [true])) {
@@ -174,11 +181,11 @@ class MessageBox extends BaseComponent {
      * @param  {[type]} title [description]
      * @return {[type]}       [description]
      */
-    show(msg, title){
+    show (msg, title) {
         this.panel.setTitleAndContent(this.state.title || title, this.state.msg || msg);
 
         if (!this.backdrop) {
-            let ele = Dom.query('.shadow-backdrop');
+            const ele = Dom.query('.shadow-backdrop');
             if (ele) {
                 this.backdrop = ele;
             } else {
@@ -189,15 +196,18 @@ class MessageBox extends BaseComponent {
         }
 
         this.backdrop.style.display = 'block';
+        let count = this.backdrop.getAttribute('data-count');
+        count = count == null ? 1 : parseInt(count, 10) + 1;
+        this.backdrop.setAttribute('data-count', count);
 
-        window.setTimeout(()=>{
-            let ele = ReactDOM.findDOMNode(this.panel);
+        window.setTimeout(() => {
+            const ele = ReactDOM.findDOMNode(this.panel);
             Dom.dom(this.container).show();
 
-            let w = ele.clientWidth;
-            let h = ele.clientHeight;
-            ele.style.marginLeft = -w / 2 + 'px';
-            ele.style.marginTop = -h / 2 + 'px';
+            const w = ele.clientWidth;
+            const h = ele.clientHeight;
+            ele.style.marginLeft = `${-w / 2}px`;
+            ele.style.marginTop = `${-h / 2}px`;
             Dom.dom(this.container).show();
             velocity(this.container, 'fadeIn', { duration: 300 });
 
@@ -208,28 +218,28 @@ class MessageBox extends BaseComponent {
         }, 0);
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this.container = document.createElement('div');
         document.body.appendChild(this.container);
         Dom.dom(this.container).addClass('cm-popup-warp');
         Dom.dom(this.container).hide();
 
         let {className, style} = this.props;
-        className = classNames('cm-messageBox', className, 'cm-messageBox-' + this.props.type);
-        let props = Object.assign({}, this.props);
+        className = classNames('cm-messageBox', className, `cm-messageBox-${this.props.type}`);
+        const props = Object.assign({}, this.props);
         props.className = className;
 
         props.footers = this.footers;
         style = Object.assign({}, style);
         props.style = style;
 
-        window.setTimeout(()=>{
-            ReactDOM.render(<Panel ref={(ref)=>{ this.panel = ref; }} {...props}
+        window.setTimeout(() => {
+            ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}
                 content={this.state.msg} />, this.container);
         }, 0);
     }
 
-    render(){
+    render () {
         return (
             <div />
         );
