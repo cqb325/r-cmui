@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Input from '../src/components/Input';
+import InputNumber from '../src/components/InputNumber';
 import TextArea from '../src/components/TextArea';
 import Button from '../src/components/Button';
 import Search from '../src/components/Search';
@@ -11,6 +12,8 @@ import RadioGroup from '../src/components/RadioGroup';
 import FontIcon from '../src/components/FontIcon';
 import ButtonGroup from '../src/components/ButtonGroup';
 import Card from '../src/components/Card';
+import MessageBox from '../src/components/MessageBox';
+import Dialog from '../src/components/Dialog';
 import './App.css';
 import { setTimeout } from 'timers';
 
@@ -110,6 +113,22 @@ class Comp extends React.Component {
                 <Card title='营销额' loadding>
                     {this.renderCardContent()}
                 </Card>
+
+                <Card>
+                    <InputNumber/>
+                </Card>
+
+                <Dialog ref='dialog' title='标题'>
+                    <Button onClick={() => {
+                        this.refs.tip.show();
+                    }}>显示</Button>
+                </Dialog>
+
+                <MessageBox ref='tip' title='提示' content='asdasdasdasdasdasdas' />
+
+                <Button onClick={() => {
+                    this.refs.dialog.open();
+                }}>显示</Button>
             </div>
         );
     }
