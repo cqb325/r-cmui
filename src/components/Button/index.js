@@ -240,7 +240,7 @@ class Button extends BaseComponent {
                 style={style}
                 target={target}>
                 {nodes}
-                {this.props.loadding ? <FontIcon icon='spinner' spin pulse className='ml-5' /> : null}
+                {this.props.loadding ? <FontIcon icon='loading' font='cmui' spin className='ml-5' /> : null}
             </a>
         );
     }
