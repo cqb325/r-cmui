@@ -14,6 +14,7 @@ import ButtonGroup from '../src/components/ButtonGroup';
 import Card from '../src/components/Card';
 import MessageBox from '../src/components/MessageBox';
 import Dialog from '../src/components/Dialog';
+import FormControl from '../src/components/FormControl';
 import './App.css';
 import { setTimeout } from 'timers';
 
@@ -70,6 +71,7 @@ class Comp extends React.Component {
                     <Button theme='success' circle>刷新</Button>
                     <Button theme='primary' circle iconOnly icon='download'></Button>
                     <Button flat>连接按钮</Button>
+                    <FontIcon icon='loading' font='cmui' spin className='ml-5' />
 
                     <ButtonGroup>
                         <Button>时</Button>
@@ -104,9 +106,14 @@ class Comp extends React.Component {
                 </div>
 
                 <div>
-                    <RadioGroup value='1'>
+                    <RadioGroup value='0' disabled>
                         <Radio value='0' label='Apple2'/>
-                        <Radio value='1' label='Apple3' checked/>
+                        <Radio value='1' label='Apple3'/>
+                    </RadioGroup>
+
+                    <RadioGroup value='0' stick>
+                        <Radio value='0' label='技术'/>
+                        <Radio value='1' label='部门'/>
                     </RadioGroup>
                 </div>
 
@@ -129,6 +136,11 @@ class Comp extends React.Component {
                 <Button onClick={() => {
                     this.refs.dialog.open();
                 }}>显示</Button>
+
+                <Card>
+                    <FormControl type='text' name='asd' required label='asd'></FormControl>
+                    <FormControl type='number' name='asd' required label='asd'></FormControl>
+                </Card>
             </div>
         );
     }

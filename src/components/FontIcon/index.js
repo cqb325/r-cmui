@@ -61,7 +61,10 @@ class FontIcon extends BaseComponent {
 
         // 自定义字体
         if (font) {
-            className = classNames(font, `${font}-${icon}`, className);
+            className = classNames(font, `${font}-${icon}`, className, {
+                'fa-spin': spin,
+                'fa-pulse': pulse
+            });
         } else {
             size = size ? `fa-${size}` : false;
             rotate = rotate ? `fa-rotate-${rotate}` : false;

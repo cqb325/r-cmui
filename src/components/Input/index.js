@@ -118,6 +118,10 @@ class Input extends BaseComponent {
         return this.input.value;
     }
 
+    setValue (value) {
+        this.setState({_value: value});
+    }
+
     focus () {
         this.input.focus();
     }

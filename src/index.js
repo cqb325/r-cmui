@@ -15,6 +15,7 @@ import MessageBox from './components/MessageBox/index';
 import Dialog from './components/Dialog/index';
 import Notification from './components/Notification/index';
 import Input from './components/Input/index';
+import Search from './components/Search/index';
 import InputNumber from './components/InputNumber/index';
 import Select from './components/Select/index';
 import Switch from './components/Switch/index';
@@ -66,6 +67,7 @@ export {
     Dialog,
     Notification,
     Input,
+    Search,
     InputNumber,
     CheckBox,
     CheckBoxGroup,
