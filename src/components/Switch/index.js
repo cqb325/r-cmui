@@ -19,23 +19,23 @@ class Switch extends BaseComponent {
     static displayName = 'Switch';
 
     static defaultProps = {
-        checked: false,
+        value: false,
         checkedText: '',
         unCheckedText: ''
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
-            checked: props.checked
+            value: props.value
         });
     }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.checked !== this.props.checked && nextProps.checked !== this.state.checked) {
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
             this.setState({
-                checked: nextProps.checked
+                value: nextProps.value
             });
         }
     }
@@ -44,18 +44,17 @@ class Switch extends BaseComponent {
      * switch change回调
      * @return {[type]} [description]
      */
-    toggleSwitch = ()=>{
+    toggleSwitch = () => {
         if (this.state.disabled) {
             return;
         }
         this.setState({
-            checked: !this.state.checked
-        }, ()=>{
-            let value = this.state.checked ? 1 : 0;
+            value: !this.state.value
+        }, () => {
             if (this.props.onChange) {
-                this.props.onChange(value);
+                this.props.onChange(this.state.value);
             }
-            this.emit('change', value);
+            this.emit('change', this.state.value);
         });
     }
 
@@ -63,38 +62,37 @@ class Switch extends BaseComponent {
      * 获取值
      * @return {[type]} [description]
      */
-    getValue(){
-        let value = this.state.checked ? 1 : 0;
-        return value;
+    getValue () {
+        return this.state.value;
     }
 
     /**
      * 设置值
      * @param {[type]} checked [description]
      */
-    setValue(checked){
+    setValue (checked) {
         if (this.state.disabled) {
             return;
         }
         this.setState({
-            checked: checked
+            value: checked
         });
     }
 
-    render(){
+    render () {
         let {className, style, checkedText, unCheckedText, size, name} = this.props;
         className = classNames('cm-switch', className, {
             [`cm-switch-${size}`]: size,
-            'cm-switch-checked': this.state.checked,
+            'cm-switch-checked': this.state.value,
             'cm-switch-disabled': this.state.disabled
         });
 
-        let text = this.state.checked ? checkedText : unCheckedText;
+        const text = this.state.value ? checkedText : unCheckedText;
 
         return (
-            <span className={className} style={style} tabIndex="0" onClick={this.toggleSwitch}>
-                <span className="cm-switch-inner">{text}</span>
-                <input name={name} type="hidden" value={this.state.checked ? 1 : 0} />
+            <span className={className} style={style} tabIndex='0' onClick={this.toggleSwitch}>
+                <span className='cm-switch-inner'>{text}</span>
+                <input name={name} type='hidden' value={this.state.value ? 1 : 0} />
             </span>
         );
     }
