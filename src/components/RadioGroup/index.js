@@ -321,6 +321,12 @@ class RadioGroup extends BaseComponent {
         this.setState({data});
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
+            this.setValue(nextProps.value);
+        }
+    }
+
     render () {
         let {className, layout} = this.props;
         className = classNames(

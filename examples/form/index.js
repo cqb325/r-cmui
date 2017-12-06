@@ -21,7 +21,8 @@ class Comp extends React.Component {
             name4: '2017-12-01',
             name5: '2017-12-01~2017-12-05',
             name6: '50',
-            name7: 0
+            name7: 1,
+            name8: '0'
         }
     };
 
@@ -35,7 +36,8 @@ class Comp extends React.Component {
                 name4: '2017-12-01',
                 name5: '2017-12-01~2017-12-05',
                 name6: '50',
-                name7: 0
+                name7: 1,
+                name8: '0'
             }
         });
     }
@@ -58,7 +60,8 @@ class Comp extends React.Component {
                 name4: '2017-12-02',
                 name5: '2017-12-02~2017-12-05',
                 name6: '100',
-                name7: 1
+                name7: 0,
+                name8: '1'
             }
         });
     }
@@ -79,6 +82,7 @@ class Comp extends React.Component {
                     <FormControl name='name5' required type='daterange' label='机房名称：'/>
                     <FormControl name='name6' required type='inputnumber' label='机房名称：'/>
                     <FormControl name='name7' required type='switch' label='机房名称：'/>
+                    <FormControl name='name8' required type='radio' data={[{id: '0', text: 'radio1'},{id: '1', text: 'radio2'}]} label='机房名称：'/>
                 </Form>
 
                 <Form ajax layout='stack' style={{padding: '0 12.5px'}}>
