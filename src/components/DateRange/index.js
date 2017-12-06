@@ -36,11 +36,11 @@ class DateRange extends BaseComponent {
         super(props);
 
         this._selectedDate = [];
-        let sep = props.sep;
+        const sep = props.sep;
         let start;
         let end;
         if (props.value) {
-            let values = props.value.split(sep);
+            const values = props.value.split(sep);
             start = moment(values[0]);
             end = moment(values[1]);
             
@@ -53,8 +53,8 @@ class DateRange extends BaseComponent {
         this._isSelecting = false;
         this.addState({
             visibility: false,
-            start: start,
-            end: end,
+            start,
+            end,
             startDate: props.startDate,
             endDate: props.endDate
         });
@@ -65,7 +65,7 @@ class DateRange extends BaseComponent {
      * @method getValue
      * @returns {Array} [start, end]
      */
-    getValue(){
+    getValue () {
         if (this.state.start && this.state.end) {
             return [this.state.start.format(this.props.format), this.state.end.format(this.props.format)];
         } else {
@@ -73,16 +73,16 @@ class DateRange extends BaseComponent {
         }
     }
 
-    setValue(value){
+    setValue (value) {
         if (value) {
-            let values = value.split(this.props.sep);
-            let start = moment(values[0]);
-            let end = moment(values[1]);
+            const values = value.split(this.props.sep);
+            const start = moment(values[0]);
+            const end = moment(values[1]);
             this._selectedDate[0] = start;
             this._selectedDate[1] = end;
             this.setState({
-                start: start,
-                end: end
+                start,
+                end
             });
         } else {
             this._selectedDate[0] = null;
@@ -98,7 +98,7 @@ class DateRange extends BaseComponent {
      * ClickAway 点击别的地方的回调
      * @method componentClickAway
      */
-    componentClickAway() {
+    componentClickAway () {
         this.hide();
     }
 
@@ -106,7 +106,7 @@ class DateRange extends BaseComponent {
      * 显示操作
      * @method show
      */
-    show = ()=>{
+    show = () => {
         if (this.props.readOnly || this.props.disabled) {
             return;
         }
@@ -114,19 +114,19 @@ class DateRange extends BaseComponent {
         if (this.state.visibility) {
             return false;
         }
-        let ele = ReactDOM.findDOMNode(this.refs.datePicker);
+        const ele = ReactDOM.findDOMNode(this.refs.datePicker);
         Dom.dom(ele).show();
 
-        let container = Dom.closest(ele, '.cm-datetime');
-        let offset = Dom.getOuterHeight(ele) + 5;
-        let dropup = Dom.overView(container, offset);
+        const container = Dom.closest(ele, '.cm-datetime');
+        const offset = Dom.getOuterHeight(ele) + 5;
+        const dropup = Dom.overView(container, offset);
 
         Dom.withoutTransition(container, () => {
             this.setState({ dropup });
             Dom.dom(ele).hide();
         });
 
-        velocity(ele, 'fadeIn', {duration: 500});
+        velocity(ele, 'fadeIn', {duration: 300});
         this.updateRange();
         if (!this.state.visibility) {
             super.show();
@@ -139,12 +139,12 @@ class DateRange extends BaseComponent {
      * @method show
      * @returns {boolean}
      */
-    hide() {
-        let ele = ReactDOM.findDOMNode(this.refs.datePicker);
+    hide () {
+        const ele = ReactDOM.findDOMNode(this.refs.datePicker);
         velocity(ele, 'fadeOut', {
             delay: 200,
-            duration: 500,
-            complete: ()=>{
+            duration: 300,
+            complete: () => {
                 super.hide();
                 this.unbindClickAway();
             }
@@ -154,7 +154,7 @@ class DateRange extends BaseComponent {
     /**
      * 选中开始日期回调
      */
-    _selectStartDate = (value, date)=>{
+    _selectStartDate = (value, date) => {
         if (!this._isSelecting) {
             if (this.props.onSelectStart) {
                 this.props.onSelectStart(value, date);
@@ -177,7 +177,7 @@ class DateRange extends BaseComponent {
     /**
      * 选中结束日期回调
      */
-    _selectEndDate = (value, date)=>{
+    _selectEndDate = (value, date) => {
         if (!this._isSelecting) {
             if (this.props.onSelectEnd) {
                 this.props.onSelectEnd(value, date);
@@ -199,11 +199,11 @@ class DateRange extends BaseComponent {
     /**
      * 更新选中的区域 高亮之
      */
-    updateRange(){
-        let startDate = this.refs.startDate;
-        let endDate = this.refs.endDate;
-        let startTime = this.refs.startTime;
-        let endTime = this.refs.endTime;
+    updateRange () {
+        const startDate = this.refs.startDate;
+        const endDate = this.refs.endDate;
+        const startTime = this.refs.startTime;
+        const endTime = this.refs.endTime;
 
         let selectedRange;
         
@@ -217,15 +217,15 @@ class DateRange extends BaseComponent {
             selectedRange = [this._selectedDate[0], this._selectedDate[1]];
         }
         
-        selectedRange.sort(function(a, b){
+        selectedRange.sort((a, b) => {
             return moment(a).toDate().getTime() - moment(b).toDate().getTime();
         });
 
         startDate.setState({
-            selectedRange: selectedRange
+            selectedRange
         });
         endDate.setState({
-            selectedRange: selectedRange
+            selectedRange
         });
     }
 
@@ -237,30 +237,30 @@ class DateRange extends BaseComponent {
      * @returns 
      * @memberof DateRange
      */
-    getRealDateTime(dateStr, timeRef){
-        if(dateStr && timeRef){
+    getRealDateTime (dateStr, timeRef) {
+        if (dateStr && timeRef) {
             let temp = moment(dateStr);
-            let time = timeRef.getCurrent();
+            const time = timeRef.getCurrent();
             temp.set('hour', time.get('hour'));
             temp.set('minute', time.get('minute'));
             temp.set('second', time.get('second'));
 
-            if(this.props.endDate){
-                let endDate = moment(this.props.endDate);
-                if(endDate.isBefore(temp)){
+            if (this.props.endDate) {
+                const endDate = moment(this.props.endDate);
+                if (endDate.isBefore(temp)) {
                     temp = endDate;
                 }
             }
 
-            if(this.props.startDate){
-                let startDate = moment(this.props.startDate);
-                if(temp.isBefore(startDate)){
+            if (this.props.startDate) {
+                const startDate = moment(this.props.startDate);
+                if (temp.isBefore(startDate)) {
                     temp = startDate;
                 }
             }
 
             return temp;
-        }else{
+        } else {
             return dateStr;
         }
     }
@@ -269,13 +269,13 @@ class DateRange extends BaseComponent {
      * 选择日期的时候显示选中的日期区域
      * @private
      */
-    _selectDate(){
-        let startTime = this.refs.startTime;
-        let endTime = this.refs.endTime;
+    _selectDate () {
+        const startTime = this.refs.startTime;
+        const endTime = this.refs.endTime;
         this._selectedDate[0] = this.getRealDateTime(this._selectedDate[0], startTime);
         this._selectedDate[1] = this.getRealDateTime(this._selectedDate[1], endTime);
 
-        this._selectedDate.sort(function(a, b){
+        this._selectedDate.sort((a, b) => {
             return moment(a).toDate().getTime() - moment(b).toDate().getTime();
         });
         
@@ -284,11 +284,11 @@ class DateRange extends BaseComponent {
             end: moment(this._selectedDate[1])
         });
 
-        let startDate = this.refs.startDate;
-        let endDate = this.refs.endDate;
+        const startDate = this.refs.startDate;
+        const endDate = this.refs.endDate;
 
-        let startCurrent = moment(this._selectedDate[0]);
-        let endCurrent = moment(this._selectedDate[1]);
+        const startCurrent = moment(this._selectedDate[0]);
+        const endCurrent = moment(this._selectedDate[1]);
         if (startCurrent.isSame(endCurrent, 'month')) {
             if (startCurrent.isSame(startDate.state.current, 'month')) {
                 endCurrent.set('date', 1);
@@ -310,16 +310,16 @@ class DateRange extends BaseComponent {
         }
 
         if (this.props.onChange) {
-            let sep = this.props.sep;
-            let start = moment(this._selectedDate[0]).format(this.props.format);
-            let end = moment(this._selectedDate[1]).format(this.props.format);
+            const sep = this.props.sep;
+            const start = moment(this._selectedDate[0]).format(this.props.format);
+            const end = moment(this._selectedDate[1]).format(this.props.format);
             this.props.onChange(start + sep + end);
         }
 
         // this._selectedDate = [];
     }
 
-    onChangeTime = ()=>{
+    onChangeTime = () => {
         this.updateRange();
         this._selectDate();
 
@@ -329,27 +329,27 @@ class DateRange extends BaseComponent {
         this.resetStartOutRange(this._selectedDate[1], this.refs.endTime);
     }
     
-    resetEndOutRange(dateStr, ref){
-        if(dateStr.isSame(this.props.endDate)){
-            let end = this.getNewDateTime(dateStr, ref.getCurrent());
-            if(dateStr.isBefore(end)){
+    resetEndOutRange (dateStr, ref) {
+        if (dateStr && dateStr.isSame(this.props.endDate)) {
+            const end = this.getNewDateTime(dateStr, ref.getCurrent());
+            if (dateStr.isBefore(end)) {
                 ref.setValue(dateStr.format('HH:mm:ss'));
             }
         }
     }
 
-    resetStartOutRange(dateStr, ref){
-        if(dateStr.isSame(this.props.startDate)){
-            let start = this.getNewDateTime(dateStr, ref.getCurrent());
-            if(dateStr.isAfter(start)){
+    resetStartOutRange (dateStr, ref) {
+        if (dateStr && dateStr.isSame(this.props.startDate)) {
+            const start = this.getNewDateTime(dateStr, ref.getCurrent());
+            if (dateStr.isAfter(start)) {
                 ref.setValue(dateStr.format('HH:mm:ss'));
             }
         }
     }
 
-    getNewDateTime(dateStr, time){
-        if(dateStr && time){
-            let temp = moment(dateStr);
+    getNewDateTime (dateStr, time) {
+        if (dateStr && time) {
+            const temp = moment(dateStr);
             temp.set('hour', time.get('hour'));
             temp.set('minute', time.get('minute'));
             temp.set('second', time.get('second'));
@@ -362,7 +362,7 @@ class DateRange extends BaseComponent {
     /**
      * mount的时候监听每个date的事件
      */
-    componentDidMount(){
+    componentDidMount () {
         let start = this.state.start;
         let end = this.state.end;
         if (!start) {
@@ -377,8 +377,8 @@ class DateRange extends BaseComponent {
             }
         }
 
-        let startDate = this.refs.startDate;
-        let endDate = this.refs.endDate;
+        const startDate = this.refs.startDate;
+        const endDate = this.refs.endDate;
 
         this.checkIsSibling(start, end);
 
@@ -392,27 +392,27 @@ class DateRange extends BaseComponent {
 
         this.updateRange();
 
-        startDate.on('selectPrev', ()=>{
+        startDate.on('selectPrev', () => {
             this.checkIsSibling();
         });
-        startDate.on('selectNext', ()=>{
+        startDate.on('selectNext', () => {
             this.checkIsSibling();
         });
-        startDate.on('selectMonth', ()=>{
-            this.checkIsSibling();
-        });
-
-        endDate.on('selectPrev', ()=>{
-            this.checkIsSibling();
-        });
-        endDate.on('selectNext', ()=>{
-            this.checkIsSibling();
-        });
-        endDate.on('selectMonth', ()=>{
+        startDate.on('selectMonth', () => {
             this.checkIsSibling();
         });
 
-        startDate.on('hoverDay', (d)=>{
+        endDate.on('selectPrev', () => {
+            this.checkIsSibling();
+        });
+        endDate.on('selectNext', () => {
+            this.checkIsSibling();
+        });
+        endDate.on('selectMonth', () => {
+            this.checkIsSibling();
+        });
+
+        startDate.on('hoverDay', (d) => {
             if (this._isSelecting) {
                 if (this._inMaxRange(d)) {
                     this._selectedDate[1] = d;
@@ -422,7 +422,7 @@ class DateRange extends BaseComponent {
                 }
             }
         });
-        endDate.on('hoverDay', (d)=>{
+        endDate.on('hoverDay', (d) => {
             if (this._isSelecting) {
                 if (this._inMaxRange(d)) {
                     this._selectedDate[1] = d;
@@ -434,8 +434,8 @@ class DateRange extends BaseComponent {
         });
     }
 
-    _selectMaxRange(d){
-        let start = moment(this._selectedDate[0]);
+    _selectMaxRange (d) {
+        const start = moment(this._selectedDate[0]);
         if (start.isBefore(d)) {
             this._selectedDate[1] = start.add(this.maxRange - 1, 'day');
         } else {
@@ -445,17 +445,17 @@ class DateRange extends BaseComponent {
         this.updateRange();
     }
 
-    _inMaxRange(d){
+    _inMaxRange (d) {
         if (this.maxRange === 0) {
             return true;
         } else {
-            let start = moment(this._selectedDate[0]);
-            let arr = [start, moment(d)];
-            arr.sort(function(a, b){
+            const start = moment(this._selectedDate[0]);
+            const arr = [start, moment(d)];
+            arr.sort((a, b) => {
                 return moment(a).toDate().getTime() - moment(b).toDate().getTime();
             });
 
-            let temp = arr[0].add(this.maxRange - 1, 'day');
+            const temp = arr[0].add(this.maxRange - 1, 'day');
             return !temp.isBefore(arr[1]);
         }
     }
@@ -465,9 +465,9 @@ class DateRange extends BaseComponent {
      * @param start
      * @param end
      */
-    checkIsSibling(start, end){
-        let startDate = this.refs.startDate;
-        let endDate = this.refs.endDate;
+    checkIsSibling (start, end) {
+        const startDate = this.refs.startDate;
+        const endDate = this.refs.endDate;
         start = moment(start || startDate.state.current);
         start.set('date', 1);
         start.add(1, 'month');
@@ -478,8 +478,8 @@ class DateRange extends BaseComponent {
             isSibling = true;
         }
         if (start.get('month') > end.get('month')) {
-            let year = start.get('year');
-            let month = start.get('month');
+            const year = start.get('year');
+            const month = start.get('month');
 
             end.set('year', year);
             end.set('month', month);
@@ -492,7 +492,7 @@ class DateRange extends BaseComponent {
         if (this.isSibling != isSibling) {
             this.isSibling = isSibling;
 
-            window.setTimeout(()=>{
+            window.setTimeout(() => {
                 startDate.setState({
                     nextBtn: !isSibling
                 });
@@ -504,9 +504,9 @@ class DateRange extends BaseComponent {
         }
     }
 
-    selectShortCuts(fun){
+    selectShortCuts (fun) {
         if (fun) {
-            let dates = fun();
+            const dates = fun();
             this._isSelecting = false;
             this._selectedDate[0] = dates[0];
             this._selectedDate[1] = dates[1];
@@ -516,7 +516,7 @@ class DateRange extends BaseComponent {
         }
     }
 
-    clear = ()=>{
+    clear = () => {
         this._selectedDate = [];
         this.updateRange();
 
@@ -528,21 +528,21 @@ class DateRange extends BaseComponent {
         this.hide();
     }
 
-    renderTools(){
-        let {clear} = this.props;
+    renderTools () {
+        const {clear} = this.props;
         if (clear) {
-            return <span className="pull-right">
-                <Button theme="info" size="small" raised onClick={this.clear}>清除</Button>
+            return <span className='pull-right'>
+                <Button theme='info' size='small' raised onClick={this.clear}>清除</Button>
             </span>;
         } else {
             return null;
         }
     }
 
-    renderShortCuts(){
-        let {shortcuts} = this.props;
+    renderShortCuts () {
+        const {shortcuts} = this.props;
         if (shortcuts) {
-            return shortcuts.map(function(shortcut, index){
+            return shortcuts.map(function (shortcut, index) {
                 let callback = null;
                 let name;
                 if (typeof shortcut === 'string') {
@@ -554,7 +554,7 @@ class DateRange extends BaseComponent {
                 }
 
                 if (callback) {
-                    return (<a href="javascript:void(0)" className="date-range-shortcut" key={index}
+                    return (<a href='javascript:void(0)' className='date-range-shortcut' key={index}
                         onClick={this.selectShortCuts.bind(this, callback)}>{name}</a>);
                 } else {
                     return null;
@@ -570,8 +570,8 @@ class DateRange extends BaseComponent {
      * @method render
      * @returns {XML}
      */
-    render() {
-        let className = classNames(
+    render () {
+        const className = classNames(
             this.props.className,
             'cm-datetime',
             'cm-dateRange',
@@ -582,28 +582,28 @@ class DateRange extends BaseComponent {
             }
         );
 
-        let sep = this.props.sep || '~';
-        let start = this.state.start ? this.state.start.format(this.props.format) : '';
-        let end = this.state.end ? this.state.end.format(this.props.format) : '';
-        let f = this.props.format.split(' ')[1];
-        let startTime = start.split(' ')[1];
-        let endTime = end.split(' ')[1];
-        let startName = this.props.startName || 'startDate';
-        let endName = this.props.endName || 'endDate';
-        let startText = (<span className="date-text">
-            <input type="hidden" name={startName} value={start} className={this.props.startClass}/>
+        const sep = this.props.sep || '~';
+        const start = this.state.start ? this.state.start.format(this.props.format) : '';
+        const end = this.state.end ? this.state.end.format(this.props.format) : '';
+        const f = this.props.format.split(' ')[1];
+        const startTime = start.split(' ')[1];
+        const endTime = end.split(' ')[1];
+        const startName = this.props.startName || 'startDate';
+        const endName = this.props.endName || 'endDate';
+        const startText = (<span className='date-text'>
+            <input type='hidden' name={startName} value={start} className={this.props.startClass}/>
             {start}&nbsp;</span>);
-        let endText = (<span className="date-text">
-            <input type="hidden" name={endName} value={end} className={this.props.endClass}/>{end}&nbsp;</span>);
+        const endText = (<span className='date-text'>
+            <input type='hidden' name={endName} value={end} className={this.props.endClass}/>{end}&nbsp;</span>);
 
-        let startProps = {
+        const startProps = {
             dateOnly: true,
             value: start,
             completion: false,
             startDate: this.state.startDate,
             endDate: this.state.endDate
         };
-        let endProps = {
+        const endProps = {
             dateOnly: true,
             value: end,
             completion: false,
@@ -611,33 +611,34 @@ class DateRange extends BaseComponent {
             endDate: this.state.endDate
         };
 
-        let shortcuts = this.renderShortCuts();
-        let tools = this.renderTools();
-        let hasToolsCont = shortcuts || tools;
+        const shortcuts = this.renderShortCuts();
+        const tools = this.renderTools();
+        const hasToolsCont = shortcuts || tools;
 
-        return (<div ref="datetime" onClick={this.show} className={className} style={this.props.style || {}}>
+        return (<div ref='datetime' onClick={this.show} className={className} style={this.props.style || {}}>
             {startText}
-            {sep}
+            {start ? sep : ''}
             {endText}
-            <div className="cm-datetime-wrap" ref="datePicker"
+            <i className='fa fa-calendar' />
+            <div className='cm-datetime-wrap' ref='datePicker'
                 style={{display: this.state.visibility ? 'block' : 'none'}}>
                 {
                     hasToolsCont
-                        ? <div className="tools-info">
+                        ? <div className='tools-info'>
                             {shortcuts}
                             {tools}
                         </div>
                         : null
                 }
-                <Date ref="startDate" {...startProps} onSelectDate={this._selectStartDate} />
-                <Date ref="endDate" {...endProps} onSelectDate={this._selectEndDate} />
-                {this.props.showTime ?
-                    <div className="cm-row mt-10 mb-5">
-                        <div className="cm-col-xs-12 text-center">
-                            <TimePicker format={f} ref="startTime" onChange={this.onChangeTime} size="small" value={startTime} />
+                <Date ref='startDate' {...startProps} onSelectDate={this._selectStartDate} />
+                <Date ref='endDate' {...endProps} onSelectDate={this._selectEndDate} />
+                {this.props.showTime
+                    ? <div className='cm-row mt-10 mb-5'>
+                        <div className='cm-col-xs-12 text-center'>
+                            <TimePicker format={f} ref='startTime' onChange={this.onChangeTime} size='small' value={startTime} />
                         </div>
-                        <div className="cm-col-xs-12 text-center">
-                            <TimePicker format={f} ref="endTime" onChange={this.onChangeTime} size="small" value={endTime} />
+                        <div className='cm-col-xs-12 text-center'>
+                            <TimePicker format={f} ref='endTime' onChange={this.onChangeTime} size='small' value={endTime} />
                         </div>
                     </div>
                     : null
@@ -650,72 +651,72 @@ class DateRange extends BaseComponent {
 DateRange = clickAway(DateRange);
 
 DateRange.SHORTCUTS = {
-    '一周内': function(){
-        let end = moment();
-        let start = moment();
+    '一周内' () {
+        const end = moment();
+        const start = moment();
         start.add(-6, 'day');
 
         return [start, end];
     },
-    '一个月内': function(){
-        let end = moment();
-        let start = moment();
+    '一个月内' () {
+        const end = moment();
+        const start = moment();
         start.add(-1, 'month');
 
         return [start, end];
     },
-    '三个月内': function(){
-        let end = moment();
-        let start = moment();
+    '三个月内' () {
+        const end = moment();
+        const start = moment();
         start.add(-3, 'month');
 
         return [start, end];
     },
-    '半年内': function(){
-        let end = moment();
-        let start = moment();
+    '半年内' () {
+        const end = moment();
+        const start = moment();
         start.add(-6, 'month');
 
         return [start, end];
     },
-    '一年内': function(){
-        let end = moment();
-        let start = moment();
+    '一年内' () {
+        const end = moment();
+        const start = moment();
         start.add(-1, 'year');
 
         return [start, end];
     },
-    '一周后': function(){
-        let end = moment();
-        let start = moment();
+    '一周后' () {
+        const end = moment();
+        const start = moment();
         end.add(6, 'day');
 
         return [start, end];
     },
-    '一个月后': function(){
-        let end = moment();
-        let start = moment();
+    '一个月后' () {
+        const end = moment();
+        const start = moment();
         end.add(1, 'month');
 
         return [start, end];
     },
-    '三个月后': function(){
-        let end = moment();
-        let start = moment();
+    '三个月后' () {
+        const end = moment();
+        const start = moment();
         end.add(3, 'month');
 
         return [start, end];
     },
-    '半年后': function(){
-        let end = moment();
-        let start = moment();
+    '半年后' () {
+        const end = moment();
+        const start = moment();
         end.add(6, 'month');
 
         return [start, end];
     },
-    '一年后': function(){
-        let end = moment();
-        let start = moment();
+    '一年后' () {
+        const end = moment();
+        const start = moment();
         end.add(1, 'year');
 
         return [start, end];

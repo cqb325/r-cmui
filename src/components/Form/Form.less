@@ -1,24 +1,54 @@
-.cm-form.cm-form-stack{
-    .cm-form-row{
-      display: block;
-    }
-    .cm-form-label{
-      display: block;
-      text-align: left;
-    }
-  }
-  
-  .cm-form-inline{
-    .cm-form-group,
-    &.cm-form-group{
+.cm-form{
+  &.cm-form-inline{
+    .cm-form-group{
       display: inline-block;
     }
   }
-  
-  .cm-form-row{
-    display: block;
-    margin-bottom: 10px;
-    .cm-form-group{
-        margin-bottom: 0;
+  &.cm-form-stack{
+    .cm-form-label{
+      margin-bottom: 5px;
+    }
+    .cm-tooltip-helper{
+      display: block;
+      width: 100%;
+    }
+    .cm-select,
+    .cm-datetime,
+    .cm-form-control{
+      width: 100%;
+    }
+    .cm-select .cm-select-value{
+      max-width: 100%;
     }
   }
+  &.cm-form-stack-inline{
+    .cm-form-group{
+      position: relative;
+    }
+    .cm-form-label{
+      position: absolute;
+      height: 100%;
+      line-height: 25px;
+      left: 0;
+    }
+    .cm-tooltip-helper{
+      display: inline-block;
+      width: 100%;
+    }
+    .cm-select,
+    .cm-datetime,
+    .cm-form-control{
+      width: 100%;
+    }
+    .cm-select .cm-select-value{
+      max-width: 100%;
+    }
+  }
+
+  .cm-form-row{
+    margin-bottom: 10px;
+    .cm-form-group{
+      margin-bottom: 0;
+    }
+  }
+}

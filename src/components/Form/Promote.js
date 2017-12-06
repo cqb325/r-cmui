@@ -6,11 +6,12 @@ import classNames from 'classnames';
  * @class Promote
  * @extends {React.Component}
  */
-class Promote extends React.Component{
+class Promote extends React.Component {
+    displayName = 'Promote';
     static displayName = 'Promote';
-    render(){
-        let className = classNames('cm-form-promote', 'text-promote', this.props.className);
-        let style = Object.assign({
+    render () {
+        const className = classNames('cm-form-promote', 'text-promote', this.props.className);
+        const style = Object.assign({
             'paddingLeft': this.props.labelWidth,
             'fontStyle': this.props.italic ? 'italic' : 'normal'
         }, this.props.style);
