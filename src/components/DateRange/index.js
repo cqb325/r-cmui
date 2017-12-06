@@ -565,6 +565,12 @@ class DateRange extends BaseComponent {
         }
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
+            this.setValue(nextProps.value);
+        }
+    }
+
     /**
      * 渲染组件结构
      * @method render
@@ -648,7 +654,7 @@ class DateRange extends BaseComponent {
     }
 }
 
-DateRange = clickAway(DateRange);
+clickAway(DateRange);
 
 DateRange.SHORTCUTS = {
     '一周内' () {
