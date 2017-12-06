@@ -520,7 +520,6 @@ class FormControl extends BaseComponent {
     render () {
         let {
             label,
-            labelGrid,
             type,
             layout,
             className,
@@ -562,7 +561,7 @@ class FormControl extends BaseComponent {
             if (labelWidth != undefined) {
                 labelStyle['width'] = labelWidth;
             }
-            labelEle = <Label className={labelClass} grid={labelGrid} style={labelStyle}>{label}</Label>;
+            labelEle = <Label className={labelClass} style={labelStyle}>{label}</Label>;
         }
         if (this.props.layout === 'stack-inline' && labelWidth) {
             style = Object.assign({paddingLeft: labelWidth}, style);

@@ -38,7 +38,7 @@ class Datetime extends BaseComponent {
      * ClickAway 点击别的地方的回调
      * @method componentClickAway
      */
-    componentClickAway() {
+    componentClickAway () {
         this.hide();
     }
 
@@ -46,20 +46,20 @@ class Datetime extends BaseComponent {
      * 显示操作
      * @method show
      */
-    show(){
+    show () {
         if (this.props.readOnly || this.props.disabled) {
             return;
         }
 
-        if (this.state.visibility){
+        if (this.state.visibility) {
             return false;
         }
 
-        let ele = ReactDOM.findDOMNode(this.refs.datePicker);
+        const ele = ReactDOM.findDOMNode(this.refs.datePicker);
         Dom.dom(ele).show();
-        let container = Dom.closest(ele, '.cm-datetime');
-        let offset = Dom.getOuterHeight(ele) + 5;
-        let dropup = Dom.overView(container, offset);
+        const container = Dom.closest(ele, '.cm-datetime');
+        const offset = Dom.getOuterHeight(ele) + 5;
+        const dropup = Dom.overView(container, offset);
 
         Dom.withoutTransition(container, () => {
             this.setState({ dropup });
@@ -71,7 +71,7 @@ class Datetime extends BaseComponent {
         if (!this.state.visibility) {
             super.show();
             setTimeout(() => {
-                let dateComp = this.refs.date;
+                const dateComp = this.refs.date;
                 dateComp.show();
 
                 this.bindClickAway();
@@ -84,20 +84,20 @@ class Datetime extends BaseComponent {
      * @method show
      * @returns {boolean}
      */
-    hide() {
-        let ele = ReactDOM.findDOMNode(this.refs.datePicker);
+    hide () {
+        const ele = ReactDOM.findDOMNode(this.refs.datePicker);
         velocity(ele, 'fadeOut', {
             delay: 200,
             duration: 500,
-            complete: () =>{
+            complete: () => {
                 super.hide();
                 this.unbindClickAway();
             }
         });
 
-        let dateComp = this.refs.date;
+        const dateComp = this.refs.date;
 
-        if (dateComp.getStage() === 0 && dateComp.minStage === 0){
+        if (dateComp.getStage() === 0 && dateComp.minStage === 0) {
             dateComp.setStage(1);
         }
     }
@@ -107,9 +107,9 @@ class Datetime extends BaseComponent {
      * @method setValue
      * @param value {String} 当前值
      */
-    setValue(value) {
+    setValue (value) {
         this.setState({
-            value: value
+            value
         });
     }
 
@@ -118,13 +118,13 @@ class Datetime extends BaseComponent {
      * @method getValue
      * @return {String} 当前值
      */
-    getValue() {
+    getValue () {
         return this.state.value;
     }
 
-    _selectDate(value, date){
+    _selectDate (value, date) {
         this.setState({
-            value: value
+            value
         });
 
         if (this.props.onSelectDate) {
@@ -142,25 +142,31 @@ class Datetime extends BaseComponent {
     }
 
 
-    componentDidMount(){
-        let dateComp = this.refs.date;
+    componentDidMount () {
+        const dateComp = this.refs.date;
 
-        dateComp.on('hide', ()=>{
+        dateComp.on('hide', () => {
             this.hide();
         });
 
-        dateComp.on('selectTime', (value)=>{
+        dateComp.on('selectTime', (value) => {
             this.emit('selectTime', value);
         });
-        dateComp.on('selectMonth', (value)=>{
+        dateComp.on('selectMonth', (value) => {
             this.emit('selectMonth', value);
         });
-        dateComp.on('selectYear', (value)=>{
+        dateComp.on('selectYear', (value) => {
             this.emit('selectYear', value);
         });
     }
 
-    getReference(){
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
+            this.setValue(nextProps.value);
+        }
+    }
+
+    getReference () {
         return this.refs.date;
     }
 
@@ -169,7 +175,7 @@ class Datetime extends BaseComponent {
      * @method render
      * @returns {XML}
      */
-    render() {
+    render () {
         let {className, grid, readOnly, disabled, name, placeholder, style} = this.props;
         className = classNames(
             className,
@@ -177,7 +183,7 @@ class Datetime extends BaseComponent {
             this.state.theme,
             getGrid(grid),
             {
-                disabled: disabled,
+                disabled,
                 active: this.state.active && !readOnly,
                 dropup: this.state.dropup
             }
@@ -187,27 +193,27 @@ class Datetime extends BaseComponent {
             ? this.state.value
             : '';
         text = text
-            ? (<span className="date-text">
-                <input type="hidden" name={name} defaultValue={this.state.value} />{text}
+            ? (<span className='date-text'>
+                <input type='hidden' name={name} defaultValue={this.state.value} />{text}
             </span>)
-            : (<span className="date-text">
-                <input type="hidden" name={name} defaultValue={this.state.value} />{placeholder}&nbsp;
+            : (<span className='date-text'>
+                <input type='hidden' name={name} defaultValue={this.state.value} />{placeholder}&nbsp;
             </span>);
 
-        let others = omit(this.props, ['className', 'grid', 'readOnly', 'disabled', 'style']);
+        const others = omit(this.props, ['className', 'grid', 'readOnly', 'disabled', 'style']);
         return (
-            <div ref="datetime" onClick={this.show.bind(this)} className={className} style={style || {}}>
+            <div ref='datetime' onClick={this.show.bind(this)} className={className} style={style || {}}>
                 {text}
-                <i className="fa fa-calendar" />
-                <div className="cm-datetime-wrap" ref="datePicker">
-                    <Date ref="date" {...others} onSelectDate={this._selectDate.bind(this)} />
+                <i className='fa fa-calendar' />
+                <div className='cm-datetime-wrap' ref='datePicker'>
+                    <Date ref='date' {...others} onSelectDate={this._selectDate.bind(this)} />
                 </div>
             </div>
         );
     }
 }
 
-Datetime = clickAway(Datetime);
+clickAway(Datetime);
 
 Datetime.propTypes = {
     /**
