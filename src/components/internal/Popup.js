@@ -15,8 +15,10 @@ import Events from '../utils/Events';
  * @constructor
  * @extend React.Component
  */
-class Popup extends PureComponent{
-    constructor(props){
+class Popup extends PureComponent {
+    displayName = 'Popup';
+
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -29,7 +31,7 @@ class Popup extends PureComponent{
         this.scrollElements = [];
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
         if (nextProps.visible !== this.state.visible) {
             this.setState({
                 visible: nextProps.visible
@@ -37,22 +39,22 @@ class Popup extends PureComponent{
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
 
         let flag = false;
-        Events.on(window, 'resize', ()=>{
-            if (!flag){
+        Events.on(window, 'resize', () => {
+            if (!flag) {
                 flag = true;
-                if (this.timer){
+                if (this.timer) {
                     clearTimeout(this.timer);
                 }
-                this.timer = window.setTimeout(()=>{
-                    if (this.state.visible && this._isMounted){
+                this.timer = window.setTimeout(() => {
+                    if (this.state.visible && this._isMounted) {
                         this.update(this.state.visible);
                     }
                     flag = false;
@@ -63,36 +65,36 @@ class Popup extends PureComponent{
 
         this.getScrollElements(this.props.baseEle);
 
-        this.scrollElements.forEach((ele)=>{
-            Events.on(ele, 'scroll', ()=>{
-                if (this.state.visible && this._isMounted){
+        this.scrollElements.forEach((ele) => {
+            Events.on(ele, 'scroll', () => {
+                if (this.state.visible && this._isMounted) {
                     this.update(this.state.visible);
                 }
             });
         });
     }
 
-    update(visible){
-        let tip = Dom.dom(ReactDOM.findDOMNode(this));
+    update (visible) {
+        const tip = Dom.dom(ReactDOM.findDOMNode(this));
         if (visible) {
-            let base = Dom.dom(this.props.baseEle);
-            let baseOffset = base.offset();
-            let scroll = this.getScroll(this.props.baseEle);
+            const base = Dom.dom(this.props.baseEle);
+            const baseOffset = Dom.offset(this.props.baseEle);
+            // let scroll = this.getScroll(this.props.baseEle);
 
-            let scrollTop = scroll.top;
-            let scrollLeft = scroll.left;
+            // let scrollTop = scroll.top;
+            // let scrollLeft = scroll.left;
             // if(this.props.offsetEle) {
             //     scrollTop = Dom.query(this.props.offsetEle).scrollTop;
             //     scrollLeft = Dom.query(this.props.offsetEle).scrollLeft;
             // }
 
-            let style = {};
-            let baseWidth = base.width();
-            let baseHeight = base.height();
+            const style = {};
+            const baseWidth = base.width();
+            const baseHeight = base.height();
 
             tip.show();
-            let tipWidth = tip.width();
-            let tipHeight = tip.height();
+            const tipWidth = tip.width();
+            const tipHeight = tip.height();
 
             if (this.props.align === 'top') {
                 style.left = baseOffset.left + baseWidth / 2 - tipWidth / 2;
@@ -146,16 +148,16 @@ class Popup extends PureComponent{
                 style.top = baseOffset.top - (tipHeight - baseHeight);
             }
 
-            style.top = style.top - scrollTop;
-            style.left = style.left - scrollLeft;
+            // style.top = style.top - scrollTop;
+            // style.left = style.left - scrollLeft;
 
             this.setState({
-                visible: visible,
-                style: style
+                visible,
+                style
             });
         } else {
             this.setState({
-                visible: visible
+                visible
             });
 
             // window.setTimeout(()=>{
@@ -163,7 +165,7 @@ class Popup extends PureComponent{
             // }, this.props.delay || 0);
         }
 
-        if (this.props.onVisibleChange){
+        if (this.props.onVisibleChange) {
             this.props.onVisibleChange(visible);
         }
     }
@@ -172,14 +174,14 @@ class Popup extends PureComponent{
      * 获取存在滚动条的元素
      * @param ele
      */
-    getScrollElements(ele){
+    getScrollElements (ele) {
         this.scrollElements = [];
         let parent = ele.parentNode;
 
-        while (parent !== null && parent.tagName !== 'HTML'){
-            if (parent.scrollHeight > parent.offsetHeight &&
-                (Dom.dom(parent).css('overflow-y') !== 'hidden' ||
-                Dom.dom(parent).css('overflow-x') !== 'hidden')){
+        while (parent !== null && parent.tagName !== 'HTML') {
+            if (parent.scrollHeight > parent.offsetHeight
+                && (Dom.dom(parent).css('overflow-y') !== 'hidden'
+                || Dom.dom(parent).css('overflow-x') !== 'hidden')) {
                 this.scrollElements.push(parent);
             }
             parent = parent.parentNode;
@@ -190,31 +192,31 @@ class Popup extends PureComponent{
      * 获取Scroll
      * @returns {{top: number, left: number}}
      */
-    getScroll(){
+    getScroll () {
         let top = 0;
         let left = 0;
-        this.scrollElements.forEach((ele)=>{
+        this.scrollElements.forEach((ele) => {
             if (ele.tagName !== 'BODY') {
                 top += ele.scrollTop;
                 left += ele.scrollLeft;
             }
         });
         return {
-            top: top,
-            left: left
+            top,
+            left
         };
     }
 
-    setContent(content){
+    setContent (content) {
         this.setState({content});
     }
 
-    render(){
-        this.getScrollElements(this.props.baseEle);
-        let className = classNames({
+    render () {
+        // this.getScrollElements(this.props.baseEle);
+        const className = classNames({
             visible: this.state.visible
         }, this.props.extraProps ? this.props.extraProps.className : '', this.props.align);
-        let style = Object.assign({}, this.props.extraProps.style, this.state.style);
+        const style = Object.assign({}, this.props.extraProps.style, this.state.style);
         return (
             <div className={className} style={style}>
                 {this.state.content || this.props.children}
