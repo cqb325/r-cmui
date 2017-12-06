@@ -230,7 +230,7 @@ class InputNumber extends BaseComponent {
         if (this.state.max != undefined) {
             value = Math.min(this.state.max, value);
         }
-        this.setState(value);
+        this.setState({value});
     }
 
     /**
@@ -326,7 +326,7 @@ class InputNumber extends BaseComponent {
         return (
             <span className={className} style={style}>
                 <Button onClick={this.subtract}>-</Button>
-                <input onFocus={this.onFocus} onBlur={this.onBlur} onKeyDown={this.onKeyDown}
+                <input autoComplete='off' onFocus={this.onFocus} onBlur={this.onBlur} onKeyDown={this.onKeyDown}
                     className={itemClassName} name={this.props.name} value={this.formatter(this.state.value)}
                     type='text' onChange={this.handleChange} />
                 <Button onClick={this.plus}>+</Button>
