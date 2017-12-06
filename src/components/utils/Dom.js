@@ -7,7 +7,7 @@ import mutation from './mutation';
 
 let List;
 
-function tryParseInt(p) {
+function tryParseInt (p) {
     if (!p) {
         return 0;
     }
@@ -43,7 +43,7 @@ class Dom {
      * @param el {Element} 可选 页面元素
      * @returns {Element}
      */
-    static query(selector, el){
+    static query (selector, el) {
         if (arguments.length === 1 && typeof arguments[0] === 'string') {
             if (document.querySelector) {
                 return document.querySelector(arguments[0]);
@@ -62,7 +62,7 @@ class Dom {
      * @param selector {String} css选择器
      * @returns {NodeList}
      */
-    static queryAll(selector, el) {
+    static queryAll (selector, el) {
         if (arguments.length === 1 && typeof arguments[0] === 'string') {
             if (document.querySelectorAll) {
                 return document.querySelectorAll(arguments[0]);
@@ -80,7 +80,7 @@ class Dom {
      * @param id
      * @returns {Element}
      */
-    static get(id) {
+    static get (id) {
         return document.getElementById(id);
     }
 
@@ -91,12 +91,12 @@ class Dom {
      * @param el
      * @returns {*}
      */
-    static first(el, selector) {
+    static first (el, selector) {
         if (arguments.length === 1) {
             return el.children[0];
         }
         if (arguments.length === 2) {
-            return Dom.query(selector + ':first-child', el);
+            return Dom.query(`${selector}:first-child`, el);
         }
     }
 
@@ -107,8 +107,8 @@ class Dom {
      * @param index
      * @returns {Element}
      */
-    static eq(el, index) {
-        return Dom.query(':nth-child(' + index + ')', el);
+    static eq (el, index) {
+        return Dom.query(`:nth-child(${index})`, el);
     }
 
     /**
@@ -118,8 +118,8 @@ class Dom {
      * @param selector
      * @returns {*}
      */
-    static not(el, selector) {
-        return Dom.queryAll(':not(' + selector + ')', el);
+    static not (el, selector) {
+        return Dom.queryAll(`:not(${selector})`, el);
     }
 
     /**
@@ -128,8 +128,8 @@ class Dom {
      * @param el
      * @returns {*|Node}
      */
-    static prev(el){
-        var node = el.previousSibling;
+    static prev (el) {
+        let node = el.previousSibling;
         if (node.nodeType) {
             if (node.nodeType === 1) {
                 return node;
@@ -147,8 +147,8 @@ class Dom {
      * @param el
      * @returns {*|Node}
      */
-    static next(el) {
-        var node = el.nextSibling;
+    static next (el) {
+        let node = el.nextSibling;
         if (node.nodeType) {
             if (node.nodeType === 1) {
                 return node;
@@ -167,13 +167,13 @@ class Dom {
      * @param el
      * @returns {*}
      */
-    static last(el, selector) {
+    static last (el, selector) {
         if (arguments.length === 1) {
-            var children = el.children;
+            const children = el.children;
             return children[children.length - 1];
         }
         if (arguments.length === 2) {
-            return Dom.query(selector + ':last-child', el);
+            return Dom.query(`${selector}:last-child`, el);
         }
     }
 
@@ -183,12 +183,12 @@ class Dom {
      * @param el
      * @param selector
      */
-    static closest(el, selector){
+    static closest (el, selector) {
         let doms;
         let targetDom;
-        var isSame = function(doms, el){
+        const isSame = function (doms, el) {
             let i = 0;
-            let len = doms.length;
+            const len = doms.length;
             for (i; i < len; i++) {
                 if (doms[i].isEqualNode) {
                     if (doms[i].isEqualNode(el)) {
@@ -202,7 +202,7 @@ class Dom {
             }
             return false;
         };
-        var traversal = function(el, selector){
+        var traversal = function (el, selector) {
             doms = Dom.queryAll(selector, el.parentNode);
             targetDom = isSame(doms, el);
             while (!targetDom) {
@@ -224,7 +224,7 @@ class Dom {
      * @method remove
      * @param el
      */
-    static remove(el) {
+    static remove (el) {
         if (el && el.parentNode) {
             el.parentNode.removeChild(el);
         }
@@ -238,7 +238,7 @@ class Dom {
      * @param value
      * @returns {*}
      */
-    static attr(el, name, value){
+    static attr (el, name, value) {
         if (arguments.length === 2) {
             return el.getAttribute(name);
         } else if (arguments.length === 3) {
@@ -253,7 +253,7 @@ class Dom {
      * @param el
      * @param name
      */
-    static removeAttr(el, name) {
+    static removeAttr (el, name) {
         if (arguments.length === 2) {
             el.removeAttribute(name);
         }
@@ -266,7 +266,7 @@ class Dom {
      * @param clazz
      * @returns {boolean}
      */
-    static hasClass(el, clazz) {
+    static hasClass (el, clazz) {
         if (el.className.indexOf(clazz) > -1) {
             return true;
         } else {
@@ -281,12 +281,12 @@ class Dom {
      * @param clazz
      * @returns {*}
      */
-    static addClass(el, clazz) {
+    static addClass (el, clazz) {
         if ('classList' in el) {
             el.classList.add(clazz);
         } else {
-            var preCls = el.className;
-            el.className = preCls + ' ' + clazz;
+            const preCls = el.className;
+            el.className = `${preCls} ${clazz}`;
         }
         return el;
     }
@@ -298,11 +298,11 @@ class Dom {
      * @param clazz
      * @returns {*}
      */
-    static removeClass(el, clazz) {
+    static removeClass (el, clazz) {
         if ('classList' in el) {
             el.classList.remove(clazz);
         } else {
-            var preCls = el.className;
+            const preCls = el.className;
 
             el.className = preCls.replace(clazz, '');
         }
@@ -335,11 +335,11 @@ class Dom {
      * @param el {Element} 界面元素
      * @returns {{top: number, left: number}}
      */
-    static offset(el) {
+    static offset (el) {
         const rect = el.getBoundingClientRect();
         return {
-            top: rect.top + document.body.scrollTop,
-            left: rect.left + document.body.scrollLeft
+            top: rect.top + document.documentElement.scrollTop,
+            left: rect.left + document.documentElement.scrollLeft
         };
     }
 
@@ -349,7 +349,7 @@ class Dom {
      * @param el {Element} 界面元素
      * @returns {ClientRect} 文字区域范围
      */
-    static bounding(el) {
+    static bounding (el) {
         return el.getBoundingClientRect();
     }
 
@@ -359,10 +359,10 @@ class Dom {
      * @returns {number}
      */
     static forceRedraw (el) {
-        let originalDisplay = Dom.css(el, 'display');
+        const originalDisplay = Dom.css(el, 'display');
 
         el.style.display = 'none';
-        let oh = el.offsetHeight;
+        const oh = el.offsetHeight;
         el.style.display = originalDisplay;
         return oh;
     }
@@ -393,11 +393,11 @@ class Dom {
      * @returns {*}
      */
     static getOuterHeight (el) {
-        let height = el.clientHeight +
-            tryParseInt(el.style.borderTopWidth) +
-            tryParseInt(el.style.borderBottomWidth) +
-            tryParseInt(el.style.marginTop) +
-            tryParseInt(el.style.marginBottom);
+        const height = el.clientHeight
+            + tryParseInt(el.style.borderTopWidth)
+            + tryParseInt(el.style.borderBottomWidth)
+            + tryParseInt(el.style.marginTop)
+            + tryParseInt(el.style.marginBottom);
         return height;
     }
 
@@ -408,11 +408,11 @@ class Dom {
      * @returns {*}
      */
     static getOuterWidth (el) {
-        return el.offsetWidth +
-            tryParseInt(el.style.borderLeftWidth) +
-            tryParseInt(el.style.borderRightWidth) +
-            tryParseInt(el.style.marginLeft) +
-            tryParseInt(el.style.marginRight);
+        return el.offsetWidth
+            + tryParseInt(el.style.borderLeftWidth)
+            + tryParseInt(el.style.borderRightWidth)
+            + tryParseInt(el.style.marginLeft)
+            + tryParseInt(el.style.marginRight);
     }
 
     /**
@@ -423,8 +423,8 @@ class Dom {
      * @returns {boolean}
      */
     static overView (el, pad = 0) {
-        let height = window.innerHeight || document.documentElement.clientHeight;
-        let bottom = el.getBoundingClientRect().bottom + pad;
+        const height = window.innerHeight || document.documentElement.clientHeight;
+        const bottom = el.getBoundingClientRect().bottom + pad;
         return bottom > height;
     }
 
@@ -435,7 +435,7 @@ class Dom {
      * @param fake {String} 伪类
      * @returns {*}
      */
-    static css (el, style, fake){
+    static css (el, style, fake) {
         if (typeof el === 'string') {
             el = Dom.query(el);
         }
@@ -453,11 +453,11 @@ class Dom {
      * @param str
      * @returns {List}
      */
-    static dom(str){
+    static dom (str) {
         return new List(Dom.parseHTML(str));
     }
 
-    static parseHTML(html){
+    static parseHTML (html) {
         if (typeof html !== 'string') {
             if (html.nodeType && html.nodeType === 1) {
                 return [html];
@@ -469,40 +469,40 @@ class Dom {
         }
 
         // tag name
-        var m = /<([\w:]+)/.exec(html);
+        const m = /<([\w:]+)/.exec(html);
         if (!m) {
             throw new Error('No elements were generated.');
         }
-        var tag = m[1];
+        const tag = m[1];
 
         // body support
         if (tag === 'body') {
-            var ele = document.createElement('html');
+            const ele = document.createElement('html');
             ele.innerHTML = html;
             return [ele.removeChild(ele.lastChild)];
         }
 
         // wrap map
-        var wrap = map[tag] || map._default;
-        var depth = wrap[0];
-        var prefix = wrap[1];
-        var suffix = wrap[2];
-        var el = document.createElement('div');
+        const wrap = map[tag] || map._default;
+        let depth = wrap[0];
+        const prefix = wrap[1];
+        const suffix = wrap[2];
+        let el = document.createElement('div');
         el.innerHTML = prefix + html + suffix;
 
         // trim away wrapper elements
         while (depth--) {
             el = el.lastChild;
-        };
+        }
 
-        var els = [];
+        const els = [];
 
-        var child = el.firstChild;
+        let child = el.firstChild;
         do {
             els.push(child);
         } while (child = child.nextElementSibling);
 
-        for (var i = 0; i < els.length; ++i) {
+        for (let i = 0; i < els.length; ++i) {
             el.removeChild(els[i]);
         }
 
@@ -526,7 +526,7 @@ List = function (els, selector) {
 };
 
 // for minifying
-var proto = List.prototype;
+const proto = List.prototype;
 
 /**
  * Set attribute `name` to `val`, or get attr `name`.
@@ -537,7 +537,7 @@ var proto = List.prototype;
  * @api public
  */
 
-proto.attr = function(name, val) {
+proto.attr = function (name, val) {
     if (val === undefined) {
         return this[0].getAttribute(name);
     }
@@ -546,14 +546,14 @@ proto.attr = function(name, val) {
     return this;
 };
 
-proto.removeAttr = function(name) {
+proto.removeAttr = function (name) {
     this[0].removeAttribute(name);
     return this;
 };
 
 // set or get the data attribute for the first element in the list
-proto.data = function(key, value) {
-    return this.attr('data-' + key, value);
+proto.data = function (key, value) {
+    return this.attr(`data-${key}`, value);
 };
 
 /**
@@ -562,9 +562,9 @@ proto.data = function(key, value) {
  * @return {List}
  * @api public
  */
-proto.clone = function(){
-    var arr = [];
-    for (var i = 0, len = this.length; i < len; ++i) {
+proto.clone = function () {
+    const arr = [];
+    for (let i = 0, len = this.length; i < len; ++i) {
         arr.push(this[i].cloneNode(true));
     }
     return new List(arr);
@@ -578,7 +578,7 @@ proto.clone = function(){
  * @api public
  */
 
-proto.at = function(i){
+proto.at = function (i) {
     return new List([this[i]], this.selector);
 };
 
@@ -590,7 +590,7 @@ proto.at = function(i){
  * @api public
  */
 
-proto.first = function(){
+proto.first = function () {
     return new List([this[0]], this.selector);
 };
 
@@ -602,7 +602,7 @@ proto.first = function(){
  * @api public
  */
 
-proto.last = function(){
+proto.last = function () {
     return new List([this[this.length - 1]], this.selector);
 };
 
@@ -613,7 +613,7 @@ proto.last = function(){
  * @api public
  */
 
-proto.length = function() {
+proto.length = function () {
     return this.length;
 };
 
@@ -624,14 +624,14 @@ proto.length = function() {
  * @api public
  */
 
-proto.text = function(val) {
+proto.text = function (val) {
     if (val !== undefined) {
         this[0].textContent = val;
         return this;
     }
 
-    var str = '';
-    for (var i = 0; i < this.length; ++i) {
+    let str = '';
+    for (let i = 0; i < this.length; ++i) {
         str += this[i].textContent;
     }
     return str;
@@ -644,8 +644,8 @@ proto.text = function(val) {
  * @api public
  */
 
-proto.html = function(val){
-    var el = this[0];
+proto.html = function (val) {
+    const el = this[0];
 
     if (val) {
         if (typeof (val) !== 'string') {
@@ -667,8 +667,8 @@ proto.html = function(val){
  * @api public
  */
 
-proto.each = function(fn) {
-    for (var i = 0; i < this.length; ++i) {
+proto.each = function (fn) {
+    for (let i = 0; i < this.length; ++i) {
         fn(new List([this[i]], this.selector), i);
     }
     return this;
@@ -682,7 +682,7 @@ proto.each = function(fn) {
  * @api public
  */
 
-proto.forEach = function(fn) {
+proto.forEach = function (fn) {
     Array.prototype.forEach.call(this, fn);
     return this;
 };
@@ -695,15 +695,15 @@ proto.forEach = function(fn) {
  * @api public
  */
 
-proto.map = function(fn){
+proto.map = function (fn) {
     return Array.prototype.map.call(this, fn);
 };
 
-proto.select = function() {
-    for (var i = 0; i < this.length; ++i) {
-        var el = this[i];
+proto.select = function () {
+    for (let i = 0; i < this.length; ++i) {
+        const el = this[i];
         el.select();
-    };
+    }
 
     return this;
 };
@@ -717,15 +717,15 @@ proto.select = function() {
  * @api public
  */
 
-proto.filter = function(fn) {
-    var els = Array.prototype.filter.call(this, function(el) {
+proto.filter = function (fn) {
+    const els = Array.prototype.filter.call(this, function (el) {
         return fn(new List([el], this.selector));
     });
     return new List(els, this.selector);
 };
 
-proto.value = function(val) {
-    var el = this[0];
+proto.value = function (val) {
+    const el = this[0];
     if (val) {
         el.value = val;
         return this;
@@ -734,10 +734,10 @@ proto.value = function(val) {
     return el.value;
 };
 
-proto.next = function() {
-    var els = [];
-    for (var i = 0; i < this.length; ++i) {
-        var next = this[i].nextElementSibling;
+proto.next = function () {
+    const els = [];
+    for (let i = 0; i < this.length; ++i) {
+        const next = this[i].nextElementSibling;
         // if no more siblings then don't push
         if (next) {
             els.push(next);
@@ -747,10 +747,10 @@ proto.next = function() {
     return new List(els);
 };
 
-proto.prev = function() {
-    var els = [];
-    for (var i = 0; i < this.length; ++i) {
-        var next = this[i].previousElementSibling;
+proto.prev = function () {
+    const els = [];
+    for (let i = 0; i < this.length; ++i) {
+        const next = this[i].previousElementSibling;
         // if no more siblings then don't push
         if (next) {
             els.push(next);
@@ -766,9 +766,9 @@ proto.prev = function() {
  * @api public
  */
 
-proto.addClass = function(name){
-    var el;
-    for (var i = 0; i < this.length; ++i) {
+proto.addClass = function (name) {
+    let el;
+    for (let i = 0; i < this.length; ++i) {
         el = this[i];
         el._classes = el._classes || classes(el);
         el._classes.add(name);
@@ -784,9 +784,9 @@ proto.addClass = function(name){
  * @api public
  */
 
-proto.removeClass = function(name){
-    var el;
-    for (var i = 0; i < this.length; ++i) {
+proto.removeClass = function (name) {
+    let el;
+    for (let i = 0; i < this.length; ++i) {
         el = this[i];
         el._classes = el._classes || classes(el);
         el._classes.remove(name);
@@ -802,9 +802,9 @@ proto.removeClass = function(name){
  * @api public
  */
 
-proto.toggleClass = function(name){
-    var el;
-    for (var i = 0; i < this.length; ++i) {
+proto.toggleClass = function (name) {
+    let el;
+    for (let i = 0; i < this.length; ++i) {
         el = this[i];
         el._classes = el._classes || classes(el);
         el._classes.toggle(name);
@@ -820,9 +820,9 @@ proto.toggleClass = function(name){
  * @api public
  */
 
-proto.hasClass = function(name){
-    var el;
-    for (var i = 0; i < this.length; ++i) {
+proto.hasClass = function (name) {
+    let el;
+    for (let i = 0; i < this.length; ++i) {
         el = this[i];
         el._classes = el._classes || classes(el);
         if (el._classes.has(name)) {
@@ -841,9 +841,9 @@ proto.hasClass = function(name){
  * @api public
  */
 
-proto.css = function(prop, val){
+proto.css = function (prop, val) {
     if (prop instanceof Object) {
-        for (var p in prop) {
+        for (const p in prop) {
             if ({}.hasOwnProperty.call(prop, p)) {
                 this.setStyle(p, prop[p]);
             }
@@ -867,8 +867,8 @@ proto.css = function(prop, val){
  * @api private
  */
 
-proto.setStyle = function(prop, val){
-    for (var i = 0; i < this.length; ++i) {
+proto.setStyle = function (prop, val) {
+    for (let i = 0; i < this.length; ++i) {
         this[i].style[prop] = val;
     }
     return this;
@@ -882,81 +882,81 @@ proto.setStyle = function(prop, val){
  * @api private
  */
 
-proto.getStyle = function(prop) {
-    var el = this[0];
+proto.getStyle = function (prop) {
+    const el = this[0];
     if (el) {
         return Dom.css(el, prop);
     }
 };
-proto.parent = function() {
-    var els = [];
-    for (var i = 0; i < this.length; ++i) {
+proto.parent = function () {
+    const els = [];
+    for (let i = 0; i < this.length; ++i) {
         els.push(this[i].parentNode);
     }
 
     return new List(els);
 };
 
-/// mutation
+// / mutation
 
-proto.prepend = function(what) {
-    for (var i = 0; i < this.length; ++i) {
+proto.prepend = function (what) {
+    for (let i = 0; i < this.length; ++i) {
         mutation.prepend(this[i], Dom.dom(what));
     }
     return this;
 };
 
-proto.append = function(what) {
-    for (var i = 0; i < this.length; ++i) {
+proto.append = function (what) {
+    for (let i = 0; i < this.length; ++i) {
         mutation.append(this[i], Dom.dom(what));
     }
     return this;
 };
 
-proto.before = function(what) {
-    for (var i = 0; i < this.length; ++i) {
+proto.before = function (what) {
+    for (let i = 0; i < this.length; ++i) {
         mutation.before(this[i], Dom.dom(what));
     }
     return this;
 };
 
-proto.after = function(what) {
-    for (var i = 0; i < this.length; ++i) {
+proto.after = function (what) {
+    for (let i = 0; i < this.length; ++i) {
         mutation.after(this[i], Dom.dom(what));
     }
     return this;
 };
 
-proto.remove = function() {
-    for (var i = 0; i < this.length; ++i) {
+proto.remove = function () {
+    for (let i = 0; i < this.length; ++i) {
         mutation.remove(this[i]);
     }
 };
 
-proto.replace = function(what) {
-    for (var i = 0; i < this.length; ++i) {
+proto.replace = function (what) {
+    for (let i = 0; i < this.length; ++i) {
         mutation.replace(this[i], Dom.dom(what));
     }
     return this;
 };
 
 // note, we don't do .find('*').remove() here for efficiency
-proto.empty = function() {
-    for (var i = 0; i < this.length; ++i) {
+proto.empty = function () {
+    for (let i = 0; i < this.length; ++i) {
         mutation.empty(this[i]);
     }
     return this;
 };
 
-proto.show = function() {
-    for (var i = 0; i < this.length; ++i) {
+proto.show = function () {
+    for (let i = 0; i < this.length; ++i) {
         this[i].style.display = this[i].org_display ? this[i].org_display : 'block';
     }
     return this;
 };
 
-proto.hide = function() {
-    for (var i = 0; i < this.length; ++i) {
+proto.hide = function () {
+    for (let i = 0; i < this.length; ++i) {
         this[i].org_display = this[i].style.display;
         this[i].style.display = 'none';
     }
@@ -980,11 +980,11 @@ proto.height = function (isouter) {
 
 proto.offset = function () {
     if (this.length) {
-        var ele = this[0];
-        var actualLeft = ele.offsetLeft;
-        var actualTop = ele.offsetTop;
-        var current = ele.offsetParent;
-        while (current !== null && current.tagName !== 'BODY'){
+        const ele = this[0];
+        let actualLeft = ele.offsetLeft;
+        let actualTop = ele.offsetTop;
+        let current = ele.offsetParent;
+        while (current !== null && current.tagName !== 'BODY') {
             actualLeft += current.offsetLeft;
             actualTop += current.offsetTop;
             current = current.offsetParent;

@@ -91,7 +91,6 @@ class RadioGroup extends BaseComponent {
             this.itemMap[ref.getValue()] = ref;
 
             if (ref.getValue() === this.state.value) {
-                console.log(111);
                 this._lastChecked = ref;
             }
         }

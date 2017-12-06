@@ -20,15 +20,15 @@ import {fromJS} from 'immutable';
 const getGrid = grids.getGrid;
 import './Select.less';
 
-class Option extends BaseComponent{
+class Option extends BaseComponent {
     static displayName = 'Option';
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
-        let {itemBind, value} = props;
+        const {itemBind, value} = props;
 
-        if(itemBind){
+        if (itemBind) {
             itemBind(value, this);
         }
 
@@ -37,33 +37,33 @@ class Option extends BaseComponent{
         });
     }
 
-    onSelect = (e)=>{
-        if(e && e.preventDefault){
+    onSelect = (e) => {
+        if (e && e.preventDefault) {
             e.preventDefault();
         }
-        if(e && e.stopPropagation){
+        if (e && e.stopPropagation) {
             e.stopPropagation();
         }
 
-        let {multi, disabled} = this.props;
-        if(disabled){
+        const {multi, disabled} = this.props;
+        if (disabled) {
             return false;
         }
 
-        if(multi){
+        if (multi) {
             this.setState({
                 active: !this.state.active
-            }, ()=>{
-                if(this.props.onClick){
+            }, () => {
+                if (this.props.onClick) {
                     this.props.onClick(this);
                 }
             });
-        }else{
-            if(!this.state.active){
+        } else {
+            if (!this.state.active) {
                 this.setState({
                     active: true
-                }, ()=>{
-                    if(this.props.onClick){
+                }, () => {
+                    if (this.props.onClick) {
                         this.props.onClick(this);
                     }
                 });
@@ -75,11 +75,11 @@ class Option extends BaseComponent{
      * 获取值
      * @return {[type]} [description]
      */
-    getValue(){
+    getValue () {
         return this.props.value;
     }
 
-    getText(){
+    getText () {
         return this.props.children || this.props.html;
     }
 
@@ -87,7 +87,7 @@ class Option extends BaseComponent{
      * 是否为空选项
      * @return {Boolean} [description]
      */
-    isEmptyOption(){
+    isEmptyOption () {
         return this.props.empty;
     }
 
@@ -95,7 +95,7 @@ class Option extends BaseComponent{
      * 是否选中
      * @return {Boolean} [description]
      */
-    isActive(){
+    isActive () {
         return this.state.active;
     }
 
@@ -103,13 +103,13 @@ class Option extends BaseComponent{
      * 设置选中状态
      * @param {[type]} active [description]
      */
-    setActive(active){
+    setActive (active) {
         this.setState({active});
     }
 
-    componentWillUnmount(){
-        let {itemUnBind} = this.props;
-        if(itemUnBind){
+    componentWillUnmount () {
+        const {itemUnBind} = this.props;
+        if (itemUnBind) {
             itemUnBind(this.props.value);
         }
     }
@@ -122,16 +122,16 @@ class Option extends BaseComponent{
         }
     }
 
-    render(){
-        let {html, children, disabled} = this.props;
-        let className = classNames('cm-select-option', {
+    render () {
+        const {html, children, disabled} = this.props;
+        const className = classNames('cm-select-option', {
             'cm-select-option-active': this.state.active,
             'cm-select-option-disabled': disabled
         });
 
         return (
             <li className={className} onClick={this.onSelect} style={{display: this.props.show ? 'block' : 'none'}}>
-                <a href="javascript:void(0)">
+                <a href='javascript:void(0)'>
                     {
                         html ? <span dangerouslySetInnerHTML={{__html: html}} /> : children
                     }
@@ -220,19 +220,19 @@ class Select extends BaseComponent {
         placeholder: PropTypes.string
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.sep = props.sep;
         this.orignData = props.data;
 
-        let data = this._rebuildData(props.data, props.value, props.valueField);
+        const data = this._rebuildData(props.data, props.value, props.valueField);
         this.data = data || [];
 
         this.addState({
             value: props.value,
             active: props.active,
-            data: data,
+            data,
             filterKey: ''
         });
 
@@ -249,7 +249,7 @@ class Select extends BaseComponent {
      * @param  {[type]} option [description]
      * @return {[type]}        [description]
      */
-    itemBind = (value, option)=>{
+    itemBind = (value, option) => {
         this.options[value] = option;
     }
 
@@ -258,7 +258,7 @@ class Select extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    itemUnBind = (value)=>{
+    itemUnBind = (value) => {
         delete this.options[value];
     }
 
@@ -271,18 +271,18 @@ class Select extends BaseComponent {
      * @returns {*}
      * @private
      */
-    _rebuildData(data){
+    _rebuildData (data) {
         if (!data) {
             return null;
         }
-        //生成一个新的数据， 防止后续操作影响到改数据
+        // 生成一个新的数据， 防止后续操作影响到改数据
         data = fromJS(data).toJS();
 
         // let defaultValues = defaultValue ? (defaultValue + '').split(this.sep) : [];
         if (Core.isArray(data)) {
-            let one = data[0];
+            const one = data[0];
             if (Core.isString(one)) {
-                return data.map(function(item){
+                return data.map((item) => {
                     return {id: item, text: item};
                 }, this);
             }
@@ -293,9 +293,9 @@ class Select extends BaseComponent {
             return null;
         }
         if (Core.isObject(data)) {
-            let ret = [];
-            for (var id in data) {
-                let item = {id: id, text: data[id]};
+            const ret = [];
+            for (const id in data) {
+                const item = {id, text: data[id]};
                 ret.push(item);
             }
 
@@ -311,30 +311,30 @@ class Select extends BaseComponent {
      * @returns {XML}
      * @private
      */
-    _renderValues(){
-        let values = this.state.value ? (this.state.value + '').split(this.sep) : [];
+    _renderValues () {
+        const values = this.state.value ? (`${this.state.value}`).split(this.sep) : [];
         let html = [];
-        let className = classNames('cm-select-value', {
+        const className = classNames('cm-select-value', {
             'cm-select-placeholder': !values.length && this.props.placeholder
         });
         if (values.length) {
             html = this.text;
         } else {
-            html.push(this.props.placeholder ? this.props.placeholder + '&nbsp;' : '&nbsp;');
+            html.push(this.props.placeholder ? `${this.props.placeholder}&nbsp;` : '&nbsp;');
         }
-        html = '<div class="cm-select-value-text">' + (html.join(this.sep) || '&nbsp;') + '</div>';
+        html = `<div class="cm-select-value-text">${html.join(this.sep) || '&nbsp;'}</div>`;
 
-        html = html + '<input type="hidden" class="' + (this.props.className || '') + '" name="' +
-            (this.props.name || '') + '" value="' + (this.state.value || '') + '">';
+        html = `${html}<input type="hidden" class="${this.props.className || ''}" name="${ 
+            this.props.name || ''}" value="${this.state.value || ''}">`;
 
 
         return (<span style={{maxWidth: this.props.maxWidth, minWidth: this.props.minWidth}} className={className} dangerouslySetInnerHTML={{__html: html}} />);
     }
 
-    _renderFilter(){
-        if(this.props.filter){
+    _renderFilter () {
+        if (this.props.filter) {
             return <Input onKeyUp={this.filter}></Input>;
-        }else{
+        } else {
             return null;
         }
     }
@@ -351,12 +351,12 @@ class Select extends BaseComponent {
      * @param option 选中的选项
      * @private
      */
-    _selectItem(option){
+    _selectItem (option) {
         let value = '';
-        //空选项
+        // 空选项
         if (option.isEmptyOption()) {
             if (!this.props.multi) {
-                if(this.lastSelectItem){
+                if (this.lastSelectItem) {
                     this.lastSelectItem.setActive(false);
                 }
                 this.lastSelectItem = option;
@@ -369,7 +369,7 @@ class Select extends BaseComponent {
                 this.text = this.getDisplayText();
             } else {
                 value = option.getValue();
-                if(this.lastSelectItem){
+                if (this.lastSelectItem) {
                     this.lastSelectItem.setActive(false);
                 }
                 this.lastSelectItem = option;
@@ -379,7 +379,7 @@ class Select extends BaseComponent {
         }
 
         this.setState({
-            value: value
+            value
         });
 
         if (this.props.onChange) {
@@ -393,10 +393,10 @@ class Select extends BaseComponent {
      * 获取显示内容
      * @return {[type]} [description]
      */
-    getDisplayText(){
-        let text = [];
-        for (let value in this.options) {
-            let option = this.options[value];
+    getDisplayText () {
+        const text = [];
+        for (const value in this.options) {
+            const option = this.options[value];
             if (option.isActive()) {
                 text.push(option.getText());
             }
@@ -409,10 +409,10 @@ class Select extends BaseComponent {
      * @method getSelectedValues
      * @returns {string}
      */
-    getSelectedValues(){
-        let values = [];
-        for (let value in this.options) {
-            let option = this.options[value];
+    getSelectedValues () {
+        const values = [];
+        for (const value in this.options) {
+            const option = this.options[value];
             if (option.isActive()) {
                 values.push(option.getValue());
             }
@@ -420,11 +420,11 @@ class Select extends BaseComponent {
         return values.join(this.sep);
     }
 
-    getValue(){
+    getValue () {
         return this.state.value;
     }
 
-    setValue(value){
+    setValue (value) {
         // let valueField = this.props.valueField;
         // let options = this.options;
         if (value === null || value === undefined || value === '') {
@@ -443,28 +443,28 @@ class Select extends BaseComponent {
      * @returns {*}
      * @private
      */
-    _renderOptions(){
-        let {textField, valueField, optionsTpl, choiceText, multi, hasEmptyOption} = this.props;
+    _renderOptions () {
+        const {textField, valueField, optionsTpl, choiceText, multi, hasEmptyOption} = this.props;
 
-        let data = this.state.data;
+        const data = this.state.data;
         if (!data) {
             return '';
         }
-        let ret = [];
+        const ret = [];
         if (!multi && hasEmptyOption) {
             ret.push(<Option key={-1} empty
                 itemBind={this.itemBind}
                 itemUnBind={this.itemUnBind}
-                value="___empty"
+                value='___empty'
                 multi={multi}
                 onClick={this._selectItem}>{choiceText}</Option>);
         }
         this.text = [];
-        data.forEach((item)=>{
-            let text = item[textField];
-            let value = item[valueField];
-            let active = this.isActive(value);
-            let show = text.indexOf(this.state.filterKey) !== -1;
+        data.forEach((item) => {
+            const text = item[textField];
+            const value = item[valueField];
+            const active = this.isActive(value);
+            const show = text.indexOf(this.state.filterKey) !== -1;
 
             let html = text;
             if (optionsTpl) {
@@ -484,7 +484,7 @@ class Select extends BaseComponent {
                 active={active}
             />);
 
-            if(active){
+            if (active) {
                 this.text.push(html);
             }
         });
@@ -497,8 +497,8 @@ class Select extends BaseComponent {
      * @param  {[type]}  value [description]
      * @return {Boolean}       [description]
      */
-    isActive(value){
-        let vs = this.state.value ? this.state.value.split(this.sep) : [];
+    isActive (value) {
+        const vs = this.state.value ? this.state.value.split(this.sep) : [];
         return vs.indexOf(value) !== -1;
     }
 
@@ -506,27 +506,27 @@ class Select extends BaseComponent {
      * 渲染子元素
      * @return {[type]} [description]
      */
-    getChildrenOptions(){
+    getChildrenOptions () {
         this.text = [];
-        return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+        return React.Children.map(this.props.children, (child) => {
+            const componentName = child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Option') {
-                let value = child.props.value;
-                let active = this.isActive(value);
-                let show = child.props.children.indexOf(this.state.filterKey) !== -1;
+                const value = child.props.value;
+                const active = this.isActive(value);
+                const show = child.props.children.indexOf(this.state.filterKey) !== -1;
                 if (active) {
                     this.text.push(child.props.children);
                 }
-                let props = Object.assign({}, child.props, {
+                const props = Object.assign({}, child.props, {
                     itemBind: this.itemBind,
                     itemUnBind: this.itemUnBind,
-                    active: active,
+                    active,
                     multi: this.props.multi,
                     onClick: this._selectItem,
                     key: value,
-                    show: show
+                    show
                 });
-                if(this.props.multi && child.props.empty){
+                if (this.props.multi && child.props.empty) {
                     return null;
                 }
                 if (child.props.empty) {
@@ -543,7 +543,7 @@ class Select extends BaseComponent {
      * ClickAway 点击别的地方的回调
      * @method componentClickAway
      */
-    componentClickAway() {
+    componentClickAway () {
         this.hideOptions();
     }
 
@@ -551,11 +551,11 @@ class Select extends BaseComponent {
      * 显示下拉框
      * @method showOptions
      */
-    showOptions = (e)=>{
+    showOptions = (e) => {
         if (this.props.readOnly || this.state.disabled) {
             return;
         }
-        if(this.props.filter && e.target == ReactDOM.findDOMNode(this.filterInputField)){
+        if (this.props.filter && e.target == ReactDOM.findDOMNode(this.filterInputField)) {
             return;
         }
         if (this.state.active && !this.props.multi) {
@@ -563,15 +563,15 @@ class Select extends BaseComponent {
             return;
         }
 
-        let options = ReactDOM.findDOMNode(this.refs.options);
+        const options = ReactDOM.findDOMNode(this.refs.options);
         options.style.display = 'block';
 
-        let container = Dom.closest(options, '.cm-select');
-        let offset = Dom.getOuterHeight(options) + 5;
-        let dropup = Dom.overView(container, offset);
+        const container = Dom.closest(options, '.cm-select');
+        const offset = Dom.getOuterHeight(options) + 5;
+        const dropup = Dom.overView(container, offset);
 
         Dom.withoutTransition(container, () => {
-            if(this._isMounted){
+            if (this._isMounted) {
                 this.setState({ dropup });
             }
         });
@@ -579,10 +579,10 @@ class Select extends BaseComponent {
         this.bindClickAway();
 
         setTimeout(() => {
-            if(this._isMounted){
+            if (this._isMounted) {
                 this.setState({ active: true });
             }
-            if(this.props.onShow){
+            if (this.props.onShow) {
                 this.props.onShow();
             }
             this.emit('show');
@@ -593,9 +593,9 @@ class Select extends BaseComponent {
      * 隐藏下拉框
      * @method hideOptions
      */
-    hideOptions = ()=>{
+    hideOptions = () => {
         this.setState({ active: false });
-        let options = ReactDOM.findDOMNode(this.refs.options);
+        const options = ReactDOM.findDOMNode(this.refs.options);
 
         this.unbindClickAway();
 
@@ -608,7 +608,7 @@ class Select extends BaseComponent {
             if (this.state.active === false) {
                 options.style.display = 'none';
             }
-            if(this.props.onHide){
+            if (this.props.onHide) {
                 this.props.onHide();
             }
             this.emit('hide');
@@ -621,16 +621,16 @@ class Select extends BaseComponent {
      * @param data 新值
      * @param value 默认值
      */
-    setData(data, value){
-        let valueField = this.props.valueField;
+    setData (data, value) {
+        const valueField = this.props.valueField;
         if (value !== undefined) {
             this.text = [];
         }
-        let val = value === undefined ? this.state.value : value;
+        const val = value === undefined ? this.state.value : value;
         this.orignData = data;
-        let newData = this._rebuildData(data, val, valueField);
+        const newData = this._rebuildData(data, val, valueField);
         this.data = newData;
-        if(this._isMounted){
+        if (this._isMounted) {
             this.setState({
                 data: newData,
                 value: val
@@ -642,11 +642,11 @@ class Select extends BaseComponent {
      * 添加选项
      * @param option
      */
-    addOption(option){
-        let data = this.state.data;
+    addOption (option) {
+        const data = this.state.data;
         data.push(option);
         this.setState({
-            data: data
+            data
         });
     }
 
@@ -655,16 +655,16 @@ class Select extends BaseComponent {
      * @param key
      * @param value
      */
-    removeOption(key, value){
-        let data = this.state.data;
-        data.forEach((item, index)=>{
+    removeOption (key, value) {
+        const data = this.state.data;
+        data.forEach((item, index) => {
             if (item[key] === value) {
                 data.splice(index, 1);
             }
         });
 
         this.setState({
-            data: data
+            data
         });
     }
 
@@ -673,8 +673,8 @@ class Select extends BaseComponent {
      * @param  {[type]}  url [description]
      * @return {Promise}     [description]
      */
-    async loadFromRemote(url){
-        let data = await fetch(url);
+    async loadFromRemote (url) {
+        const data = await fetch(url);
         this.setData(data);
 
         if (this.props.onDataLoaded) {
@@ -683,36 +683,36 @@ class Select extends BaseComponent {
         this.emit('dataLoaded');
     }
 
-    componentWillMount(){
+    componentWillMount () {
         if (this.props.url) {
             this.loadFromRemote(this.props.url);
         }
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
-        if(!this.props.multi){
-            for(let value in this.options){
-                let option = this.options[value];
-                if(option.isActive()){
+        if (!this.props.multi) {
+            for (const value in this.options) {
+                const option = this.options[value];
+                if (option.isActive()) {
                     this.lastSelectItem = option;
                 }
             }
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
     }
 
     componentWillReceiveProps (nextProps) {
-        let value = nextProps.value;
+        const value = nextProps.value;
         if (value !== this.props.value && value !== this.state.value) {
             this.setState({ value });
         }
     }
 
-    render(){
+    render () {
         let {className, style, grid, multi} = this.props;
         className = classNames('cm-select', getGrid(grid), {
             'cm-select-active': this.state.active,
@@ -721,16 +721,16 @@ class Select extends BaseComponent {
             'cm-select-hasEmptyOption': !multi && this.props.hasEmptyOption
         });
 
-        let filter = this._renderFilter();
-        let childrenOptions = this.getChildrenOptions();
-        let options = this._renderOptions();
-        let text = this._renderValues();
+        const filter = this._renderFilter();
+        const childrenOptions = this.getChildrenOptions();
+        const options = this._renderOptions();
+        const text = this._renderValues();
         return (
             <div className={className} style={style} onClick={this.showOptions}>
                 {text}
-                <span className="cm-select-cert" />
-                <div className="cm-select-options-wrap">
-                    <div ref="options" className="cm-select-options">
+                <span className='cm-select-cert' />
+                <div className='cm-select-options-wrap'>
+                    <div ref='options' className='cm-select-options'>
                         {filter}
                         <ul>{childrenOptions}{options}</ul>
                     </div>
@@ -740,7 +740,7 @@ class Select extends BaseComponent {
     }
 }
 
-Select = clickAway(Select);
+clickAway(Select);
 
 Select.Option = Option;
 
