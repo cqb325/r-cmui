@@ -17,6 +17,9 @@ import Dialog from '../src/components/Dialog';
 import FormControl from '../src/components/FormControl';
 import './App.css';
 import { setTimeout } from 'timers';
+import DateRange from './daterange/index';
+import SimpleListPage from './simpleListPage/index';
+import Form from './form/index';
 
 class Comp extends React.Component {
     displayName = 'Comp';
@@ -141,6 +144,10 @@ class Comp extends React.Component {
                     <FormControl type='text' name='asd' required label='asd'></FormControl>
                     <FormControl type='number' name='asd' required label='asd'></FormControl>
                 </Card>
+
+                <DateRange/>
+                <SimpleListPage/>
+                <Form/>
             </div>
         );
     }

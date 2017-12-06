@@ -26,6 +26,7 @@ import './FormControl.less';
  * @extend BaseComponent
  */
 class FormControl extends BaseComponent {
+    displayName = 'FormControl';
     static displayName = 'FormControl';
 
     static defaultProps = {
@@ -218,12 +219,12 @@ class FormControl extends BaseComponent {
      * @method onChange
      * @param value 当前的值
      */
-     onChange = (value, selectItem, option) => {
-         this.check(value);
-         if (this.props.onChange) {
-             this.props.onChange.apply(this, [value, selectItem, option]);
-         }
-     }
+    onChange = (value, selectItem, option) => {
+        this.check(value);
+        if (this.props.onChange) {
+            this.props.onChange.apply(this, [value, selectItem, option]);
+        }
+    }
 
     /**
      * 验证元素
@@ -231,85 +232,85 @@ class FormControl extends BaseComponent {
      * @param value {String} 元素的值
      * @returns {boolean} 是否通过
      */
-     check (value) {
-         if (!this.needValid()) {
-             return true;
-         }
+    check (value) {
+        if (!this.needValid()) {
+            return true;
+        }
 
-         if (value === undefined) {
-             value = this.item.getValue();
-         }
-         const rules = this.rules;
-         const messages = this.messages;
-         let rule;
-         let result;
+        if (value === undefined) {
+            value = this.item.getValue();
+        }
+        const rules = this.rules;
+        const messages = this.messages;
+        let rule;
+        let result;
 
-         if (!rules['required'] && (value === null || value === '' || value === undefined)) {
-             if (this.state.errorTip) {
-                 this.setState({errorTip: null});
-                 this.refs.tooltip.setTitle(null);
-                 this.refs.tooltip.hide();
-             }
-             return true;
-         }
+        if (!rules['required'] && (value === null || value === '' || value === undefined)) {
+            if (this.state.errorTip) {
+                this.setState({errorTip: null});
+                this.refs.tooltip.setTitle(null);
+                this.refs.tooltip.hide();
+            }
+            return true;
+        }
 
-         if (this.item.props['data-valueType'] === 'array') {
-             value = value ? value instanceof Array ? value : value.split(',') : [];
-         }
+        if (this.item.props['data-valueType'] === 'array') {
+            value = value ? value instanceof Array ? value : value.split(',') : [];
+        }
 
-         if (rules['required']) {
-             rule = { method: 'required', parameters: rules[ 'required' ] };
-             result = this.validByMethod(value, rule, messages);
-             if (result === false) {
-                 if (this._tipAuto) {
-                     this.refs.tooltip.show();
-                 }
-                 return false;
-             }
-         }
-         for (const method in rules) {
-             if (method === 'required' || method === 'remote') {
-                 continue;
-             }
-             rule = { method, parameters: rules[ method ] };
+        if (rules['required']) {
+            rule = { method: 'required', parameters: rules[ 'required' ] };
+            result = this.validByMethod(value, rule, messages);
+            if (result === false) {
+                if (this._tipAuto) {
+                    this.refs.tooltip.show();
+                }
+                return false;
+            }
+        }
+        for (const method in rules) {
+            if (method === 'required' || method === 'remote') {
+                continue;
+            }
+            rule = { method, parameters: rules[ method ] };
 
-             result = this.validByMethod(value, rule, messages);
-             if (result === false) {
-                 if (this._tipAuto) {
-                     this.refs.tooltip.show();
-                 }
-                 return false;
-             }
-         }
-         if (rules['remote']) {
-             let url = rules[ 'remote' ];
-             if (typeof url === 'function') {
-                 url = url();
-             } else {
-                 url = this._URLParse(url, {name: value});
-                 url = this._rebuildURL(url);
-             }
+            result = this.validByMethod(value, rule, messages);
+            if (result === false) {
+                if (this._tipAuto) {
+                    this.refs.tooltip.show();
+                }
+                return false;
+            }
+        }
+        if (rules['remote']) {
+            let url = rules[ 'remote' ];
+            if (typeof url === 'function') {
+                url = url();
+            } else {
+                url = this._URLParse(url, {name: value});
+                url = this._rebuildURL(url);
+            }
 
-             result = this.validByRemote(value, url, messages);
-             if (result === false) {
-                 if (this._tipAuto) {
-                     this.refs.tooltip.show();
-                 }
-                 return false;
-             }
-         }
+            result = this.validByRemote(value, url, messages);
+            if (result === false) {
+                if (this._tipAuto) {
+                    this.refs.tooltip.show();
+                }
+                return false;
+            }
+        }
 
-         if (this.props.onValid) {
-             this.props.onValid(value, true, this);
-         }
-         this.emit('valid', value, true, this);
+        if (this.props.onValid) {
+            this.props.onValid(value, true, this);
+        }
+        this.emit('valid', value, true, this);
 
-         this.setState({errorTip: null});
-         this.refs.tooltip.setTitle(null);
-         this.refs.tooltip.hide();
+        this.setState({errorTip: null});
+        this.refs.tooltip.setTitle(null);
+        this.refs.tooltip.hide();
 
-         return true;
-     }
+        return true;
+    }
 
     /**
      * 解析url
@@ -319,30 +320,30 @@ class FormControl extends BaseComponent {
      * @returns {{pathname: *, query: {}}}
      * @private
      */
-     _URLParse (url, otherParams) {
-         url = url.split('?');
-         const params = {};
+    _URLParse (url, otherParams) {
+        url = url.split('?');
+        const params = {};
 
-         if (url[1]) {
-             const parts = url[1].split('=');
-             if (parts.length) {
-                 parts.forEach((part) => {
-                     const pair = part.split('&');
-                     params[pair[0]] = pair[1];
-                 });
-             }
-         }
-         if (otherParams) {
-             for (const key in otherParams) {
-                 params[key] = otherParams[key];
-             }
-         }
+        if (url[1]) {
+            const parts = url[1].split('=');
+            if (parts.length) {
+                parts.forEach((part) => {
+                    const pair = part.split('&');
+                    params[pair[0]] = pair[1];
+                });
+            }
+        }
+        if (otherParams) {
+            for (const key in otherParams) {
+                params[key] = otherParams[key];
+            }
+        }
 
-         return {
-             pathname: url[0],
-             query: params
-         };
-     }
+        return {
+            pathname: url[0],
+            query: params
+        };
+    }
 
     /**
      * 重构url
@@ -350,15 +351,15 @@ class FormControl extends BaseComponent {
      * @returns {string}
      * @private
      */
-     _rebuildURL (url) {
-         const suffix = [];
-         if (url.query) {
-             for (const key in url.query) {
-                 suffix.push(`${key}=${url.query[key]}`);
-             }
-         }
-         return `${url.pathname}?${suffix.join('&')}`;
-     }
+    _rebuildURL (url) {
+        const suffix = [];
+        if (url.query) {
+            for (const key in url.query) {
+                suffix.push(`${key}=${url.query[key]}`);
+            }
+        }
+        return `${url.pathname}?${suffix.join('&')}`;
+    }
 
     /**
      * 远程验证字段
@@ -366,213 +367,217 @@ class FormControl extends BaseComponent {
      * @param url
      * @param messages
      */
-     validByRemote (value, url, messages) {
-         const remoteRet = Ajax.get(url);
+    validByRemote (value, url, messages) {
+        const remoteRet = Ajax.get(url);
 
-         let errorTip;
-         if (remoteRet && !remoteRet.success) {
-             errorTip = (messages && messages['remote']) ? messages['remote'] : Validation.messages['remote'];
-             if (this._isMounted) {
-                 this.setState({errorTip});
-                 this.refs.tooltip.setTitle(errorTip);
-             }
-             if (this.props.onValid) {
-                 this.props.onValid(value, remoteRet.success, this);
-             }
-             this.emit('valid', value, remoteRet.success, this);
-         }
+        let errorTip;
+        if (remoteRet && !remoteRet.success) {
+            errorTip = (messages && messages['remote']) ? messages['remote'] : Validation.messages['remote'];
+            if (this._isMounted) {
+                this.setState({errorTip});
+                this.refs.tooltip.setTitle(errorTip);
+            }
+            if (this.props.onValid) {
+                this.props.onValid(value, remoteRet.success, this);
+            }
+            this.emit('valid', value, remoteRet.success, this);
+        }
 
-         return remoteRet.success;
-     }
+        return remoteRet.success;
+    }
 
-     validByMethod (value, rule, messages) {
-         const method = rule.method;
-         if (!Validation.methods[ method ]) {
-             console.error(`验证中缺少${method}方法`);
-             return;
-         }
-         const result = Validation.methods[ method ].call(this, value, rule.parameters);
-         let errorTip;
-         if (result === false) {
-             errorTip = (messages && messages[method]) ? messages[method] : Validation.messages[method];
-             if (typeof errorTip === 'function') {
-                 errorTip = errorTip(rule.parameters);
-             }
-             this.setState({errorTip});
-             this.refs.tooltip.setTitle(errorTip);
-             if (this.props.onValid) {
-                 this.props.onValid(value, result, this);
-             }
-             this.emit('valid', value, result, this);
-         }
+    validByMethod (value, rule, messages) {
+        const method = rule.method;
+        if (!Validation.methods[ method ]) {
+            console.error(`验证中缺少${method}方法`);
+            return;
+        }
+        const result = Validation.methods[ method ].call(this, value, rule.parameters);
+        let errorTip;
+        if (result === false) {
+            errorTip = (messages && messages[method]) ? messages[method] : Validation.messages[method];
+            if (typeof errorTip === 'function') {
+                errorTip = errorTip(rule.parameters);
+            }
+            this.setState({errorTip});
+            this.refs.tooltip.setTitle(errorTip);
+            if (this.props.onValid) {
+                this.props.onValid(value, result, this);
+            }
+            this.emit('valid', value, result, this);
+        }
 
-         return result;
-     }
+        return result;
+    }
 
     /**
      * 获取表单元素
      * @method getReference
      * @returns {*}
      */
-     getReference () {
-         return this.refs['formItem'];
-     }
+    getReference () {
+        return this.refs['formItem'];
+    }
 
-     componentDidMount () {
-         this._isMounted = true;
-         this.item = this.refs['formItem'];
-         if (this.props['itemBind'] && this.isFormItem()) {
-             this.props['itemBind']({
-                 ref: this,
-                 name: this.props.name,
-                 isFormItem: this.isFormItem()
-             });
-         }
-     }
+    componentDidMount () {
+        this._isMounted = true;
+        this.item = this.refs['formItem'];
+        if (this.props['itemBind'] && this.isFormItem()) {
+            this.props['itemBind']({
+                ref: this,
+                name: this.props.name,
+                isFormItem: this.isFormItem()
+            });
+        }
+    }
 
     /**
      * 是否验证通过
      * @method isValid
      * @return {boolean} 是否验证通过
      */
-     isValid () {
-         return !this.state.errorTip;
-     }
+    isValid () {
+        return !this.state.errorTip;
+    }
 
     /**
      * 获取值
      * @method getValue
      * @returns {String} 字段的值
      */
-     getValue () {
-         if (this.item.getValue) {
-             return this.item.getValue();
-         }
-     }
+    getValue () {
+        if (this.item.getValue) {
+            return this.item.getValue();
+        }
+    }
 
     /**
      * 设置值
      * @method setValue
      * @param value
      */
-     setValue (value) {
-         if (this.item.setValue) {
-             this.item.setValue(value);
-         }
-     }
+    setValue (value) {
+        if (this.item.setValue) {
+            this.item.setValue(value);
+        }
+    }
 
     /**
      * 获取表单名称
      * @method getName
      * @return {String}  表单名称
      */
-     getName () {
-         return this._name;
-     }
+    getName () {
+        return this._name;
+    }
 
     /**
      * 是否为表单元素
      * @method isFormItem
      * @return {boolean} 是否为表单元素
      */
-     isFormItem () {
-         return this._isFormItem;
-     }
+    isFormItem () {
+        return this._isFormItem;
+    }
 
     /**
      * 设置错误信息
      * @method setErrorTip
      * @param msg {String} 错误信息
      */
-     setErrorTip (msg) {
-         this.setState({errorTip: msg});
-         this.refs.tooltip.setTitle(msg);
-     }
+    setErrorTip (msg) {
+        this.setState({errorTip: msg});
+        this.refs.tooltip.setTitle(msg);
+    }
 
     /**
      * 动态设置验证规则
      * @param rule
      * @param ruleArgs
      */
-     setRule (rule, ruleArgs) {
-         this.rules[rule] = ruleArgs;
-     }
+    setRule (rule, ruleArgs) {
+        this.rules[rule] = ruleArgs;
+    }
 
     /**
      * 动态设置验证提示消息
      * @param rule
      * @param message
      */
-     setMessage (rule, message) {
-         this.messages[rule] = message;
-     }
+    setMessage (rule, message) {
+        this.messages[rule] = message;
+    }
 
-     componentWillUnmount () {
-         this._isMounted = false;
+    componentWillUnmount () {
+        this._isMounted = false;
 
-         this.item = this.refs['formItem'];
-         if (this.props['itemUnBind'] && this.isFormItem()) {
-             this.props['itemUnBind'](this.props.name);
-         }
-     }
+        this.item = this.refs['formItem'];
+        if (this.props['itemUnBind'] && this.isFormItem()) {
+            this.props['itemUnBind'](this.props.name);
+        }
+    }
 
-     render () {
-         let {
-             label,
-             labelGrid,
-             type,
-             layout,
-             className,
-             style,
-             required,
-             tipTheme,
-             labelWidth
-         } = this.props;
+    render () {
+        let {
+            label,
+            labelGrid,
+            type,
+            layout,
+            className,
+            style,
+            required,
+            tipTheme,
+            labelWidth
+        } = this.props;
+        //  console.log(layout);
 
-         className = classNames('cm-form-group', className, {
-             'cm-form-group-inline': layout === 'inline',
-             'cm-form-group-invalid': this.state.errorTip
-         });
+        className = classNames('cm-form-group', className, {
+            [`cm-form-group-${layout}`]: layout,
+            'cm-form-group-invalid': this.state.errorTip
+        });
 
-         const items = this._getControl(type);
+        const items = this._getControl(type);
 
-         const customChildren = this._renderChildren();
+        const customChildren = this._renderChildren();
 
-         const labelClass = classNames('cm-form-label', {
-             'cm-form-label-required': required || this.required
-         });
+        const labelClass = classNames('cm-form-label', {
+            'cm-form-label-required': required || this.required
+        });
 
-         if (type === 'hidden') {
-             return (
-                 <div className={className} style={style}>
-                     {items}
-                     {customChildren}
-                 </div>
-             );
-         }
+        if (type === 'hidden') {
+            return (
+                <div className={className} style={style}>
+                    {items}
+                    {customChildren}
+                </div>
+            );
+        }
 
-         let labelEle = null;
-         if (label) {
-             if (label === '&nbsp;') {
-                 label = ' ';
-             }
-             const labelStyle = {};
-             if (labelWidth != undefined) {
-                 labelStyle['width'] = labelWidth;
-             }
-             labelEle = <Label className={labelClass} grid={labelGrid} style={labelStyle}>{label}</Label>;
-         }
-         return (
-             <div className={className} style={style}>
-                 {labelEle}
-                 <Tooltip theme={tipTheme} className={'error-tip'}
-                     align={this._tipAlign} ref='tooltip' title={this.state.errorTip}>
-                     {items}
-                     {customChildren}
-                 </Tooltip>
-             </div>
-         );
-     }
+        let labelEle = null;
+        if (label) {
+            if (label === '&nbsp;') {
+                label = ' ';
+            }
+            const labelStyle = {};
+            if (labelWidth != undefined) {
+                labelStyle['width'] = labelWidth;
+            }
+            labelEle = <Label className={labelClass} grid={labelGrid} style={labelStyle}>{label}</Label>;
+        }
+        if (this.props.layout === 'stack-inline' && labelWidth) {
+            style = Object.assign({paddingLeft: labelWidth}, style);
+        }
+        return (
+            <div className={className} style={style}>
+                {labelEle}
+                <Tooltip theme={tipTheme} className={'error-tip'}
+                    align={this._tipAlign} ref='tooltip' title={this.state.errorTip}>
+                    {items}
+                    {customChildren}
+                </Tooltip>
+            </div>
+        );
+    }
 }
 
 FormControl.COMPONENTS = {
@@ -591,16 +596,20 @@ FormControl.register = function (component, type, valueType) {
             if (theType === 'number' || theType === 'integer' || theType === 'tel') {
                 valueType = 'number';
             }
-            FormControl.COMPONENTS[theType] = {
+            if (!FormControl.COMPONENTS[theType]) {
+                FormControl.COMPONENTS[theType] = {
+                    component,
+                    valueType: valueType || 'string'
+                };
+            }
+        });
+    } else {
+        if (!FormControl.COMPONENTS[type]) {
+            FormControl.COMPONENTS[type] = {
                 component,
                 valueType: valueType || 'string'
             };
-        });
-    } else {
-        FormControl.COMPONENTS[type] = {
-            component,
-            valueType: valueType || 'string'
-        };
+        }
     }
 };
 
@@ -628,7 +637,7 @@ FormControl.propTypes = {
      * @attribute label
      * @type {String}
      */
-    label: PropTypes.string,
+    label: PropTypes.any,
     /**
      * 文本框的提示
      * @attribute placeholder

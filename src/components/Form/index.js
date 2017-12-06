@@ -9,11 +9,11 @@ import BaseComponent from '../core/BaseComponent';
 import grids from '../utils/grids';
 import Button from '../Button/index';
 import PropTypes from 'prop-types';
-import './Form.less';
 import fetch from '../utils/fetch';
 import Row from './Row';
 import Promote from './Promote';
 const getGrid = grids.getGrid;
+import './Form.less';
 
 
 /**
@@ -23,21 +23,20 @@ const getGrid = grids.getGrid;
  * @extend BaseComponent
  */
 class Form extends BaseComponent {
-    static displayName = 'Form';
+    displayName = 'Form';
 
     static defaultProps = {
-        useDefaultSubmitBtn: true,
-        submitTheme: 'primary'
+        useDefaultSubmitBtn: false,
+        submitTheme: 'primary',
+        layout: 'inline'
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.action = props.action;
         this.method = props.method;
         this.target = props.target;
-        // 是否使用默认提交按钮
-        this.useDefaultSubmitBtn = props.useDefaultSubmitBtn;
 
         this.items = {};
 
@@ -51,9 +50,9 @@ class Form extends BaseComponent {
      * @method isValid
      * @returns {boolean} 是否验证通过
      */
-    isValid(){
-        for (let name in this.items) {
-            let control = this.items[name];
+    isValid () {
+        for (const name in this.items) {
+            const control = this.items[name];
 
             if (!control.ref.check()) {
                 return false;
@@ -69,7 +68,7 @@ class Form extends BaseComponent {
      * @param name {String} 字段名称
      * @returns {*}
      */
-    getFormControl(name){
+    getFormControl (name) {
         return this.items[name].ref;
     }
 
@@ -79,7 +78,7 @@ class Form extends BaseComponent {
      * @param name {String} 字段名称
      * @returns {*}
      */
-    getItem(name){
+    getItem (name) {
         if (this.items[name]) {
             return this.items[name].ref.getReference();
         }
@@ -92,9 +91,15 @@ class Form extends BaseComponent {
      * @method itemBind
      * @param data 子元素数据
      */
-    itemBind = (data)=>{
+    itemBind = (data) => {
         if (data.name) {
             this.items[data.name] = data;
+            // if (this.props.data) {
+            //     const val = this.props.data[data.name];
+            //     if (data.ref.setValue) {
+            //         data.ref.setValue(val);
+            //     }
+            // }
         } else {
             console.log(data.ref, 'need a name property');
         }
@@ -105,7 +110,7 @@ class Form extends BaseComponent {
      * @method itemUnBind
      * @param name
      */
-    itemUnBind = (name)=>{
+    itemUnBind = (name) => {
         delete this.items[name];
     }
 
@@ -114,41 +119,68 @@ class Form extends BaseComponent {
      * @method renderChildren
      * @returns {*}
      */
-    renderChildren(){
-        return React.Children.map(this.props.children, (child)=>{
-            let componentName = (child && child.type && child.type.displayName) ? child.type.displayName : '';
+    renderChildren (ele) {
+        ele = ele || this;
+        const tipAlign = this.props.tipAlign ? this.props.tipAlign : (this.props.layout === 'stack' || this.props.layout === 'stack-inline') ? 'topRight' : 'right';
+        return React.Children.map(ele.props.children, (child) => {
+            const componentName = (child && child.type && child.type.displayName) ? child.type.displayName : '';
             if (componentName === 'FormControl' || componentName === 'Row') {
-                let props = Object.assign({
+                const props = Object.assign({
                     'itemBind': this.itemBind,
                     'itemUnBind': this.itemUnBind
                 }, child.props);
                 props.layout = this.props.layout ? this.props.layout : props.layout;
                 props.tipTheme = this.props.tipTheme ? this.props.tipTheme : props.tipTheme;
-                props.tipAlign = this.props.tipAlign ? this.props.tipAlign : props.tipAlign;
+                props.tipAlign = tipAlign;
                 props.tipAuto = this.props.tipAuto ? this.props.tipAuto : props.tipAuto;
                 props.labelWidth = this.props.labelWidth ? this.props.labelWidth : props.labelWidth;
+                if (componentName === 'FormControl') {
+                    props.value = this.props.data ? this.props.data[props.name] : props.value;
+                }
+                if (componentName === 'Row') {
+                    props.data = this.props.data;
+                }
                 return React.cloneElement(child, props);
             } else if (componentName === 'Promote') {
-                let props = Object.assign({
+                const props = Object.assign({
                     labelWidth: this.props.labelWidth ? this.props.labelWidth : child.props.labelWidth
                 }, child.props);
                 return React.cloneElement(child, props);
             } else {
-                return child;
+                if (child && child.props && child.props.children) {
+                    return React.cloneElement(child, child.props, this.renderChildren(child));
+                }   else {
+                    return child;
+                }
             }
         });
+    }
+
+    onSubmit = (event) => {
+        event.preventDefault();
+        if (this.props.onSubmit) {
+            const ret = this.props.onSubmit();
+            if (ret) {
+                this.submit();
+            }
+        }
+        const ret = this.emit('onSubmit');
+        if (ret) {
+            this.submit();
+        }
+        return false;
     }
 
     /**
      * 提交表单
      * @method submit
      */
-    submit = ()=>{
-        let {customParams, ajax} = this.props;
-        let method = this.method;
+    submit = () => {
+        const {customParams, ajax} = this.props;
+        const method = this.method;
         if (this.isValid()) {
             if (ajax) {
-                let params = customParams ? customParams() : this.getFormParams();
+                const params = customParams ? customParams() : this.getFormParams();
                 this.submitData(params);
             } else if (method === 'custom') {
                 if (this.props.submit) {
@@ -161,13 +193,40 @@ class Form extends BaseComponent {
     }
 
     /**
+     * 重置表单
+     * 但是有初始值的control会被设置成 ''，
+     * 最好父组件设置一个初始化的对象
+     */
+    reset () {
+        for (const name in this.items) {
+            const item = this.items[name];
+            if (item.ref.setValue) {
+                item.ref.setValue('');
+            }
+        }
+    }
+
+    /**
+     * 设置表单初始值
+     */
+    setData (data) {
+        for (const name in this.items) {
+            const item = this.items[name];
+            const val = data[name];
+            if (item.ref.setValue && val != undefined) {
+                item.ref.setValue(val);
+            }
+        }
+    }
+
+    /**
      * ajax 提交数据
      * @param {any} params
      * @memberof Form
      */
-    async submitData(params){
-        let res = await fetch(this.action, params, this.props.method, this.props.onError);
-        if(this.props.onSuccess){
+    async submitData (params) {
+        const res = await fetch(this.action, params, this.props.method, this.props.onError);
+        if (this.props.onSuccess) {
             this.props.onSuccess(res);
         }
         this.emit('success', res);
@@ -178,7 +237,7 @@ class Form extends BaseComponent {
      * method getItems
      * @returns {{}|*}
      */
-    getItems(){
+    getItems () {
         return this.items;
     }
 
@@ -187,12 +246,12 @@ class Form extends BaseComponent {
      * @method getFormParams
      * @returns {{}}
      */
-    getFormParams(){
-        let params = {};
-        for (let name in this.items) {
-            let control = this.items[name];
-            if(control.ref.getValue){
-                let value = control.ref.getValue();
+    getFormParams () {
+        const params = {};
+        for (const name in this.items) {
+            const control = this.items[name];
+            if (control.ref.getValue) {
+                const value = control.ref.getValue();
                 params[name] = value;
             }
         }
@@ -205,26 +264,22 @@ class Form extends BaseComponent {
      * @method renderSubmit
      * @returns {XML}
      */
-    renderSubmit(){
-        if (this.useDefaultSubmitBtn) {
-            return (
-                <Button theme={this.props.submitTheme} onClick={this.submit}>{this.props.submitText || '保 存'}</Button>
-            );
-        } else {
-            return null;
-        }
+    renderSubmit () {
+        return (
+            <Button theme={this.props.submitTheme} onClick={this.submit}>{this.props.submitText || '保 存'}</Button>
+        );
     }
 
     render () {
-        let {className, grid, style, layout, encType} = this.props;
+        const {className, grid, style, layout, encType} = this.props;
 
-        className = classNames('cm-form', className, getGrid(grid), {
+        const clazzName = classNames('cm-form', className, getGrid(grid), {
             [`cm-form-${layout}`]: layout
         });
 
         if (this.props.component && this.props.component === 'div') {
             return (
-                <div ref="form" className={className} style={style}>
+                <div ref='form' className={clazzName} style={style}>
                     {this.renderChildren()}
                     <div style={{'textAlign': 'center'}}>
                         {this.renderSubmit()}
@@ -233,12 +288,22 @@ class Form extends BaseComponent {
             );
         } else {
             return (
-                <form ref="form" className={className} style={style} encType={encType} action={this.action}
-                    method={this.method || 'post'} target={this.target}>
+                <form ref='form' 
+                    className={clazzName}
+                    style={style}
+                    encType={encType}
+                    action={this.action}
+                    method={this.method || 'post'}
+                    target={this.target}
+                    onSubmit={this.onSubmit}
+                >
                     {this.renderChildren()}
-                    <div style={{'textAlign': 'center'}}>
-                        {this.renderSubmit()}
-                    </div>
+                    {
+                        this.props.useDefaultSubmitBtn
+                            ? <div style={{'textAlign': 'center'}}>
+                                {this.renderSubmit()}
+                            </div> : null
+                    }
                 </form>
             );
         }
@@ -293,7 +358,7 @@ Form.propTypes = {
      * @attribute layout
      * @type {String}
      */
-    layout: PropTypes.string,
+    layout: PropTypes.oneOf(['inline','stack','stack-inline']),
     /**
      * 是否使用默认的提交按钮
      * @attribute useDefaultSubmitBtn
