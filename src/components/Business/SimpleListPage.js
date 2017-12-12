@@ -177,10 +177,14 @@ class SimpleListPage extends React.Component {
 
         if (this.form) {
             if (this.form.displayName === 'Form') {
-                this.form.on('onSubmit', () => {
+                const button = document.createElement('button');
+                button.type = 'submit';
+                button.style.display = 'none';
+                this.form.refs.form.appendChild(button);
+                this.form.beforeSubmit = () => {
                     this.clickSearch();
                     return false;
-                });
+                };
             }
         }
     }

@@ -143,6 +143,7 @@ class Comp extends React.Component {
                 <Card>
                     <FormControl type='text' name='asd' required label='asd'></FormControl>
                     <FormControl type='number' name='asd' required label='asd'></FormControl>
+                    <FormControl type='checkbox' name='asd' required label='asd' data={[{id: '1', text: 'asd'},{id: '2', text: 'asd'},{id: '3', text: 'asd'},{id: '4', text: 'asd'}]}></FormControl>
                 </Card>
 
                 <DateRange/>
