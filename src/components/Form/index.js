@@ -158,6 +158,12 @@ class Form extends BaseComponent {
 
     onSubmit = (event) => {
         event.preventDefault();
+        if (this.beforeSubmit) {
+            if (this.beforeSubmit()) {
+                this.submit();
+            }
+            return false;
+        }
         if (this.props.onSubmit) {
             const ret = this.props.onSubmit();
             if (ret) {
@@ -165,7 +171,15 @@ class Form extends BaseComponent {
             }
         }
         const ret = this.emit('onSubmit');
-        if (ret) {
+        let r = false;
+        if (ret instanceof Array) {
+            ret.forEach((item) => {
+                r = r && item;
+            });
+        } else {
+            r = ret;
+        }
+        if (r) {
             this.submit();
         }
         return false;

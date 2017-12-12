@@ -154,7 +154,8 @@ class Select extends BaseComponent {
         valueField: 'id',
         sep: ',',
         choiceText: '请选择',
-        active: false
+        active: false,
+        value: ''
     };
 
     static propTypes = {
@@ -169,7 +170,7 @@ class Select extends BaseComponent {
          * @attribute value
          * @type {String}
          */
-        value: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         /**
          * 自定义class
          * @attribute className
@@ -433,7 +434,7 @@ class Select extends BaseComponent {
         }
         if (value != undefined) {
             this.text = this.getDisplayText();
-            this.setState({value});
+            this.setState({value: `${value}`});
         }
     }
 
@@ -498,7 +499,7 @@ class Select extends BaseComponent {
      * @return {Boolean}       [description]
      */
     isActive (value) {
-        const vs = this.state.value ? this.state.value.split(this.sep) : [];
+        const vs = this.state.value ? (`${this.state.value}`).split(this.sep) : [];
         return vs.indexOf(value) !== -1;
     }
 

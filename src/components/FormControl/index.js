@@ -563,7 +563,7 @@ class FormControl extends BaseComponent {
             }
             labelEle = <Label className={labelClass} style={labelStyle}>{label}</Label>;
         }
-        if (this.props.layout === 'stack-inline' && labelWidth) {
+        if (this.props.layout === 'stack-inline' && labelWidth && label) {
             style = Object.assign({paddingLeft: labelWidth}, style);
         }
         return (

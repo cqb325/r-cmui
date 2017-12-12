@@ -7,6 +7,7 @@ import React from 'react';
 import BaseComponent from '../core/BaseComponent';
 import classNames from 'classnames';
 import Input from '../Input/index';
+import FormControl from '../FormControl/index';
 import './Spinner.less';
 
 /**
@@ -146,9 +147,9 @@ class Spinner extends BaseComponent {
             [`cm-spinner-${this.props.size}`]: this.props.size
         });
         return (
-            <div className={className}>
+            <div className={className} style={this.props.style}>
                 <span className='cm-spinner-value'>
-                    <Input name={this.props.name} value={`${this.state.value  }`} onChange={this.inputChange} />
+                    <Input name={this.props.name} value={`${this.state.value}`} onChange={this.inputChange} />
                 </span>
                 <span className='cm-spinner-plus' onClick={this.plus}>
                     <i className='fa fa-angle-up' />
@@ -160,5 +161,7 @@ class Spinner extends BaseComponent {
         );
     }
 }
+
+FormControl.register(Spinner, 'spinner');
 
 export default Spinner;

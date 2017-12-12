@@ -17,6 +17,12 @@ class Label extends React.Component {
         this.setState({value});
     }
     
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
+            this.setState({value: nextProps.value});
+        }
+    }
+    
     render () {
         const className = classNames('cm-formcontrol-label', this.props.className);
         return (
