@@ -325,10 +325,10 @@ class FormControl extends BaseComponent {
         const params = {};
 
         if (url[1]) {
-            const parts = url[1].split('=');
+            const parts = url[1].split('&');
             if (parts.length) {
                 parts.forEach((part) => {
-                    const pair = part.split('&');
+                    const pair = part.split('=');
                     params[pair[0]] = pair[1];
                 });
             }
