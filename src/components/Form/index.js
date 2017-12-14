@@ -295,9 +295,13 @@ class Form extends BaseComponent {
             return (
                 <div ref='form' className={clazzName} style={style}>
                     {this.renderChildren()}
-                    <div style={{'textAlign': 'center'}}>
-                        {this.renderSubmit()}
-                    </div>
+                    {
+                        this.props.useDefaultSubmitBtn 
+                            ? <div style={{'textAlign': 'center'}}>
+                                {this.renderSubmit()}
+                            </div>
+                            : null
+                    }
                 </div>
             );
         } else {
