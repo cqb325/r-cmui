@@ -526,13 +526,15 @@ class FormControl extends BaseComponent {
             style,
             required,
             tipTheme,
-            labelWidth
+            labelWidth,
+            stick
         } = this.props;
         //  console.log(layout);
 
         className = classNames('cm-form-group', className, {
             [`cm-form-group-${layout}`]: layout,
             [`cm-form-group-${type}`]: type,
+            'cm-form-group-stick': stick,
             'cm-form-group-invalid': this.state.errorTip
         });
 
