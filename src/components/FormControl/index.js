@@ -532,6 +532,7 @@ class FormControl extends BaseComponent {
 
         className = classNames('cm-form-group', className, {
             [`cm-form-group-${layout}`]: layout,
+            [`cm-form-group-${type}`]: type,
             'cm-form-group-invalid': this.state.errorTip
         });
 
