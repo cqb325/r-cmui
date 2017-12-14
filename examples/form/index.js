@@ -9,6 +9,7 @@ import FormControl from '../../src/components/FormControl';
 import '../../src/components/Input';
 import '../../src/components/FormControl/Label';
 import '../../src/components/Switch';
+import '../../src/components/Spinner';
 
 class Comp extends React.Component {
     displayName = 'Comp';
@@ -134,14 +135,15 @@ class Comp extends React.Component {
 
                 <Form ajax layout='stack-inline' labelWidth={85} tipAlign='topRight'>
                     <FormControl name='name' type='hidden' label='hidden' placeholder='输入机房名称'/>
-                    <FormControl name='name' label='机房名称：' type='label' value={'哈哈哈哈'}>
-                    </FormControl>
+                    <FormControl name='name' label='机房名称：' type='label' value={'哈哈哈哈'}></FormControl>
                     <FormControl name='name' required type='text' label='机房名称：' placeholder='输入机房名称'/>
                     <FormControl name='name' required type='select' label='机房名称：' placeholder=''/>
                     <FormControl name='name' required type='textarea' height={80} label='机房名称：' placeholder='输入机房名称'/>
                     <FormControl name='name' required type='datetime' label='机房名称：' dateOnly/>
                     <FormControl name='name' required type='daterange' label='机房名称：'/>
                     <FormControl name='name' required type='inputnumber' label='机房名称：'/>
+                    <FormControl name='name' required type='checkbox' label='机房名称：' data={[{id: '0', text: '中文'},{id: '1', text: 'asd'}]}/>
+                    <FormControl name='name' required type='radio' label='机房名称：' data={[{id: '0', text: '中文'},{id: '1', text: 'asd'}]}/>
                 </Form>
 
                 <div style={{marginTop: 500}}></div>
