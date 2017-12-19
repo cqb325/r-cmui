@@ -14,8 +14,10 @@ import Events from '../utils/Events';
  * @constructor
  * @extend React.Component
  */
-class InnerTrigger extends PureComponent{
-    constructor(props){
+class InnerTrigger extends PureComponent {
+    displayName = 'InnerTrigger';
+    
+    constructor (props) {
         super(props);
 
         let popupVisible;
@@ -26,34 +28,34 @@ class InnerTrigger extends PureComponent{
         }
 
         this.state = {
-            popupVisible: popupVisible,
+            popupVisible,
             isEmpty: props.isEmpty
         };
 
         this.popup = props.popup;
     }
 
-    isClickToShow() {
+    isClickToShow () {
         const { action, showAction } = this.props;
         return action.indexOf('click') !== -1 || showAction.indexOf('click') !== -1;
     }
 
-    isClickToHide() {
+    isClickToHide () {
         const { action, hideAction } = this.props;
         return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
     }
 
-    isMouseEnterToShow() {
+    isMouseEnterToShow () {
         const { action, showAction } = this.props;
         return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
     }
 
-    isMouseLeaveToHide() {
+    isMouseLeaveToHide () {
         const { action, hideAction } = this.props;
         return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
     }
 
-    onClick(event){
+    onClick (event) {
         event.preventDefault();
         const nextVisible = !this.state.popupVisible && !this.state.isEmpty;
         if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
@@ -61,23 +63,23 @@ class InnerTrigger extends PureComponent{
         }
     }
 
-    onMouseEnter(){
+    onMouseEnter () {
         this.delaySetPopupVisible(true, this.props.mouseEnterDelay);
     }
 
-    onMouseLeave(){
+    onMouseLeave () {
         this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
     }
 
-    setPopupVisible(popupVisible){
+    setPopupVisible (popupVisible) {
         if (this._isMounted) {
             this.setState({popupVisible});
             this.popupRef.update(popupVisible);
         }
     }
 
-    delaySetPopupVisible(popupVisible, delay){
-        window.setTimeout(()=>{
+    delaySetPopupVisible (popupVisible, delay) {
+        window.setTimeout(() => {
             if (this._isMounted) {
                 if (!this.state.isEmpty) {
                     this.setState({popupVisible});
@@ -91,7 +93,7 @@ class InnerTrigger extends PureComponent{
      * 重新设置显示内容
      * @param title
      */
-    updateContent(title){
+    updateContent (title) {
         this.popupRef.setContent(title);
     }
 
@@ -99,34 +101,34 @@ class InnerTrigger extends PureComponent{
      * 空的内容不显示
      * @param empty
      */
-    contentIsEmpty(empty){
+    contentIsEmpty (empty) {
         this.setState({isEmpty: empty});
-        if (empty){
+        if (empty) {
             this.setState({ popupVisible: false });
             this.popupRef.update(false);
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
-        let p = this.container.parentNode;
+        const p = this.container.parentNode;
         p.removeChild(this.container);
 
-        let target = ReactDOM.findDOMNode(this.refs.target);
+        const target = ReactDOM.findDOMNode(this.refs.target);
         Events.off(target, 'click', this.onClick);
         Events.off(target, 'mouseenter', this.onMouseEnter);
         Events.off(target, 'mouseleave', this.onMouseLeave);
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
         this.container = document.createElement('div');
         document.body.appendChild(this.container);
-        let baseEle = ReactDOM.findDOMNode(this);
+        const baseEle = ReactDOM.findDOMNode(this);
 
-        let props = {
+        const props = {
             align: this.props.align,
-            baseEle: baseEle,
+            baseEle,
             offsetEle: this.props.offsetEle,
             visible: this.state.popupVisible,
             extraProps: this.props.extraProps,
@@ -134,14 +136,14 @@ class InnerTrigger extends PureComponent{
             onVisibleChange: this.props.onVisibleChange
         };
 
-        window.setTimeout(()=>{
-            ReactDOM.render(<Popup ref={(ref)=>{ this.popupRef = ref; }} {...props}>
+        window.setTimeout(() => {
+            ReactDOM.render(<Popup ref={(ref) => { this.popupRef = ref; }} {...props}>
                 {typeof this.popup === 'function' ? this.popup() : this.popup}
             </Popup>, this.container);
         }, 0);
     }
 
-    render(){
+    render () {
         const props = this.props;
         const children = props.children;
         const child = React.Children.only(children);
