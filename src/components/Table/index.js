@@ -27,7 +27,7 @@ class Table extends BaseComponent {
         sortMode: 'single'
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.orignData = List(props.data).toJS();
@@ -44,9 +44,9 @@ class Table extends BaseComponent {
         this._index = 1;
     }
 
-    _rebuildData(data){
-        if (data && data.length){
-            return data.map((item)=>{
+    _rebuildData (data) {
+        if (data && data.length) {
+            return data.map((item) => {
                 return {
                     key: item.id || UUID.v4(),
                     data: item
@@ -61,12 +61,12 @@ class Table extends BaseComponent {
      * @method setData
      * @param data {Array} 表体数据
      */
-    setData(data){
+    setData (data) {
         this.orignData = List(data).toJS();
         this.data = this._rebuildData(this.orignData);
         this._index = 1;
         this.setState({data: this.data});
-        //有checkbox将头部的清空
+        // 有checkbox将头部的清空
         this.refs.header.check(false);
     }
 
@@ -74,14 +74,14 @@ class Table extends BaseComponent {
      * 获取表格数据
      * @returns {*}
      */
-    getData(){
+    getData () {
         return this.state.data;
     }
 
     /**
      * 获取表头信息
      */
-    getColumns(){
+    getColumns () {
         return this.state.columns;
     }
 
@@ -89,9 +89,9 @@ class Table extends BaseComponent {
      * 添加行
      * @param row
      */
-    addRow(row){
-        let data = List(this.getData());
-        let newData = data.push({
+    addRow (row) {
+        const data = List(this.getData());
+        const newData = data.push({
             key: row.id || UUID.v4(),
             data: row
         }).toJS();
@@ -104,10 +104,10 @@ class Table extends BaseComponent {
      * 删除行
      * @param index
      */
-    removeRow(index){
-        let data = List(this.getData());
-        let newData = data.delete(index).toJS();
-        this.setState({data: newData}, ()=>{
+    removeRow (index) {
+        const data = List(this.getData());
+        const newData = data.delete(index).toJS();
+        this.setState({data: newData}, () => {
             this.refreshHeaderCheckBox(null, true);
         });
     }
@@ -117,12 +117,12 @@ class Table extends BaseComponent {
      * @param field
      * @param value
      */
-    removeRows(field, value){
-        let data = List(this.getData());
-        let newData = data.filter((item)=>{
+    removeRows (field, value) {
+        const data = List(this.getData());
+        const newData = data.filter((item) => {
             return item.data[field] !== value;
         }).toJS();
-        this.setState({data: newData}, ()=>{
+        this.setState({data: newData}, () => {
             this.refreshHeaderCheckBox(null, true);
         });
     }
@@ -132,13 +132,13 @@ class Table extends BaseComponent {
      * @method resetData
      * @param data {Object} {header: [], data: []}
      */
-    resetData(data){
-        if(data.data){
+    resetData (data) {
+        if (data.data) {
             this.orignData = List(data.data).toJS();
             this.data = this._rebuildData(this.orignData);
             this._index = 1;
             this.setState({columns: data.columns, data: this.data});
-            //有checkbox将头部的清空
+            // 有checkbox将头部的清空
             this.refs.header.check(false);
         }
     }
@@ -147,9 +147,9 @@ class Table extends BaseComponent {
      * 勾选所有的
      * @param checked
      */
-    checkedAll(checked){
-        for (let key in this.checkboxes) {
-            let row = this.checkboxes[key]['row'];
+    checkedAll (checked) {
+        for (const key in this.checkboxes) {
+            const row = this.checkboxes[key]['row'];
             row.check(checked);
         }
     }
@@ -159,10 +159,10 @@ class Table extends BaseComponent {
      * @param field
      * @param value
      */
-    checkRow(field, value){
-        for (let key in this.checkboxes) {
-            let row = this.checkboxes[key]['row'];
-            if (row.getData()[field] == value){
+    checkRow (field, value) {
+        for (const key in this.checkboxes) {
+            const row = this.checkboxes[key]['row'];
+            if (row.getData()[field] == value) {
                 row.check(true);
             }
         }
@@ -174,10 +174,10 @@ class Table extends BaseComponent {
      * @param field
      * @param value
      */
-    unCheckRow(field, value){
-        for (let key in this.checkboxes) {
-            let row = this.checkboxes[key]['row'];
-            if (row.getData()[field] == value){
+    unCheckRow (field, value) {
+        for (const key in this.checkboxes) {
+            const row = this.checkboxes[key]['row'];
+            if (row.getData()[field] == value) {
                 row.check(false);
             }
         }
@@ -188,7 +188,7 @@ class Table extends BaseComponent {
      * @param key
      * @param data
      */
-    bindCheckBox(key, data){
+    bindCheckBox (key, data) {
         this.checkboxes[key] = data;
     }
 
@@ -196,26 +196,26 @@ class Table extends BaseComponent {
      * 删除checkbox
      * @param key
      */
-    unBindCheckBox(key){
+    unBindCheckBox (key) {
         delete this.checkboxes[key];
     }
 
     /**
      * 获取所有勾选的数据
      */
-    getAllChecked(){
-        let data = []; let rows = [];
-        for (let key in this.checkboxes) {
-            let row = this.checkboxes[key]['row'];
-            if (row.isChecked()){
+    getAllChecked () {
+        const data = []; const rows = [];
+        for (const key in this.checkboxes) {
+            const row = this.checkboxes[key]['row'];
+            if (row.isChecked()) {
                 data.push(row.getData());
                 rows.push(row);
             }
         }
 
         return {
-            data: data,
-            rows: rows
+            data,
+            rows
         };
     }
 
@@ -224,13 +224,13 @@ class Table extends BaseComponent {
      * @param key
      * @param checked
      */
-    refreshHeaderCheckBox(key, checked){
+    refreshHeaderCheckBox (key, checked) {
         if (!checked) {
             this.refs.header.check(checked);
         } else {
             let isAllChecked = true;
-            for (let key in this.checkboxes) {
-                let row = this.checkboxes[key]['row'];
+            for (const key in this.checkboxes) {
+                const row = this.checkboxes[key]['row'];
                 if (!row.isChecked()) {
                     isAllChecked = false;
                     break;
@@ -248,24 +248,24 @@ class Table extends BaseComponent {
      * @param  {[type]} sorts  [description]
      * @return {[type]}        [description]
      */
-    onSort(column, type, sorts){
+    onSort (column, type, sorts) {
         if (this.props.onSort) {
             this.props.onSort(column, type, sorts);
         }
         this.emit('sort', column, type, sorts);
     }
 
-    render(){
-        let className = classNames('cm-table', this.props.className, {
+    render () {
+        const className = classNames('cm-table', this.props.className, {
             'table-bordered': this.props.bordered,
             'table-striped': this.props.striped,
             'table-hover': this.props.hover
         });
         return (
-            <div className="table-responsive">
+            <div className='table-responsive'>
                 <table className={className} style={this.props.style}>
-                    <Header sortMode={this.props.sortMode} ref="header" columns={this.state.columns} table={this} />
-                    <Body ref="body" data={this.state.data} columns={this.state.columns} table={this} />
+                    <Header sortMode={this.props.sortMode} ref='header' columns={this.state.columns} table={this} />
+                    <Body ref='body' data={this.state.data} columns={this.state.columns} table={this} />
                 </table>
             </div>
         );
