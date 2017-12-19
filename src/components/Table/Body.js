@@ -7,14 +7,14 @@ import Row from './Row';
  * @class Body
  * @extend BaseComponent
  */
-class Body extends BaseComponent{
+class Body extends BaseComponent {
     static displayName = 'Body';
 
     static defaultProps = {
         data: []
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -22,7 +22,7 @@ class Body extends BaseComponent{
         });
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
         if (nextProps.data !== this.props.data && nextProps.data !== this.state.data) {
             this.setState({
                 data: nextProps.data
@@ -30,16 +30,16 @@ class Body extends BaseComponent{
         }
     }
 
-    renderData(){
-        let data = this.state.data;
+    renderData () {
+        const data = this.state.data;
 
-        return data.map((row, index)=>{
+        return data.map((row, index) => {
             return <Row row={index} data={row.data} key={row.key} identify={row.key}
                 columns={this.props.columns} table={this.props.table} />;
         });
     }
 
-    render(){
+    render () {
         return (
             <tbody>
                 {this.renderData()}

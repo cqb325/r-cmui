@@ -10,7 +10,7 @@ import moment from 'moment';
  * @class Row
  * @extend BaseComponent
  */
-class Row extends BaseComponent{
+class Row extends BaseComponent {
     static displayName = 'Row';
 
     static defaultProps = {
@@ -18,7 +18,7 @@ class Row extends BaseComponent{
         identify: UUID.v4()
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -28,27 +28,27 @@ class Row extends BaseComponent{
         this.identify = props.identify;
     }
 
-    componentWillReceiveProps(){
-        // if (!shallowEqual(nextProps.data, this.state.data)) {
-        //     this.setState({
-        //         data: nextProps.data
-        //     });
-        // }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.data !== this.props.data && nextProps.data !== this.state.data) {
+            this.setState({
+                data: nextProps.data
+            });
+        }
     }
 
-    checkRow = (value, checked)=>{
+    checkRow = (value, checked) => {
         this.props.table.refreshHeaderCheckBox(this.identify, checked);
     }
 
-    check(checked){
-        if(this.refs.checkbox){
-            if(!this.refs.checkbox.isDisabled()){
+    check (checked) {
+        if (this.refs.checkbox) {
+            if (!this.refs.checkbox.isDisabled()) {
                 this.refs.checkbox.setChecked(checked);
             }
         }
     }
 
-    isChecked(){
+    isChecked () {
         if (this.refs.checkbox) {
             return this.refs.checkbox.isChecked();
         } else {
@@ -56,34 +56,34 @@ class Row extends BaseComponent{
         }
     }
 
-    getData(){
+    getData () {
         return this.state.data;
     }
 
-    componentDidMount(){
-        if (this.refs.checkbox){
+    componentDidMount () {
+        if (this.refs.checkbox) {
             this.props.table.bindCheckBox(this.identify, {checkbox: this.refs.checkbox, row: this});
         }
     }
 
-    componentWillUnmount(){
-        if (this.refs.checkbox){
+    componentWillUnmount () {
+        if (this.refs.checkbox) {
             this.props.table.unBindCheckBox(this.identify);
         }
     }
 
-    renderData(){
-        let data = this.state.data;
-        let table = this.props.table;
+    renderData () {
+        const data = this.state.data;
+        const table = this.props.table;
 
-        let columns = this.props.columns || [];
-        return columns.map((col, index)=>{
-            if (col.type === 'checkbox'){
+        const columns = this.props.columns || [];
+        return columns.map((col, index) => {
+            if (col.type === 'checkbox') {
                 return <td data-row={this.props.row} data-col={index} key={index}>
-                    <CheckBox key={UUID.v4()} ref="checkbox" checked={false} onChange={this.checkRow} />
+                    <CheckBox key={UUID.v4()} ref='checkbox' checked={false} onChange={this.checkRow} />
                 </td>;
             }
-            if (col.type === 'index'){
+            if (col.type === 'index') {
                 return <td data-row={this.props.row} data-col={index} key={index}>{table._index++}</td>;
             }
             let text = data[col.name];
@@ -91,14 +91,14 @@ class Row extends BaseComponent{
 
             let tip = '';
             if (React.isValidElement(text)) {
-                if (col.tip){
+                if (col.tip) {
                     tip = text.props.children;
                 }
             }
 
-            if (col.tip){
-                tip = text + '';
-                if (tip.charAt(0) === '<'){
+            if (col.tip) {
+                tip = `${text}`;
+                if (tip.charAt(0) === '<') {
                     tip = Dom.dom(tip).text();
                 }
             }
@@ -115,12 +115,12 @@ class Row extends BaseComponent{
      * @param data
      * @returns {*}
      */
-    formatData(text, col, data){
-        if (col.format){
+    formatData (text, col, data) {
+        if (col.format) {
             let formatFun;
-            if (typeof col.format === 'function'){
+            if (typeof col.format === 'function') {
                 formatFun = col.format;
-            } else if (typeof col.format === 'string'){
+            } else if (typeof col.format === 'string') {
                 formatFun = Row.Formats[col.format];
             }
             if (formatFun) {
@@ -131,7 +131,7 @@ class Row extends BaseComponent{
         return text;
     }
 
-    render(){
+    render () {
         return (
             <tr data-row={this.props.row}>
                 {this.renderData()}
@@ -149,7 +149,7 @@ Row.Formats = {
      * @returns {*}
      * @constructor
      */
-    DateFormat: function(value){
+    DateFormat (value) {
         if (value) {
             return moment(value).format('YYYY-MM-DD');
         } else {
@@ -165,7 +165,7 @@ Row.Formats = {
      * @returns {*}
      * @constructor
      */
-    DateTimeFormat: function(value){
+    DateTimeFormat (value) {
         if (value) {
             return moment(value).format('YYYY-MM-DD HH:mm:ss');
         } else {
