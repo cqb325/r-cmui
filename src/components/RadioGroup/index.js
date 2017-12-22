@@ -40,8 +40,6 @@ class RadioGroup extends BaseComponent {
             value: props.value
         });
 
-        this._lastChecked = null;
-
         this.items = [];
         this.itemMap = {};
     }
@@ -89,10 +87,6 @@ class RadioGroup extends BaseComponent {
         if (ref) {
             this.items.push(ref);
             this.itemMap[ref.getValue()] = ref;
-
-            if (ref.getValue() === this.state.value) {
-                this._lastChecked = ref;
-            }
         }
     }
 
@@ -124,21 +118,13 @@ class RadioGroup extends BaseComponent {
             return;
         }
 
-        if (this._lastChecked) {
-            this._lastChecked.setChecked(false, () => {
-                this.items.forEach((theItem) => {
-                    if (theItem.isChecked()) {
-                        this._lastChecked = theItem;
-                    }
-                });
-            });
-        } else {
-            this.items.forEach((theItem) => {
-                if (theItem.isChecked()) {
-                    this._lastChecked = theItem;
-                }
-            });
-        }
+        this.items.forEach((theItem) => {
+            if (theItem.getValue() == value) {
+                theItem.setChecked(true);
+            } else {
+                theItem.setChecked(false);
+            }
+        });
 
         this.handleTrigger(value);
     }
