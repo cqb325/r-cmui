@@ -334,7 +334,7 @@ class Select extends BaseComponent {
 
     _renderFilter () {
         if (this.props.filter) {
-            return <Input onKeyUp={this.filter}></Input>;
+            return <Input onKeyUp={this.filter} ref={(f) => { this.filterInputField = f ; }}></Input>;
         } else {
             return null;
         }
