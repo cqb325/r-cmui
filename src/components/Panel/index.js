@@ -171,7 +171,7 @@ class Panel extends BaseComponent {
 
         const headContent = this.renderHeader();
         return (
-            <Draggable handle='.cm-panel-title' disabled={!this.props.draggable} cancel='.cm-panel-tools,.cm-panel-head-text'>
+            <Draggable bounds='parent' handle='.cm-panel-title' disabled={!this.props.draggable} cancel='.cm-panel-tools,.cm-panel-head-text'>
                 <div className={className} style={style}>
                     <div className='cm-panel-title'>
                         {headContent}
