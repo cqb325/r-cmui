@@ -317,11 +317,9 @@ class Dialog extends BaseComponent {
             Dom.dom(this.container).hide();
         }
 
-        window.setTimeout(() => {
-            ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}>
-                {this.props.children}
-            </Panel>, this.container);
-        }, 0);
+        ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}>
+            {this.props.children}
+        </Panel>, this.container);
     }
 
     componentWillReceiveProps (nextProps) {

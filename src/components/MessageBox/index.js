@@ -233,10 +233,8 @@ class MessageBox extends BaseComponent {
         style = Object.assign({}, style);
         props.style = style;
 
-        window.setTimeout(() => {
-            ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}
-                content={this.state.msg} />, this.container);
-        }, 0);
+        ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}
+            content={this.state.msg} />, this.container);
     }
 
     render () {
