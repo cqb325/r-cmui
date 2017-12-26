@@ -152,6 +152,7 @@ class MessageBox extends BaseComponent {
         this.backdrop.setAttribute('data-count', count);
         if (count === 0) {
             this.backdrop.style.display = 'none';
+            Dom.dom(Dom.query('body')).removeClass('modal-open');
         }
     }
 
@@ -199,15 +200,24 @@ class MessageBox extends BaseComponent {
         let count = this.backdrop.getAttribute('data-count');
         count = count == null ? 1 : parseInt(count, 10) + 1;
         this.backdrop.setAttribute('data-count', count);
+        Dom.dom(Dom.query('body')).addClass('modal-open');
 
         window.setTimeout(() => {
             const ele = ReactDOM.findDOMNode(this.panel);
             Dom.dom(this.container).show();
-
-            const w = ele.clientWidth;
             const h = ele.clientHeight;
-            ele.style.marginLeft = `${-w / 2}px`;
-            ele.style.marginTop = `${-h / 2}px`;
+            const w = ele.clientWidth;
+            const viewWidth = document.documentElement.clientWidth;
+            const viewHeight = document.documentElement.clientHeight;
+            const pos = {
+                x: (viewWidth - w) / 2,
+                y: (viewHeight - h) / 2
+            };
+            if (h > viewHeight) {
+                pos.y = 10;
+            }
+            this.panel.setPosition(pos);
+            
             Dom.dom(this.container).show();
             velocity(this.container, 'fadeIn', { duration: 300 });
 

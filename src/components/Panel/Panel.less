@@ -38,6 +38,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  overflow: auto;
   z-index: 50000;
 }
 
@@ -51,4 +52,8 @@
   z-index: 49999;
   background: rgba(0,0,0,0.2);
   filter: alpha(opacity=20);
+}
+
+body.modal-open{
+  overflow: hidden;
 }
