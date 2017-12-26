@@ -64,7 +64,8 @@ class Panel extends BaseComponent {
 
         this.addState({
             title: props.title || '',
-            content: props.content || ''
+            content: props.content || '',
+            position: props.position || {}
         });
     }
 
@@ -164,6 +165,21 @@ class Panel extends BaseComponent {
         }
     }
 
+    setPosition (pos) {
+        this.setState({
+            position: pos
+        });
+    }
+
+    onDragStop = (event, data) => {
+        this.setState({
+            position: {
+                x: data.x,
+                y: data.y
+            }
+        });
+    }
+
     render () {
         let {className, style, grid} = this.props;
 
@@ -171,7 +187,13 @@ class Panel extends BaseComponent {
 
         const headContent = this.renderHeader();
         return (
-            <Draggable bounds='parent' handle='.cm-panel-title' disabled={!this.props.draggable} cancel='.cm-panel-tools,.cm-panel-head-text'>
+            <Draggable
+                bounds='.shadow-backdrop' 
+                handle='.cm-panel-title'
+                disabled={!this.props.draggable}
+                position={this.state.position}
+                onStop={this.onDragStop}
+                cancel='.cm-panel-tools,.cm-panel-head-text'>
                 <div className={className} style={style}>
                     <div className='cm-panel-title'>
                         {headContent}
