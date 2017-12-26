@@ -19,12 +19,12 @@ class Comp extends React.Component {
     render () {
         return (
             <Card className='mt-30'>
-                <FormControl name='name' stick type='text' label={<i className='fa fa-user'></i>} placeholder='输入机房名称'/>
-                <FormControl name='name' stick type='select' label={<i className='fa fa-cny'></i>} placeholder=''/>
+                <FormControl name='name' group type='text' label={<i className='fa fa-user'></i>} placeholder='输入机房名称'/>
+                <FormControl name='name' group type='select' label={<i className='fa fa-cny'></i>} placeholder=''/>
                 <Form ajax labelWidth={30} tipAlign='topRight' layout='stack-inline'>
-                    <FormControl stick name='name' required type='text' label={<i className='fa fa-user'></i>} placeholder='输入机房名称'/>
-                    <FormControl stick name='name' required type='select' label={<i className='fa fa-cny'></i>} placeholder=''/>
-                    <FormControl stick name='name' required type='textarea' height={80} label={<i className='fa fa-dollar'></i>} placeholder='输入机房名称'/>
+                    <FormControl group name='name' required type='text' label={<i className='fa fa-user'></i>} placeholder='输入机房名称'/>
+                    <FormControl group name='name' required type='select' label={<i className='fa fa-cny'></i>} placeholder=''/>
+                    <FormControl group name='name' required type='textarea' height={80} label={<i className='fa fa-dollar'></i>} placeholder='输入机房名称'/>
                 </Form>
 
                 <div style={{marginTop: 500}}></div>

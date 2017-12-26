@@ -80,9 +80,9 @@ class Tab extends BaseComponent {
             });
             return (
                 <li key={key} className={className} onClick={(e) => { this._selectTab(key, disabled, e); }}>
-                    {this.props.hasClose ? <a className="cm-tab-close" onClick={this._removeItem.bind(this, key)}>&times;</a> : null}
+                    {this.props.hasClose ? <a className='cm-tab-close' onClick={this._removeItem.bind(this, key)}>&times;</a> : null}
                     <EnhancedButton initFull touchRippleColor={'rgba(0, 0, 0, 0.1)'}>
-                        <a href="javascript:void(0)">{title}</a>
+                        <a href='javascript:void(0)'>{title}</a>
                     </EnhancedButton>
                 </li>
             );
@@ -131,14 +131,14 @@ class Tab extends BaseComponent {
         const contents = this._getContent();
         return (
             <div className={className} style={style}>
-                <ul className="cm-tab-header">
+                <ul className='cm-tab-header'>
                     {headers}
-                    <div className="cm-tab-tools">
+                    <div className='cm-tab-tools'>
                         {this.props.tools}
                     </div>
                 </ul>
-                <div className="cm-tab-content">
-                    <ScrollInner ref="scroll" activeKey={this.state.activeKey}>
+                <div className='cm-tab-content'>
+                    <ScrollInner ref='scroll' activeKey={this.state.activeKey}>
                         {contents}
                     </ScrollInner>
                 </div>
