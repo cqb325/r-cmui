@@ -129,9 +129,11 @@ class Comp extends React.Component {
                 </Card>
 
                 <Dialog ref='dialog' title='标题'>
-                    <Button onClick={() => {
-                        this.refs.tip.show();
-                    }}>显示</Button>
+                    <div style={{height: 400}}>
+                        <Button onClick={() => {
+                            this.refs.tip.show();
+                        }}>显示</Button>
+                    </div>
                 </Dialog>
 
                 <MessageBox ref='tip' title='提示' content='asdasdasdasdasdasdas' />

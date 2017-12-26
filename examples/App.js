@@ -20,7 +20,7 @@ import Date from '../src/components/DateTime/Date';
 
 
 class App extends BaseComponent {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.changeButtonProps = this.changeButtonProps.bind(this);
         this.data = [{ id: 1, text: 'phone' }, { id: 2, text: 'apple' }];
@@ -33,14 +33,14 @@ class App extends BaseComponent {
         };
     }
 
-    changeButtonProps() {
+    changeButtonProps () {
         this.setState({
             btnTheme: 'success',
             btnDisabled: false
         });
     }
 
-    componentDidMount() {
+    componentDidMount () {
         console.log(React);
     }
 
@@ -60,7 +60,7 @@ class App extends BaseComponent {
     }
 
     openMsgBox = () => {
-        this.refs.msgbox.show(<div><i className="fa fa-info" /> info message</div>, 'tip');
+        this.refs.msgbox.show(<div><i className='fa fa-info' /> info message</div>, 'tip');
     }
 
     openDialog = () => {
@@ -75,7 +75,7 @@ class App extends BaseComponent {
         });
     }
 
-    collapseMenu = (collapse)=>{
+    collapseMenu = (collapse) => {
         // this.refs.menu.setMinin(cllapse);
         this.setState({
             menuWidth: collapse ? 80 : 200,
@@ -87,24 +87,24 @@ class App extends BaseComponent {
         });
     }
 
-    renderMenu(){
-        let menuMin = this.state.menuMin;
-        return <Menu ref="menu" theme="dark" style={{width: this.state.menuWidth}}>
-            <SubMenu title={<span><FontIcon icon="save" className="mr-5"></FontIcon>{menuMin ? '' : 'Menu1'}</span>}>
-                <SubMenu title={<span><FontIcon icon="save" className="mr-5"></FontIcon>{'Menu11'}</span>}>
+    renderMenu () {
+        const menuMin = this.state.menuMin;
+        return <Menu ref='menu' style={{width: this.state.menuWidth}}>
+            <SubMenu title={<span><FontIcon icon='save' className='mr-5'></FontIcon>{menuMin ? '' : 'Menu1'}</span>}>
+                <SubMenu title={<span><FontIcon icon='save' className='mr-5'></FontIcon>{'Menu11'}</span>}>
                     <Item>aa1</Item>
                     <Item>aa2</Item>
                 </SubMenu>
                 <Item>asdasdasd</Item>
             </SubMenu>
-            <SubMenu title={<span><FontIcon icon="save" className="mr-5"></FontIcon>{menuMin ? '' : 'Menu2'}</span>}>
+            <SubMenu title={<span><FontIcon icon='save' className='mr-5'></FontIcon>{menuMin ? '' : 'Menu2'}</span>}>
                 <Item>aa1</Item>
                 <Item>aa2</Item>
             </SubMenu>
         </Menu>;
     }
 
-    close = ()=>{
+    close = () => {
         this.refs.sider.setCollapsed(true);
         this.setState({
             menuWidth: 60,
@@ -113,7 +113,7 @@ class App extends BaseComponent {
         this.refs.menu.setLayout('vertical');
     }
 
-    open = ()=>{
+    open = () => {
         this.refs.sider.setCollapsed(false);
         this.setState({
             menuWidth: 200,
@@ -122,8 +122,8 @@ class App extends BaseComponent {
         this.refs.menu.setLayout('inline');
     }
 
-    render() {
-        let treeData = [{
+    render () {
+        const treeData = [{
             id: 0,
             text: '中国',
             open: true,
@@ -139,25 +139,25 @@ class App extends BaseComponent {
             ]
         }];
         return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
+            <div className='App'>
+                <div className='App-header'>
+                    <img src={logo} className='App-logo' alt='logo' />
                     <h2>Welcome to React</h2>
                 </div>
-                <p className="App-intro">
+                <p className='App-intro'>
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
 
                 <Card>
                     <Layout>
-                        <Sider ref="sider" collapsedWidth={this.state.menuWidth}>
+                        <Sider ref='sider' collapsedWidth={this.state.menuWidth}>
                             <div style={{height: 64, background: '#414956'}}>LOGO</div>
                             {this.renderMenu()}
                         </Sider>
                         <Layout>
                             <Header>
-                                <FontIcon icon="dedent" style={{fontSize: 20, color: '#fff'}} onClick={this.close}></FontIcon>
-                                <FontIcon icon="indent" style={{fontSize: 20, color: '#fff'}} onClick={this.open}></FontIcon>
+                                <FontIcon icon='dedent' style={{fontSize: 20, color: '#fff'}} onClick={this.close}></FontIcon>
+                                <FontIcon icon='indent' style={{fontSize: 20, color: '#fff'}} onClick={this.open}></FontIcon>
                             </Header>
                             <Content style={{height: 200}}>asdasd</Content>
                             <Footer></Footer>
@@ -277,22 +277,22 @@ class App extends BaseComponent {
 
             <Select value="2" maxWidth={200} url='http://192.168.105.202:8415/mock/test/arr.html' placeholder='请选择' hasEmptyOption multi /> */}
                 </Card>
-                <Card title="sad">
+                <Card title='sad'>
                     <Switch onChange={(v) => {
                         console.log(v);
                     }}></Switch>
-                    <Switch size="small" />
-                    <Switch checkedText="on" unCheckedText="off" />
+                    <Switch size='small' />
+                    <Switch checkedText='on' unCheckedText='off' />
 
                     <TextArea autoHeight height={80} cols={30}></TextArea>
-                    <TextArea autoHeight height={80} width="100%" placeholder="enter some words"></TextArea>
+                    <TextArea autoHeight height={80} width='100%' placeholder='enter some words'></TextArea>
 
-                    <Upload name="file" /><br></br>
+                    <Upload name='file' /><br></br>
                     {/* <Uploadify url='xxx' multi={false}/>
             <Uploadify url='xxx' mode='grid' /> */}
                 </Card>
 
-                <Card title="Tooltip">
+                <Card title='Tooltip'>
                     {/* <Tooltip title='this is a tip' align="right"><a className="text-link">link</a></Tooltip>
 
             <FormControl name="username" label='username：' type='text' required />
@@ -305,7 +305,7 @@ class App extends BaseComponent {
             <FormControl name="radio" label='radio：' type='radio' required data={[{id: '1', text: 'phone'}]}/> */}
                 </Card>
 
-                <Card title="xxx">
+                <Card title='xxx'>
                     <Dropdown overlay={<ul><li>aaa</li></ul>}><a>asd</a></Dropdown>
 
                     {/* <Menu theme='black' style={{width: 200}}>
@@ -323,8 +323,8 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Spin.SVGSpin spinning ref="spin">
-                        <Slick effect="fade">
+                    <Spin.SVGSpin spinning ref='spin'>
+                        <Slick effect='fade'>
                             <Slick.Item><img src={pic1} /></Slick.Item>
                             <Slick.Item>
                                 <p>asdasd</p>
@@ -339,15 +339,15 @@ class App extends BaseComponent {
                     }} />
 
                     <Steps current={1}>
-                        <Steps.Step title="step1" description="step1 desc..."></Steps.Step>
-                        <Steps.Step title="step2" description="step2 desc..."></Steps.Step>
-                        <Steps.Step title="step3" description="step3 desc..."></Steps.Step>
+                        <Steps.Step title='step1' description='step1 desc...'></Steps.Step>
+                        <Steps.Step title='step2' description='step2 desc...'></Steps.Step>
+                        <Steps.Step title='step3' description='step3 desc...'></Steps.Step>
                     </Steps>
                 </Card>
 
                 <Card>
 
-                    <Tabs ref="tab" hasClose items={[{ title: 'tab1', key: 'tab1', content: <div>111</div> }, { text: 'tab2', key: 'tab2', content: <div>2222</div> }]}
+                    <Tabs ref='tab' hasClose items={[{ title: 'tab1', key: 'tab1', content: <div>111</div> }, { text: 'tab2', key: 'tab2', content: <div>2222</div> }]}
                         tools={<a>menu</a>}
                     >
                     </Tabs>
@@ -355,7 +355,7 @@ class App extends BaseComponent {
                     <Button onClick={() => {
                         this.refs.tab.add({
                             title: 'added',
-                            key: Math.random()+'',
+                            key: `${Math.random()}`,
                             content: <div>added tab</div>
                         });
                     }}>添加</Button>
@@ -366,7 +366,7 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Table ref="table"
+                    <Table ref='table'
                         bordered
                         columns={[{ type: 'checkbox' }, { name: 'field1', text: 'field1', sort: true }, { name: 'field2', text: 'field2', sort: true }]}
                         data={[{ field1: '111', field2: '222' }, { field1: '333', field2: '444' }]}
@@ -383,7 +383,7 @@ class App extends BaseComponent {
                         });
                     }}>添加数据</Button>
                     <Button onClick={() => {
-                        let length = this.refs.table.getData().length;
+                        const length = this.refs.table.getData().length;
                         this.refs.table.removeRow(length - 1);
                     }}>删除数据</Button>
                     <Button onClick={() => {
@@ -392,42 +392,42 @@ class App extends BaseComponent {
                 </Card>
 
                 <Card>
-                    <Progress value={50} strokeWidth={1} type="circle"></Progress>
+                    <Progress value={50} strokeWidth={1} type='circle'></Progress>
                     <Pagination current={1} total={50} pageSize={10} />
                     <br />
                     <br />
                     <br />
                     <br />
 
-                    <IconButton><FontIcon icon="save"></FontIcon></IconButton>
+                    <IconButton><FontIcon icon='save'></FontIcon></IconButton>
                 </Card>
 
                 <Card>
-                    <Form action="xxx" method="get" labelWidth={80} layout="stack-inline" ajax>
-                        <FormControl type="text" name="user" required label="User"/>
-                        <FormControl type="select" name="select" required label="Select" data={['1','2','3']}/>
-                        <FormControl type="checkbox" name="check" required label="check" data={[{id: '1', text: '1'},{id: '2', text: '2'}]}/>
-                        <FormControl type="datetime" name="datetime" required label="datetime"/>
-                        <FormControl type="daterange" name="daterange" required label="daterange"/>
-                        <FormControl type="textarea" name="address" required label="Text" height={70}/>
+                    <Form action='xxx' method='get' labelWidth={80} layout='stack-inline' ajax>
+                        <FormControl type='text' name='user' required label='User'/>
+                        <FormControl type='select' name='select' required label='Select' data={['1','2','3']}/>
+                        <FormControl type='checkbox' name='check' required label='check' data={[{id: '1', text: '1'},{id: '2', text: '2'}]}/>
+                        <FormControl type='datetime' name='datetime' required label='datetime'/>
+                        <FormControl type='daterange' name='daterange' required label='daterange'/>
+                        <FormControl type='textarea' name='address' required label='Text' height={70}/>
                         <Form.Row>
-                            <FormControl label="&nbsp;" type="text"/>
+                            <FormControl label='&nbsp;' type='text'/>
                             <Form.Promote italic>xxxxxxxxxx</Form.Promote>
                         </Form.Row>
                     </Form>
 
-                    <Badge count={111}><FontIcon icon="list" size="3x"></FontIcon></Badge>
-                    <Badge dot><FontIcon icon="list" size="3x"></FontIcon></Badge>
-                    <Badge status="success" text="success"></Badge>
+                    <Badge count={111}><FontIcon icon='list' size='3x'></FontIcon></Badge>
+                    <Badge dot><FontIcon icon='list' size='3x'></FontIcon></Badge>
+                    <Badge status='success' text='success'></Badge>
 
                     <Accordion>
-                        <Accordion.Item title="Ac1">
+                        <Accordion.Item title='Ac1'>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                         </Accordion.Item>
-                        <Accordion.Item title="Ac2">
+                        <Accordion.Item title='Ac2'>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
                             <p>asdadasdasdasd</p>
@@ -440,74 +440,74 @@ class App extends BaseComponent {
                     <br/>
                     <AutoComplete data={['a','aa','ab','b','bc']}></AutoComplete>
 
-                    <Clock value="16:12:50" secondStep={10}></Clock>
+                    <Clock value='16:12:50' secondStep={10}></Clock>
                     <br/>
-                    <Spinner max={12} step={2} size="small" loop></Spinner>
+                    <Spinner max={12} step={2} size='small' loop></Spinner>
                     <br/>
                     <br/>
 
-                    <TimePicker value="16:30:30" secondStep={5} onChange={(v)=>{
+                    <TimePicker value='16:30:30' secondStep={5} onChange={(v) => {
                         console.log(v);
                     }}></TimePicker>
 
-                    <div className="cm-datetime">
-                        <Date value="2017-09-22" format="YYYY-MM-DD" minuteStep={15} onSelectDate={(v, date)=>{
+                    <div className='cm-datetime'>
+                        <Date value='2017-09-22' format='YYYY-MM-DD' minuteStep={15} onSelectDate={(v, date) => {
                             console.log(v, date);
                         }}></Date>
                     </div>
 
-                    <DateTime dateOnly format="YYYY-MM-DD"></DateTime>
+                    <DateTime dateOnly format='YYYY-MM-DD'></DateTime>
 
-                    <DateRange clear shortcuts={['一周内']} showTime maxRange={7} endDate="2017-09-24 17:00" value="2017-09-24 15:00:00~2017-09-30 14:30:30" format="YYYY-MM-DD HH:00"></DateRange>
+                    <DateRange clear shortcuts={['一周内']} showTime maxRange={7} endDate='2017-09-24 17:00' value='2017-09-24 15:00:00~2017-09-30 14:30:30' format='YYYY-MM-DD HH:00'></DateRange>
                 </Card>
 
                 <Card>
-                    <Tree ref="tree" data={treeData} enableCheckbox enableSmartCheckbox></Tree>
+                    <Tree ref='tree' data={treeData} enableCheckbox enableSmartCheckbox></Tree>
 
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.selectItem('1');
                     }}>选中</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.openItem('1');
                     }}>打开</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.openAllItem();
                     }}>打开所有</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.closeItem('1');
                     }}>关闭</Button>
 
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.setItemText('1', '北京1');
                     }}>设置文字</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         console.log(this.refs.tree.getItemText('1'));
                     }}>获取文字</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         console.log(this.refs.tree.getOpenState('1'));
                     }}>获取打开状态</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         console.log(this.refs.tree.getSelectedItem('1'));
                     }}>当前选中节点</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         console.log(this.refs.tree.getAllChecked());
                     }}>所有勾选的节点</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.addItem('1', {
                             id: Math.random(),
                             text: 'asd'
                         });
                     }}>addItem</Button>
 
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.deleteChildItems('1');
                     }}>deleteChildItems</Button>
 
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.removeItem('1');
                     }}>removeItem</Button>
 
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tree.setData([
                             {
                                 id: '1',
@@ -522,20 +522,19 @@ class App extends BaseComponent {
                 </Card>
 
 
-
                 <Card>
-                    <Marqueen dir="down">
+                    <Marqueen dir='down'>
                         <p>1asdasdasdasdasdasdasdasdasdasd</p>
                         <p>2asdasdasdasdasdasdasdasdasdasd</p>
                         <p>3asdasdasdasdasdasdasdasdasdasd</p>
                         <p>4asdasdasdasdasdasdasdasdasdasd</p>
                     </Marqueen>
 
-                    <Marqueen dir="right">
-                        <div className="pull-left" style={{padding: 3}}>1asdasdasdasdasdasdasdasdasdasd</div>
-                        <div className="pull-left">2asdasdasdasdasdasdasdasdasdasd</div>
-                        <div className="pull-left">3asdasdasdasdasdasdasdasdasdasd</div>
-                        <div className="pull-left">4asdasdasdasdasdasdasdasdasdasd</div>
+                    <Marqueen dir='right'>
+                        <div className='pull-left' style={{padding: 3}}>1asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className='pull-left'>2asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className='pull-left'>3asdasdasdasdasdasdasdasdasdasd</div>
+                        <div className='pull-left'>4asdasdasdasdasdasdasdasdasdasd</div>
                     </Marqueen>
                 </Card>
 
@@ -563,22 +562,22 @@ class App extends BaseComponent {
                             {type: 'daterange', name: 'daterange', label: 'daterange'},
                             {type: 'row', className: 'stack-inline', children: [
                                 {type: 'textarea', label: '&nbsp;', name: 'textarea', height: 80},
-                                {type: 'promote', label: 'xxxxxxxxx'},
-                            ]},
+                                {type: 'promote', label: 'xxxxxxxxx'}
+                            ]}
                         ]
                     }} initData={{
                         select: 1,
                         daterange: '2017-10-10~2017-10-15'
                     }}></SimpleForm>
 
-                    <TableForm ref="tableform" columns={[
+                    <TableForm ref='tableform' columns={[
                         {name: 'name', text: '姓名', type: 'text'},
                         {name: 'select', text: '性别', type: 'select', props: {data: ['男', '女']}}
                     ]}></TableForm>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tableform.addRow();
                     }}>添加一行</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         this.refs.tableform.removeRow(1);
                     }}>删除一行</Button>
                 </Card>
