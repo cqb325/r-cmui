@@ -50,6 +50,7 @@ import DateRange from './components/DateRange/index';
 import Tree from './components/Tree/index';
 import Marqueen from './components/Marqueen/index';
 import Business from './components/Business/index';
+import Avatar from './components/Avatar/index';
 import './styles/theme.less';
 
 export {
@@ -104,5 +105,6 @@ export {
     DateRange,
     Tree,
     Marqueen,
-    Business
+    Business,
+    Avatar
 };
