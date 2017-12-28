@@ -1,0 +1,70 @@
+.cm-avatar {
+    font-family: "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.65);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    text-align: center;
+    background: #ccc;
+    color: #fff;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    & > * {
+        line-height: 32px;
+    }
+    &.cm-avatar-icon{
+        font-size: 18px;
+    }
+    &.cm-avatar-img{
+        img{
+            border-style: none;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+    &.cm-avatar-large{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 20px;
+        > * {
+            line-height: 40px;
+        }
+        &.cm-avatar-icon{
+            font-size: 24px;
+        }
+    }
+    &.cm-avatar-small{
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 12px;
+        & > * {
+            line-height: 24px;
+        }
+        &.cm-avatar-icon{
+            font-size: 14px;
+        }
+    }
+
+    &.cm-avatar-square{
+        border-radius: 4px;
+    }
+
+    .cm-avatar-string{
+        display: inline-block;
+        position: absolute;
+        transform-origin: 0;
+    }
+}
