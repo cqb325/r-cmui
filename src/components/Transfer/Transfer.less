@@ -1,0 +1,61 @@
+@import '../../styles/colors.less';
+
+.cm-transfer{
+    vertical-align: middle;
+    &.cm-transfer-filter{
+        .cm-transfer-list{
+            padding-top: 64px;
+            height: 214px;
+        }
+    }
+}
+.cm-transfer-ops{
+    vertical-align: middle;
+    margin: 0 15px;
+    .cm-button{
+        font-size: 14px;
+        margin-top: 5px;
+        padding: 0 10px;
+    }
+}
+.cm-transfer-list{
+    border: 1px solid @color-gray;
+    border-radius: 3px;
+    line-height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+
+    position: relative;
+    padding-top: 30px;
+    height: 180px;
+    min-width: 150px;
+}
+
+.cm-transfer-head{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 5px;
+    color: @color-normal;
+    border-bottom: 1px solid @color-gray;
+}
+
+.cm-transfer-filter-wrap{
+    position: absolute;
+    top: 30px;
+    height: 31px;
+    width: 100%;
+    padding: 1px 2px 3px 2px;
+    .cm-form-control{
+        height: 28px;
+        width: 100%;
+    }
+}
+
+.cm-transfer-body{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0 5px;
+}
