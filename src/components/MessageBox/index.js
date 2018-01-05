@@ -67,7 +67,8 @@ class MessageBox extends BaseComponent {
         cancelTheme: 'default',
         confirmIcon: 'check',
         cancelIcon: 'close',
-        draggable: true
+        draggable: true,
+        loading: false
     };
 
     constructor (props) {
@@ -76,7 +77,8 @@ class MessageBox extends BaseComponent {
         this.addState({
             title: props.title,
             msg: props.msg,
-            visibility: props.visibility
+            visibility: props.visibility,
+            loading: props.loading
         });
 
         this.confirm = this.confirm.bind(this);
@@ -87,7 +89,7 @@ class MessageBox extends BaseComponent {
         } else {
             const components = <span>
                 <Button theme={props.confirmTheme} raised
-                    icon={props.confirmIcon} onClick={this.confirm}>{props.confirmText}</Button>
+                    icon={props.confirmIcon} onClick={this.confirm} ref={(f) => this.okBtn = f}>{props.confirmText}</Button>
                 { props.type === 'confirm'
                     ? <Button theme={props.cancelTheme} raised icon={props.cancelIcon}
                         className='ml-10' onClick={this.cancle}>{props.cancelText}</Button>
@@ -120,6 +122,24 @@ class MessageBox extends BaseComponent {
      */
     getData () {
         return this.data;
+    }
+
+    /**
+     * 显示loading
+     */
+    showLoading () {
+        if (this.okBtn) {
+            this.okBtn.setLoading(true);
+        }
+    }
+
+    /**
+     * 隐藏loading
+     */
+    hideLoading () {
+        if (this.okBtn) {
+            this.okBtn.setLoading(false);
+        }
     }
 
     /**

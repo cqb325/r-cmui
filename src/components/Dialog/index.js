@@ -66,7 +66,8 @@ class Dialog extends BaseComponent {
         okButtonIcon: 'check',
         cancelButtonTheme: 'default',
         cancelButtonIcon: 'close',
-        draggable: true
+        draggable: true,
+        loadding: false
     };
 
     constructor (props) {
@@ -98,6 +99,24 @@ class Dialog extends BaseComponent {
      */
     getData () {
         return this.data;
+    }
+
+    /**
+     * 显示loading
+     */
+    showLoading () {
+        if (this.okBtn) {
+            this.okBtn.setLoading(true);
+        }
+    }
+
+    /**
+     * 隐藏loading
+     */
+    hideLoading () {
+        if (this.okBtn) {
+            this.okBtn.setLoading(false);
+        }
     }
 
     /**
@@ -304,7 +323,7 @@ class Dialog extends BaseComponent {
         props.style = style || {};
         if (useDefaultFooters) {
             props.footers = <div>
-                <Button theme={okButtonTheme} raised onClick={this.okBtnHandler} icon={okButtonIcon}>
+                <Button theme={okButtonTheme} raised onClick={this.okBtnHandler} icon={okButtonIcon} ref={(f) => this.okBtn = f}>
                     {okButtonText}
                 </Button>
                 <Button theme={cancelButtonTheme} raised onClick={this.cancelBtnHandler}
