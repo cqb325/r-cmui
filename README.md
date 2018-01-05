@@ -14,6 +14,8 @@ v2.0.3
 
 6、add List
 
+7、tree 添加禁用项
+
 v2.0.2
 
 1、fixed many bugs & stylrs
