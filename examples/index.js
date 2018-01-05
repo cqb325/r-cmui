@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import '../src/styles/theme.less';
 import '../src/styles/font-awesome.min.css';
-import App from './transfer/index';
+import App from './grid/index';
 
 ReactDOM.render(<App />, document.getElementById('root'));

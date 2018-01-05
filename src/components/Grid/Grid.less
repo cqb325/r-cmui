@@ -1,0 +1,159 @@
+@border-color: #e9e9e9;
+@color: rgba(0,0,0,.5);
+
+.cm-grid-wrap{
+  position: relative;
+  height: 100%;
+  font-size: 12px;
+  color: @color;
+  box-sizing: border-box;
+}
+.cm-grid-box{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border: 1px solid @border-color;
+}
+.cm-grid-pagination{
+    background: #f7f7f7;
+    padding: 5px 10px;
+    border: 1px solid @border-color;
+    margin-top: -1px;
+    .cm-pagination{
+        margin: 0;
+    }
+    .cm-pagination > ul li a, .cm-pagination > ul li .ellipse{
+        background: transparent;
+        border-color: transparent;
+    }
+    .cm-pagination .pagination-info{
+        float: right;
+    }
+}
+
+.cm-grid-head-wrap{
+    background: #f7f7f7;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid @border-color;
+}
+
+.cm-grid-head{
+    width: 32000px;
+    position: relative;
+    left: 0;
+    &:after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+.cm-grid-column{
+    float: left;
+    border-right: 1px solid transparent;
+    padding: 8px;
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    position: relative;
+}
+
+.cm-grid-scroll{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.cm-grid-scroll-box{
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.cm-grid-scroll-spacer-x{
+    height: 100%;
+}
+.cm-grid-scroll-content{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+.cm-grid-body-wrap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+.cm-grid-body{
+    width: 32000px;
+    position: relative;
+}
+
+.cm-grid-row{
+    border-bottom: 1px solid #e9e9e9;
+    white-space: nowrap;
+    user-select: none;
+    &:after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+&.cm-grid-row-selected {
+    background-color: rgba(0,0,0,.05);
+}
+
+.cm-grid-cell{
+    padding: 8px;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid transparent;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+}
+
+.cm-grid-border{
+    .cm-grid-cell{
+        border-right-color: @border-color;
+    }
+    .cm-grid-column{
+        border-right-color: @border-color;
+    }
+}
+
+.cm-grid-resize{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+.cm-grid-sort{
+    display: inline-block;
+    background: url(../../styles/imgs/sort.png) center center no-repeat;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    margin-left: 3px;
+}
+.cm-grid-sort-asc{
+    background: url(../../styles/imgs/sort-asc.png) center center no-repeat;
+}
+.cm-grid-sort-desc{
+    background: url(../../styles/imgs/sort-desc.png) center center no-repeat;
+}
+
+.cm-grid-cell-selected{
+    background-color: #EEF4FF;
+}

@@ -3,7 +3,16 @@
 v2.0.3
 
 1、TableForm refs混乱问题
+
 2、add Transfer
+
+3、fetch在get的时候添加时间戳，firefox缓存
+
+4、新增Grid组件
+
+5、uploadify文件类型错误提示
+
+6、add List
 
 v2.0.2
 
