@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Transfer from '../../src/components/Transfer/index';
+import List from '../../src/components/List';
+import Avatar from '../../src/components/Avatar';
 
 class Comp extends React.Component {
     displayName = 'Comp';
@@ -15,9 +17,23 @@ class Comp extends React.Component {
                 disabled: Math.random() < 0.3 ? true : false
             });
         }
+
+        const listData = [
+            {id: '1', avatar: <Avatar icon='user'/>, content: <div>
+                <h4>title</h4>
+                <p>Ant Design, a design language for background applications, is refined by Ant UED Team</p>
+            </div>, desc: 'desc'},
+            {id: '2', content: 'Racing car sprays burning fuel into crowd.', desc: <div><img width={272} alt='logo' src='https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'/></div>}
+        ];
         return (
             <div style={{padding: 50}}>
                 <Transfer data={data} transdered={transfered} filter/>
+
+                <div className='mt-30'>
+                    <List head='Head' data={listData} border size='large' spinning={false}
+                        actions={[<li className='text-link' key='edit' onClick={(data) => console.log(data)}>edit</li>,<li className='text-link' key='more'>more</li>]}
+                    />
+                </div>
             </div>
         );
     }
