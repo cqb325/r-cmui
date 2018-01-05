@@ -1,0 +1,110 @@
+.cm-list{
+    color: rgba(0, 0, 0, 0.65);
+}
+.cm-list-head,
+.cm-list-item{
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.cm-list-item{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.cm-list-border .cm-list-head,
+.cm-list-border .cm-list-item{
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom: 1px solid #e8e8e8;
+}
+.cm-list-border .cm-list-item:last-child{
+    border-bottom: none;
+}
+
+.cm-list-border{
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+}
+
+.cm-list-large{
+    .cm-list-head,
+    .cm-list-item{
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+}
+
+.cm-list-small{
+    .cm-list-head,
+    .cm-list-item{
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+}
+
+.cm-list-item-main{
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.cm-list-item-avatar{
+    margin-right: 16px;
+}
+.cm-list-item-content{
+    display: flex;
+    flex: 1;
+}
+.cm-list-item-desc{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0;
+    -ms-flex: 0;
+    flex: 0;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+.cm-list-item-action{
+    margin-left: 48px;
+    padding: 0;
+    flex: 0 0 auto;
+    list-style: none;
+    li{
+        display: inline-block;
+        padding: 0 8px;
+        cursor: pointer;
+        position: relative;
+        user-select: none;
+        &:after{
+            display: block;
+            position: absolute;
+            content: '';
+            top: 5px;
+            right: 0;
+            width: 100%;
+            height: 12px;
+            border-right: 1px solid #e8e8e8;
+        }
+        &:last-child:after{
+            border-right: none;
+        }
+    }
+}
