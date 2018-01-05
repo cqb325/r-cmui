@@ -23,8 +23,17 @@ class Grid extends React.Component {
     static propTypes = {
         className: PropTypes.string,
         style: PropTypes.object,
+        data: PropTypes.array,
         columns: PropTypes.array,
-        selectMode: PropTypes.oneOf(['row', 'cell', 'grid'])
+        selectMode: PropTypes.oneOf(['row', 'cell']),
+        source: PropTypes.oneOf(['dynamic']),
+        action: PropTypes.string,
+        border: PropTypes.bool,
+        total: PropTypes.number,
+        pageSize: PropTypes.number,
+        pageNum: PropTypes.number,
+        smart: PropTypes.bool,
+        onSelectRow: PropTypes.func
     };
 
     componentDidMount () {
@@ -111,7 +120,6 @@ class Grid extends React.Component {
                     data[i] = ret.data[index];
                     index++;
                 }
-                console.log(data);
                 
                 this.setState({
                     data,

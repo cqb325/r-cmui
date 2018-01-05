@@ -1,9 +1,17 @@
 import React from 'react';
 import DraggableCore from 'react-draggable';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 class Column extends React.Component {
     displayName = 'Column';
+
+    static propTypes = {
+        data: PropTypes.object,
+        onResizeColumn: PropTypes.func,
+        onSort: PropTypes.func,
+        index: PropTypes.number
+    };
 
     state = {
         width: this.props.data ? this.props.data.width : 100,

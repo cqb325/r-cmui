@@ -1,8 +1,19 @@
 import React from 'react';
 import Cell from './Cell';
+import PropTypes from 'prop-types';
 
 class Row extends React.Component {
     displayName = 'Row';
+
+    static propTypes = {
+        selectMode: PropTypes.string,
+        rowIndex: PropTypes.number,
+        onSelectCell: PropTypes.func,
+        onEnterCell: PropTypes.func,
+        onSelectRow: PropTypes.func,
+        columns: PropTypes.array,
+        data: PropTypes.object
+    };
 
     state = {
         selected: this.props.data._selected
