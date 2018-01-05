@@ -1,10 +1,22 @@
 import React from 'react';
 import Row from './Row';
 import Events from '../utils/Events';
-import Dom from '../utils/Dom';
+import PropTypes from 'prop-types';
 
 class Body extends React.Component {
     displayName = 'Body';
+
+    static propTypes = {
+        selectMode: PropTypes.string,
+        onSelectRow: PropTypes.func,
+        onScrollX: PropTypes.func,
+        data: PropTypes.array,
+        total: PropTypes.number,
+        pageSize: PropTypes.number,
+        pageNum: PropTypes.number,
+        columns: PropTypes.array,
+        headHeight: PropTypes.number
+    };
 
     state = {
         spacerWidth: 0,

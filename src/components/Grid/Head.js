@@ -1,8 +1,15 @@
 import React from 'react';
 import Column from './Column';
+import PropTypes from 'prop-types';
 
 class Head extends React.Component {
     displayName = 'Head';
+
+    static propTypes = {
+        onSort: PropTypes.func,
+        columns: PropTypes.array,
+        onResizeColumn: PropTypes.func
+    };
 
     columns = {};
 
