@@ -132,14 +132,24 @@ class Comp extends React.Component {
                     <div style={{height: 400}}>
                         <Button onClick={() => {
                             this.refs.tip.show();
+                            this.refs.tip.showLoading();
+
+                            window.setTimeout(() => {
+                                this.refs.tip.hideLoading();
+                            }, 2000);
                         }}>显示</Button>
                     </div>
                 </Dialog>
 
-                <MessageBox ref='tip' title='提示' content='asdasdasdasdasdasdas' />
+                <MessageBox ref='tip' title='提示' content='asdasdasdasdasdasdas'/>
 
                 <Button onClick={() => {
                     this.refs.dialog.open();
+                    this.refs.dialog.showLoading();
+
+                    window.setTimeout(() => {
+                        this.refs.dialog.hideLoading();
+                    }, 2000);
                 }}>显示</Button>
 
                 <Card>
