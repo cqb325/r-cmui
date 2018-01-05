@@ -27,7 +27,7 @@
   width: 20px;
   height: 20px;
   display: inline-block;
-  background-image: url(../../styles/imgs/tree/iconUncheckDis.gif);
+  // background-image: url(../../styles/imgs/tree/iconUncheckDis.gif);
   background-repeat: no-repeat;
   background-position: 50% 50%;
   vertical-align: top;
@@ -37,10 +37,18 @@
   user-select: none;
 }
 .tree_checkbox.checked{
-  background-image: url(../../styles/imgs/tree/iconCheckDis.gif);
+  // background-image: url(../../styles/imgs/tree/iconCheckDis.gif);
 }
 .tree_checkbox.dischecked{
-  background-image: url(../../styles/imgs/tree/iconCheckGray.gif);
+  .cm-checkbox-outter{
+    background-color: rgba(177,177,177,.8);
+    border-color: rgba(177,177,177,.8);
+  }
+  &.cm-checkbox.disabled.cm-checkbox-checked .cm-checkbox-outter{
+    background-color: rgba(177,177,177,.2) !important;
+    border-color: rgba(177,177,177,.2)!important;
+  }
+  // background-image: url(../../styles/imgs/tree/iconCheckGray.gif);
 }
 
 .tree_icon{
@@ -86,6 +94,12 @@
   display: inline-block;
   vertical-align: middle;
   white-space: nowrap;
+  &.node_disabled{
+    .tree_text{
+      text-decoration: line-through;
+      color: #ccc;
+    }
+  }
 }
 .icon_branch{
   background-image: url(../../styles/imgs/tree/folderClosed.gif);
