@@ -107,12 +107,14 @@ class Button extends BaseComponent {
         circle: false,
         active: false,
         animation: true,
-        loadding: false
+        loadding: false,
+        loading: false
     }
 
     state = {
         raised: this.props.raised,
-        active: this.props.active
+        active: this.props.active,
+        loading: this.props.loadding || this.props.loading
     };
 
     /**
@@ -124,7 +126,7 @@ class Button extends BaseComponent {
         if (this.props.disabled) {
             return;
         }
-        if (this.props.loadding) {
+        if (this.state.loading) {
             return;
         }
         if (this.props.onClick) {
@@ -167,6 +169,14 @@ class Button extends BaseComponent {
     }
 
     /**
+     * 设置loading
+     * @param {*} loading 
+     */
+    setLoading (loading) {
+        this.setState({loading});
+    }
+
+    /**
      * get is active
      * @return {[type]} [description]
      */
@@ -178,6 +188,19 @@ class Button extends BaseComponent {
         this._isMounted = true;
         if (this.props['itemBind']) {
             this.props['itemBind'](this);
+        }
+    }
+
+    componentWillReceiveProps (nextProps) {
+        if (this.state.loading !== nextProps.loadding && this.props.loadding !== nextProps.loadding) {
+            this.setState({
+                loading: nextProps.loadding
+            });
+        }
+        if (this.state.loading !== nextProps.loading && this.props.loading !== nextProps.loading) {
+            this.setState({
+                loading: nextProps.loading
+            });
         }
     }
 
@@ -240,7 +263,7 @@ class Button extends BaseComponent {
                 style={style}
                 target={target}>
                 {nodes}
-                {this.props.loadding ? <FontIcon icon='loading' font='cmui' spin className='ml-5' /> : null}
+                {this.state.loading ? <FontIcon icon='loading' font='cmui' spin className='ml-5' /> : null}
             </a>
         );
     }
