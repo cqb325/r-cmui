@@ -458,6 +458,7 @@ class Select extends BaseComponent {
                 itemUnBind={this.itemUnBind}
                 value='___empty'
                 multi={multi}
+                show={true}
                 onClick={this._selectItem}>{choiceText}</Option>);
         }
         this.text = [];
