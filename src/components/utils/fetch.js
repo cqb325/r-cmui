@@ -1,21 +1,26 @@
-export default async (url = '', data = {}, type = 'GET', fail)=>{
+export default async (url = '', data = {}, type = 'GET', fail) => {
     type = type.toUpperCase();
-    let dataStr = ''; //数据拼接字符串
+    let dataStr = ''; // 数据拼接字符串
     Object.keys(data).forEach(key => {
-        dataStr += key + '=' + data[key] + '&';
+        dataStr += `${key}=${data[key]}&`;
     });
     dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
     if (type === 'GET') {
         if (dataStr !== '') {
-            url = url + '?' + dataStr;
+            url = `${url}?${dataStr}`;
+        }
+        if (url.indexOf('?') > -1) {
+            url += `&_=${new Date().getTime()}`;
+        } else {
+            url += `?_=${new Date().getTime()}`;
         }
     }
 
-    let requestConfig = {
+    const requestConfig = {
         method: type,
         headers: {
             'Accept': 'application/json',
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         },
         mode: 'cors',
         cache: 'force-cache',
@@ -34,7 +39,7 @@ export default async (url = '', data = {}, type = 'GET', fail)=>{
         return responseJson;
     } catch (error) {
         console.error(error);
-        if(fail) {
+        if (fail) {
             fail(error);
         }
     }
