@@ -1,0 +1,129 @@
+@import '../../styles/colors.less';
+
+.cm-tag{
+    position: relative;
+    display: inline-block;
+    margin-right: 8px;
+    &.cm-tag-has-badge{
+        &:after{
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            border-radius: 50%;
+            background: @color-blue-light;
+            right: -2px;
+            top: 10px;
+            z-index: 2;
+        }
+        .cm-tag-content{
+            border-radius: 3px 0 0 3px;
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
+
+    &.cm-tag-primary{
+        .cm-tag-content{
+            color: #fff;
+            background-color: @color-blue;
+            border-color: @color-blue;
+        }
+    }
+
+    &.cm-tag-success{
+        .cm-tag-content{
+            color: #fff;
+            background-color: @color-success;
+            border-color: @color-success;
+        }
+    }
+
+    &.cm-tag-danger{
+        .cm-tag-content{
+            color: #fff;
+            background-color: @color-danger;
+            border-color: @color-danger;
+        }
+    }
+
+    &.cm-tag-warning{
+        .cm-tag-content{
+            color: #fff;
+            background-color: @color-warning;
+            border-color: @color-warning;
+        }
+    }
+
+    &.cm-tag-info{
+        .cm-tag-content{
+            color: #fff;
+            background-color: @color-info;
+            border-color: @color-info;
+        }
+    }
+}
+.cm-tag-content {
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.65);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    height: 26px;
+    line-height: 23px;
+    padding: 0 9px 0 8px;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    background: #fafafa;
+    font-size: 12px;
+    -webkit-transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    opacity: 1;
+    cursor: pointer;
+    white-space: nowrap;
+    &:hover{
+        opacity: 0.8;
+    }
+
+    i.cmui{
+        color: rgba(0, 0, 0, 0.45);
+        transition: all .3s;
+        font-size: 12px;
+        &:hover{
+            color: rgba(0, 0, 0, 0.85);
+        }
+    }
+
+
+    &.cm-tag-closing{
+        transform: scaleX(0);
+        transform-origin: 0 center;
+    }
+}
+.cm-tag-badge{
+    display: inline-block;
+    height: 26px;
+    line-height: 23px;
+    position: absolute;
+    z-index: 1;
+    left: 100%;
+    top: 0;
+    background: @color-blue-light;
+    border: 1px solid @color-blue-light;
+    color: #fff;
+    border-radius: 0 3px 3px 0;
+    // -webkit-transition: all 0.3s linear;
+    // transition: all 0.3s linear;
+    width: 4px;
+    overflow: hidden;
+    .cm-tag-badge-text{
+        display: inline-block;
+        padding: 0 3px;
+    }
+}
