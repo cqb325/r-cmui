@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Tag from '../../src/components/Tag';
+import Tags from '../../src/components/Tag/Tags';
 
 class Comp extends React.Component {
     displayName = 'Comp';
@@ -19,6 +20,10 @@ class Comp extends React.Component {
 
                 <Tag badge={160}>Desktop</Tag>
                 <Tag badge={10}>Desktop</Tag>
+
+                <div>
+                    <Tags data={[{id: '1', text: 'asd'},{id: '2', text: 'asd'},{id: '3', text: 'asd'}]} closable theme='primary'/>
+                </div>
             </div>
         );
     }
