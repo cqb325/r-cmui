@@ -16,6 +16,8 @@ v2.0.3
 
 7、tree 添加禁用项
 
+8、add Tag & Tags 
+
 v2.0.2
 
 1、fixed many bugs & stylrs
