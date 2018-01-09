@@ -134,6 +134,12 @@ class Body extends React.Component {
         this.onSpacerScroll();
 
         Events.on(this.content, 'mousewheel', (e) => {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
             const delta = e.wheelDelta;
             if (delta > 0) {
                 this.scrollUp();
