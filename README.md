@@ -18,6 +18,8 @@ v2.0.3
 
 8、add Tag & Tags 
 
+9、重设验证提示、setData之后进行验证
+
 v2.0.2
 
 1、fixed many bugs & stylrs
