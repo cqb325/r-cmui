@@ -216,6 +216,16 @@ class Form extends BaseComponent {
             const item = this.items[name];
             if (item.ref.setValue) {
                 item.ref.setValue('');
+                item.ref.setErrorTip('');
+            }
+        }
+    }
+
+    resetValid () {
+        for (const name in this.items) {
+            const item = this.items[name];
+            if (item.ref.setErrorTip) {
+                item.ref.setErrorTip('');
             }
         }
     }
@@ -231,6 +241,8 @@ class Form extends BaseComponent {
                 item.ref.setValue(val);
             }
         }
+
+        this.isValid();
     }
 
     /**
