@@ -255,15 +255,6 @@ class Table extends BaseComponent {
         this.emit('sort', column, type, sorts);
     }
 
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.data !== this.props.data && nextProps.data !== this.state.data) {
-            this.setState({
-                data: nextProps.data
-            });
-        }
-    }
-
     render () {
         const className = classNames('cm-table', this.props.className, {
             'table-bordered': this.props.bordered,
