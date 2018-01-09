@@ -7,8 +7,8 @@ const {SVGSpin} = Spin;
 
 import './List.less';
 
-class Comp extends React.Component {
-    displayName = 'Comp';
+class List extends React.Component {
+    displayName = 'List';
 
     static defaultProps = {
         spinning: false
@@ -16,7 +16,7 @@ class Comp extends React.Component {
 
     static propTypes = {
         head: PropTypes.any,
-        data: PropTypes.object,
+        data: PropTypes.any,
         actions: PropTypes.array,
         className: PropTypes.string,
         style: PropTypes.object,
@@ -60,4 +60,4 @@ class Comp extends React.Component {
         );
     }
 }
-export default Comp;
+export default List;
