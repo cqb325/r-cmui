@@ -486,8 +486,12 @@ class FormControl extends BaseComponent {
      * @param msg {String} 错误信息
      */
     setErrorTip (msg) {
-        this.setState({errorTip: msg});
-        this.refs.tooltip.setTitle(msg);
+        if (this._isMounted) {
+            this.setState({errorTip: msg});
+            if (this.refs.tooltip) {
+                this.refs.tooltip.setTitle(msg);
+            }
+        }
     }
 
     /**
