@@ -20,6 +20,10 @@ v2.0.3
 
 9、重设验证提示、setData之后进行验证
 
+10、MessageBox Dialog 添加showLoading、hideLoading 确认按钮可实现loading
+
+11、Menu优化
+
 v2.0.2
 
 1、fixed many bugs & stylrs
