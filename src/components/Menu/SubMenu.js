@@ -58,7 +58,7 @@ class SubMenu extends BaseComponent {
                 prefix: this.props.prefix,
                 index,
                 level: this.props.level + 1,
-                layout: this.props.layout
+                layout: this.state.layout
             });
             return React.cloneElement(child, props);
         });
@@ -82,7 +82,7 @@ class SubMenu extends BaseComponent {
         if (this.props.disabled) {
             return false;
         }
-        if (this.props.layout === 'vertical' || this.props.layout === 'horizontal') {
+        if (this.state.layout === 'vertical' || this.state.layout === 'horizontal') {
             this.collapse(true);
         }
     }
@@ -91,7 +91,7 @@ class SubMenu extends BaseComponent {
         if (this.props.disabled) {
             return false;
         }
-        if (this.props.layout === 'vertical' || this.props.layout === 'horizontal') {
+        if (this.state.layout === 'vertical' || this.state.layout === 'horizontal') {
             this.collapse(false);
         }
     }
@@ -100,7 +100,7 @@ class SubMenu extends BaseComponent {
         if (this.props.disabled) {
             return false;
         }
-        if (this.props.layout === 'horizontal' || this.props.layout === 'vertical') {
+        if (this.state.layout === 'horizontal' || this.state.layout === 'vertical') {
             return false;
         }
 
@@ -118,19 +118,10 @@ class SubMenu extends BaseComponent {
             this.props.onClick(this);
         }
 
-        if (this.props.layout === 'horizontal') {
-            if (collapse && this.state.collapsed) {
-                this.collapse(false);
-            }
-            if (!collapse && !this.state.collapsed) {
-                this.collapse(true);
-            }
+        if (this.state.collapsed) {
+            this.collapse(false);
         } else {
-            if (this.state.collapsed) {
-                this.collapse(false);
-            } else {
-                this.collapse(true);
-            }
+            this.collapse(true);
         }
     }
 
@@ -169,7 +160,7 @@ class SubMenu extends BaseComponent {
         const openKeys = parent.getOpenKeys();
         this.isAnimating = true;
         if (collapsed) {
-            if (this.props.layout === 'inline') {
+            if (this.state.layout === 'inline') {
                 velocity(subMenu[0], 'slideUp', {
                     duration: 300,
                     complete: () => {
@@ -202,7 +193,7 @@ class SubMenu extends BaseComponent {
                 delete openKeys[this.identify];
             }
         } else {
-            if (this.props.layout === 'inline') {
+            if (this.state.layout === 'inline') {
                 velocity(subMenu[0], 'slideDown', {
                     duration: 300,
                     complete: () => {
@@ -246,7 +237,6 @@ class SubMenu extends BaseComponent {
     }
 
     render () {
-        const {layout} = this.props;
         const className = classNames(`${this.props.prefix}-submenu-title`, {
             [`${this.props.prefix}-submenu-title-hover`]: this.state.hover,
             [`${this.props.prefix}-disabled`]: this.props.disabled,
@@ -259,7 +249,7 @@ class SubMenu extends BaseComponent {
 
         const paddingLeft = this.state.layout === 'inline' ? 24 * this.props.level : 0;
         const style = paddingLeft ? {paddingLeft} : null;
-        const display = layout !== 'inline' ? '' : this.props.open ? 'block' : 'none';
+        const display = this.state.layout !== 'inline' ? '' : this.props.open ? 'block' : 'none';
         return (
             <li className={className2}
                 onMouseEnter={this.onMouseEnter.bind(this)}
