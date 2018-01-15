@@ -145,7 +145,6 @@ class SimpleListPage extends React.Component {
     }
 
     componentDidMount () {
-        this.search(1, this.props.pageSize);
         const searchBtn = this.props.searchBtn || '#search-btn';
         let btn;
         if (searchBtn && typeof searchBtn === 'function') {
@@ -188,6 +187,8 @@ class SimpleListPage extends React.Component {
                 };
             }
         }
+
+        this.search(1, this.props.pageSize);
     }
 
     refresh () {
