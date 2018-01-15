@@ -30,8 +30,8 @@ class Comp extends React.Component {
     }
 
     onRemoveTag = (tag, e) => {
-        let id = tag.props.data.id;
-        this.removeTag(id);
+        const id = tag.props.data.id;
+        this.removeTag(id, e);
     }
 
     /**
@@ -39,7 +39,7 @@ class Comp extends React.Component {
      */
     addTag (tag) {
         const data = this.state.data;
-        data.push(data);
+        data.push(tag);
         this.setState({
             data
         });
@@ -51,7 +51,7 @@ class Comp extends React.Component {
     removeTag (id) {
         let data = this.state.data;
         let removedItem = null;
-        data = data.filter((item)=>{
+        data = data.filter((item) => {
             if (item.id === id) {
                 removedItem = item;
             }
@@ -59,7 +59,7 @@ class Comp extends React.Component {
         });
         this.setState({
             data
-        }, ()=>{
+        }, () => {
             if (this.props.onRemove) {
                 this.props.onRemove(removedItem);
             }
@@ -77,12 +77,18 @@ class Comp extends React.Component {
      * 获取id
      */
     getIds () {
-        if(!this.state.data){
+        if (!this.state.data) {
             return null;
         }
         return this.state.data.map((item) => {
             return item.id;
         });
+    }
+
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.data !== this.props.data && nextProps.data !== this.state.data) {
+            this.setState({data: nextProps.data});
+        }
     }
 
     render () {
