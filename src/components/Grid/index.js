@@ -7,6 +7,8 @@ import Body from './Body';
 import SmartBody from './SmartBody';
 import Pagination from '../Pagination';
 import fetch from '../utils/fetch';
+import Dom from '../utils/Dom';
+import ContextMenu from '../ContextMenu';
 import './Grid.less';
 
 class Grid extends React.Component {
@@ -50,6 +52,7 @@ class Grid extends React.Component {
         this.setState({
             headHeight
         });
+        
     }
 
     onScrollX = (scrollLeft) => {
@@ -159,6 +162,20 @@ class Grid extends React.Component {
         this.onPageNumChange(this.state.pageNum, this.state.pageSize);
     }
 
+    onMenuSelect = (item) => {
+        let target = Dom.closest(this.contextmenu.getTrigger(), '.cm-grid-cell');
+        let row = target.getAttribute('data-row');
+        let cell = target.getAttribute('data-cell');
+
+        let rowData = this.state.data[row];
+        let col = this.props.columns[cell];
+        let cellData = rowData ? rowData[col.name] : undefined;
+
+        if (this.props.onMenuSelect) {
+            this.props.onMenuSelect(item, row, cell, rowData, cellData);
+        }
+    }
+
     render () {
         const {className, style, border, total, pageSize, pageNum, selectMode, smart} = this.props;
         const clazzName = classNames('cm-grid-wrap', className, {
@@ -194,6 +211,8 @@ class Grid extends React.Component {
                         onChange={this.onPageNumChange}
                     />
                 </div>}
+
+                {this.props.contextmenu ? <ContextMenu ref={(f) => this.contextmenu = f} onSelect={this.onMenuSelect} overlay={this.props.contextmenu} target='.cm-grid-cell'/> : null}
             </div>
         );
     }
