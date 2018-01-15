@@ -146,20 +146,21 @@ class SimpleListPage extends React.Component {
 
     componentDidMount () {
         this.search(1, this.props.pageSize);
-        let searchBtn;
-        if (this.props.searchBtn && typeof this.props.searchBtn === 'function') {
-            searchBtn = this.props.searchBtn();
+        const searchBtn = this.props.searchBtn || '#search-btn';
+        let btn;
+        if (searchBtn && typeof searchBtn === 'function') {
+            btn = this.props.searchBtn();
         } else {
-            searchBtn = Dom.query(this.props.searchBtn || '#search-btn');
+            btn = Dom.query(searchBtn);
         }
 
-        if (searchBtn) {
+        if (btn) {
             if (typeof searchBtn === 'string') {
-                Events.on(searchBtn, 'click', () => {
+                Events.on(btn, 'click', () => {
                     this.clickSearch();
                 });
             } else {
-                searchBtn.on('click', () => {
+                btn.on('click', () => {
                     this.clickSearch();
                 });
             }
