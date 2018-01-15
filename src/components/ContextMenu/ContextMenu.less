@@ -1,0 +1,23 @@
+.cm-contextmenu{
+    opacity: 0;
+    transform-origin: 0 0;
+    
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+    -webkit-transition: transform 0.2s,opacity 0.7s;
+    -moz-transition: transform 0.2s;
+    -ms-transition: transform 0.2s;
+    -o-transition: transform 0.2s;
+    transition: transform 0.2s,opacity 0.7s;
+    &.cm-contextmenu-visible{
+      opacity: 1;
+      -webkit-transform: scale(1, 1);
+      -moz-transform: scale(1, 1);
+      -ms-transform: scale(1, 1);
+      -o-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+}

@@ -24,6 +24,8 @@ v2.0.3
 
 11、Menu优化
 
+12、添加contextMenu  Grid 添加contextMenu
+
 v2.0.2
 
 1、fixed many bugs & stylrs
