@@ -344,6 +344,9 @@ class Select extends BaseComponent {
         this.setState({
             filterKey: e.target.value
         });
+        if (this.props.onFilter) {
+            this.props.onFilter(e.target.value);
+        }
     }
 
     /**
