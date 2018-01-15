@@ -20,7 +20,7 @@ class Item extends BaseComponent {
      * 点击
      * @returns {boolean}
      */
-    onClick () {
+    onClick (event) {
         if (this.props.disabled) {
             return false;
         }
@@ -41,13 +41,15 @@ class Item extends BaseComponent {
      * 选择
      */
     select () {
-        if (this._isMounted) {
+        const root = this.props.root;
+        if (this._isMounted && root.props.storeClickState) {
             this.setState({active: true});
         }
-        const root = this.props.root;
-        root.lastSelect = this;
+        if (root.props.storeClickState) {
+            root.lastSelect = this;
+        }
 
-        if (this.props.layout !== 'inline') {
+        if (this.props.layout !== 'inline' && root.props.storeClickState) {
             let parent = this.props.parent;
             root.unSelectSubMenus();
             while (parent.name !== 'Menu') {
