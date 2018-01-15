@@ -26,7 +26,8 @@ class Menu extends BaseComponent {
         startIndex: 1,
         theme: 'light',
         modal: 'single',
-        layout: 'inline'
+        layout: 'inline',
+        storeClickState: true
     };
 
     constructor (props) {
@@ -219,13 +220,23 @@ class Menu extends BaseComponent {
         this._isMounted = true;
     }
 
+    onContextMenu = (event) => {
+        if (event.preventDefault) {
+            event.preventDefault();
+        }
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        }
+        return false;
+    }
+
     render () {
         let {className, style, prefix} = this.props;
         className = classNames(className, prefix, this.state.theme, {
             [`${prefix}-${this.state.layout}`]: this.props.layout !== undefined
         });
         return (
-            <ul className={className} style={style}>
+            <ul className={className} style={style} onContextMenu={this.onContextMenu}>
                 {this.renderChildren()}
             </ul>
         );
