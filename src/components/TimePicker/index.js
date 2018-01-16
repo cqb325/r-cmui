@@ -42,14 +42,6 @@ class TimePicker extends BaseComponent {
         });
     }
 
-    plusHour = (v, step) => {
-        this.timeChange(step, 'hour', 'plus');
-    }
-
-    subHour = (v, step) => {
-        this.timeChange(-step, 'hour', 'sub');
-    }
-
     changeHour = (hour) => {
         const time = this.state.current;
         const lastHour = time.get('hour');
@@ -63,14 +55,6 @@ class TimePicker extends BaseComponent {
         });
     }
 
-    plusMinute = (v, step) => {
-        this.timeChange(step, 'minute', 'plus');
-    }
-
-    subMinute = (v, step) => {
-        this.timeChange(-step, 'minute', 'sub');
-    }
-
     changeMinute = (minute) => {
         const time = this.state.current;
         const lastMinute = time.get('minute');
@@ -82,14 +66,6 @@ class TimePicker extends BaseComponent {
         this.setState({value: v, current: moment(time)}, () => {
             this.emitChange(v, time, 'minute', op);
         });
-    }
-
-    plusSecond = (v, step) => {
-        this.timeChange(step, 'second', 'plus');
-    }
-
-    subSecond = (v, step) => {
-        this.timeChange(-step, 'second', 'sub');
     }
 
     changeSecond = (second) => {
@@ -161,17 +137,17 @@ class TimePicker extends BaseComponent {
         const second = time.get('second');
         const h = this.hasHour
             ? <Spinner loop size={this.props.size} value={hour} key='hour' max={23} step={this.props.hourStep}
-                onSub={this.subHour} onPlus={this.plusHour} onChange={this.changeHour}
+                onChange={this.changeHour}
             />
             : null;
         const m = this.hasMinute
             ? <Spinner loop size={this.props.size} value={minute} key='munite' max={59} step={this.props.minuteStep}
-                onSub={this.subMinute} onPlus={this.plusMinute} onChange={this.changeMinute}
+                onChange={this.changeMinute}
             />
             : null;
         const s = this.hasSecond
             ? <Spinner loop size={this.props.size} value={second} key='second' max={59} step={this.props.secondStep}
-                onSub={this.subSecond} onPlus={this.plusSecond} onChange={this.changeSecond}
+                onChange={this.changeSecond}
             />
             : null;
 

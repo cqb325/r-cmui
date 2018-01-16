@@ -318,7 +318,6 @@ class Date extends BaseComponent {
             d = this.state.current.add(1, 'year');
         }
         d = moment(d);
-        this.setState({current: d});
         if (this.props.onNext) {
             this.props.onNext(d);
         }
@@ -747,9 +746,9 @@ class Date extends BaseComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
-            this.setValue(nextProps.value);
-        }
+        // if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
+        //     this.setValue(nextProps.value);
+        // }
     }
 
     /**

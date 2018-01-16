@@ -26,6 +26,8 @@ v2.0.3
 
 12、添加contextMenu  Grid 添加contextMenu
 
+13、DateRange&TimePicker bug
+
 v2.0.2
 
 1、fixed many bugs & stylrs
