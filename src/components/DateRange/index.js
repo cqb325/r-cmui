@@ -46,6 +46,9 @@ class DateRange extends BaseComponent {
             
             this._selectedDate[0] = start;
             this._selectedDate[1] = end;
+        } else {
+            this._selectedDate[0] = moment();
+            this._selectedDate[1] = moment();
         }
 
         this.maxRange = props.maxRange;
@@ -84,12 +87,34 @@ class DateRange extends BaseComponent {
                 start,
                 end
             });
+            this.updateRange();
+            this._selectDate();
         } else {
-            this._selectedDate[0] = null;
-            this._selectedDate[1] = null;
+            const start = moment();
+            const end = moment();
+            start.add(-1, 'month');
+
+            const startDate = this.refs.startDate;
+            const endDate = this.refs.endDate;
+
+            this._selectedDate[0] = startDate;
+            this._selectedDate[1] = endDate;
+
+            this.checkIsSibling(start, end);
+
             this.setState({
-                start: null,
-                end: null
+                start: undefined,
+                end: undefined
+            }, () => {
+                startDate.setState({
+                    current: start
+                });
+        
+                endDate.setState({
+                    current: end
+                });
+
+                this.updateRange();
             });
         }
     }
@@ -289,7 +314,7 @@ class DateRange extends BaseComponent {
 
         const startCurrent = moment(this._selectedDate[0]);
         const endCurrent = moment(this._selectedDate[1]);
-        if (startCurrent.isSame(endCurrent, 'month')) {
+        if (startCurrent.isSame(endCurrent, 'month') && startCurrent.isSame(endCurrent, 'year')) {
             if (startCurrent.isSame(startDate.state.current, 'month')) {
                 endCurrent.set('date', 1);
                 endCurrent.add(1, 'month');
@@ -298,6 +323,7 @@ class DateRange extends BaseComponent {
                 startCurrent.add(-1, 'month');
             }
         }
+        
         startDate.setState({
             current: startCurrent
         });
@@ -392,20 +418,20 @@ class DateRange extends BaseComponent {
 
         this.updateRange();
 
-        startDate.on('selectPrev', () => {
+        startDate.on('prev', () => {
             this.checkIsSibling();
         });
-        startDate.on('selectNext', () => {
+        startDate.on('next', () => {
             this.checkIsSibling();
         });
         startDate.on('selectMonth', () => {
             this.checkIsSibling();
         });
 
-        endDate.on('selectPrev', () => {
+        endDate.on('prev', () => {
             this.checkIsSibling();
         });
-        endDate.on('selectNext', () => {
+        endDate.on('next', () => {
             this.checkIsSibling();
         });
         endDate.on('selectMonth', () => {
@@ -477,7 +503,7 @@ class DateRange extends BaseComponent {
         if (start.get('month') == end.get('month') && start.get('year') == end.get('year')) {
             isSibling = true;
         }
-        if (start.get('month') > end.get('month')) {
+        if (start.get('year') == end.get('year') && start.get('month') > end.get('month')) {
             const year = start.get('year');
             const month = start.get('month');
 

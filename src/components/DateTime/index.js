@@ -111,6 +111,8 @@ class Datetime extends BaseComponent {
         this.setState({
             value
         });
+        const dateComp = this.refs.date;
+        dateComp.setValue(value);
     }
 
     /**
