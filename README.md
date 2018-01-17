@@ -26,7 +26,7 @@ v2.0.3
 
 12、添加contextMenu  Grid 添加contextMenu
 
-13、DateRange&TimePicker bug
+13、DateRange&TimePicker bug  手动设置DateRange的值调用setValue时，当value为空时，重新进行初始化，删除Date的componentWillReceiveProps生命周期，删除TimePicker的plus和sub回调，与change重复。
 
 v2.0.2
 
