@@ -719,7 +719,7 @@ class Select extends BaseComponent {
 
     render () {
         let {className, style, grid, multi} = this.props;
-        className = classNames('cm-select', getGrid(grid), {
+        className = classNames('cm-select', className, getGrid(grid), {
             'cm-select-active': this.state.active,
             'cm-select-disabled': this.state.disabled,
             'cm-select-dropup': this.state.dropup,

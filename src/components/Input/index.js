@@ -67,7 +67,10 @@ class Input extends BaseComponent {
          * @attribute onChange
          * @type {Function}
          */
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        addonBefore: PropTypes.any,
+        addonAfter: PropTypes.any,
+        size: PropTypes.string
     };
 
     onChange = (event) => {
@@ -145,7 +148,7 @@ class Input extends BaseComponent {
     }
 
     render () {
-        const {className, type, size, addonBefore, addonAfter} = this.props;
+        const {className, type, size, addonBefore, addonAfter, prefix, suffix} = this.props;
 
         const props = {
             className: classNames(
@@ -177,6 +180,15 @@ class Input extends BaseComponent {
                     <input ref={(f) => this.input = f} {...others} {...props} />
                     {addonAfter ? <span className='cm-input-group-addon'>{addonAfter}</span> : null}
                 </span>
+            </span>;
+        } else if (prefix || suffix) {
+            const wrapClassName = classNames('cm-input-affix-wrap', {
+                [`cm-input-affix-wrap-${size}`]: size
+            });
+            return <span className={wrapClassName}>
+                {prefix ? <span className='cm-input-prefix'>{prefix}</span> : null}
+                <input ref={(f) => this.input = f} {...others} {...props} />
+                {suffix ? <span className='cm-input-suffix'>{suffix}</span> : null}
             </span>;
         } else {
             return (<input ref={(f) => this.input = f} {...others} {...props} />);

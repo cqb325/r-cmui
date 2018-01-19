@@ -87,8 +87,9 @@ class FormControl extends BaseComponent {
             props.onChange = this.onChange;
             delete props.required;
 
-            props.style = this.props.itemStyle;
-            props.className = this.props.itemClass;
+            this.props.itemStyle ? props.style = this.props.itemStyle : false;
+            this.props.itemClass ? props.className = this.props.itemClass : false;
+
             component = React.createElement(component.component, props);
         }
         return component;
@@ -100,10 +101,9 @@ class FormControl extends BaseComponent {
      * @returns {*}
      * @private
      */
-    _renderChildren () {
-        const {children} = this.props;
-
-        return React.Children.map(children, (child, index) => {
+    _renderChildren (ele) {
+        ele = ele || this;
+        return React.Children.map(ele.props.children, (child, index) => {
             const registerComp = this.isRegisterComponent(child);
             if (registerComp) {
                 const others = omit(this.props, ['itemUnBind', 'tipTheme', 'tipAlign', 'tipAuto', 'itemStyle', 'itemClass', 'labelWidth',
@@ -120,12 +120,16 @@ class FormControl extends BaseComponent {
 
                 delete props.required;
 
-                props.style = this.props.itemStyle;
-                props.className = this.props.itemClass;
+                this.props.itemStyle ? props.style = this.props.itemStyle : false;
+                this.props.itemClass ? props.className = this.props.itemClass : false;
 
                 return React.cloneElement(child, props);
             } else {
-                return child;
+                if (child && child.props && child.props.children) {
+                    return React.cloneElement(child, child.props, this._renderChildren(child));
+                }   else {
+                    return child;
+                }
             }
         });
     }
@@ -542,9 +546,12 @@ class FormControl extends BaseComponent {
             'cm-form-group-invalid': this.state.errorTip
         });
 
-        const items = this._getControl(type);
-
         const customChildren = this._renderChildren();
+        
+        const items = null;
+        if (!customChildren) {
+            this._getControl(type);
+        }
 
         const labelClass = classNames('cm-form-label', {
             'cm-form-label-required': required || this.required
