@@ -548,9 +548,9 @@ class FormControl extends BaseComponent {
 
         const customChildren = this._renderChildren();
         
-        const items = null;
+        let items = null;
         if (!customChildren) {
-            this._getControl(type);
+            items = this._getControl(type);
         }
 
         const labelClass = classNames('cm-form-label', {
