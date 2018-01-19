@@ -137,7 +137,7 @@ class Comp extends React.Component {
                     <FormControl name='name' type='hidden' label='hidden' placeholder='输入机房名称'/>
                     <FormControl name='name' label='机房名称：' type='label' value={'哈哈哈哈'}></FormControl>
                     <FormControl name='name' required type='text' label='机房名称：' placeholder='输入机房名称'/>
-                    <FormControl name='name' required type='select' label='机房名称：' placeholder=''/>
+                    <FormControl name='name' required type='select' filter label='机房名称：' placeholder=''/>
                     <FormControl name='name' required type='textarea' height={80} label='机房名称：' placeholder='输入机房名称'/>
                     <FormControl name='name' required type='datetime' label='机房名称：' dateOnly/>
                     <FormControl name='name' required type='daterange' label='机房名称：' showTime/>

@@ -284,7 +284,7 @@ class App extends BaseComponent {
                     <Switch size='small' />
                     <Switch checkedText='on' unCheckedText='off' />
 
-                    <TextArea autoHeight height={80} cols={30}></TextArea>
+                    <TextArea autoHeight height={80} ></TextArea>
                     <TextArea autoHeight height={80} width='100%' placeholder='enter some words'></TextArea>
 
                     <Upload name='file' /><br></br>

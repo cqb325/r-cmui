@@ -6,6 +6,7 @@ import TextArea from '../src/components/TextArea';
 import Button from '../src/components/Button';
 import Search from '../src/components/Search';
 import CheckBox from '../src/components/CheckBox';
+import Select from '../src/components/Select';
 import Radio from '../src/components/Radio';
 import CheckBoxGroup from '../src/components/CheckBoxGroup';
 import RadioGroup from '../src/components/RadioGroup';
@@ -84,12 +85,13 @@ class Comp extends React.Component {
                 </div>
                 as 中文
                 <Search name='search' placeholder='站内搜索' onSearch={(v) => { console.log(v); }}/>
-                <Input value={this.state.input} type='number' disabled={this.state.disabled} onChange={() => {
+                <Input addonBefore='http://' value={this.state.input} type='number' disabled={this.state.disabled} onChange={() => {
                     console.log(11);
-                }}></Input><Button>刷 新</Button>
+                }}></Input>
+                <Input size='large' addonBefore={<Select width={63} minWidth={63} value='http://' data={['http://', 'https://']}></Select>} addonAfter={<FontIcon icon='gear'/>} value={this.state.input} type='number'></Input>
                 <TextArea value={this.state.input} height={50} autoHeight onChange={() => {
                     console.log(11);
-                }}/>
+                }}/><Button>刷 新</Button>
 
                 <div>
                     <CheckBox label='阿萨德' onChange={(value, checked) => { console.log(checked); }}></CheckBox>
