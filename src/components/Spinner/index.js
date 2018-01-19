@@ -148,7 +148,7 @@ class Spinner extends BaseComponent {
 
     render () {
         let {className} = this.props;
-        className = classNames('cm-spinner', {
+        className = classNames('cm-spinner', className, {
             [`cm-spinner-${this.props.size}`]: this.props.size
         });
         return (
