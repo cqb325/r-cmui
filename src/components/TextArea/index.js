@@ -144,6 +144,14 @@ class TextArea extends BaseComponent {
     render () {
         let {className, style, height, width} = this.props;
 
+        const clazzName = classNames(
+            className,
+            'cm-input',
+            {
+                'cm-input-disabled': this.props.disabled
+            }
+        );
+
         style = Object.assign({}, style || {});
         if (height !== undefined && height !== null) {
             style['height'] = height;
@@ -153,13 +161,7 @@ class TextArea extends BaseComponent {
         }
 
         const props = {
-            className: classNames(
-                className,
-                'cm-form-control',
-                {
-                    'cm-form-control-disabled': this.props.disabled
-                }
-            ),
+            className: clazzName,
             onChange: this.onChange,
             style
         };

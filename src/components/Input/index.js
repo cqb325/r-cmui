@@ -145,14 +145,15 @@ class Input extends BaseComponent {
     }
 
     render () {
-        const {className, type} = this.props;
+        const {className, type, size, addonBefore, addonAfter} = this.props;
 
         const props = {
             className: classNames(
                 className,
-                'cm-form-control',
+                'cm-input',
                 {
-                    'cm-form-control-disabled': this.props.disabled
+                    [`cm-input-${size}`]: size,
+                    'cm-input-disabled': this.props.disabled
                 }
             ),
             onChange: this.onChange,
@@ -166,7 +167,20 @@ class Input extends BaseComponent {
         const others = filterProps(this.props);
         delete others['data-valueType'];
 
-        return (<input ref={(f) => this.input = f} {...others} {...props} />);
+        if (addonBefore || addonAfter) {
+            const wrapClassName = classNames('cm-input-group-wrap', {
+                [`cm-input-group-wrap-${size}`]: size
+            });
+            return <span className={wrapClassName}>
+                <span className='cm-input-wrap cm-input-group'>
+                    {addonBefore ? <span className='cm-input-group-addon'>{addonBefore}</span> : null}
+                    <input ref={(f) => this.input = f} {...others} {...props} />
+                    {addonAfter ? <span className='cm-input-group-addon'>{addonAfter}</span> : null}
+                </span>
+            </span>;
+        } else {
+            return (<input ref={(f) => this.input = f} {...others} {...props} />);
+        }
     }
 }
 
