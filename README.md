@@ -1,5 +1,11 @@
-![](https://img.shields.io/badge/r--cmui-2.0.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.0.3-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
+
+#demo
+
+[https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
+
+
 v2.0.3
 
 1、TableForm refs混乱问题
@@ -28,6 +34,8 @@ v2.0.3
 
 13、DateRange&TimePicker bug  手动设置DateRange的值调用setValue时，当value为空时，重新进行初始化，删除Date的componentWillReceiveProps生命周期，删除TimePicker的plus和sub回调，与change重复。
 
+14、Input添加addon和affix， 添加 InputGroup
+
 v2.0.2
 
 1、fixed many bugs & stylrs
@@ -51,7 +59,3 @@ v2.0.1
 1、new structure
 
 2、use PureComponent
-
-#demo
-
-[https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
