@@ -21,7 +21,7 @@ class Comp extends React.Component {
     render () {
         return (
             <div>
-                <Suggest value='1' selectItems={{'1': 'asd'}} ref={(f) => this.suggest = f} filter onFilter={this.onFilter} placeholder='输入xxx'/>
+                <Suggest inputOption value='1' selectItems={{'1': 'asd'}} ref={(f) => this.suggest = f} filter onFilter={this.onFilter} placeholder='输入xxx'/>
             </div>
         );
     }

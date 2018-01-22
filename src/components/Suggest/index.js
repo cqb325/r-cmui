@@ -161,7 +161,8 @@ class Suggest extends BaseComponent {
         sep: ',',
         choiceText: '请选择',
         active: false,
-        value: ''
+        value: '',
+        inputOption: false
     };
 
     static propTypes = {
@@ -224,7 +225,14 @@ class Suggest extends BaseComponent {
          * @attribute placeholder
          * @type {String}
          */
-        placeholder: PropTypes.string
+        placeholder: PropTypes.string,
+        /**
+         * 默写场景下输入的内容也可以作为上传的值，
+         * 开启改参数可以将输入的内容作为一个选项，进行选择
+         * @attribute inputOption
+         * @type {Boolean}
+         */
+        inputOption: PropTypes.bool
     };
 
     constructor (props) {
@@ -355,6 +363,12 @@ class Suggest extends BaseComponent {
     }
 
     filter = (e) => {
+        console.log(this.selectItems, this.lastFilterKey, this.selectItems[this.lastFilterKey]);
+        if (this.selectItems[this.lastFilterKey]) {
+            delete this.selectItems[this.lastFilterKey];
+        }
+        
+        this.lastFilterKey = e.target.value;
         if (this.props.onFilter) {
             this.props.onFilter(e.target.value);
         }
@@ -371,10 +385,7 @@ class Suggest extends BaseComponent {
         // 空选项
         if (option.isEmptyOption()) {
             if (!this.props.multi) {
-                if (this.lastSelectItem) {
-                    this.lastSelectItem.setActive(false);
-                }
-                this.lastSelectItem = option;
+                this.selectItems = {};
                 this.hideOptions();
             }
         } else {
@@ -389,7 +400,7 @@ class Suggest extends BaseComponent {
                     this.lastSelectItem.setActive(false);
                 }
                 this.lastSelectItem = option;
-                this.selectItems = [option.getText()];
+                this.selectItems = {[option.getValue()]: [option.getText()]};
                 this.hideOptions();
             }
         }
@@ -456,6 +467,20 @@ class Suggest extends BaseComponent {
                 multi={multi}
                 show={true}
                 onClick={this._selectItem}>{choiceText}</Option>);
+        }
+        if (this.props.inputOption) {
+            const v = this.filterInputField.getValue();
+            if (v) {
+                const active = this.isActive(v);
+                ret.push(<Option key='inputOption'
+                    itemBind={this.itemBind}
+                    itemUnBind={this.itemUnBind}
+                    value={v}
+                    multi={multi}
+                    show={true}
+                    active={active}
+                    onClick={this._selectItem}>{v}</Option>);
+            }
         }
         data.forEach((item) => {
             const text = item[textField];
