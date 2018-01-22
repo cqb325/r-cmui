@@ -9,12 +9,14 @@ class Tag extends React.Component {
     displayName = 'Tag';
 
     static defaultProps = {
-        closable: false
+        closable: false,
+        circle: false
     };
 
     static propTypes = {
         closable: PropTypes.bool,
-        badge: PropTypes.any
+        badge: PropTypes.any,
+        circle: PropTypes.bool
     };
 
     state = {
@@ -64,10 +66,11 @@ class Tag extends React.Component {
         if (!this.state.show) {
             return null;
         }
-        const {className, style, theme, badge} = this.props;
+        const {className, style, theme, badge, circle} = this.props;
         const clazzName = classNames('cm-tag', className, {
             [`cm-tag-${theme}`]: theme,
-            'cm-tag-has-badge': badge !== undefined
+            'cm-tag-has-badge': badge !== undefined,
+            'cm-tag-circle': !badge && circle
         });
         return (
             <div className={clazzName} style={style} ref={(f) => this.wrap = f } 
