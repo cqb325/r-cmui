@@ -363,7 +363,6 @@ class Suggest extends BaseComponent {
     }
 
     filter = (e) => {
-        console.log(this.selectItems, this.lastFilterKey, this.selectItems[this.lastFilterKey]);
         if (this.selectItems[this.lastFilterKey]) {
             delete this.selectItems[this.lastFilterKey];
         }
