@@ -12,9 +12,9 @@ class Comp extends React.Component {
 
                 asd<Tag closable>asdasd</Tag>
                 asd
-                <Tag theme='primary' closable>asdasd</Tag>
-                <Tag theme='danger' closable>asdasd</Tag>
-                <Tag theme='warning' closable>asdasd</Tag>
+                <Tag theme='primary' circle closable>asdasd</Tag>
+                <Tag theme='danger' circle closable>asdasd</Tag>
+                <Tag theme='warning' circle closable>asdasd</Tag>
                 <Tag theme='success' closable>asdasd</Tag>
                 <Tag theme='info' closable>asdasd</Tag>
 

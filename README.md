@@ -9,7 +9,7 @@ v2.1.0
 
 1、修改suggest添加inputOption，可以将输入内容作为选项值。
 
-2、
+2、tag 添加圆角circle属性
 
 v2.0.3
 
