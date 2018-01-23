@@ -11,6 +11,10 @@ v2.1.0
 
 2、tag 添加圆角circle属性
 
+3、FormControl hidden 需隐藏
+
+4、Label支持format
+
 v2.0.3
 
 1、TableForm refs混乱问题
