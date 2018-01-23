@@ -179,28 +179,39 @@ class Body extends React.Component {
         }
     }
 
+    componentWillUnmount () {
+        this._isMounted = false;
+        Events.off(this.content, 'mousewheel', this.wheel);
+        Events.off(window, 'resize', this.windowResize);
+        Events.off(this.box, 'scroll', this.spaceScroll);
+    }
+
     componentDidMount () {
+        this._isMounted = true;
         this.updateSize();
         this.onSpacerScroll();
 
-        Events.on(this.content, 'mousewheel', (e) => {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            const delta = e.wheelDelta;
-            if (delta > 0) {
-                this.scrollUp();
-            } else {
-                this.scrollDown();
-            }
-        });
+        Events.on(this.content, 'mousewheel', this.wheel);
+        Events.on(window, 'resize', this.windowResize);
+    }
 
-        Events.on(window, 'resize', () => {
-            this.updateScrollSize();
-        });
+    windowResize = () => {
+        this.updateScrollSize();
+    }
+
+    wheel = (e) => {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        const delta = e.wheelDelta;
+        if (delta > 0) {
+            this.scrollUp();
+        } else {
+            this.scrollDown();
+        }
     }
 
     updateSize () {
@@ -260,13 +271,15 @@ class Body extends React.Component {
     }
 
     onSpacerScroll () {
-        Events.on(this.box, 'scroll', () => {
-            this.body.style.top = `${-this.box.scrollTop}px`;
-            this.body.style.left = `${-this.box.scrollLeft}px`;
-            if (this.props.onScrollX) {
-                this.props.onScrollX(-this.box.scrollLeft);
-            }
-        });
+        Events.on(this.box, 'scroll', this.spaceScroll);
+    }
+
+    spaceScroll = () => {
+        this.body.style.top = `${-this.box.scrollTop}px`;
+        this.body.style.left = `${-this.box.scrollLeft}px`;
+        if (this.props.onScrollX) {
+            this.props.onScrollX(-this.box.scrollLeft);
+        }
     }
 
     render () {
