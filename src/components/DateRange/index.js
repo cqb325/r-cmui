@@ -86,9 +86,10 @@ class DateRange extends BaseComponent {
             this.setState({
                 start,
                 end
+            }, () => {
+                this.updateRange();
+                this._selectDate();
             });
-            this.updateRange();
-            this._selectDate();
         } else {
             const start = moment();
             const end = moment();
