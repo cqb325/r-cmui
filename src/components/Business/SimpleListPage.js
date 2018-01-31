@@ -234,7 +234,7 @@ class SimpleListPage extends React.Component {
 
     render () {
         return (
-            <SVGSpin spinning={this.state.spinning}>
+            <SVGSpin spinning={this.state.spinning} className={this.props.className}>
                 <Table ref='table' columns={this.props.columns} onSort={this.sortColumn} data={this.props.data || []} bordered={this.props.bordered} hover striped />
 
                 <div className='cm-row'>
