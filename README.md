@@ -15,6 +15,10 @@ v2.1.0
 
 4、Label支持format
 
+5、Grid 添加过滤，支持远程排序和过滤，远程排序支持多字段排序， 添加autoHeight，smart模式不起效果,添加可编辑模式
+
+6、DateRange setValue 时间没变bug  SimpleListPage添加自定className
+
 v2.0.3
 
 1、TableForm refs混乱问题
