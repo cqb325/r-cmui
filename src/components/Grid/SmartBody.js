@@ -15,6 +15,10 @@ class Body extends React.Component {
         pageSize: PropTypes.number,
         pageNum: PropTypes.number,
         columns: PropTypes.array,
+        onOpenEdit: PropTypes.func,
+        onCellChange: PropTypes.func,
+        onCheckedRow: PropTypes.func,
+        editable: PropTypes.bool,
         headHeight: PropTypes.number
     };
 
@@ -91,26 +95,36 @@ class Body extends React.Component {
         if (!this.props.data) {
             return null;
         }
-        const {start, end} = this.state;
+        let {start, end} = this.state;
         const data = this.props.data;
-        const showData = [];
-        // 清空数据
-        this.indexRows = {};
-        this.lastSelectRows = [];
-        for (let i = start; i <= end; i++) {
-            const row = data[i];
-            showData.push(
-                <Row key={row.id} 
-                    columns={this.props.columns}
-                    data={row}
-                    rowIndex={i}
-                    selectMode={this.props.selectMode}
-                    ref={(f) => { this.saveRow(i, f); }}
-                    onSelectRow={this.onSelectRow}
-                />
-            );
+
+        if (data && data.length) {
+            const showData = [];
+            // 清空数据
+            this.indexRows = {};
+            this.lastSelectRows = [];
+            end = Math.min(end, data.length - 1);
+            for (let i = start; i <= end; i++) {
+                const row = data[i];
+                showData.push(
+                    <Row key={row.id} 
+                        columns={this.props.columns}
+                        data={row}
+                        rowIndex={i}
+                        selectMode={this.props.selectMode}
+                        ref={(f) => { this.saveRow(i, f); }}
+                        onSelectRow={this.onSelectRow}
+                        onCheckedRow={this.props.onCheckedRow}
+                        onOpenEdit={this.props.onOpenEdit}
+                        editable={this.props.editable}
+                        onCellChange={this.props.onCellChange}
+                    />
+                );
+            }
+            return showData;
+        } else {
+            return null;
         }
-        return showData;
     }
 
     renderBody () {
@@ -119,7 +133,23 @@ class Body extends React.Component {
             <div className='cm-grid-body' ref={(f) => this.body = f}>
                 {rows}
             </div>
+            {rows ? null : <div style={{textAlign: 'center'}}>暂无数据</div>}
         </div>;
+    }
+
+    /**
+     * 是否全选了
+     */
+    isAllChecked () {
+        let checked = true;
+        this.props.data.forEach((item) => {
+            if (!item._disabled && !item._checked) {
+                checked = false;
+                return false;
+            }
+        });
+
+        return checked;
     }
 
     componentWillUnmount () {
@@ -131,7 +161,7 @@ class Body extends React.Component {
 
     componentDidMount () {
         this._isMounted = true;
-        const h = this.body.firstChild.getBoundingClientRect().height;
+        const h = this.getRowHeight();
         const totalHeight = h * this.props.total;
         this.setState({
             spacerHeight: totalHeight
@@ -144,6 +174,26 @@ class Body extends React.Component {
         Events.on(this.content, 'mousewheel', this.wheel);
 
         Events.on(window, 'resize', this.windowResize);
+    }
+
+    /**
+     * 计算row的高度
+     */
+    getRowHeight () {
+        const child = document.createElement('div');
+        child.className = 'cm-grid-row';
+        const cell = document.createElement('div');
+        cell.className = 'cm-grid-cell';
+        cell.innerHTML = '&nbsp;';
+        child.appendChild(cell);
+        if (this.body.firstChild) {
+            this.body.insertBefore(child, this.body.firstChild);
+        } else {
+            this.body.appendChild(child);
+        }
+        const height = child.getBoundingClientRect().height;
+        this.body.removeChild(child);
+        return height;
     }
 
     windowResize = () => {
@@ -187,6 +237,16 @@ class Body extends React.Component {
         }
     }
 
+    updateSpaceSize () {
+        const h = this.getRowHeight();
+        const totalHeight = h * this.props.total;
+        this.setState({
+            spacerHeight: totalHeight
+        }, () => {
+            this.updateScrollSize();
+        });
+    }
+
     scrollUp () {
         let top = this.box.scrollTop;
         top = Math.max(top - this.step, 0);
@@ -211,7 +271,7 @@ class Body extends React.Component {
      * 
      */
     updateData () {
-        const h = this.body.firstChild.getBoundingClientRect().height;
+        const h = this.getRowHeight();
         const top = this.box.scrollTop;
         let start = parseInt(top / h, 10);
         start = Math.max(0, start - this.props.pageSize);
@@ -244,7 +304,9 @@ class Body extends React.Component {
     render () {
         let w = 0;
         this.props.columns.forEach((column) => {
-            w += column.width;
+            if (!column.hide) {
+                w += column.width;
+            }
         });
         return (
             <div className='cm-grid-scroll' style={{top: this.props.headHeight}}>

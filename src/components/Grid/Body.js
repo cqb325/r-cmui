@@ -15,7 +15,13 @@ class Body extends React.Component {
         pageSize: PropTypes.number,
         pageNum: PropTypes.number,
         columns: PropTypes.array,
-        headHeight: PropTypes.number
+        headHeight: PropTypes.number,
+        autoHeight: PropTypes.bool,
+        resetHeight: PropTypes.func,
+        onOpenEdit: PropTypes.func,
+        onCellChange: PropTypes.func,
+        editable: PropTypes.bool,
+        onCheckedRow: PropTypes.func
     };
 
     state = {
@@ -27,8 +33,7 @@ class Body extends React.Component {
     lastSelectRows = [];
     lastSelectedCells = {row: [], cell: []};
     indexRows = {};
-
-    pagesData = [];
+    lastPageData = [];
 
     saveRow = (index, f) => {
         if (f) {
@@ -100,8 +105,10 @@ class Body extends React.Component {
         // 清空数据
         this.indexRows = {};
         this.lastSelectRows = [];
+        this.lastPageData = [];
         for (let i = start; i <= end; i++) {
             const row = data[i];
+            this.lastPageData.push(row);
             showData.push(
                 <Row key={row.id} 
                     selectMode={this.props.selectMode}
@@ -112,6 +119,10 @@ class Body extends React.Component {
                     onSelectRow={this.onSelectRow}
                     onEnterCell={this.onEnterCell}
                     onSelectCell={this.onSelectCell}
+                    onCheckedRow={this.props.onCheckedRow}
+                    onOpenEdit={this.props.onOpenEdit}
+                    editable={this.props.editable}
+                    onCellChange={this.props.onCellChange}
                 />
             );
         }
@@ -193,10 +204,51 @@ class Body extends React.Component {
 
         Events.on(this.content, 'mousewheel', this.wheel);
         Events.on(window, 'resize', this.windowResize);
+
+        if (this.props.autoHeight && this.props.resetHeight) {
+            const totalHeight = this.body.getBoundingClientRect().height;
+            setTimeout(() => {
+                this.props.resetHeight(totalHeight);
+            }, 10);
+        }
+    }
+
+    checkAllRows (checked) {
+        this.lastPageData.forEach((item) => {
+            if (!item._disabled) {
+                item._checked = checked;
+            }
+        });
+        this.setState({});
+    }
+
+    isAllChecked () {
+        let checked = true;
+        let data = [];
+        if (this.props.source === 'dynamic') {
+            data = this.lastPageData;
+        } else {
+            data = this.props.data;
+        }
+        data.forEach((item) => {
+            if (!item._disabled && !item._checked) {
+                checked = false;
+                return false;
+            }
+        });
+        return checked;
     }
 
     windowResize = () => {
         this.updateScrollSize();
+    }
+
+    /**
+     * 滚动条重置
+     */
+    resetScroll () {
+        this.box.scrollTop = 0;
+        this.body.style.top = '0px';
     }
 
     wheel = (e) => {
@@ -290,7 +342,9 @@ class Body extends React.Component {
         }
         let w = 0;
         this.props.columns.forEach((column) => {
-            w += column.width;
+            if (!column.hide) {
+                w += column.width;
+            }
         });
         return (
             <div className='cm-grid-scroll' style={{top: this.props.headHeight}}>
@@ -299,7 +353,7 @@ class Body extends React.Component {
                 </div>
                 <div className='cm-grid-scroll-box' ref={(f) => this.box = f}>
                     <div className='cm-grid-scroll-spacer' ref={(f) => this.spacer = f} style={{height: this.state.spacerHeight}}></div>
-                    <div style={{width: w, height: 1}}></div>
+                    <div style={{width: w, height: 0}}></div>
                 </div>
                 <div className='cm-grid-scroll-content' ref={(f) => this.content = f}>
                     {this.renderBody()}

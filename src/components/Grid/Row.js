@@ -11,6 +11,10 @@ class Row extends React.Component {
         onSelectCell: PropTypes.func,
         onEnterCell: PropTypes.func,
         onSelectRow: PropTypes.func,
+        onCheckedRow: PropTypes.func,
+        onOpenEdit: PropTypes.func,
+        onCellChange: PropTypes.func,
+        editable: PropTypes.bool,
         columns: PropTypes.array,
         data: PropTypes.object
     };
@@ -20,6 +24,8 @@ class Row extends React.Component {
     };
 
     cells = [];
+
+    checkboxCell = null;
 
     selectCells (cells) {
         for (let i = cells[0]; i <= cells[1]; i++) {
@@ -39,8 +45,24 @@ class Row extends React.Component {
         }
     }
 
-    saveCell = (f) => {
+    saveCell (col, f) {
         this.cells.push(f);
+        if (col.type === 'checkbox') {
+            this.checkboxCell = f;
+        }
+    }
+
+    setChecked (checked) {
+        if (this.checkboxCell) {
+            this.checkboxCell.setChecked(checked);
+        }
+    }
+
+    isChecked () {
+        if (this.checkboxCell) {
+            return this.checkboxCell.isChecked();
+        }
+        return false;
     }
 
     renderCells () {
@@ -52,9 +74,13 @@ class Row extends React.Component {
                 index={index}
                 key={column.name || column.type}
                 data={this.props.data}
-                ref={this.saveCell}
+                ref={this.saveCell.bind(this, column)}
                 onSelectCell={this.props.onSelectCell}
                 onEnterCell={this.props.onEnterCell}
+                onCheckedRow={this.props.onCheckedRow}
+                onOpenEdit={this.props.onOpenEdit}
+                editable={this.props.editable}
+                onCellChange={this.props.onCellChange}
             />;
         });
     }
@@ -90,8 +116,12 @@ class Row extends React.Component {
     }
 
     render () {
+        const show = this.props.data._show === undefined ? true : this.props.data._show;
+        const style = {
+            display:  show ? 'block' : 'none'
+        };
         return (
-            <div className={`cm-grid-row ${(this.state.selected && this.props.selectMode === 'row') ? 'cm-grid-row-selected' : ''}`} data-row={this.props.rowIndex} onMouseDown={this.onMouseDown}>
+            <div style={style} className={`cm-grid-row ${(this.state.selected && this.props.selectMode === 'row') ? 'cm-grid-row-selected' : ''}`} data-row={this.props.rowIndex} onMouseDown={this.onMouseDown}>
                 {this.renderCells()}
             </div>
         );
