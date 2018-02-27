@@ -19,6 +19,8 @@ v2.1.0
 
 6、DateRange setValue 时间没变bug  SimpleListPage添加自定className
 
+7、add Timeline
+
 v2.0.3
 
 1、TableForm refs混乱问题
