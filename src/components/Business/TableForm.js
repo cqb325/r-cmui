@@ -74,7 +74,11 @@ class TableForm extends BaseComponent {
         if (props) {
             props.forEach((prop) => {
                 if (source[prop] != undefined) {
-                    target[prop] = source[prop];
+                    if (source[prop] && typeof source[prop] === 'object') {
+                        target[prop] = JSON.parse(JSON.stringify(source[prop]));
+                    } else {
+                        target[prop] = source[prop];
+                    }
                 }
             });
         }
