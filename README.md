@@ -9,6 +9,8 @@ v2.1.1
 
 1、TableForm 验证rules对象重复问题
 
+2、修复DateTime clock中的spinner样式
+
 v2.1.0
 
 1、修改suggest添加inputOption，可以将输入内容作为选项值。
