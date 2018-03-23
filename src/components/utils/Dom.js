@@ -183,40 +183,52 @@ class Dom {
      * @param el
      * @param selector
      */
+    // static closest (el, selector) {
+    //     let doms;
+    //     let targetDom;
+    //     const isSame = function (doms, el) {
+    //         let i = 0;
+    //         const len = doms.length;
+    //         for (i; i < len; i++) {
+    //             if (doms[i].isEqualNode) {
+    //                 if (doms[i].isEqualNode(el)) {
+    //                     return doms[i];
+    //                 }
+    //             } else {
+    //                 if (doms[i] == el) {
+    //                     return doms[i];
+    //                 }
+    //             }
+    //         }
+    //         return false;
+    //     };
+    //     var traversal = function (el, selector) {
+    //         doms = Dom.queryAll(selector, el.parentNode);
+    //         targetDom = isSame(doms, el);
+    //         while (!targetDom) {
+    //             el = el.parentNode;
+    //             if (el != null && el.nodeType === el.DOCUMENT_NODE) {
+    //                 return false;
+    //             }
+    //             traversal(el, selector);
+    //         }
+
+    //         return targetDom;
+    //     };
+
+    //     return traversal(el, selector);
+    // }
+    
     static closest (el, selector) {
-        let doms;
-        let targetDom;
-        const isSame = function (doms, el) {
-            let i = 0;
-            const len = doms.length;
-            for (i; i < len; i++) {
-                if (doms[i].isEqualNode) {
-                    if (doms[i].isEqualNode(el)) {
-                        return doms[i];
-                    }
-                } else {
-                    if (doms[i] == el) {
-                        return doms[i];
-                    }
-                }
+        const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    
+        while (el) {
+            if (matchesSelector.call(el, selector)) {
+                break;
             }
-            return false;
-        };
-        var traversal = function (el, selector) {
-            doms = Dom.queryAll(selector, el.parentNode);
-            targetDom = isSame(doms, el);
-            while (!targetDom) {
-                el = el.parentNode;
-                if (el != null && el.nodeType === el.DOCUMENT_NODE) {
-                    return false;
-                }
-                traversal(el, selector);
-            }
-
-            return targetDom;
-        };
-
-        return traversal(el, selector);
+            el = el.parentElement;
+        }
+        return el;
     }
 
     /**

@@ -11,6 +11,8 @@ v2.1.1
 
 2、修复DateTime clock中的spinner样式
 
+3、修改Dom的closest函数
+
 v2.1.0
 
 1、修改suggest添加inputOption，可以将输入内容作为选项值。
