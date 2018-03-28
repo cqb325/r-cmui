@@ -155,7 +155,7 @@ class DateRange extends BaseComponent {
         velocity(ele, 'fadeIn', {duration: 300});
         this.updateRange();
         if (!this.state.visibility) {
-            super.show();
+            this.setState({ visibility: true });
             this.bindClickAway();
         }
     }
@@ -171,7 +171,7 @@ class DateRange extends BaseComponent {
             delay: 200,
             duration: 300,
             complete: () => {
-                super.hide();
+                this.setState({ visibility: false });
                 this.unbindClickAway();
             }
         });

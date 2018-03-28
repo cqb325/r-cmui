@@ -745,7 +745,7 @@ class Date extends BaseComponent {
         return this.state.value;
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps () {
         // if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
         //     this.setValue(nextProps.value);
         // }
