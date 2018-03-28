@@ -13,6 +13,8 @@ v2.1.1
 
 3、修改Dom的closest函数
 
+4、DateTime和DateRange show hide 取消使用super 在IE10有问题
+
 v2.1.0
 
 1、修改suggest添加inputOption，可以将输入内容作为选项值。

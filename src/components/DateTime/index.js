@@ -69,7 +69,7 @@ class Datetime extends BaseComponent {
         velocity(ele, 'fadeIn', {duration: 500});
 
         if (!this.state.visibility) {
-            super.show();
+            this.setState({ visibility: true });
             setTimeout(() => {
                 const dateComp = this.refs.date;
                 dateComp.show();
@@ -90,7 +90,7 @@ class Datetime extends BaseComponent {
             delay: 200,
             duration: 500,
             complete: () => {
-                super.hide();
+                this.setState({ visibility: false });
                 this.unbindClickAway();
             }
         });
