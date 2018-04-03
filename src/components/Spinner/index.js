@@ -27,8 +27,15 @@ class Spinner extends BaseComponent {
 
     constructor (props) {
         super(props);
+        let defaultValue = props.value;
+        if (props.min) {
+            defaultValue = Math.max(defaultValue, props.min);
+        }
+        if (props.max) {
+            defaultValue = Math.min(defaultValue, props.max);
+        }
         this.addState({
-            value: props.value
+            value: defaultValue
         });
     }
 

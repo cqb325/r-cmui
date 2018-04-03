@@ -13,6 +13,8 @@ v2.2.0
 
 3、修改Suggest初始显示值问题
 
+4、修改Spinner中如果设置min或max则默认值需要根据min和max进行比较
+
 v2.1.1
 
 1、TableForm 验证rules对象重复问题
