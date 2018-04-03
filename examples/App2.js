@@ -21,6 +21,7 @@ import { setTimeout } from 'timers';
 import DateRange from './daterange/index';
 import SimpleListPage from './simpleListPage/index';
 import Form from './form/index';
+import '../src/components/Spinner';
 
 class Comp extends React.Component {
     displayName = 'Comp';
@@ -157,6 +158,7 @@ class Comp extends React.Component {
                 <Card>
                     <FormControl type='text' name='asd' required label='asd'></FormControl>
                     <FormControl type='number' name='asd' required label='asd'></FormControl>
+                    <FormControl type='spinner' name='spinner' required label='asd' min={1}></FormControl>
                     <FormControl type='checkbox' name='asd' required label='asd' data={[{id: '1', text: 'asd'},{id: '2', text: 'asd'},{id: '3', text: 'asd'},{id: '4', text: 'asd'}]}></FormControl>
                 </Card>
 
