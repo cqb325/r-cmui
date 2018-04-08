@@ -8,7 +8,10 @@
 v2.2.0
 
 1、添加contacts组件
+
 2、DateTime clear&today
+
+3、修改Suggest初始显示值问题
 
 v2.1.1
 
