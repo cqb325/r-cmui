@@ -554,6 +554,11 @@ class Date extends BaseComponent {
         this.setState({
             value: null
         });
+
+        if (this.props.onSelectDate) {
+            this.props.onSelectDate('');
+        }
+        this.emit('selectDate', '');
     }
 
     /**
@@ -577,6 +582,9 @@ class Date extends BaseComponent {
             current: moment(today)
         });
 
+        if (this.props.onSelectDate) {
+            this.props.onSelectDate(today.format(this.props.format));
+        }
         this.emit('selectDate', moment(today).toDate());
     }
 
