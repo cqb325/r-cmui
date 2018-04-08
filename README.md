@@ -8,6 +8,7 @@
 v2.2.0
 
 1、添加contacts组件
+2、DateTime clear&today
 
 v2.1.1
 
