@@ -285,22 +285,35 @@ class Suggest extends BaseComponent {
      * @returns {*}
      * @private
      */
-    _rebuildData (data) {
+    _rebuildData (data, defaultValue, valueField) {
         if (!data) {
             return null;
         }
         // 生成一个新的数据， 防止后续操作影响到改数据
         data = fromJS(data).toJS();
 
-        // let defaultValues = defaultValue ? (defaultValue + '').split(this.sep) : [];
+        const defaultValues = defaultValue ? (`${defaultValue}`).split(this.sep) : [];
         if (Core.isArray(data)) {
             const one = data[0];
             if (Core.isString(one)) {
                 return data.map((item) => {
-                    return {id: item, text: item};
+                    const ret = {id: item, text: item};
+                    defaultValues.forEach((a) => {
+                        if (a === item) {
+                            this.selectItems[item] = item;
+                        }
+                    });
+                    return ret;
                 }, this);
             }
             if (Core.isObject(one)) {
+                data.forEach((item) => {
+                    defaultValues.forEach((a) => {
+                        if (a === `${item[valueField]}`) {
+                            this.selectItems[item[valueField]] = item[this.props.textField];
+                        }
+                    });
+                });
                 return data;
             }
 
@@ -310,6 +323,11 @@ class Suggest extends BaseComponent {
             const ret = [];
             for (const id in data) {
                 const item = {id, text: data[id]};
+                defaultValues.forEach((a) => {
+                    if (a === id) {
+                        this.selectItems[id] = data[id];
+                    }
+                });
                 ret.push(item);
             }
 
@@ -440,6 +458,14 @@ class Suggest extends BaseComponent {
             this.setState({value});
         }
         if (value != undefined) {
+            const vls = value.split(this.props.sep);
+            vls.forEach((vl) => {
+                for (const id in this.options) {
+                    if (id === vl) {
+                        this.selectItems[id] = this.options[id].getText();
+                    }
+                }
+            });
             this.setState({value: `${value}`});
         }
     }
@@ -537,7 +563,7 @@ class Suggest extends BaseComponent {
         if (this.props.filter && e.target == ReactDOM.findDOMNode(this.filterInputField)) {
             return;
         }
-        if (Dom.closest(e.target, '.cm-tag')) {
+        if (e.target && Dom.closest(e.target, '.cm-tag')) {
             return;
         }
         if (this.state.active && !this.props.multi) {
@@ -606,7 +632,7 @@ class Suggest extends BaseComponent {
     setData (data, value) {
         const valueField = this.props.valueField;
         if (value !== undefined) {
-            this.text = [];
+            this.selectItems = {};
         }
         const val = value === undefined ? this.state.value : value;
         this.orignData = data;
@@ -666,7 +692,7 @@ class Suggest extends BaseComponent {
     }
 
     render () {
-        let {className, style, grid, multi} = this.props;
+        let {className, style, multi} = this.props;
         className = classNames('cm-select', {
             'cm-select-active': this.state.active,
             'cm-select-disabled': this.state.disabled,
