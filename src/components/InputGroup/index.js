@@ -27,9 +27,11 @@ class InputGroup extends BaseComponent {
 
     renderComponents () {
         return React.Children.map(this.props.children, (child) => {
-            const props = Object.assign({}, this.props, child.props, {
+            const props = Object.assign({}, this.props, {
                 className: 'cm-input-group-item'
             });
+            delete props.children;
+            Object.assign(props, child.props);
             return React.cloneElement(child, props);
         });
     }
