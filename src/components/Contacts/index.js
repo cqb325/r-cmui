@@ -26,6 +26,10 @@ class Contacts extends React.Component {
         });
     }
 
+    setData (data) {
+        this.setState({data});
+    }
+
     /**
      * 选中节点
      * @param {*} item 
@@ -158,8 +162,11 @@ class Contacts extends React.Component {
         const rect = this.wrap.getBoundingClientRect();
         const H = rect.height;
         const h = H / 26;
-        const eles = Dom.dom(Dom.queryAll('a', this.wrap));
-        eles.css({height: `${h}px`, 'line-height': `${h}px`});
+        const els = Dom.queryAll('a', this.wrap);
+        if (els.length) {
+            const eles = Dom.dom(els);
+            eles.css({height: `${h}px`, 'line-height': `${h}px`});
+        }
     }
 
     render () {
@@ -167,7 +174,9 @@ class Contacts extends React.Component {
         const clazzName = classNames(className, 'cm-contacts');
         return (
             <div className={clazzName} style={style} ref={(f) => this.wrap = f}>
-                {this.renderList()}
+                <div className='cm-contacts-list'>
+                    {this.renderList()}
+                </div>
                 {this.renderDots()}
             </div>
         );

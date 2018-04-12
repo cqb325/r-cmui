@@ -4,9 +4,14 @@
     position: relative;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
 
+    .cm-contacts-list{
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
     dl>dt{
         color: #999;
         height: 40px;
@@ -40,10 +45,11 @@
     }
 
     .cm-contacts-nav{
-        position: fixed;
+        position: absolute;
         top: 0;
         bottom: 0;
-        right: 3px;
+        right: 8px;
+        z-index: 10;
         a{
             display: block;
             color: #333;
