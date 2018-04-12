@@ -15,6 +15,8 @@ v2.2.0
 
 4、修改Spinner中如果设置min或max则默认值需要根据min和max进行比较
 
+5、修复InputGroup传递props错误
+
 v2.1.1
 
 1、TableForm 验证rules对象重复问题
