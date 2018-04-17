@@ -90,11 +90,27 @@ class Contacts extends React.Component {
         return eles;
     }
 
+    gotoChar (selector, e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        const ele = Dom.query(selector);
+        if (ele) {
+            const eleOff = Dom.dom(ele).offset();
+            const parentOff = Dom.dom(this.list).offset();
+            const scrollTop = eleOff.top - parentOff.top;
+            this.list.scrollTop = scrollTop;
+        }
+    }
+
     renderDots () {
         const eles = [];
         const data = this.state.data;
         for (const chart in data) {
-            eles.push(<a key={chart} href={`#contact_${chart}`}>{chart}</a>);
+            eles.push(<a key={chart} onClick={this.gotoChar.bind(this, `#contact_${chart}`)} href={`#contact_${chart}`}>{chart}</a>);
         }
         return <div className='cm-contacts-nav'>{eles}</div>;
     }
@@ -174,7 +190,7 @@ class Contacts extends React.Component {
         const clazzName = classNames(className, 'cm-contacts');
         return (
             <div className={clazzName} style={style} ref={(f) => this.wrap = f}>
-                <div className='cm-contacts-list'>
+                <div className='cm-contacts-list' ref={(f) => this.list = f}>
                     {this.renderList()}
                 </div>
                 {this.renderDots()}
