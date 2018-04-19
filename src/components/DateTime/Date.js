@@ -739,8 +739,8 @@ class Date extends BaseComponent {
      */
     setValue (value) {
         this.setState({
-            value,
-            current: moment(value)
+            value: value || '',
+            current: value ? moment(value) : moment()
         });
     }
 
