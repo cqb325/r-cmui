@@ -86,20 +86,18 @@ class Datetime extends BaseComponent {
      */
     hide () {
         const ele = ReactDOM.findDOMNode(this.refs.datePicker);
+        const dateComp = this.refs.date;
         velocity(ele, 'fadeOut', {
-            delay: 200,
-            duration: 500,
+            delay: 100,
+            duration: 200,
             complete: () => {
+                if (dateComp.getStage() === 0 && dateComp.minStage === 0) {
+                    dateComp.setStage(1);
+                }
                 this.setState({ visibility: false });
                 this.unbindClickAway();
             }
         });
-
-        const dateComp = this.refs.date;
-
-        if (dateComp.getStage() === 0 && dateComp.minStage === 0) {
-            dateComp.setStage(1);
-        }
     }
 
     /**
