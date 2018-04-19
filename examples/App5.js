@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from '../src/components/Table';
 import Button from '../src/components/Button';
+import DateTime from '../src/components/DateTime';
 import './App.css';
 
 class Comp extends React.Component {
@@ -26,6 +27,7 @@ class Comp extends React.Component {
         return (
             <div>
                 <Table ref={(f) => this.table = f} columns={this.columns} data={data}></Table>
+                <DateTime />
                 <Button onClick={this.changeData}>变更</Button>
             </div>
         );

@@ -21,6 +21,10 @@ v2.2.0
 
 7、修改DateTime的setValue处理value为null或undefined
 
+8、修改DateTime处于选项时间状态进行关闭时不能直接隐藏的问题
+
+9、添加ScrollTop组件
+
 v2.1.1
 
 1、TableForm 验证rules对象重复问题

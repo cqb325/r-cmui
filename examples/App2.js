@@ -21,6 +21,8 @@ import { setTimeout } from 'timers';
 import DateRange from './daterange/index';
 import SimpleListPage from './simpleListPage/index';
 import Form from './form/index';
+import ScrollTop from '../src/components/ScrollTop';
+import Avatar from '../src/components/Avatar';
 import '../src/components/Spinner';
 
 class Comp extends React.Component {
@@ -59,6 +61,9 @@ class Comp extends React.Component {
         return (
             <div>
                 <div>
+                    <ScrollTop>
+                        <Avatar style={{color: 'rgb(245, 106, 0)', cursor: 'pointer', backgroundColor: 'rgb(253, 227, 207)'}}>UP</Avatar>
+                    </ScrollTop>
                     <Button onClick={this.refresh}>刷新</Button>
                     <Button theme='primary' loadding={this.state.loadding} onClick={() => {
                         this.setState({

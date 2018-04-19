@@ -160,6 +160,9 @@ class MessageBox extends BaseComponent {
      * @return {[type]} [description]
      */
     hide () {
+        if (!this._isMounted) {
+            return false;
+        }
         velocity(this.container, 'fadeOut', { duration: 300 });
 
         if (this.props.onHide) {
@@ -203,6 +206,9 @@ class MessageBox extends BaseComponent {
      * @return {[type]}       [description]
      */
     show (msg, title) {
+        if (!this._isMounted) {
+            return false;
+        }
         this.panel.setTitleAndContent(this.state.title || title, this.state.msg || msg);
 
         if (!this.backdrop) {
@@ -265,6 +271,12 @@ class MessageBox extends BaseComponent {
 
         ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}
             content={this.state.msg} />, this.container);
+
+        this._isMounted = true;
+    }
+
+    componentWillUnmount () {
+        this._isMounted = false;
     }
 
     render () {

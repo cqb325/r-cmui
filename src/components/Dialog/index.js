@@ -172,6 +172,9 @@ class Dialog extends BaseComponent {
     }
 
     close = () => {
+        if (!this._isMounted) {
+            return false;
+        }
         this.setState({
             visibility: false
         });
@@ -211,6 +214,9 @@ class Dialog extends BaseComponent {
      * @param orign 打开dialog的元素
      */
     open (orign) {
+        if (!this._isMounted) {
+            return false;
+        }
         this.setState({
             visibility: true
         });
@@ -350,6 +356,11 @@ class Dialog extends BaseComponent {
         ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}>
             {this.props.children}
         </Panel>, this.container);
+        this._isMounted = true;
+    }
+
+    componentWillUnmount () {
+        this._isMounted = false;
     }
 
     componentWillReceiveProps (nextProps) {
