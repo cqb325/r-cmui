@@ -19,6 +19,8 @@ v2.2.0
 
 6、select 添加分组功能，指定group属性进行分组显示，默认按照首字母分组，可自定义分组
 
+7、修改DateTime的setValue处理value为null或undefined
+
 v2.1.1
 
 1、TableForm 验证rules对象重复问题
