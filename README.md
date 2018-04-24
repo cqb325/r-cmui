@@ -25,6 +25,8 @@ v2.2.0
 
 9、添加ScrollTop组件
 
+10、messageBox和Dialog多次两用show或open后backdrop无法关闭问题
+
 v2.1.1
 
 1、TableForm 验证rules对象重复问题
