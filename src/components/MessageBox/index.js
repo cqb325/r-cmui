@@ -225,7 +225,9 @@ class MessageBox extends BaseComponent {
         this.backdrop.style.display = 'block';
         let count = this.backdrop.getAttribute('data-count');
         count = count == null ? 1 : parseInt(count, 10) + 1;
-        this.backdrop.setAttribute('data-count', count);
+        if (this.container.style.display === 'none') {
+            this.backdrop.setAttribute('data-count', count);
+        }
         Dom.dom(Dom.query('body')).addClass('modal-open');
 
         window.setTimeout(() => {
