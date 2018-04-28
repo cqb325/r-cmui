@@ -27,6 +27,10 @@ v2.2.0
 
 10、messageBox和Dialog多次两用show或open后backdrop无法关闭问题
 
+11、修改Uploadify中removeFile函数
+
+12、修改Select中Option变化之后再次点击报错lastSelectItem设置激活状态的时候unmount的问题
+
 v2.1.1
 
 1、TableForm 验证rules对象重复问题

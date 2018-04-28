@@ -224,8 +224,8 @@ class Uploadify extends BaseComponent {
         this.uploader.removeFile(file);
         let files = this.state.files;
         if (files) {
-            files = List.of(files).filter((f) => {
-                return file.id !== f[0].id;
+            files = List.of(...files).filter((f) => {
+                return file.id !== f.id;
             }).toJS();
             this.setState({files});
         }
