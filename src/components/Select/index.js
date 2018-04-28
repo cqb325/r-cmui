@@ -797,6 +797,7 @@ class Select extends BaseComponent {
 
     componentWillUnmount () {
         this._isMounted = false;
+        this.lastSelectItem = null;
     }
 
     componentWillReceiveProps (nextProps) {
