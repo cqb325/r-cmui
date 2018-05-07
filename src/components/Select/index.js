@@ -801,7 +801,7 @@ class Select extends BaseComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        const value = nextProps.value;
+        const value = nextProps.value === 'undefined' ? '' : nextProps.value;
         if (value !== this.props.value && value !== this.state.value) {
             this.setState({ value });
         }
