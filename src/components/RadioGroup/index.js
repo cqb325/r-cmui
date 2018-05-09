@@ -308,8 +308,9 @@ class RadioGroup extends BaseComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
-            this.setValue(nextProps.value);
+        const value = nextProps.value === 'undefined' ? '' : nextProps.value;
+        if (value !== this.props.value && value !== this.state.value) {
+            this.setValue(value);
         }
     }
 
