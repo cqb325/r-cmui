@@ -149,7 +149,7 @@ class Spinner extends BaseComponent {
     componentWillReceiveProps (nextProps) {
         const value = nextProps.value;
         if (value !== this.props.value && value !== this.state.value) {
-            this.setState({ value });
+            this.setValue(value);
         }
     }
 

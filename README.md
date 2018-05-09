@@ -11,6 +11,8 @@ v2.2.1
 
 2、修改RadioGroup和CheckBoxGroup接收新props的时候value为undefined的问题
 
+3、Spinner的props变化的时候setState改为调用setValue方法
+
 v2.2.0
 
 1、添加contacts组件
