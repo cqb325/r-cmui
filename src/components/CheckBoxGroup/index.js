@@ -359,8 +359,9 @@ class CheckBoxGroup extends BaseComponent {
 
     componentWillReceiveProps (nextProps) {
         const params = {};
-        if (nextProps.value != this.state.value && nextProps.value != this.props.value) {
-            params.value = nextProps.value;
+        const value = nextProps.value === 'undefined' ? '' : nextProps.value;
+        if (value !== this.props.value && value !== this.state.value) {
+            params.value = value;
         }
         if (nextProps.data != this.state.data && nextProps.data != this.props.data) {
             params.data = nextProps.data;

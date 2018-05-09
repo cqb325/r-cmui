@@ -9,6 +9,8 @@ v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题
 
+2、修改RadioGroup和CheckBoxGroup接收新props的时候value为undefined的问题
+
 v2.2.0
 
 1、添加contacts组件
