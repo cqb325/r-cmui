@@ -1,10 +1,15 @@
 import React from 'react';
 
-import Scroller from '../../src/components/DateTimePicker/Scroller';
-import ScrollDate from '../../src/components/DateTimePicker/ScrollDate';
-import ScrollTime from '../../src/components/DateTimePicker/ScrollTime';
+import Scroller from '../../src/components/ScrollDateTime/Scroller';
+import ScrollDate from '../../src/components/ScrollDateTime/ScrollDate';
+import ScrollTime from '../../src/components/ScrollDateTime/ScrollTime';
+import ScrollDateTime from '../../src/components/ScrollDateTime';
+import ScrollDateTimeComp from '../../src/components/ScrollDateTime/ScrollDateTime';
+import DateTime from '../../src/components/DateTime';
+import DateRange from '../../src/components/DateRange';
 import Button from '../../src/components/Button';
-import '../../src/components/DateTimePicker/DateTimePicker.less';
+import ScrollRangeDateTime from '../../src/components/ScrollRangeDateTime';
+import '../../src/components/ScrollDateTime/ScrollDateTime.less';
 
 class Comp extends React.Component {
     displayName = 'Comp';
@@ -42,6 +47,27 @@ class Comp extends React.Component {
                 <Button onClick={() => {
                     this.scrollTime.setStartTime('08:30:00');
                 }}>设置START</Button>
+
+                <div>
+                    <ScrollDateTimeComp />
+                    <DateTime/>
+                    asd : <ScrollDateTime today clear endDate='2018-06-01 12:30:10' value='2018-05-14 11:15:05'
+                        onChange={(v) => {
+                            console.log(v);
+                        }}></ScrollDateTime>
+                </div>
+
+                <div>
+                    asd: <DateRange/>
+                    asd: <ScrollRangeDateTime ref={(f) => this.range = f} view='hm' endDate='23:59:59' startDate='00:00:00'/>
+                    <Button onClick={() => {
+                        // this.range.setValue('12:30:10~15:30:48');
+                        this.range.setValue();
+                    }}>设置初始值</Button>
+                    <Button onClick={() => {
+                        console.log(this.range.getValue());
+                    }}>获取值</Button>
+                </div>
             </div>
         );
     }

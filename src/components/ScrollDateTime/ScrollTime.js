@@ -30,6 +30,12 @@ class ScrollTime extends React.Component {
         endTime: PropTypes.any
     }
 
+    static HEAD = {
+        HOUR: '时',
+        MINUTE: '分',
+        SECOND: '秒'
+    }
+
     constructor (props) {
         super(props);
 
@@ -42,12 +48,12 @@ class ScrollTime extends React.Component {
     }
 
     renderHead () {
-        let arr = ['时', '分', '秒'];
+        let arr = [ScrollTime.HEAD.HOUR, ScrollTime.HEAD.MINUTE, ScrollTime.HEAD.SECOND];
         if (this.props.hourOnly) {
-            arr = ['时'];
+            arr = [ScrollTime.HEAD.HOUR];
         }
         if (this.props.minuteOnly) {
-            arr = ['时', '分'];
+            arr = [ScrollTime.HEAD.HOUR, ScrollTime.HEAD.MINUTE];
         }
         return arr.map((item) => {
             return <div key={item} className='cm-scroll-date-head-item'>{item}</div>;
@@ -231,6 +237,14 @@ class ScrollTime extends React.Component {
         return this.state.value;
     }
 
+    /**
+     * 滚轮显示的值
+     */
+    getScrollValue () {
+        const current = this.state.current;
+        return current.format(this.getFormat());
+    }
+
     setValue (value) {
         if (value) {
             this.setState({
@@ -244,31 +258,33 @@ class ScrollTime extends React.Component {
      * 设置截止时间
      * @param {*} endTime 
      */
-    setEndTime (endTime) {
+    setEndTime (endTime, callback) {
         const current = this.state.current;
-        const end = moment(endTime, this.getFormat());
-        if (this.props.hourOnly) {
-            if (current.get('hour') > end.get('hour')) {
-                current.set('hour', end.get('hour'));
-            }
-        } else if (this.props.minuteOnly) {
-            if (current.format('HHmm') > end.format('HHmm')) {
-                current.set('hour', end.get('hour'));
-                current.set('minute', end.get('minute'));
-                if (this.minute) {
-                    this.minute.setMax(end.get('minute'));
+        if (endTime) {
+            const end = moment(endTime, this.getFormat());
+            if (this.props.hourOnly) {
+                if (current.get('hour') > end.get('hour')) {
+                    current.set('hour', end.get('hour'));
                 }
-            }
-        } else {
-            if (current.format('HHmmss') > end.format('HHmmss')) {
-                current.set('hour', end.get('hour'));
-                current.set('minute', end.get('minute'));
-                current.set('second', end.get('second'));
-                if (this.minute) {
-                    this.minute.setMax(end.get('minute'));
+            } else if (this.props.minuteOnly) {
+                if (current.format('HHmm') > end.format('HHmm')) {
+                    current.set('hour', end.get('hour'));
+                    current.set('minute', end.get('minute'));
+                    if (this.minute) {
+                        this.minute.setMax(end.get('minute'));
+                    }
                 }
-                if (this.second) {
-                    this.second.setMax(end.get('second'));
+            } else {
+                if (current.format('HHmmss') > end.format('HHmmss')) {
+                    current.set('hour', end.get('hour'));
+                    current.set('minute', end.get('minute'));
+                    current.set('second', end.get('second'));
+                    if (this.minute) {
+                        this.minute.setMax(end.get('minute'));
+                    }
+                    if (this.second) {
+                        this.second.setMax(end.get('second'));
+                    }
                 }
             }
         }
@@ -276,6 +292,8 @@ class ScrollTime extends React.Component {
             value: current.format(this.getFormat()),
             current,
             endTime
+        }, () => {
+            callback ? callback() : false;
         });
     }
 
@@ -283,31 +301,33 @@ class ScrollTime extends React.Component {
      * 设置起始时间
      * @param {*} startTime 
      */
-    setStartTime (startTime) {
+    setStartTime (startTime, callback) {
         const current = this.state.current;
-        const end = moment(startTime, this.getFormat());
-        if (this.props.hourOnly) {
-            if (current.get('hour') < end.get('hour')) {
-                current.set('hour', end.get('hour'));
-            }
-        } else if (this.props.minuteOnly) {
-            if (current.format('HHmm') < end.format('HHmm')) {
-                current.set('hour', end.get('hour'));
-                current.set('minute', end.get('minute'));
-                if (this.minute) {
-                    this.minute.setMin(end.get('minute'));
+        if (startTime) {
+            const end = moment(startTime, this.getFormat());
+            if (this.props.hourOnly) {
+                if (current.get('hour') < end.get('hour')) {
+                    current.set('hour', end.get('hour'));
                 }
-            }
-        } else {
-            if (current.format('HHmmss') < end.format('HHmmss')) {
-                current.set('hour', end.get('hour'));
-                current.set('minute', end.get('minute'));
-                current.set('second', end.get('second'));
-                if (this.minute) {
-                    this.minute.setMin(end.get('minute'));
+            } else if (this.props.minuteOnly) {
+                if (current.format('HHmm') < end.format('HHmm')) {
+                    current.set('hour', end.get('hour'));
+                    current.set('minute', end.get('minute'));
+                    if (this.minute) {
+                        this.minute.setMin(end.get('minute'));
+                    }
                 }
-                if (this.second) {
-                    this.second.setMin(end.get('second'));
+            } else {
+                if (current.format('HHmmss') < end.format('HHmmss')) {
+                    current.set('hour', end.get('hour'));
+                    current.set('minute', end.get('minute'));
+                    current.set('second', end.get('second'));
+                    if (this.minute) {
+                        this.minute.setMin(end.get('minute'));
+                    }
+                    if (this.second) {
+                        this.second.setMin(end.get('second'));
+                    }
                 }
             }
         }
@@ -315,6 +335,8 @@ class ScrollTime extends React.Component {
             value: current.format(this.getFormat()),
             current,
             startTime
+        }, () => {
+            callback ? callback() : false;
         });
     }
 
@@ -333,7 +355,7 @@ class ScrollTime extends React.Component {
                 <div className='cm-scroll-date-head cm-row'>
                     {this.renderHead()}
                 </div>
-                <div className='cm-scroll-date-body'>
+                <div className='cm-scroll-date-body cm-row'>
                     {this.renderScrollers()}
                 </div>
             </div>

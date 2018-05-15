@@ -41,6 +41,12 @@ class Scroller extends React.Component {
     }
 
     scrollWrap = (e) => {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
         const delta = e.wheelDelta;
         if (delta < 0) {
             this.addNum();
@@ -71,9 +77,9 @@ class Scroller extends React.Component {
         return this.state.value;
     }
 
-    setValue (value) {
-        value = Math.max(value, this.state.min);
-        value = Math.min(value, this.state.max);
+    setValue (value, min, max) {
+        value = Math.max(value, min === undefined ? this.state.min : min);
+        value = Math.min(value, max === undefined ? this.state.max : max);
         this.setState({value});
     }
 
@@ -107,14 +113,17 @@ class Scroller extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
-            this.setValue(nextProps.value);
-        }
+        const params = {};
         if (nextProps.min !== this.props.min && nextProps.min !== this.state.min) {
+            params.min = nextProps.min === undefined ? this.state.min : nextProps.min;
             this.setMin(nextProps.min);
         }
         if (nextProps.max !== this.props.max && nextProps.max !== this.state.max) {
+            params.max = nextProps.max === undefined ? this.state.max : nextProps.max;
             this.setMax(nextProps.max);
+        }
+        if (nextProps.value !== this.props.value && nextProps.value !== this.state.value) {
+            this.setValue(nextProps.value, params.min, params.max);
         }
     }
 

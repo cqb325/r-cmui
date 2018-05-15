@@ -30,6 +30,12 @@ class ScrollDate extends React.Component {
         endDate: PropTypes.any
     }
 
+    static HEAD = {
+        YEAR: '年',
+        MONTH: '月',
+        DATE: '日'
+    }
+
     constructor (props) {
         super(props);
 
@@ -42,12 +48,12 @@ class ScrollDate extends React.Component {
     }
 
     renderHead () {
-        let arr = ['年', '月', '日'];
+        let arr = [ScrollDate.HEAD.YEAR, ScrollDate.HEAD.MONTH, ScrollDate.HEAD.DATE];
         if (this.props.yearOnly) {
-            arr = ['年'];
+            arr = [ScrollDate.HEAD.YEAR];
         }
         if (this.props.monthOnly) {
-            arr = ['年', '月'];
+            arr = [ScrollDate.HEAD.YEAR, ScrollDate.HEAD.MONTH];
         }
         return arr.map((item) => {
             return <div key={item} className='cm-scroll-date-head-item'>{item}</div>;
@@ -175,11 +181,11 @@ class ScrollDate extends React.Component {
         }
     }
 
-    getMaxDate () {
+    getMaxDate (init) {
         if (this.state.endDate) {
             const end = moment(this.state.endDate);
-            const year = this.year ? this.year.getValue() : this.state.current.get('year');
-            const month = this.month ? this.month.getValue() : this.state.current.get('month') + 1;
+            const year = init ? this.state.current.get('year') : this.year.getValue();
+            const month = init ? this.state.current.get('month') + 1 : this.month.getValue();
             const current = moment().set('year', year).set('month', month - 1);
             if (end.format('YYYY-MM') === current.format('YYYY-MM')) {
                 return end.get('date');
@@ -199,11 +205,11 @@ class ScrollDate extends React.Component {
         return max;
     }
 
-    getMinDate () {
+    getMinDate (init) {
         if (this.state.startDate) {
             const end = moment(this.state.startDate);
-            const year = this.year ? this.year.getValue() : this.state.current.get('year');
-            const month = this.month ? this.month.getValue() : this.state.current.get('month') + 1;
+            const year = init ? this.state.current.get('year') : this.year.getValue();
+            const month = init ? this.state.current.get('month') + 1 : this.month.getValue();
             const current = moment().set('year', year).set('month', month - 1);
             if (end.format('YYYY-MM') === current.format('YYYY-MM')) {
                 return end.get('date');
@@ -221,8 +227,8 @@ class ScrollDate extends React.Component {
         const yearScroller = <Scroller ref={(f) => this.year = f} key='year' min={this.getMinYear(year)} max={this.getMaxYear(year)} value={year} onChange={this.changeYear}/>;
         const month = current.get('month');
         const monthScroller = <Scroller ref={(f) => this.month = f} key='month' min={this.getMinMonth()} max={this.getMaxMonth()} value={month + 1} onChange={this.changeMonth}/>;
-        const max = this.getMaxDate();
-        const dateScroller = <Scroller ref={(f) => this.date = f} key='date' min={this.getMinDate()} max={max} value={current.get('date')} onChange={this.changeDate}/>;
+        const max = this.getMaxDate(true);
+        const dateScroller = <Scroller ref={(f) => this.date = f} key='date' min={this.getMinDate(true)} max={max} value={current.get('date')} onChange={this.changeDate}/>;
 
         if (this.props.yearOnly) {
             return yearScroller;
@@ -237,6 +243,14 @@ class ScrollDate extends React.Component {
 
     getValue () {
         return this.state.value;
+    }
+
+    /**
+     * 滚轮显示的值
+     */
+    getScrollValue () {
+        const current = this.state.current;
+        return current.format(this.getFormat());
     }
 
     setValue (value) {
@@ -341,7 +355,7 @@ class ScrollDate extends React.Component {
                 <div className='cm-scroll-date-head cm-row'>
                     {this.renderHead()}
                 </div>
-                <div className='cm-scroll-date-body'>
+                <div className='cm-scroll-date-body cm-row'>
                     {this.renderScrollers()}
                 </div>
             </div>
