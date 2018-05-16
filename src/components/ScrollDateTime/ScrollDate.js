@@ -278,7 +278,7 @@ class ScrollDate extends React.Component {
                 current.set('year', end.get('year'));
                 current.set('month', end.get('month'));
                 if (this.month) {
-                    this.month.setMax(end.get('month'));
+                    this.month.setMax(end.get('month') + 1);
                 }
             }
         } else {
@@ -287,7 +287,7 @@ class ScrollDate extends React.Component {
                 current.set('month', end.get('month'));
                 current.set('date', end.get('date'));
                 if (this.month) {
-                    this.month.setMax(end.get('month'));
+                    this.month.setMax(end.get('month') + 1);
                 }
                 if (this.date) {
                     this.date.setMax(end.get('date'));
@@ -317,7 +317,7 @@ class ScrollDate extends React.Component {
                 current.set('year', start.get('year'));
                 current.set('month', start.get('month'));
                 if (this.month) {
-                    this.month.setMin(start.get('month'));
+                    this.month.setMin(start.get('month') + 1);
                 }
             }
         } else {
@@ -326,7 +326,7 @@ class ScrollDate extends React.Component {
                 current.set('month', start.get('month'));
                 current.set('date', start.get('date'));
                 if (this.month) {
-                    this.month.setMin(start.get('month'));
+                    this.month.setMin(start.get('month') + 1);
                 }
                 if (this.date) {
                     this.date.setMin(start.get('date'));

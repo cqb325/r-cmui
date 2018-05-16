@@ -8,6 +8,7 @@ import clickAway from '../utils/ClickAway';
 import velocity from '../../lib/velocity';
 import ScrollDateTime from '../ScrollDateTime/ScrollDateTime';
 
+import '../ScrollDateTime/ScrollDateTime.less';
 import './ScrollRangeDateTime.less';
 
 class ScrollRangeDateTime extends BaseComponent {
@@ -179,7 +180,14 @@ class ScrollRangeDateTime extends BaseComponent {
         const start = moment(v, this.format);
         this.endComp.setStartDate(v);
         window.setTimeout(() => {
-            const end = moment(this.endComp.getScrollValue(), this.format);
+            let end = moment(this.endComp.getScrollValue(), this.format);
+            if (this.props.maxRange) {
+                const off = this.getOffsetDays(start, end);
+                if (off > this.props.maxRange) {
+                    end = moment(start).add(this.props.maxRange, 'days');
+                    this.endComp.setValue(end.format(this.format));
+                }
+            }
             this.setState({start, end});
         }, 0);
     }
@@ -188,10 +196,22 @@ class ScrollRangeDateTime extends BaseComponent {
         const v = this.endComp.getScrollValue();
         this.startComp.setEndDate(v);
         const end = moment(v, this.format);
+
         window.setTimeout(() => {
-            const start = moment(this.startComp.getScrollValue(), this.format);
+            let start = moment(this.startComp.getScrollValue(), this.format);
+            if (this.props.maxRange) {
+                const off = this.getOffsetDays(start, end);
+                if (off > this.props.maxRange) {
+                    start = moment(end).add(-this.props.maxRange, 'days');
+                    this.startComp.setValue(start.format(this.format));
+                }
+            }
             this.setState({start, end});
         }, 0);
+    }
+
+    getOffsetDays (start, end) {
+        return end.diff(start, 'days');
     }
 
     getValue () {
@@ -206,6 +226,15 @@ class ScrollRangeDateTime extends BaseComponent {
             end = moment(values[1], this.format);
         }
         this.setState({start, end});
+    }
+
+    componentDidMount () {
+        if (this.state.start) {
+            const startValue = this.state.start.format(this.format);
+            const endValue = this.state.end.format(this.format);
+            this.startComp.setValue(startValue);
+            this.endComp.setValue(endValue);
+        }
     }
 
     render () {

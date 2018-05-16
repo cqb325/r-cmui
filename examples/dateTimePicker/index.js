@@ -59,7 +59,7 @@ class Comp extends React.Component {
 
                 <div>
                     asd: <DateRange/>
-                    asd: <ScrollRangeDateTime ref={(f) => this.range = f} view='hm' endDate='23:59:59' startDate='00:00:00'/>
+                    asd: <ScrollRangeDateTime ref={(f) => this.range = f} view='ymd' endDate='2018-06-01' maxRange={5}/>
                     <Button onClick={() => {
                         // this.range.setValue('12:30:10~15:30:48');
                         this.range.setValue();
