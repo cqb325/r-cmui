@@ -188,6 +188,9 @@ class ScrollDateTime extends BaseComponent {
     }
 
     onClickToday = () => {
+        window.setTimeout(() => {
+            this.onChange(this.comp.getValue());
+        }, 0);
         this.hide();
     }
 
