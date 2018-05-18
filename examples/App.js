@@ -147,7 +147,7 @@ class App extends BaseComponent {
                 <p className='App-intro'>
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
-
+                <Select data={[{id: '1', text: 'asd1'},{id: '2', text: 'asd2', disabled: true},{id: '3', text: 'asd3'}]} ref='select' value='1' placeholder='请选择' multi/>
                 <Card>
                     <Layout>
                         <Sider ref='sider' collapsedWidth={this.state.menuWidth}>

@@ -565,6 +565,7 @@ class Select extends BaseComponent {
                 item={item}
                 multi={multi}
                 show={show}
+                disabled={item.disabled}
                 itemBind={this.itemBind}
                 itemUnBind={this.itemUnBind}
                 onClick={this._selectItem}
