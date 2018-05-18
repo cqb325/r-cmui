@@ -9,6 +9,8 @@ v2.3.0
 
 1、添加 ScrollDateTime & ScrollRangeDateTime
 
+2、select选项添加disabled参数
+
 v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题
