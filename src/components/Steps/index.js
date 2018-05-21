@@ -22,7 +22,7 @@ class Steps extends BaseComponent {
     static defaultProps = {
         current: 0
     };
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -32,7 +32,7 @@ class Steps extends BaseComponent {
         this.steps = [];
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
         if (nextProps.current !== this.props.current && nextProps.current !== this.state.current) {
             this.setState({
                 current: nextProps.current
@@ -40,25 +40,25 @@ class Steps extends BaseComponent {
         }
     }
 
-    componentDidMount(){
-        let w = this.steps.length === 1 ? '100%' : 1 / (this.steps.length - 1) * 100 + '%';
-        let lastWidth = this.steps.length > 1 ? this.steps[this.steps.length - 1].getWidth() : 0;
+    componentDidMount () {
+        const w = this.steps.length === 1 ? '100%' : `${1 / (this.steps.length - 1) * 100}%`;
+        const lastWidth = this.steps.length > 1 ? this.steps[this.steps.length - 1].getWidth() : 0;
 
-        this.steps.forEach((step, index)=>{
+        this.steps.forEach((step, index) => {
             if (index < this.steps.length - 1) {
                 step.updateStyle({
                     width: w,
-                    marginRight: -lastWidth / (this.steps.length - 1) + 'px'
+                    marginRight: `${-lastWidth / (this.steps.length - 1)}px`
                 });
             }
         });
     }
 
-    bindStep = (step)=>{
+    bindStep = (step) => {
         this.steps.push(step);
     }
 
-    next(){
+    next () {
         if (this.state.current === this.steps.length - 1) {
             if (this.props.onFinished) {
                 this.props.onFinished();
@@ -66,9 +66,9 @@ class Steps extends BaseComponent {
             return;
         }
         if (this.state.current < this.steps.length - 1) {
-            let current = this.state.current + 1;
+            const current = this.state.current + 1;
             this.setState({
-                current: current
+                current
             });
 
             if (this.props.onChange) {
@@ -77,12 +77,12 @@ class Steps extends BaseComponent {
         }
     }
 
-    prev(){
+    prev () {
         if (this.state.current === 0) {
             return;
         }
         if (this.state.current > 0) {
-            let current = this.state.current - 1;
+            const current = this.state.current - 1;
             this.setState({
                 current: this.state.current - 1
             });
@@ -93,11 +93,11 @@ class Steps extends BaseComponent {
         }
     }
 
-    setActive(current){
+    setActive (current) {
         if (current > 0 && current < this.steps.length - 1) {
             if (current !== this.state.current) {
                 this.setState({
-                    current: current
+                    current
                 });
 
                 if (this.props.onChange) {
@@ -107,13 +107,13 @@ class Steps extends BaseComponent {
         }
     }
 
-    renderSteps(){
+    renderSteps () {
         let index = 1;
-        return React.Children.map(this.props.children, (child)=>{
-            let componentName = child.type && child.type.displayName ? child.type.displayName : '';
+        return React.Children.map(this.props.children, (child) => {
+            const componentName = child.type && child.type.displayName ? child.type.displayName : '';
             if (componentName === 'Step') {
-                let props = Object.assign({
-                    index: index,
+                const props = Object.assign({
+                    index,
                     current: this.state.current,
                     'bindStep': this.bindStep
                 }, child.props);
@@ -126,14 +126,14 @@ class Steps extends BaseComponent {
         });
     }
 
-    render(){
+    render () {
         let {className, style} = this.props;
         className = classNames('cm-steps', className, {
             'cm-steps-small': this.props.size === 'small',
             'cm-steps-vertical': this.props.layout === 'vertical'
         });
 
-        let steps = this.renderSteps();
+        const steps = this.renderSteps();
         return (
             <div className={className} style={style}>
                 {steps}
@@ -154,7 +154,7 @@ class Step extends BaseComponent {
         description: '',
         title: ''
     };
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -167,24 +167,24 @@ class Step extends BaseComponent {
         });
     }
 
-    componentDidMount(){
+    componentDidMount () {
         if (this.props['bindStep']) {
             this.props['bindStep'](this);
         }
     }
 
-    updateStyle(style){
-        window.setTimeout(()=>{
+    updateStyle (style) {
+        window.setTimeout(() => {
             this.setState({style});
         }, 0);
     }
 
-    getWidth(){
-        let ele = ReactDOM.findDOMNode(this);
+    getWidth () {
+        const ele = ReactDOM.findDOMNode(this);
         return Math.ceil(Dom.dom(ele).width()) + 4;
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
         if (nextProps.current !== this.state.current) {
             this.setState({
                 current: nextProps.current
@@ -192,7 +192,7 @@ class Step extends BaseComponent {
         }
     }
 
-    render(){
+    render () {
         let {className, style} = this.props;
         let status = false;
         if (this.state.current + 1 > this.state.index) {
@@ -221,18 +221,18 @@ class Step extends BaseComponent {
 
         return (
             <div className={className} style={style}>
-                <div className="cm-step-tail">
+                <div className='cm-step-tail'>
                     <i />
                 </div>
-                <div className="cm-steps-step">
-                    <div className="cm-step-head">
-                        <div className="cm-step-head-inner">
+                <div className='cm-steps-step'>
+                    <div className='cm-step-head'>
+                        <div className='cm-step-head-inner'>
                             {inner}
                         </div>
                     </div>
-                    <div className="cm-step-main">
-                        <div className="cm-step-title">{this.state.title}</div>
-                        <div className="cm-step-description">{this.state.description}</div>
+                    <div className='cm-step-main'>
+                        <div className='cm-step-title'>{this.state.title}</div>
+                        <div className='cm-step-description'>{this.state.description}</div>
                     </div>
                 </div>
             </div>

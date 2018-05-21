@@ -28,7 +28,7 @@ class Sider extends React.Component {
         defaultCollapsed: false
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         let collapsed;
@@ -44,7 +44,7 @@ class Sider extends React.Component {
         this.toggle = this.toggle.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps (nextProps) {
         if (nextProps.collapsed !== this.props.collapsed && nextProps.collapsed !== this.state.collapsed) {
             this.setState({
                 collapsed: nextProps.collapsed
@@ -52,10 +52,10 @@ class Sider extends React.Component {
         }
     }
 
-    setCollapsed(collapsed){
+    setCollapsed (collapsed) {
         if (this.props.collapsed !== this.state.collapsed) {
             this.setState({
-                collapsed: collapsed
+                collapsed
             });
 
             if (this.props.onCollapse) {
@@ -64,14 +64,14 @@ class Sider extends React.Component {
         }
     }
 
-    toggle(){
-        let collapsed = !this.state.collapsed;
+    toggle () {
+        const collapsed = !this.state.collapsed;
         this.setCollapsed(collapsed);
     }
 
-    render(){
+    render () {
         let {prefixCls, className, collapsible, trigger, style, width, collapsedWidth} = this.props;
-        let divProps = omit(this.props, ['prefixCls', 'collapsible', 'collapsedWidth', 'collapsed', 'defaultCollapsed', 'onCollapse', 'name']);
+        const divProps = omit(this.props, ['prefixCls', 'collapsible', 'collapsedWidth', 'collapsed', 'defaultCollapsed', 'onCollapse', 'name']);
 
         className = classNames(className, prefixCls, {
             [`${prefixCls}-collapsed`]: !!this.state.collapsed,
@@ -83,8 +83,8 @@ class Sider extends React.Component {
         }, style);
 
         const iconObj = {
-            'expanded': <FontIcon icon="angle-left" />,
-            'collapsed': <FontIcon icon="angle-right" />
+            'expanded': <FontIcon icon='angle-left' />,
+            'collapsed': <FontIcon icon='angle-right' />
         };
         const status = this.state.collapsed ? 'collapsed' : 'expanded';
         const defaultTrigger = iconObj[status];

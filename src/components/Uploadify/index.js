@@ -27,7 +27,7 @@ import './Uploadify.less';
 class Uploadify extends BaseComponent {
     static displayName = 'Uploadify';
     static defaultProps = {
-        buttonText: 'upload',
+        buttonText: window.RCMUI_I18N['Upload.buttonText'],
         files: [],
         mode: 'falls',
         silent: false,
@@ -185,11 +185,11 @@ class Uploadify extends BaseComponent {
 
         console.log(error);
         if (error.code === -600) {
-            this.refs.msg.show('上传的文件大小超出范围，请重新选择');
+            this.refs.msg.show(window.RCMUI_I18N['Upload.errorSize']);
         } else if (error.code === -601) {
-            this.refs.msg.show('不支持该类型的文件');
+            this.refs.msg.show(window.RCMUI_I18N['Upload.errorType']);
         } else if (error.code === -200) {
-            this.refs.msg.show('上传服务连接错误，请检查服务地址');
+            this.refs.msg.show(window.RCMUI_I18N['Upload.errorServer']);
         } else {
             this.refs.msg.show(error.message);
         }
@@ -404,7 +404,7 @@ class Uploadify extends BaseComponent {
                 <Dialog title={' '} ref='dialog' useDefaultFooters={false} footers={null}>
                     <img ref='lightBox' className='cm-uploadify-lightbox' alt='' />
                 </Dialog>
-                <MessageBox ref='msg' title='提示' />
+                <MessageBox ref='msg' title={window.RCMUI_I18N['Upload.tip']} />
             </div>
         );
     }

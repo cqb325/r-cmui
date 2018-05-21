@@ -19,7 +19,7 @@ import Select from '../Select/index';
  */
 class AutoComplete extends Select {
     static displayName = 'AutoComplete';
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.timer = null;
         this.addState({
@@ -35,28 +35,28 @@ class AutoComplete extends Select {
      * @returns {XML}
      * @private
      */
-    _renderValues(){
-        let {name, placeholder} = this.props;
-        let values = this.state.value ? (this.state.value + '').split(this.sep) : [];
+    _renderValues () {
+        const {name, placeholder} = this.props;
+        const values = this.state.value ? (`${this.state.value  }`).split(this.sep) : [];
 
         let html = [];
         if (values.length) {
             html = this.text;
         }
-        let className = classNames('cm-select-value', {
+        const className = classNames('cm-select-value', {
             'cm-select-placeholder': !values.length && placeholder
         });
 
-        return (<Input ref="input" type="text" className={className}
+        return (<Input ref='input' type='text' className={className}
             name={name}
             value={html.join(this.sep)}
             placeholder={placeholder}
-            trigger="change"
-            onChange={(value)=>{
+            trigger='change'
+            onChange={(value) => {
                 if (this.timer) {
                     window.clearTimeout(this.timer);
                 }
-                this.timer = setTimeout(()=>{
+                this.timer = setTimeout(() => {
                     this.filter(value);
                     this.timer = null;
                 }, 200);
@@ -71,11 +71,11 @@ class AutoComplete extends Select {
      * @returns 
      * @memberof AutoComplete
      */
-    filter(value, silent){
+    filter (value, silent) {
         if (!this.data) {
             return;
         }
-        var filtered = this.data.filter((item)=> {
+        let filtered = this.data.filter((item) => {
             if (item.text.indexOf(value) != -1) {
                 return true;
             }
@@ -83,20 +83,20 @@ class AutoComplete extends Select {
             return false;
         });
 
-        this.setState({data: filtered}, ()=>{
-            if(!silent){
+        this.setState({data: filtered}, () => {
+            if (!silent) {
                 this.showOptions();
             }
         });
     }
 
-    _selectItem(option) {
+    _selectItem (option) {
         super._selectItem(option);
-        let v = option.getValue();
+        const v = option.getValue();
         this.filter(v, true);
     }
 
-    getValue(){
+    getValue () {
         return this.refs.input.value;
     }
 
@@ -104,20 +104,20 @@ class AutoComplete extends Select {
      * 显示下拉框
      * @method showOptions
      */
-    showOptions = ()=>{
-        if(!this.state.data || (this.state.data && !this.state.data.length)){
+    showOptions = () => {
+        if (!this.state.data || (this.state.data && !this.state.data.length)) {
             return;
         }
         if (this.props.readOnly || this.state.disabled) {
             return;
         }
 
-        let options = ReactDOM.findDOMNode(this.refs.options);
+        const options = ReactDOM.findDOMNode(this.refs.options);
         options.style.display = 'block';
 
-        let container = Dom.closest(options, '.cm-select');
-        let offset = Dom.getOuterHeight(options) + 5;
-        let dropup = Dom.overView(container, offset);
+        const container = Dom.closest(options, '.cm-select');
+        const offset = Dom.getOuterHeight(options) + 5;
+        const dropup = Dom.overView(container, offset);
 
         Dom.withoutTransition(container, () => {
             this.setState({ dropup });
@@ -130,7 +130,7 @@ class AutoComplete extends Select {
         }, 0);
     }
 
-    render(){
+    render () {
         return super.render();
     }
 }

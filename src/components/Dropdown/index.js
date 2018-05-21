@@ -23,7 +23,7 @@ class Dropdown extends BaseComponent {
         align: 'bottomLeft'
     };
     
-    constructor(props){
+    constructor (props) {
         super(props);
 
         this.action = props.action;
@@ -33,7 +33,7 @@ class Dropdown extends BaseComponent {
      * 显示隐藏回调
      * @param visible
      */
-    onVisibleChange(visible){
+    onVisibleChange (visible) {
         if (this.props.onVisibleChange) {
             this.props.onVisibleChange(visible);
         }
@@ -41,26 +41,26 @@ class Dropdown extends BaseComponent {
         this.emit('visibleChange', visible);
     }
 
-    render(){
+    render () {
         let {className, style} = this.props;
         className = classNames('cm-dropdown', className, this.props.align);
 
         return (
             <InnerDropdown
-                ref="trigger"
+                ref='trigger'
                 action={this.action}
                 overlay={this.props.overlay}
                 align={this.props.align || 'bottomLeft'}
                 delay={this.delay}
                 onVisibleChange={this.onVisibleChange.bind(this)}
                 extraProps={{
-                    className: className,
-                    style: style
+                    className,
+                    style
                 }}
             >
                 {React.isValidElement(this.props.children)
                     ? this.props.children
-                    : <span className="cm-dropdown-helper">{this.props.children}</span>
+                    : <span className='cm-dropdown-helper'>{this.props.children}</span>
                 }
             </InnerDropdown>
         );

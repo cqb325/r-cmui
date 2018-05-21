@@ -559,7 +559,7 @@ class DateRange extends BaseComponent {
         const {clear} = this.props;
         if (clear) {
             return <span className='pull-right'>
-                <Button theme='info' size='small' raised onClick={this.clear}>清除</Button>
+                <Button theme='info' size='small' raised onClick={this.clear}>{window.RCMUI_I18N['DateRange.clear']}</Button>
             </span>;
         } else {
             return null;

@@ -31,9 +31,9 @@ class ScrollTime extends React.Component {
     }
 
     static HEAD = {
-        HOUR: '时',
-        MINUTE: '分',
-        SECOND: '秒'
+        HOUR: window.RCMUI_I18N['ScrollDateTime.hour'],
+        MINUTE: window.RCMUI_I18N['ScrollDateTime.minute'],
+        SECOND: window.RCMUI_I18N['ScrollDateTime.second']
     }
 
     constructor (props) {

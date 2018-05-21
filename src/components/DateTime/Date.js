@@ -474,7 +474,7 @@ class Date extends BaseComponent {
         const endDate = this.state.endDate;
 
         const ret = [];
-        const months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+        const months = window.RCMUI_I18N['DateTime.month'];
         for (let i = 0; i < 12; i++) {
             let disabled = false;
             if (startDate) {
@@ -595,7 +595,7 @@ class Date extends BaseComponent {
      * @private
      */
     _getWeek () {
-        return ['日', '一', '二', '三', '四', '五', '六'].map((w, i) => {
+        return window.RCMUI_I18N['DateTime.week'].map((w, i) => {
             return <div key={i} className='week'>{w}</div>;
         });
     }
@@ -649,10 +649,10 @@ class Date extends BaseComponent {
             return (
                 <div className='date-picker-footer'>
                     <a className='clear' onClick={this.clear.bind(this)}>
-                        清除
+                        {window.RCMUI_I18N['DateTime.clear']}
                     </a>
                     <a className='today-btn' onClick={this.today.bind(this)}>
-                        今天
+                        {window.RCMUI_I18N['DateTime.today']}
                     </a>
                 </div>
             );

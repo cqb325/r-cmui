@@ -120,7 +120,7 @@ class SimpleListPage extends React.Component {
     search = async (page, pageSize) => {
         this.setState({spinning: true});
         const ret = await fetch(this.props.action, this.getSearchParams(page, pageSize), 'GET', (error) => {
-            console.log('get Table Data error!', error);
+            console.log(window.RCMUI_I18N['SimpleListPage.fetchDataError'], error);
         });
         if (ret) {
             this.refs.table.setData(ret.data);
