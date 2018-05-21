@@ -133,7 +133,7 @@ class Body extends React.Component {
             <div className='cm-grid-body' ref={(f) => this.body = f}>
                 {rows}
             </div>
-            {rows ? null : <div style={{textAlign: 'center'}}>暂无数据</div>}
+            {rows ? null : <div style={{textAlign: 'center'}}>{window.RCMUI_I18N['Grid.NoData']}</div>}
         </div>;
     }
 

@@ -4,8 +4,8 @@ import FormControl from '../FormControl/index';
 import Form from '../Form/index';
 import Button from '../Button/index';
 
-class SimpleForm extends BaseComponent{
-    constructor(props) {
+class SimpleForm extends BaseComponent {
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -22,10 +22,10 @@ class SimpleForm extends BaseComponent{
      * @param source
      * @param props
      */
-    mergeProps(target, source, props){
-        if(props){
-            props.forEach(function(prop){
-                if(source[prop] != undefined){
+    mergeProps (target, source, props) {
+        if (props) {
+            props.forEach((prop) => {
+                if (source[prop] != undefined) {
                     target[prop] = source[prop];
                 }
             });
@@ -38,10 +38,10 @@ class SimpleForm extends BaseComponent{
      * @param value
      * @param selectItem
      */
-    onChange(item, value, selectItem){
+    onChange (item, value, selectItem) {
         item.value = value;
 
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(item, value, selectItem);
         }
 
@@ -52,31 +52,31 @@ class SimpleForm extends BaseComponent{
      *
      * @param items
      */
-    renderItems(items){
-        if(items){
-            return items.map((item)=>{
-                if(item.type === 'button'){
+    renderItems (items) {
+        if (items) {
+            return items.map((item) => {
+                if (item.type === 'button') {
                     return <Button {...item} key={this.itemIndex++}>{item.label}</Button>;
                 }
-                if(item.type === 'label'){
+                if (item.type === 'label') {
                     return <span key={this.itemIndex++} style={item.style} {...item.props}>{item.label}</span>;
                 }
-                if(item.type === 'promote'){
+                if (item.type === 'promote') {
                     return <Form.Promote key={this.itemIndex++} {...item}>{item.label}</Form.Promote>;
                 }
-                if(item.type !== 'row'){
-                    let itemProps = Object.assign({}, item.props||{});
+                if (item.type !== 'row') {
+                    let itemProps = Object.assign({}, item.props || {});
                     itemProps = Object.assign(itemProps, item);
                     itemProps.key = this.itemIndex++;
-                    let initData = this.state.initData;
+                    const initData = this.state.initData;
                     let val = initData[item.name];
-                    if(typeof itemProps.value === 'function'){
+                    if (typeof itemProps.value === 'function') {
                         val = itemProps.value(initData);
                     }
                     itemProps.value = val == undefined ? itemProps.value : val;
-                    itemProps.value = (itemProps.value == undefined || itemProps.value == null) ? undefined : itemProps.value+'';
+                    itemProps.value = (itemProps.value == undefined || itemProps.value == null) ? undefined : `${itemProps.value}`;
                     return <FormControl {...itemProps} label={item.label} onChange={this.onChange.bind(this, item)}/>;
-                }else{
+                } else {
                     return this.renderFormRow(item);
                 }
             });
@@ -88,9 +88,9 @@ class SimpleForm extends BaseComponent{
      *
      * @param item
      */
-    renderFormRow(item){
-        let items = this.renderItems(item.children);
-        let props = Object.assign({}, item.props, item);
+    renderFormRow (item) {
+        const items = this.renderItems(item.children);
+        const props = Object.assign({}, item.props, item);
         return <Form.Row {...props} key={this.itemIndex++}>
             {items}
         </Form.Row>;
@@ -99,14 +99,14 @@ class SimpleForm extends BaseComponent{
     /**
      * 获取表单
      */
-    getForm(){
+    getForm () {
         return this.refs.form;
     }
 
     /**
      * 获取表单的元素
      */
-    getFormItems(){
+    getFormItems () {
         this.refs.form.getItems();
     }
 
@@ -114,7 +114,7 @@ class SimpleForm extends BaseComponent{
      * 是否验证通过
      * @returns {*|boolean}
      */
-    isValid(){
+    isValid () {
         return this.refs.form.isValid();
     }
 
@@ -122,7 +122,7 @@ class SimpleForm extends BaseComponent{
      * 获取表单数据
      * @returns {{}}
      */
-    getFormData(){
+    getFormData () {
         return this.refs.form.getFormParams();
     }
 
@@ -130,7 +130,7 @@ class SimpleForm extends BaseComponent{
      * 设置表单的初始值
      * @param data
      */
-    setFormData(data){
+    setFormData (data) {
         this.setState({initData: data});
     }
 
@@ -139,7 +139,7 @@ class SimpleForm extends BaseComponent{
      * @param name
      * @returns {*}
      */
-    getFormControl(name){
+    getFormControl (name) {
         return this.refs.form.getFormControl(name);
     }
 
@@ -148,16 +148,16 @@ class SimpleForm extends BaseComponent{
      * @param name
      * @returns {*|Object}
      */
-    getItem(name){
+    getItem (name) {
         return this.refs.form.getItem(name);
     }
 
-    render(){
-        let formData = this.state.data;
+    render () {
+        const formData = this.state.data;
         let formProps = Object.assign({}, formData.props || {});
         // this.mergeProps(formProps, formData, ["action","method","encType","className","style"]);
         formProps = Object.assign(formProps, formData);
-        return <Form ref="form" {...formProps}>
+        return <Form ref='form' {...formProps}>
             {this.renderItems(formData.items)}
         </Form>;
     }

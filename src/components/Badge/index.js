@@ -14,14 +14,14 @@ import './Badge.less';
  * @constructor
  * @extend BaseComponent
  */
-class Badge extends BaseComponent{
+class Badge extends BaseComponent {
     static displayName = 'Badge';
     static defaultProps = {
         count: 0,
         dot: false
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -30,7 +30,7 @@ class Badge extends BaseComponent{
         });
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps (nextProps) {
         if (nextProps.count !== this.props.count) {
             this.setState({
                 count: nextProps.count
@@ -38,17 +38,17 @@ class Badge extends BaseComponent{
         }
     }
 
-    renderCount(){
+    renderCount () {
         if (this.state.status) {
-            let countName = classNames('cm-badge-status-dot', {
+            const countName = classNames('cm-badge-status-dot', {
                 [`cm-badge-status-${this.state.status}`]: this.state.status
             });
             return [
-                <span key="1" className={countName} />,
-                <span key="2" className="cm-badge-status-text">{this.props.text}</span>
+                <span key='1' className={countName} />,
+                <span key='2' className='cm-badge-status-text'>{this.props.text}</span>
             ];
         } else {
-            let countName = classNames('cm-badge-count', {
+            const countName = classNames('cm-badge-count', {
                 'cm-badge-dot': this.props.dot
             });
             if (this.state.count != undefined || this.props.dot) {
@@ -68,9 +68,9 @@ class Badge extends BaseComponent{
      * @param {any} num 
      * @memberof Badge
      */
-    addCount(num){
+    addCount (num) {
         num = num || 0;
-        let value = Math.max(this.state.count + num, 0);
+        const value = Math.max(this.state.count + num, 0);
 
         this.setState({
             count: value
@@ -82,12 +82,12 @@ class Badge extends BaseComponent{
      * @param {any} count 
      * @memberof Badge
      */
-    setCount(count){
+    setCount (count) {
         count = Math.max(count, 0);
         this.setState({count});
     }
 
-    render(){
+    render () {
         let {className, style} = this.props;
         className = classNames(className, 'cm-badge', this.state.theme, {
             'cm-badge-static': (!React.Children.count(this.props.children) && !this.state.status),

@@ -58,7 +58,7 @@ class Upload extends BaseComponent {
         placeholder: PropTypes.string
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -67,10 +67,10 @@ class Upload extends BaseComponent {
         });
     }
 
-    selectedFile = ()=>{
-        let file = ReactDOM.findDOMNode(this.refs.file);
+    selectedFile = () => {
+        const file = ReactDOM.findDOMNode(this.refs.file);
         let path = file.value;
-        let index = path.lastIndexOf('\\');
+        const index = path.lastIndexOf('\\');
         path = path.substr(index + 1);
         this.setState({
             fileName: path
@@ -83,29 +83,29 @@ class Upload extends BaseComponent {
         }
     }
 
-    getValue(){
+    getValue () {
         return this.state.fileName;
     }
 
-    render(){
+    render () {
         let {disabled, className, style, grid, name} = this.props;
 
         className = classNames('cm-upload', className, getGrid(grid), {
             'cm-upload-disabled': disabled
         });
 
-        let icon = 'upload';
+        const icon = 'upload';
 
         let txt = this.state.fileName || this.props.placeHolder;
-        txt = (<div className="cm-upload-fileName">{txt}</div>);
+        txt = (<div className='cm-upload-fileName'>{txt}</div>);
         return (
             <div className={className} style={style}>
-                <input type="file" name={name} ref="file"
-                    onChange={this.selectedFile} className="cm-upload-pick-helper" />
-                <div className="cm-upload-pick-btn">
+                <input type='file' name={name} ref='file'
+                    onChange={this.selectedFile} className='cm-upload-pick-helper' />
+                <div className='cm-upload-pick-btn'>
                     {txt}
                 </div>
-                <FontIcon icon={icon} title="上传" ref="uploadBtn" />
+                <FontIcon icon={icon} title={window.RCMUI_I18N['Upload.buttonText']} ref='uploadBtn' />
             </div>
         );
     }

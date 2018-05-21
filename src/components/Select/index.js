@@ -174,7 +174,7 @@ class Select extends BaseComponent {
         textField: 'text',
         valueField: 'id',
         sep: ',',
-        choiceText: '请选择',
+        choiceText: window.RCMUI_I18N['Select.choiceText'],
         active: false,
         value: '',
         group: false

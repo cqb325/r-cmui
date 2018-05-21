@@ -382,8 +382,8 @@ class ScrollDateTimeComp extends BaseComponent {
             <div className='cm-scroll-datetime-comp'>
                 {this.renderDateTime()}
                 <div className='cm-scroll-datetime-tools'>
-                    {this.props.today ? <Button theme='primary' className='mr-5 mt-10' onClick={this.selectToday}>今天</Button> : null}
-                    {this.props.clear ? <Button theme='primary' className='mr-5 mt-10' onClick={this.clear}>清除</Button> : null}
+                    {this.props.today ? <Button theme='primary' className='mr-5 mt-10' onClick={this.selectToday}>{window.RCMUI_I18N['DateTime.today']}</Button> : null}
+                    {this.props.clear ? <Button theme='primary' className='mr-5 mt-10' onClick={this.clear}>{window.RCMUI_I18N['DateTime.clear']}</Button> : null}
                 </div>
             </div>
         );

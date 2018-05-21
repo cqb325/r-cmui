@@ -58,8 +58,8 @@ class Dialog extends BaseComponent {
 
     static defaultProps = {
         visibility: false,
-        okButtonText: '确 定',
-        cancelButtonText: '取 消',
+        okButtonText: window.RCMUI_I18N['Dialog.okButtonText'],
+        cancelButtonText: window.RCMUI_I18N['Dialog.cancelButtonText'],
         hasCloseBtn: true,
         useDefaultFooters: true,
         okButtonTheme: 'primary',

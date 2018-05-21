@@ -18,30 +18,30 @@ import './Toast.less';
  */
 class Toast extends BaseComponent {
     static displayName = 'Toast';
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.toast = null;
     }
 
-    show(msg){
+    show (msg) {
         this.toast.show(msg);
     }
 
-    hide(msg){
+    hide (msg) {
         this.toast.hide(msg);
     }
 
-    componentDidMount(){
+    componentDidMount () {
         if (!window.Toast) {
             window.Toast = this;
 
             this.container = document.createElement('div');
             document.body.appendChild(this.container);
 
-            window.setTimeout(()=>{
+            window.setTimeout(() => {
                 ReactDOM.render(
-                    <ToastInner msg={this.props.msg} ref={(ref)=>{ this.toast = ref; }} />
+                    <ToastInner msg={this.props.msg} ref={(ref) => { this.toast = ref; }} />
                     , this.container);
             }, 0);
         } else {
@@ -49,9 +49,9 @@ class Toast extends BaseComponent {
         }
     }
 
-    render(){
+    render () {
         return (
-            <div className="toast-placeholder" />
+            <div className='toast-placeholder' />
         );
     }
 }
@@ -62,12 +62,12 @@ class Toast extends BaseComponent {
  * @constructor
  * @extend Component
  */
-class ToastInner extends React.Component{
+class ToastInner extends React.Component {
     static displayName = 'ToastInner';
     static defaultProps = {
-        msg: '数据加载中'
+        msg: window.RCMUI_I18N['Toast.title']
     };
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -80,8 +80,8 @@ class ToastInner extends React.Component{
      * 显示Toast
      * @param msg
      */
-    show(msg){
-        let params = {
+    show (msg) {
+        const params = {
             visibility: true
         };
         if (msg) {
@@ -94,8 +94,8 @@ class ToastInner extends React.Component{
      * 隐藏Toast
      * @param msg
      */
-    hide(msg){
-        let params = {
+    hide (msg) {
+        const params = {
             visibility: false
         };
         if (msg) {
@@ -104,26 +104,26 @@ class ToastInner extends React.Component{
         this.setState(params);
     }
 
-    render(){
+    render () {
         return (
-            <div className="weui_loading_toast" style={{display: this.state.visibility ? 'block' : 'none'}}>
-                <div className="weui_mask_transparent" />
-                <div className="weui_toast">
-                    <div className="weui_loading">
-                        <div className="weui_loading_leaf weui_loading_leaf_0" />
-                        <div className="weui_loading_leaf weui_loading_leaf_1" />
-                        <div className="weui_loading_leaf weui_loading_leaf_2" />
-                        <div className="weui_loading_leaf weui_loading_leaf_3" />
-                        <div className="weui_loading_leaf weui_loading_leaf_4" />
-                        <div className="weui_loading_leaf weui_loading_leaf_5" />
-                        <div className="weui_loading_leaf weui_loading_leaf_6" />
-                        <div className="weui_loading_leaf weui_loading_leaf_7" />
-                        <div className="weui_loading_leaf weui_loading_leaf_8" />
-                        <div className="weui_loading_leaf weui_loading_leaf_9" />
-                        <div className="weui_loading_leaf weui_loading_leaf_10" />
-                        <div className="weui_loading_leaf weui_loading_leaf_11" />
+            <div className='weui_loading_toast' style={{display: this.state.visibility ? 'block' : 'none'}}>
+                <div className='weui_mask_transparent' />
+                <div className='weui_toast'>
+                    <div className='weui_loading'>
+                        <div className='weui_loading_leaf weui_loading_leaf_0' />
+                        <div className='weui_loading_leaf weui_loading_leaf_1' />
+                        <div className='weui_loading_leaf weui_loading_leaf_2' />
+                        <div className='weui_loading_leaf weui_loading_leaf_3' />
+                        <div className='weui_loading_leaf weui_loading_leaf_4' />
+                        <div className='weui_loading_leaf weui_loading_leaf_5' />
+                        <div className='weui_loading_leaf weui_loading_leaf_6' />
+                        <div className='weui_loading_leaf weui_loading_leaf_7' />
+                        <div className='weui_loading_leaf weui_loading_leaf_8' />
+                        <div className='weui_loading_leaf weui_loading_leaf_9' />
+                        <div className='weui_loading_leaf weui_loading_leaf_10' />
+                        <div className='weui_loading_leaf weui_loading_leaf_11' />
                     </div>
-                    <p className="weui_toast_content">{this.state.msg}</p>
+                    <p className='weui_toast_content'>{this.state.msg}</p>
                 </div>
             </div>
         );

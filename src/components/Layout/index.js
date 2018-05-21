@@ -15,7 +15,7 @@ import './Layout.less';
  * @extend React.Component
  */
 class Basic extends React.Component {
-    render(){
+    render () {
         let {prefixCls, className, children, name, style} = this.props;
         let hasSider;
         if (name === 'Layout') {
@@ -43,8 +43,8 @@ class Basic extends React.Component {
  * @extend React.Component
  */
 class Layout extends React.Component {
-    render(){
-        return <Basic prefixCls="cm-layout" name="Layout" {...this.props} />;
+    render () {
+        return <Basic prefixCls='cm-layout' name='Layout' {...this.props} />;
     }
 }
 
@@ -56,8 +56,8 @@ class Layout extends React.Component {
  * @extend React.Component
  */
 class Header extends React.Component {
-    render(){
-        return <Basic prefixCls="cm-layout-header" name="Header" {...this.props} />;
+    render () {
+        return <Basic prefixCls='cm-layout-header' name='Header' {...this.props} />;
     }
 }
 
@@ -69,8 +69,8 @@ class Header extends React.Component {
  * @extend React.Component
  */
 class Footer extends React.Component {
-    render(){
-        return <Basic prefixCls="cm-layout-footer" name="Footer" {...this.props} />;
+    render () {
+        return <Basic prefixCls='cm-layout-footer' name='Footer' {...this.props} />;
     }
 }
 
@@ -82,8 +82,8 @@ class Footer extends React.Component {
  * @extend React.Component
  */
 class Content extends React.Component {
-    render(){
-        return <Basic prefixCls="cm-layout-content" name="Content" {...this.props} />;
+    render () {
+        return <Basic prefixCls='cm-layout-content' name='Content' {...this.props} />;
     }
 }
 

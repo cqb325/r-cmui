@@ -10,8 +10,8 @@ class Transfer extends React.Component {
     displayName = 'Transfer';
 
     static defaultProps = {
-        sourceTitle: 'source',
-        targetTitle: 'target',
+        sourceTitle: window.RCMUI_I18N['Transfer.sourceTitle'],
+        targetTitle: window.RCMUI_I18N['Transfer.targetTitle'],
         transdered: '',
         filter: false
     };

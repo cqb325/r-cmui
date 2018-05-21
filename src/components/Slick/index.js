@@ -26,7 +26,7 @@ class Slick extends BaseComponent {
         autoPlay: false,
         delay: 3000
     };
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -43,7 +43,7 @@ class Slick extends BaseComponent {
         this._lastActiveIndex = 0;
     }
 
-    getActive(){
+    getActive () {
         return this.state.current;
     }
 
@@ -52,9 +52,9 @@ class Slick extends BaseComponent {
      * @param index
      * @param callback
      */
-    jumpTo(index, callback){
+    jumpTo (index, callback) {
         if (!callback) {
-            callback = function(){};
+            callback = function () {};
         }
         if (this._isMounted) {
             this.setState({
@@ -84,14 +84,14 @@ class Slick extends BaseComponent {
      * @param index
      * @param callback
      */
-    fade(index, callback){
-        let ele = Dom.dom(ReactDOM.findDOMNode(this));
-        let items = Dom.dom(Dom.queryAll('.cm-slick-item', ele[0]));
+    fade (index, callback) {
+        const ele = Dom.dom(ReactDOM.findDOMNode(this));
+        const items = Dom.dom(Dom.queryAll('.cm-slick-item', ele[0]));
         if (this._lastActiveIndex !== index) {
             velocity(items[this._lastActiveIndex], 'fadeOut', { duration: 300 });
             velocity(items[index], 'fadeIn', {
                 duration: 300,
-                complete: ()=> {
+                complete: () => {
                     callback(index);
                     if (this.props.onShown) {
                         this.props.onShown(index);
@@ -107,12 +107,12 @@ class Slick extends BaseComponent {
      * @param index
      * @param callback
      */
-    slide(index, callback){
+    slide (index, callback) {
         if (this.props.layout === 'vertical') {
-            let top = -this._height * index;
-            velocity(this._stack[0], {top: top}, {
+            const top = -this._height * index;
+            velocity(this._stack[0], {top}, {
                 duration: 300,
-                complete: ()=> {
+                complete: () => {
                     callback(index);
                     if (this.props.onShown) {
                         this.props.onShown(index);
@@ -121,10 +121,10 @@ class Slick extends BaseComponent {
                 }
             });
         } else {
-            let left = -this._width * index;
-            velocity(this._stack[0], {left: left}, {
+            const left = -this._width * index;
+            velocity(this._stack[0], {left}, {
                 duration: 300,
-                complete: ()=> {
+                complete: () => {
                     callback(index);
                     if (this.props.onShown) {
                         this.props.onShown(index);
@@ -140,16 +140,16 @@ class Slick extends BaseComponent {
      * @param index
      * @param callback
      */
-    slideNormal(index, callback){
+    slideNormal (index, callback) {
         if (this.props.layout === 'vertical') {
-            let top = -this._height * index;
+            const top = -this._height * index;
             this._stack.css({
-                top: top + 'px'
+                top: `${top  }px`
             });
         } else {
-            let left = -this._width * index;
+            const left = -this._width * index;
             this._stack.css({
-                left: left + 'px'
+                left: `${left  }px`
             });
         }
         callback(index);
@@ -164,16 +164,16 @@ class Slick extends BaseComponent {
      * @param index
      * @param callback
      */
-    slideNormalSilent(index){
+    slideNormalSilent (index) {
         if (this.props.layout === 'vertical') {
-            let top = -this._height * index;
+            const top = -this._height * index;
             this._stack.css({
-                top: top + 'px'
+                top: `${top  }px`
             });
         } else {
-            let left = -this._width * index;
+            const left = -this._width * index;
             this._stack.css({
-                left: left + 'px'
+                left: `${left  }px`
             });
         }
     }
@@ -182,16 +182,16 @@ class Slick extends BaseComponent {
      * 渲染子元素
      * @returns {*}
      */
-    renderChildren(){
+    renderChildren () {
         this.dots = [];
-        let cildren = this.props.children;
-        return React.Children.map(cildren, (child, index)=>{
-            let active = this.state.current === index;
+        const cildren = this.props.children;
+        return React.Children.map(cildren, (child, index) => {
+            const active = this.state.current === index;
             if (child.props.name === 'Slick.Item') {
                 let props = child.props;
                 props = Object.assign({}, props, {
-                    index: index,
-                    active: active,
+                    index,
+                    active,
                     parent: this
                 });
                 this.dots.push(<li key={index}
@@ -210,17 +210,17 @@ class Slick extends BaseComponent {
      * 将最后一个放到第一个前面
      * @param last
      */
-    setLastToFirst(last){
+    setLastToFirst (last) {
         if (this.props.layout === 'vertical') {
             last.css({
                 position: 'absolute',
-                top: -this._height + 'px',
+                top: `${-this._height  }px`,
                 left: 0
             });
         } else {
             last.css({
                 position: 'absolute',
-                left: -this._width + 'px',
+                left: `${-this._width  }px`,
                 top: 0
             });
         }
@@ -229,7 +229,7 @@ class Slick extends BaseComponent {
     /**
      * 重置最后一个元素的样式
      */
-    resetLastStyle(last){
+    resetLastStyle (last) {
         last.css({
             position: 'static',
             top: 'auto',
@@ -240,47 +240,47 @@ class Slick extends BaseComponent {
     /**
      * 播放
      */
-    play(){
-        let ele = Dom.dom(ReactDOM.findDOMNode(this));
-        let items = Dom.dom(Dom.queryAll('.cm-slick-item', ele[0]));
+    play () {
+        const ele = Dom.dom(ReactDOM.findDOMNode(this));
+        const items = Dom.dom(Dom.queryAll('.cm-slick-item', ele[0]));
 
-        window.setInterval(()=>{
+        window.setInterval(() => {
             let current = this.state.current;
             if (this.props.effect === 'slide' && current === this.dots.length - 1) {
-                let last = items.last();
+                const last = items.last();
                 this.setLastToFirst(last);
                 this.slideNormalSilent(-1);
             }
             current = (this.state.current + 1) % this.dots.length;
 
-            this.jumpTo(current, ()=>{
+            this.jumpTo(current, () => {
                 if (this.props.effect === 'slide' && current === 0) {
-                    let last = items.last();
+                    const last = items.last();
                     this.resetLastStyle(last);
                 }
             });
         }, this.props.delay);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
     }
 
     /**
      * 初始化大小和位置
      */
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
-        let ele = Dom.dom(ReactDOM.findDOMNode(this));
+        const ele = Dom.dom(ReactDOM.findDOMNode(this));
         this._width = ele.width();
         this._height = ele.height();
-        let length = this.dots.length;
-        let totalWidth = this._width * length;
-        let totalHeight = this._height * length;
+        const length = this.dots.length;
+        const totalWidth = this._width * length;
+        const totalHeight = this._height * length;
 
         this._stack = Dom.dom(Dom.query('.cm-slick-stack', ele[0]));
-        let items = Dom.dom(Dom.queryAll('.cm-slick-item', ele[0]));
-        let list = Dom.dom(Dom.queryAll('.cm-slick-list', ele[0]));
+        const items = Dom.dom(Dom.queryAll('.cm-slick-item', ele[0]));
+        const list = Dom.dom(Dom.queryAll('.cm-slick-list', ele[0]));
         if (this.props.effect === 'fade') {
             this._stack.css('height', '100%');
             this._stack.css('width', '100%');
@@ -297,25 +297,25 @@ class Slick extends BaseComponent {
             });
         } else {
             if (this.props.layout === 'vertical') {
-                this._stack.css('height', totalHeight + 'px');
+                this._stack.css('height', `${totalHeight  }px`);
                 this._stack.css('width', '100%');
                 items.css({
-                    height: this._height + 'px',
+                    height: `${this._height  }px`,
                     width: '100%'
                 });
                 list.css({
-                    height: this._height + 'px',
+                    height: `${this._height  }px`,
                     width: '100%'
                 });
             } else {
-                this._stack.css('width', totalWidth + 'px');
+                this._stack.css('width', `${totalWidth  }px`);
                 this._stack.css('height', '100%');
                 list.css({
-                    width: this._width + 'px',
+                    width: `${this._width  }px`,
                     height: '100%'
                 });
                 items.css({
-                    width: this._width + 'px',
+                    width: `${this._width  }px`,
                     height: '100%'
                 });
             }
@@ -327,7 +327,7 @@ class Slick extends BaseComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        let params = {};
+        const params = {};
         if (nextProps.current !== this.props.value) {
             params.current = nextProps.current;
         }
@@ -337,7 +337,7 @@ class Slick extends BaseComponent {
         this.setState(params);
     }
 
-    render(){
+    render () {
         let {className, style, layout} = this.props;
 
         className = classNames(className, 'cm-slick', {
@@ -345,13 +345,13 @@ class Slick extends BaseComponent {
         });
         return (
             <div className={className} style={style}>
-                <div className="cm-slick-slider">
-                    <div className="cm-slick-list">
-                        <div className="cm-slick-stack">
+                <div className='cm-slick-slider'>
+                    <div className='cm-slick-list'>
+                        <div className='cm-slick-stack'>
                             {this.renderChildren()}
                         </div>
                     </div>
-                    <ul className="cm-slick-dots">
+                    <ul className='cm-slick-dots'>
                         {this.dots}
                     </ul>
                 </div>
@@ -366,14 +366,14 @@ class Slick extends BaseComponent {
  * @constructor
  * @extend BaseComponent
  */
-class Item extends BaseComponent{
+class Item extends BaseComponent {
     static displayName = 'Item';
 
     static defaultProps = {
         name: 'Slick.Item'
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -381,8 +381,8 @@ class Item extends BaseComponent{
         });
     }
 
-    render(){
-        let className = classNames(this.props.className, 'cm-slick-item', {
+    render () {
+        const className = classNames(this.props.className, 'cm-slick-item', {
             'cm-slick-active': this.props.active
         });
         return (

@@ -28,7 +28,7 @@ class IconButton extends BaseComponent {
      * @private
      * @method _handleClick
      */
-    _handleClick = ()=>{
+    _handleClick = () => {
         if (this.state.disabled) {
             return;
         }
@@ -43,7 +43,7 @@ class IconButton extends BaseComponent {
      * @method createButtonChildren
      * @returns {*}
      */
-    createButtonChildren() {
+    createButtonChildren () {
         const {
             children,
             disabled,
@@ -51,7 +51,7 @@ class IconButton extends BaseComponent {
             touchRippleOpacity
         } = this.props;
 
-        let icon = this.props.icon ? (<FontIcon icon={this.props.icon}>
+        const icon = this.props.icon ? (<FontIcon icon={this.props.icon}>
             {children}
         </FontIcon>) : children;
 
@@ -67,18 +67,18 @@ class IconButton extends BaseComponent {
     /**
      * 渲染
      */
-    render(){
+    render () {
         const className = classNames(
             this.props.className,
             'cm-button', 'cm-iconButton',
             this.state.theme
         );
 
-        let link = this.props.href;
+        const link = this.props.href;
 
-        let iconSize = this.props.size ? this.props.size : (this.props.style && this.props.style.fontSize) ? parseInt(this.props.style.fontSize, 10) : 24;
-        let style = Object.assign({
-            fontSize: iconSize + 'px',
+        const iconSize = this.props.size ? this.props.size : (this.props.style && this.props.style.fontSize) ? parseInt(this.props.style.fontSize, 10) : 24;
+        const style = Object.assign({
+            fontSize: `${iconSize  }px`,
             overflow: 'visible',
             padding: iconSize / 2,
             width: iconSize * 2,
@@ -88,7 +88,7 @@ class IconButton extends BaseComponent {
         }, this.props.style);
 
         return (
-            <a href={link} ref="button"
+            <a href={link} ref='button'
                 disabled={this.state.disabled}
                 onClick={this._handleClick}
                 className={className}

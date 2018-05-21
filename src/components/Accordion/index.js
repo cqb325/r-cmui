@@ -16,7 +16,7 @@ import './Accordion.less';
 /**
  * Item Component
  */
-class Item extends BaseComponent{
+class Item extends BaseComponent {
     static displayName = 'Item';
     static defaultProps = {
         open: false,
@@ -75,7 +75,7 @@ class Item extends BaseComponent{
         title: PropTypes.string
     }
 
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.active = props.open;
         this.key = props.identify;
@@ -85,7 +85,7 @@ class Item extends BaseComponent{
         });
     }
 
-    onClick = ()=>{
+    onClick = () => {
         if (this._animating) {
             return false;
         }
@@ -99,15 +99,15 @@ class Item extends BaseComponent{
     /**
      * 打开
      */
-    open(){
+    open () {
         this._animating = true;
-        let body = ReactDOM.findDOMNode(this.refs.body);
+        const body = ReactDOM.findDOMNode(this.refs.body);
         if (this.props.onOpen) {
             this.props.onOpen(this);
         }
         velocity(body, 'slideDown', {
             duration: 300,
-            complete: ()=>{
+            complete: () => {
                 this.active = true;
                 if (this._isMounted) {
                     this.setState({
@@ -125,15 +125,15 @@ class Item extends BaseComponent{
     /**
      * 折叠
      */
-    collapse(){
+    collapse () {
         this._animating = true;
-        let body = ReactDOM.findDOMNode(this.refs.body);
+        const body = ReactDOM.findDOMNode(this.refs.body);
         if (this.props.onCollapse) {
             this.props.onCollapse(this);
         }
         velocity(body, 'slideUp', {
             duration: 300,
-            complete: ()=>{
+            complete: () => {
                 this.active = false;
                 if (this._isMounted) {
                     this.setState({
@@ -148,11 +148,11 @@ class Item extends BaseComponent{
         });
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
         this.props.parent.items.push(this);
         if (this.props.open) {
@@ -160,17 +160,17 @@ class Item extends BaseComponent{
         }
     }
 
-    render() {
+    render () {
         let {className, style, icon, title, children} = this.props;
 
         className = classNames('cm-accordion-item', className, {
             'cm-accordion-item-active': this.state.active
         });
-        icon = icon ? <FontIcon className="cm-accordion-item-icon" icon={icon} /> : null;
+        icon = icon ? <FontIcon className='cm-accordion-item-icon' icon={icon} /> : null;
         return (
             <li className={className} style={style}>
-                <div className="cm-accordion-item-head" onClick={this.onClick}>{icon}{title}</div>
-                <div className="cm-accordion-item-body" ref="body">
+                <div className='cm-accordion-item-head' onClick={this.onClick}>{icon}{title}</div>
+                <div className='cm-accordion-item-body' ref='body'>
                     {children}
                 </div>
             </li>
@@ -215,7 +215,7 @@ class Accordion extends BaseComponent {
         bordered: PropTypes.bool
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.items = [];
@@ -226,7 +226,7 @@ class Accordion extends BaseComponent {
      * 根据index索引展开
      * @param index
      */
-    activeByIndex(index){
+    activeByIndex (index) {
         if (this.items[index]) {
             this.items[index].open();
         }
@@ -237,7 +237,7 @@ class Accordion extends BaseComponent {
      * @param  {String/Object} item item对象或item的key值
      * @return {void}
      */
-    activeItem(item){
+    activeItem (item) {
         if (typeof item == 'string') {
             item = this.getItem(item);
         }
@@ -252,8 +252,8 @@ class Accordion extends BaseComponent {
      * @param  {[type]} key [description]
      * @return {[type]}     [description]
      */
-    getItem(key){
-        for (let i in this.items) {
+    getItem (key) {
+        for (const i in this.items) {
             if (this.items[i].key === key) {
                 return this.items[i];
             }
@@ -265,7 +265,7 @@ class Accordion extends BaseComponent {
      * 展开回调
      * @param item
      */
-    onOpen(item){
+    onOpen (item) {
         if (this.lastOpenItem) {
             this.lastOpenItem.collapse();
         }
@@ -282,7 +282,7 @@ class Accordion extends BaseComponent {
      * 折叠回调
      * @param item
      */
-    onCollapse(item){
+    onCollapse (item) {
         this.lastOpenItem = null;
         if (this.props.onCollapse) {
             this.props.onCollapse(item);
@@ -290,9 +290,9 @@ class Accordion extends BaseComponent {
         this.emit('collapse', item);
     }
 
-    renderItems(){
-        let children = this.props.children;
-        return React.Children.map(children, (child)=>{
+    renderItems () {
+        const children = this.props.children;
+        return React.Children.map(children, (child) => {
             let props = child.props;
             props = Object.assign({}, props, {
                 onCollapse: this.onCollapse.bind(this),
@@ -306,16 +306,16 @@ class Accordion extends BaseComponent {
         });
     }
 
-    render(){
-        let className = classNames('cm-accordion', this.state.theme, this.props.className, {
+    render () {
+        const className = classNames('cm-accordion', this.state.theme, this.props.className, {
             'cm-accordion-bordered': this.props.bordered
         });
 
-        let items = this.renderItems();
+        const items = this.renderItems();
 
         return (
             <div className={className} style={this.props.style}>
-                <ul className="cm-accordion-wrap">
+                <ul className='cm-accordion-wrap'>
                     {items}
                 </ul>
             </div>

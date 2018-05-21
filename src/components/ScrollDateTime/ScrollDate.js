@@ -31,9 +31,9 @@ class ScrollDate extends React.Component {
     }
 
     static HEAD = {
-        YEAR: '年',
-        MONTH: '月',
-        DATE: '日'
+        YEAR: window.RCMUI_I18N['ScrollDateTime.year'],
+        MONTH: window.RCMUI_I18N['ScrollDateTime.month'],
+        DATE: window.RCMUI_I18N['ScrollDateTime.day']
     }
 
     constructor (props) {

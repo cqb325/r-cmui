@@ -29,7 +29,7 @@ class Progress extends BaseComponent {
         radius: 60,
         theme: 'primary'
     };
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.addState({
@@ -46,12 +46,12 @@ class Progress extends BaseComponent {
      * @returns 
      * @memberof Progress
      */
-    validValue(v){
+    validValue (v) {
         v = parseFloat(v);
-        if(this.props.min != undefined){
+        if (this.props.min != undefined) {
             v = Math.max(v, this.props.min);
         }
-        if(this.props.max != undefined){
+        if (this.props.max != undefined) {
             v = Math.min(v, this.props.max);
         }
 
@@ -63,10 +63,10 @@ class Progress extends BaseComponent {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    update(value){
+    update (value) {
         if (this._isMounted) {
             this.setState({
-                value: value
+                value
             });
         }
     }
@@ -75,7 +75,7 @@ class Progress extends BaseComponent {
      * 获取当前值
      * @return {[type]} [description]
      */
-    getValue(){
+    getValue () {
         return this.state.value;
     }
 
@@ -83,7 +83,7 @@ class Progress extends BaseComponent {
      * 设置当前值
      * @param {[type]} value [description]
      */
-    setValue(value){
+    setValue (value) {
         this.update(this.validValue(value));
     }
 
@@ -91,7 +91,7 @@ class Progress extends BaseComponent {
      * 获取最大值
      * @return {[type]} [description]
      */
-    getMax(){
+    getMax () {
         return this.state.max;
     }
 
@@ -99,15 +99,15 @@ class Progress extends BaseComponent {
      * 获取最小值
      * @return {[type]} [description]
      */
-    getMin(){
+    getMin () {
         return this.state.min;
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
     }
 
@@ -115,30 +115,30 @@ class Progress extends BaseComponent {
      * 绘制圆形
      * @returns {XML}
      */
-    renderCircle(){
-        let colorMap = {
+    renderCircle () {
+        const colorMap = {
             primary: '#20A0FF',
             danger: '#FF4949',
             success: '#13CE66',
             warning: '#F7BA2A'
         };
-        let r = this.props.radius;
+        const r = this.props.radius;
         // 计算当前角度对应的弧度值
-        let rad = 2 * Math.PI;
+        const rad = 2 * Math.PI;
 
         // 极坐标转换成直角坐标
-        let x = (Math.sin(rad) * r).toFixed(2);
-        let y = -(Math.cos(rad) * r).toFixed(2);
+        const x = (Math.sin(rad) * r).toFixed(2);
+        const y = -(Math.cos(rad) * r).toFixed(2);
 
         // path 属性 A 61 61 0 1 1 -0 61 A 61 61 0 1 1 -0 -61
-        let descriptions = ['M', 0, -r, 'A', r, r, 0, 1, 1, x, -y, 'A', r, r, 0, 1, 1, x, y];
+        const descriptions = ['M', 0, -r, 'A', r, r, 0, 1, 1, x, -y, 'A', r, r, 0, 1, 1, x, y];
 
-        let strokeWidth = this.props.strokeWidth;
-        let tx = r + strokeWidth / 2;
+        const strokeWidth = this.props.strokeWidth;
+        const tx = r + strokeWidth / 2;
 
-        let percent = (this.state.value - this.state.min) / (this.state.max - this.state.min);
-        let dd = rad * r;
-        let offset = dd * (1 - percent);
+        const percent = (this.state.value - this.state.min) / (this.state.max - this.state.min);
+        const dd = rad * r;
+        const offset = dd * (1 - percent);
         let status = this.props.status;
         if (this.state.value == this.state.max) {
             status = 'finished';
@@ -149,15 +149,15 @@ class Progress extends BaseComponent {
             color = 'danger';
         }
         return (
-            <svg width="100%" height="100%" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" style={{width: 2 * r + strokeWidth, height: 2 * r + strokeWidth}}>
-                <circle cx={tx} cy={tx} r={r} stroke="#f3f3f3"
-                    strokeWidth={strokeWidth} fillOpacity="0" />
-                <path className="cm-progress-bar-path"
+            <svg width='100%' height='100%' version='1.1'
+                xmlns='http://www.w3.org/2000/svg' style={{width: 2 * r + strokeWidth, height: 2 * r + strokeWidth}}>
+                <circle cx={tx} cy={tx} r={r} stroke='#f3f3f3'
+                    strokeWidth={strokeWidth} fillOpacity='0' />
+                <path className='cm-progress-bar-path'
                     d={descriptions.join(' ')}
-                    strokeLinecap="round"
+                    strokeLinecap='round'
                     strokeWidth={strokeWidth}
-                    fillOpacity="0"
+                    fillOpacity='0'
                     stroke={colorMap[color]}
                     transform={`translate(${tx},${tx})`}
                     style={{strokeDashoffset: offset, strokeDasharray: dd}}
@@ -167,13 +167,13 @@ class Progress extends BaseComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        let value = nextProps.value;
+        const value = nextProps.value;
         if (value !== this.props.value && value !== this.state.value) {
             this.setState({ value });
         }
     }
 
-    render(){
+    render () {
         let {className, style, grid, showPercent, active, status, type} = this.props;
         if (this.state.value == this.state.max) {
             status = 'finished';
@@ -184,16 +184,16 @@ class Progress extends BaseComponent {
             [`cm-progress-${status}`]: status,
             [`cm-progress-${type}`]: type
         });
-        let current = parseInt((this.state.value - this.state.min) / (this.state.max - this.state.min) * 100, 10);
-        let width = current + '%';
+        const current = parseInt((this.state.value - this.state.min) / (this.state.max - this.state.min) * 100, 10);
+        const width = `${current  }%`;
         let percent = showPercent ? width : null;
 
         if (status === 'finished' && showPercent) {
-            let icon = type === 'circle' ? 'check' : 'check-circle';
+            const icon = type === 'circle' ? 'check' : 'check-circle';
             percent = <FontIcon icon={icon} />;
         }
         if (status === 'exception' && showPercent) {
-            let icon = type === 'circle' ? 'close' : 'times-circle';
+            const icon = type === 'circle' ? 'close' : 'times-circle';
             percent = <FontIcon icon={icon} />;
         }
 
@@ -207,19 +207,19 @@ class Progress extends BaseComponent {
             bar = this.renderCircle();
             fontSize = fontSize * this.props.radius / 60;
         } else {
-            bar = <div className="cm-progress-bar" style={{width: width, height: this.props.strokeWidth}} />;
+            bar = <div className='cm-progress-bar' style={{width, height: this.props.strokeWidth}} />;
         }
         return (
             <div className={className} style={style}>
-                <div className="cm-progress-outer">
-                    <div className="cm-progress-inner">
+                <div className='cm-progress-outer'>
+                    <div className='cm-progress-inner'>
                         {bar}
-                        {type === 'circle' ? <span className="cm-progress-info" style={{fontSize: fontSize}}>
+                        {type === 'circle' ? <span className='cm-progress-info' style={{fontSize}}>
                             {percent}
                         </span> : null}
                     </div>
                 </div>
-                {(type === 'circle' || !showPercent) ? null : <span className="cm-progress-info">{percent}</span>}
+                {(type === 'circle' || !showPercent) ? null : <span className='cm-progress-info'>{percent}</span>}
             </div>
         );
     }
