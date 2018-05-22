@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import BaseComponent from '../core/BaseComponent';
 import classNames from 'classnames';
 import moment from 'moment';
-import BaseComponent from '../core/BaseComponent';
 import ScrollDateTimeComp from './ScrollDateTime';
-import Button from '../Button';
-
+import FormControl from '../FormControl/index';
 import Dom from '../utils/Dom';
 import clickAway from '../utils/ClickAway';
 import velocity from '../../lib/velocity';
@@ -242,5 +241,7 @@ class ScrollDateTime extends BaseComponent {
 }
 
 clickAway(ScrollDateTime);
+
+FormControl.register(ScrollDateTime, 'scrollDateTime');
 
 export default ScrollDateTime;

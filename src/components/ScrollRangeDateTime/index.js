@@ -7,6 +7,7 @@ import Dom from '../utils/Dom';
 import clickAway from '../utils/ClickAway';
 import velocity from '../../lib/velocity';
 import ScrollDateTime from '../ScrollDateTime/ScrollDateTime';
+import FormControl from '../FormControl/index';
 
 import '../ScrollDateTime/ScrollDateTime.less';
 import './ScrollRangeDateTime.less';
@@ -283,5 +284,7 @@ class ScrollRangeDateTime extends BaseComponent {
 }
 
 clickAway(ScrollRangeDateTime);
+
+FormControl.register(ScrollRangeDateTime, 'scrollRangeDateTime');
 
 export default ScrollRangeDateTime;

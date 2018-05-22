@@ -7,8 +7,9 @@ import classNames from 'classnames';
 import moment from 'moment';
 import Scroller from './Scroller';
 import PropTypes from 'prop-types';
+import BaseComponent from '../core/BaseComponent';
 
-class ScrollDate extends React.Component {
+class ScrollDate extends BaseComponent {
     displayName = 'ScrollDate';
 
     static defaultProps = {

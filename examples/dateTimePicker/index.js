@@ -8,6 +8,7 @@ import ScrollDateTimeComp from '../../src/components/ScrollDateTime/ScrollDateTi
 import DateTime from '../../src/components/DateTime';
 import DateRange from '../../src/components/DateRange';
 import Button from '../../src/components/Button';
+import FormControl from '../../src/components/FormControl';
 import ScrollRangeDateTime from '../../src/components/ScrollRangeDateTime';
 import '../../src/components/ScrollDateTime/ScrollDateTime.less';
 
@@ -67,6 +68,10 @@ class Comp extends React.Component {
                     <Button onClick={() => {
                         console.log(this.range.getValue());
                     }}>获取值</Button>
+                </div>
+
+                <div>
+                    <FormControl type='scrollRangeDateTime' label='选择时间: ' name='rangeTime' required/>
                 </div>
             </div>
         );

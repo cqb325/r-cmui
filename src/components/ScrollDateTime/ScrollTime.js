@@ -7,8 +7,9 @@ import classNames from 'classnames';
 import moment from 'moment';
 import Scroller from './Scroller';
 import PropTypes from 'prop-types';
+import BaseComponent from '../core/BaseComponent';
 
-class ScrollTime extends React.Component {
+class ScrollTime extends BaseComponent {
     displayName = 'ScrollTime';
 
     static defaultProps = {
