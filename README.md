@@ -13,6 +13,8 @@ v2.3.0
 
 3、添加国际化支持添加了简体中文和英文 通过window.RCMUI_LANG指定 默认为zh_cn
 
+4、将ScrollDateTime & ScrollRangeDateTime加入FormControl中
+
 v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题

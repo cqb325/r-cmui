@@ -7,8 +7,10 @@ import Emitter from './Emitter';
 import '../../lang/zh_cn';
 import '../../lang/us_en';
 const i18n = window.RCMUI_LANG || 'zh_cn';
+
 if (!window.RCMUI_I18N) {
     window.RCMUI_I18N = window.RCMUI_LANGS[i18n] || {};
+    console.log(window.RCMUI_I18N);
 }
 
 /**
