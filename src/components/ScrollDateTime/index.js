@@ -186,6 +186,22 @@ class ScrollDateTime extends BaseComponent {
         return this.comp.getValue();
     }
 
+    /**
+     * 设置开始时间
+     * @param {*} startDate 
+     */
+    setStartDate (startDate) {
+        this.comp.setStartDate(startDate);
+    }
+
+    /**
+     * 设置结束时间
+     * @param {*} endDate 
+     */
+    setEndDate (endDate) {
+        this.comp.setEndDate(endDate);
+    }
+
     onClickToday = () => {
         window.setTimeout(() => {
             this.onChange(this.comp.getValue());

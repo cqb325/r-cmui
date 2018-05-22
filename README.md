@@ -15,6 +15,10 @@ v2.3.0
 
 4、将ScrollDateTime & ScrollRangeDateTime加入FormControl中
 
+5、ScrollDateTime设置起止时间方法
+
+6、ScrollDate的setStartDate和SetEndDate方法在初始无值状态下的bug
+
 v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题

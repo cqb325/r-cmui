@@ -326,11 +326,14 @@ class ScrollDateTimeComp extends BaseComponent {
             this.scrollDate.setStartDate(ds);
         }
 
-        const dv = this.state.value ? this.f1 ? moment(this.state.value, this.format).format(this.f1) : '' : '';
+        let dv = this.state.value ? this.f1 ? moment(this.state.value, this.format).format(this.f1) : '' : '';
         const sv = date ? this.f1 ? moment(date, this.format).format(this.f1) : '' : '';
         if (ts && this.scrollTime) {
             // 存在日期需要判断日期是否相等
-            if (dv) {
+            if (this.scrollDate) {
+                if (!dv) {
+                    dv = this.scrollDate.getScrollValue();
+                }
                 if (dv === sv) {
                     this.scrollTime.setStartTime(ts);
                 } else {
@@ -359,11 +362,14 @@ class ScrollDateTimeComp extends BaseComponent {
             this.scrollDate.setEndDate(de);
         }
 
-        const dv = this.state.value ? this.f1 ? moment(this.state.value, this.format).format(this.f1) : '' : '';
+        let dv = this.state.value ? this.f1 ? moment(this.state.value, this.format).format(this.f1) : '' : '';
         const ev = date ? this.f1 ? moment(date, this.format).format(this.f1) : '' : '';
         if (te && this.scrollTime) {
             // 存在日期需要判断日期是否相等
-            if (dv) {
+            if (this.scrollDate) {
+                if (!dv) {
+                    dv = this.scrollDate.getScrollValue();
+                }
                 if (dv === ev) {
                     this.scrollTime.setEndTime(te);
                 } else {
