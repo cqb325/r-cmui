@@ -21,6 +21,8 @@ v2.3.0
 
 7、Menu 修复child为空的节点渲染问题
 
+8、添加二维码QRCode组件
+
 v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题
