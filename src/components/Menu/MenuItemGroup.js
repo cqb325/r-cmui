@@ -15,18 +15,22 @@ class MenuItemGroup extends BaseComponent {
     renderChildren () {
         const cildren = this.props.children;
         return React.Children.map(cildren, (child, index) => {
-            let props = child.props;
-            props = Object.assign({}, props, {
-                onSelect: this.props.onSelect,
-                onClick: this.props.onClick,
-                index,
-                parent: this,
-                prefix: this.prefix,
-                root: this.props.root,
-                level: this.props.level,
-                layout: this.props.layout
-            });
-            return React.cloneElement(child, props);
+            if (child) {
+                let props = child.props;
+                props = Object.assign({}, props, {
+                    onSelect: this.props.onSelect,
+                    onClick: this.props.onClick,
+                    index,
+                    parent: this,
+                    prefix: this.prefix,
+                    root: this.props.root,
+                    level: this.props.level,
+                    layout: this.props.layout
+                });
+                return React.cloneElement(child, props);
+            } else {
+                return null;
+            }
         });
     }
 

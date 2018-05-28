@@ -195,20 +195,24 @@ class Menu extends BaseComponent {
     renderChildren () {
         const cildren = this.props.children;
         return React.Children.map(cildren, (child, index) => {
-            let props = child.props;
-            props = Object.assign({}, props, {
-                onSelect: this.onSelect,
-                onClick: this.onClick,
-                onCollapse: this.onCollapse,
-                onOpen: this.onOpen,
-                parent: this,
-                root: this,
-                index,
-                level: this.props.startIndex,
-                prefix: this.props.prefix,
-                layout: this.props.layout
-            });
-            return React.cloneElement(child, props);
+            if (child) {
+                let props = child.props;
+                props = Object.assign({}, props, {
+                    onSelect: this.onSelect,
+                    onClick: this.onClick,
+                    onCollapse: this.onCollapse,
+                    onOpen: this.onOpen,
+                    parent: this,
+                    root: this,
+                    index,
+                    level: this.props.startIndex,
+                    prefix: this.props.prefix,
+                    layout: this.props.layout
+                });
+                return React.cloneElement(child, props);
+            } else {
+                return null;
+            }
         });
     }
 

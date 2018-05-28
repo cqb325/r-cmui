@@ -49,18 +49,22 @@ class SubMenu extends BaseComponent {
     renderChildren () {
         const cildren = this.props.children;
         return React.Children.map(cildren, (child, index) => {
-            let props = child.props;
-            props = Object.assign({}, props, {
-                onSelect: this.props.onSelect,
-                onClick: this.props.onClick,
-                parent: this,
-                root: this.props.root,
-                prefix: this.props.prefix,
-                index,
-                level: this.props.level + 1,
-                layout: this.state.layout
-            });
-            return React.cloneElement(child, props);
+            if (child) {
+                let props = child.props;
+                props = Object.assign({}, props, {
+                    onSelect: this.props.onSelect,
+                    onClick: this.props.onClick,
+                    parent: this,
+                    root: this.props.root,
+                    prefix: this.props.prefix,
+                    index,
+                    level: this.props.level + 1,
+                    layout: this.state.layout
+                });
+                return React.cloneElement(child, props);
+            } else {
+                return null;
+            }
         });
     }
 

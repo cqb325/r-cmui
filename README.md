@@ -19,6 +19,8 @@ v2.3.0
 
 6、ScrollDate的setStartDate和SetEndDate方法在初始无值状态下的bug
 
+7、Menu 修复child为空的节点渲染问题
+
 v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题
