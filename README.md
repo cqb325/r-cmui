@@ -23,6 +23,8 @@ v2.3.0
 
 8、添加二维码QRCode组件
 
+9、修改fetch组件 添加fetchText和fetchJSON 添加options可以自定义header
+
 v2.2.1
 
 1、修改Select接收新props的时候value为undefined的问题
