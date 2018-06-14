@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
 import BaseComponent from '../core/BaseComponent';
+import Button from '../Button';
 import Dom from '../utils/Dom';
 import clickAway from '../utils/ClickAway';
 import velocity from '../../lib/velocity';
@@ -23,6 +24,7 @@ class ScrollRangeDateTime extends BaseComponent {
         endDate: '',
         sep: '~',
         size: 'small',
+        clear: false,
         maxRange: 0
     }
 
@@ -238,6 +240,10 @@ class ScrollRangeDateTime extends BaseComponent {
         }
     }
 
+    clear = () => {
+        this.setValue('');
+    }
+
     render () {
         const {className, disabled, style, size} = this.props;
         const clazzName = classNames(
@@ -277,6 +283,9 @@ class ScrollRangeDateTime extends BaseComponent {
                     style={{display: this.state.visibility ? 'inline-block' : 'none'}}>
                     <ScrollDateTime ref={(f) => this.startComp = f} onChange={this.changeStart} view={this.props.view} value={startValue} startDate={this.props.startDate} endDate={this.props.endDate} />
                     <ScrollDateTime ref={(f) => this.endComp = f} onChange={this.changeEnd} view={this.props.view} value={endValue} startDate={this.props.startDate} endDate={this.props.endDate} />
+                    <div className='cm-scroll-datetime-tools'>
+                        {this.props.clear ? <Button theme='primary' className='mr-5 mt-10' onClick={this.clear}>{window.RCMUI_I18N['DateTime.clear']}</Button> : null}
+                    </div>
                 </div>
             </div>
         );
