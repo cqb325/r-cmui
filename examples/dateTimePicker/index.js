@@ -8,6 +8,7 @@ import ScrollDateTimeComp from '../../src/components/ScrollDateTime/ScrollDateTi
 import DateTime from '../../src/components/DateTime';
 import DateRange from '../../src/components/DateRange';
 import Button from '../../src/components/Button';
+import Form from '../../src/components/Form';
 import FormControl from '../../src/components/FormControl';
 import ScrollRangeDateTime from '../../src/components/ScrollRangeDateTime';
 import '../../src/components/ScrollDateTime/ScrollDateTime.less';
@@ -50,7 +51,9 @@ class Comp extends React.Component {
                 }}>设置START</Button>
 
                 <div>
-                    <ScrollDateTimeComp />
+                    <ScrollDateTimeComp onChange={(v) => {
+                        console.log(v);
+                    }}/>
                     <DateTime/>
                     asd : <ScrollDateTime today clear endDate='2018-06-01 12:30:10' value='2018-05-14 11:15:05'
                         onChange={(v) => {
@@ -60,7 +63,9 @@ class Comp extends React.Component {
 
                 <div>
                     asd: <DateRange/>
-                    asd: <ScrollRangeDateTime ref={(f) => this.range = f} view='ymd' endDate='2018-06-01' maxRange={5}/>
+                    asd: <ScrollRangeDateTime ref={(f) => this.range = f} view='ymd' endDate='2018-06-01' maxRange={5} onChange={(v) => {
+                        console.log(v);
+                    }}/>
                     <Button onClick={() => {
                         // this.range.setValue('12:30:10~15:30:48');
                         this.range.setValue();
@@ -71,7 +76,14 @@ class Comp extends React.Component {
                 </div>
 
                 <div>
-                    <FormControl type='scrollRangeDateTime' label='选择时间: ' name='rangeTime' required/>
+                    <Form ref={(f) => this.form = f}>
+                        <FormControl clear type='scrollRangeDateTime' label='选择时间: ' name='rangeTime' required onChange={(v) => {
+                            console.log(v);
+                        }}/>
+                    </Form>
+                    <Button onClick={() => {
+                        this.form.isValid();
+                    }}>提交</Button>
                 </div>
             </div>
         );
