@@ -191,7 +191,11 @@ class ScrollRangeDateTime extends BaseComponent {
                     this.endComp.setValue(end.format(this.format));
                 }
             }
-            this.setState({start, end});
+            this.setState({start, end}, () => {
+                if (this.props.onChange) {
+                    this.props.onChange(this.getValue());
+                }
+            });
         }, 0);
     }
 
@@ -209,7 +213,11 @@ class ScrollRangeDateTime extends BaseComponent {
                     this.startComp.setValue(start.format(this.format));
                 }
             }
-            this.setState({start, end});
+            this.setState({start, end}, () => {
+                if (this.props.onChange) {
+                    this.props.onChange(this.getValue());
+                }
+            });
         }, 0);
     }
 
