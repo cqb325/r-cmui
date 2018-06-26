@@ -6,6 +6,10 @@ import Button from '../../src/components/Button';
 class Comp extends React.Component {
     displayName = 'Comp';
 
+    onSelect = (item, tree) => {
+        console.log(item);
+    }
+
     render () {
         return (
             <div style={{padding: 50}}>
@@ -19,9 +23,14 @@ class Comp extends React.Component {
                         const item = this.tree.getSelectedItem();
                         this.tree.enableItem(item);
                     }}>激活</Button>
+
+                    <Button onClick={() => {
+                        const item = this.tree.getSelectedItem();
+                        this.tree.enableItem(item);
+                    }}>激活</Button>
                 </div>
 
-                <Tree ref={(f) => this.tree = f} data={data} enableSmartDisabled enableCheckbox enableSmartCheckbox/>
+                <Tree ref={(f) => this.tree = f} onSelect={this.onSelect} data={data} enableSmartDisabled enableCheckbox enableSmartCheckbox/>
             </div>
         );
     }

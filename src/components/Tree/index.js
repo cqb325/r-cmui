@@ -438,6 +438,7 @@ class TreeSubNodes extends BaseComponent {
 
         const nodes = items.map(function (item) {
             item._parent = this.props.parent;
+            item.level = item._parent ? item._parent.level + 1 : 0;
             return (
                 <TreeNode
                     key={item.id}
