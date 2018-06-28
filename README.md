@@ -9,6 +9,8 @@ v2.3.1
 
 1、Tree添加level属性
 
+2、ScrollDateTime兼容firefox
+
 v2.3.0
 
 1、添加 ScrollDateTime & ScrollRangeDateTime

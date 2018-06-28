@@ -38,6 +38,7 @@ class Scroller extends React.Component {
 
     componentDidMount () {
         this.wrap.addEventListener('mousewheel', this.scrollWrap, false);
+        this.wrap.addEventListener('DOMMouseScroll',this.scrollWrap,false);
     }
 
     scrollWrap = (e) => {
@@ -47,7 +48,7 @@ class Scroller extends React.Component {
         if (e.stopPropagation) {
             e.stopPropagation();
         }
-        const delta = e.wheelDelta;
+        const delta = e.wheelDelta || -e.detail;
         if (delta < 0) {
             this.addNum();
         } else {
