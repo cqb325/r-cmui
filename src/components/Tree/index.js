@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import fetch from '../utils/fetch';
 import {List} from 'immutable';
 import velocity from '../../lib/velocity';
+import ContextMenu from '../ContextMenu';
+import Dom from '../utils/Dom';
 import './Tree.less';
 
 /**
@@ -319,7 +321,7 @@ class TreeNode extends BaseComponent {
                 <span className={nodeClassName}>
                     <span className='tree_arrow' onClick={this._openClose.bind(this)} />
                     {checkboxEle}
-                    <span className={contClassName} onClick={this._select.bind(this)}>
+                    <span data-id={item.id} className={contClassName} onClick={this._select.bind(this)}>
                         <span className={iconClassName} />
                         <span className='tree_text' title={this.state.text}>{this.state.text}</span>
                     </span>
@@ -1443,6 +1445,15 @@ class Tree extends BaseComponent {
         });
     }
 
+    onMenuSelect = (item) => {
+        const target = Dom.closest(this.contextmenu.getTrigger(), '.tree_cont');
+        const id = target.getAttribute('data-id');
+        const node = this.getItem(id);
+        if (this.props.onMenuSelect) {
+            this.props.onMenuSelect(item, node, this);
+        }
+    }
+
     render () {
         const className = classNames('cm-tree');
         return (
@@ -1456,6 +1467,7 @@ class Tree extends BaseComponent {
                     enableSmartCheckbox={this.state.enableSmartCheckbox}
                     onCheck={this._check.bind(this)}
                 />
+                {this.props.contextmenu ? <ContextMenu ref={(f) => this.contextmenu = f} onSelect={this.onMenuSelect} overlay={this.props.contextmenu} target='.tree_cont'/> : null}
             </div>
         );
     }
