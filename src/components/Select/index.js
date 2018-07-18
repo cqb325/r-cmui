@@ -16,7 +16,6 @@ import Dom from '../utils/Dom';
 import Input from '../Input/index';
 import FormControl from '../FormControl/index';
 import grids from '../utils/grids';
-import {fromJS} from 'immutable';
 import PinYin from '../utils/PinYin';
 import '../utils/PinYinDictFirstLetter';
 
@@ -312,7 +311,8 @@ class Select extends BaseComponent {
             return null;
         }
         // 生成一个新的数据， 防止后续操作影响到改数据
-        data = fromJS(data).toJS();
+        // data = fromJS(data).toJS();
+        data = JSON.parse(JSON.stringify(data));
 
         // let defaultValues = defaultValue ? (defaultValue + '').split(this.sep) : [];
         if (Core.isArray(data)) {

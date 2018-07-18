@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import FontIcon from '../FontIcon/index';
 import grids from '../utils/grids';
+import FormControl from '../FormControl';
 const getGrid = grids.getGrid;
 import './Progress.less';
 
@@ -185,7 +186,7 @@ class Progress extends BaseComponent {
             [`cm-progress-${type}`]: type
         });
         const current = parseInt((this.state.value - this.state.min) / (this.state.max - this.state.min) * 100, 10);
-        const width = `${current  }%`;
+        const width = `${current}%`;
         let percent = showPercent ? width : null;
 
         if (status === 'finished' && showPercent) {
@@ -224,5 +225,7 @@ class Progress extends BaseComponent {
         );
     }
 }
+
+FormControl.register(Progress, 'progress');
 
 export default Progress;
