@@ -8,6 +8,9 @@
 v2.3.2
 
 1、Tree添加右键菜单
+2、删除Notification的immutable依赖
+3、删除Select组件的immutable依赖
+4、Progress注册到FormControl中
 
 v2.3.1
 

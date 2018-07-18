@@ -8,7 +8,6 @@ import ReactDOM from 'react-dom';
 import BaseComponent from '../core/BaseComponent';
 import UUID from '../utils/UUID';
 import FontIcon from '../FontIcon/index';
-import {fromJS} from 'immutable';
 import NotificationPanel from './NotificationPanel';
 import './Notification.less';
 
@@ -103,7 +102,10 @@ class Notification extends BaseComponent {
             return false;
         }
         this.configs[config.key] = config;
-        configs = fromJS(configs).push(config).toJS();
+        // configs = fromJS(configs).push(config).toJS();
+        configs.push(config);
+        // configs = fromJS(configs).push(config).toJS();
+        configs = JSON.parse(JSON.stringify(configs));
 
         if (this._isMounted) {
             this.setState({configs});
@@ -146,7 +148,9 @@ class Notification extends BaseComponent {
                 break;
             }
         }
-        configs = fromJS(configs).delete(index).toJS();
+        // configs = fromJS(configs).delete(index).toJS();
+        configs.splice(index);
+        configs = JSON.parse(JSON.stringify(configs));
         delete this.panels[key];
         delete this.configs[key];
 
