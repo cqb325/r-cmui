@@ -410,6 +410,7 @@ class App extends BaseComponent {
                         <FormControl type='datetime' name='datetime' required label='datetime'/>
                         <FormControl type='daterange' name='daterange' required label='daterange'/>
                         <FormControl type='textarea' name='address' required label='Text' height={70}/>
+                        <FormControl type='text' name='range' required label='Range' rules={{range: [1,99]}} height={70}/>
                         <Form.Row>
                             <FormControl label='&nbsp;' type='text'/>
                             <Form.Promote italic>xxxxxxxxxx</Form.Promote>
@@ -570,7 +571,7 @@ class App extends BaseComponent {
                         daterange: '2017-10-10~2017-10-15'
                     }}></SimpleForm>
 
-                    <TableForm ref='tableform' columns={[
+                    <TableForm ref='tableform' bordered columns={[
                         {name: 'name', text: '姓名', type: 'text'},
                         {name: 'select', text: '性别', type: 'select', props: {data: ['男', '女']}}
                     ]}></TableForm>

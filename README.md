@@ -11,6 +11,8 @@ v2.3.2
 2、删除Notification的immutable依赖
 3、删除Select组件的immutable依赖
 4、Progress注册到FormControl中
+5、FormControl中range规则错误信息展示错误问题
+6、Table有边框没数据的时候样式问题修复
 
 v2.3.1
 

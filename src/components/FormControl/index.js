@@ -401,7 +401,7 @@ class FormControl extends BaseComponent {
         if (result === false) {
             errorTip = (messages && messages[method]) ? messages[method] : Validation.messages[method];
             if (typeof errorTip === 'function') {
-                errorTip = errorTip(rule.parameters);
+                errorTip = errorTip(...rule.parameters);
             }
             this.setState({errorTip});
             this.refs.tooltip.setTitle(errorTip);
