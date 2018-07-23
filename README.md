@@ -5,6 +5,9 @@
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
 
+v2.3.3
+1、SimpleListPage参数是字符串的删除头尾空格,添加查询的try catch避免查询出错后js不执行
+
 v2.3.2
 
 1、Tree添加右键菜单
