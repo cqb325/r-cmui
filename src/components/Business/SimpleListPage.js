@@ -77,6 +77,13 @@ class SimpleListPage extends React.Component {
             }
         }
 
+        // 去掉参数值后面的空格
+        for (const key in params) {
+            if (typeof params[key] == 'string') {
+                params[key] = params[key].trim();
+            }
+        }
+
         return params;
     }
 
@@ -118,23 +125,27 @@ class SimpleListPage extends React.Component {
      * 查询
      */
     search = async (page, pageSize) => {
-        this.setState({spinning: true});
-        const ret = await fetch(this.props.action, this.getSearchParams(page, pageSize), 'GET', {
-            fail: (error) => {
-                console.log(window.RCMUI_I18N['SimpleListPage.fetchDataError'], error);
+        try {
+            this.setState({spinning: true});
+            const ret = await fetch(this.props.action, this.getSearchParams(page, pageSize), 'GET', {
+                fail: (error) => {
+                    console.log(window.RCMUI_I18N['SimpleListPage.fetchDataError'], error);
+                }
+            });
+            if (ret) {
+                this.refs.table.setData(ret.data);
+                if (this.refs.pagination) {
+                    this.refs.pagination.update({total: ret.total, current: ret.pageNum, pageSize: ret.pageSize});
+                }
+                
+                this.setState({spinning: false});
+                
+                if (this.props.afterRequest) {
+                    this.props.afterRequest(ret.data);
+                }
             }
-        });
-        if (ret) {
-            this.refs.table.setData(ret.data);
-            if (this.refs.pagination) {
-                this.refs.pagination.update({total: ret.total, current: ret.pageNum, pageSize: ret.pageSize});
-            }
-            
-            this.setState({spinning: false});
-            
-            if (this.props.afterRequest) {
-                this.props.afterRequest(ret.data);
-            }
+        } catch (e) {
+            console.log(e);
         }
     }
 
