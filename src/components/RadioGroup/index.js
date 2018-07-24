@@ -326,7 +326,7 @@ class RadioGroup extends BaseComponent {
         );
 
         return (
-            <span className={className}>
+            <span className={className} style={this.props.style}>
                 {this.renderChildrenItems()}
                 {this._renderItems()}
             </span>

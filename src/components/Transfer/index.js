@@ -38,7 +38,7 @@ class Transfer extends React.Component {
         let target = [];
         if (data) {
             target = data.filter((item) => {
-                if (keys.indexOf(item.id) > -1) {
+                if (keys.indexOf(`${item.id}`) > -1) {
                     return true;
                 } else {
                     source.push(item);

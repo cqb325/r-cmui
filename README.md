@@ -7,6 +7,11 @@
 
 v2.3.3
 1、SimpleListPage参数是字符串的删除头尾空格,添加查询的try catch避免查询出错后js不执行
+2、InnerDropdown 删除ref  会将外面设置的ref覆盖
+3、FormControl当注册的元素为disable的时候不进行验证, 远程验证携带参数问题
+4、RadioGroup添加自定义style属性
+5、Transfer 数据id为数字的时候bug
+6、Form元素的LabelWidth优先级更高
 
 v2.3.2
 

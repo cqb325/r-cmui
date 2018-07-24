@@ -208,6 +208,11 @@ class FormControl extends BaseComponent {
         if (this.props.disabled || this.props.readOnly) {
             return false;
         }
+
+        if (this.item.state && this.item.state.disabled) {
+            return false;
+        }
+
         if (this._isMounted) {
             const ele = Dom.dom(ReactDOM.findDOMNode(this));
             if (ele.width() === 0 && ele.height() === 0) {
@@ -291,7 +296,9 @@ class FormControl extends BaseComponent {
             if (typeof url === 'function') {
                 url = url();
             } else {
-                url = this._URLParse(url, {name: value});
+                const params = {};
+                params[name] = value;
+                url = this._URLParse(url, params);
                 url = this._rebuildURL(url);
             }
 
