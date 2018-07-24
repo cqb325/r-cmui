@@ -18,8 +18,10 @@ const isDescendant = Dom.isDescendant;
  * @constructor
  * @extend React.Component
  */
-class InnerDropdown extends React.PureComponent{
-    constructor(props){
+class InnerDropdown extends React.PureComponent {
+    displayName = 'InnerDropdown';
+
+    constructor (props) {
         super(props);
 
         let popupVisible;
@@ -30,96 +32,96 @@ class InnerDropdown extends React.PureComponent{
         }
 
         this.state = {
-            popupVisible: popupVisible
+            popupVisible
         };
 
         this.overlay = props.overlay;
-        this.overlaySelect = (this.overlay && this.overlay.onSelect) ? this.overlay.onSelect : function(){};
+        this.overlaySelect = (this.overlay && this.overlay.onSelect) ? this.overlay.onSelect : function () {};
     }
 
-    isClickToShow() {
+    isClickToShow () {
         const {action} = this.props;
         return action.indexOf('click') !== -1;
     }
 
-    isClickToHide() {
+    isClickToHide () {
         const { action } = this.props;
         return action.indexOf('click') !== -1;
     }
 
-    isMouseEnterToShow() {
+    isMouseEnterToShow () {
         const { action } = this.props;
         return action.indexOf('hover') !== -1;
     }
 
-    isMouseLeaveToHide() {
+    isMouseLeaveToHide () {
         const { action } = this.props;
         return action.indexOf('hover') !== -1;
     }
 
-    onClick(){
+    onClick () {
         const nextVisible = !this.state.popupVisible;
         if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
             this.setPopupVisible(!this.state.popupVisible);
         }
     }
 
-    onDocumentClick(event){
-        let target = event.target || event.srcElement;
-        let triggerEle = ReactDOM.findDOMNode(this.refs.target);
-        let overlayEle = ReactDOM.findDOMNode(this.popupRef);
-        if (target !== triggerEle && !isDescendant(triggerEle, target) &&
-            target !== overlayEle && !isDescendant(overlayEle, target)){
+    onDocumentClick (event) {
+        const target = event.target || event.srcElement;
+        const triggerEle = ReactDOM.findDOMNode(this);
+        const overlayEle = ReactDOM.findDOMNode(this.popupRef);
+        if (target !== triggerEle && !isDescendant(triggerEle, target)
+            && target !== overlayEle && !isDescendant(overlayEle, target)) {
             this.setPopupVisible(false);
         }
         return false;
     }
 
-    onMouseEnter(){
+    onMouseEnter () {
         if (!this.state.popupVisible) {
             this.delaySetPopupVisible(true, this.props.mouseEnterDelay);
         }
     }
 
-    onMouseLeave(){
+    onMouseLeave () {
 
     }
 
-    onDocumentMove(event){
-        if (!this.state.popupVisible){
+    onDocumentMove (event) {
+        if (!this.state.popupVisible) {
             return true;
         }
-        let target = event.target || event.srcElement;
-        if (this.timer){
+        const target = event.target || event.srcElement;
+        if (this.timer) {
             window.clearTimeout(this.timer);
             this.timer = null;
         }
-        this.timer = window.setTimeout(()=>{
-            let triggerEle = ReactDOM.findDOMNode(this.refs.target);
-            let overlayEle = ReactDOM.findDOMNode(this.popupRef);
-            if (target !== triggerEle && !isDescendant(triggerEle, target) &&
-                target !== overlayEle && !isDescendant(overlayEle, target)){
+        this.timer = window.setTimeout(() => {
+            const triggerEle = ReactDOM.findDOMNode(this);
+            const overlayEle = ReactDOM.findDOMNode(this.popupRef);
+            if (target !== triggerEle && !isDescendant(triggerEle, target)
+                && target !== overlayEle && !isDescendant(overlayEle, target)) {
                 this.setPopupVisible(false);
             }
         }, this.props.mouseLeaveDelay * 1000);
     }
 
-    onSelect(item){
+    onSelect (item) {
         this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
-        if (this.overlaySelect){
+        if (this.overlaySelect) {
             this.overlaySelect(item);
         }
     }
 
-    setPopupVisible(popupVisible){
+    setPopupVisible (popupVisible) {
         if (this._isMounted) {
             this.setState({popupVisible});
             this.popupRef.update(popupVisible);
         }
     }
 
-    delaySetPopupVisible(popupVisible, delay){
-        window.setTimeout(()=>{
+    delaySetPopupVisible (popupVisible, delay) {
+        window.setTimeout(() => {
             if (this._isMounted) {
                 if (!this.state.isEmpty) {
                     this.setState({popupVisible});
@@ -130,12 +132,12 @@ class InnerDropdown extends React.PureComponent{
     }
 
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         this._isMounted = false;
-        let p = this.container.parentNode;
+        const p = this.container.parentNode;
         p.removeChild(this.container);
 
-        let target = ReactDOM.findDOMNode(this.refs.target);
+        const target = ReactDOM.findDOMNode(this);
         Events.off(target, 'click', this.onClick);
         Events.off(document, 'click', this.onClick);
         Events.off(target, 'mouseenter', this.onMouseEnter);
@@ -144,27 +146,27 @@ class InnerDropdown extends React.PureComponent{
     }
 
 
-    onVisibleChange(visible){
-        let tip = ReactDOM.findDOMNode(this.popupRef);
-        if (!visible){
+    onVisibleChange (visible) {
+        const tip = ReactDOM.findDOMNode(this.popupRef);
+        if (!visible) {
             velocity(tip, 'slideUp', {duration: 300});
         } else {
             velocity(tip, 'slideDown', {duration: 300});
         }
-        if (this.props.onVisibleChange){
+        if (this.props.onVisibleChange) {
             this.props.onVisibleChange();
         }
     }
 
-    componentDidMount(){
+    componentDidMount () {
         this._isMounted = true;
         this.container = document.createElement('div');
         document.body.appendChild(this.container);
-        let baseEle = ReactDOM.findDOMNode(this);
+        const baseEle = ReactDOM.findDOMNode(this);
 
-        let props = {
+        const props = {
             align: this.props.align,
-            baseEle: baseEle,
+            baseEle,
             visible: this.state.popupVisible,
             extraProps: this.props.extraProps,
             delay: this.props.delay,
@@ -174,15 +176,15 @@ class InnerDropdown extends React.PureComponent{
         let newOverlay = null;
         if (this.overlay) {
             let overlayProps = null;
-            let type = this.overlay.type;
-            let compName = type && type.displayName ? type.displayName : '';
-            if(compName === 'Menu'){
+            const type = this.overlay.type;
+            const compName = type && type.displayName ? type.displayName : '';
+            if (compName === 'Menu') {
                 overlayProps = Object.assign({
                     onSelect: this.onSelect.bind(this),
                     prefix: 'cm-dropdown-menu',
                     startIndex: 0
                 }, this.overlay.props : {});
-            }else{
+            } else {
                 overlayProps = this.overlay.props;
             }
 
@@ -190,8 +192,8 @@ class InnerDropdown extends React.PureComponent{
         } else {
             newOverlay = <span />;
         }
-        window.setTimeout(()=>{
-            ReactDOM.render(<Popup ref={(ref)=>{ this.popupRef = ref; }} {...props}>
+        window.setTimeout(() => {
+            ReactDOM.render(<Popup ref={(ref) => { this.popupRef = ref; }} {...props}>
                 {newOverlay}
             </Popup>, this.container);
         }, 0);
@@ -205,13 +207,11 @@ class InnerDropdown extends React.PureComponent{
         }
     }
 
-    render(){
+    render () {
         const props = this.props;
         const children = props.children;
         const child = React.Children.only(children);
-        const newChildProps = {
-            ref: 'target'
-        };
+        const newChildProps = {};
 
         if (this.isClickToHide() || this.isClickToShow()) {
             newChildProps.onClick = this.onClick.bind(this);

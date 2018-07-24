@@ -133,7 +133,7 @@ class Form extends BaseComponent {
                 props.tipTheme = this.props.tipTheme ? this.props.tipTheme : props.tipTheme;
                 props.tipAlign = tipAlign;
                 props.tipAuto = this.props.tipAuto ? this.props.tipAuto : props.tipAuto;
-                props.labelWidth = this.props.labelWidth ? this.props.labelWidth : props.labelWidth;
+                props.labelWidth = props.labelWidth || this.props.labelWidth;
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;
                 }
@@ -143,7 +143,7 @@ class Form extends BaseComponent {
                 return React.cloneElement(child, props);
             } else if (componentName === 'Promote') {
                 const props = Object.assign({
-                    labelWidth: this.props.labelWidth ? this.props.labelWidth : child.props.labelWidth
+                    labelWidth: child.props.labelWidth || this.props.labelWidth
                 }, child.props);
                 return React.cloneElement(child, props);
             } else {
