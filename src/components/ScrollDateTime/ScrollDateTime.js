@@ -185,7 +185,11 @@ class ScrollDateTimeComp extends BaseComponent {
     changeTime = (value) => {
         let v = value;
         if (this.scrollDate) {
-            v = `${this.scrollDate.getValue()} ${v}`;
+            if (this.scrollDate.getValue()) {
+                v = `${this.scrollDate.getValue()} ${v}`;
+            } else {
+                v = `${this.scrollDate.getScrollValue()} ${v}`;
+            }
         }
 
         this.setState({value: v}, () => {
