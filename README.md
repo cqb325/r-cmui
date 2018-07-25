@@ -12,6 +12,7 @@ v2.3.3
 4、RadioGroup添加自定义style属性
 5、Transfer 数据id为数字的时候bug
 6、Form元素的LabelWidth优先级更高
+7、ScrollDateTime在未初始化的时候time变化而date获取为空的问题
 
 v2.3.2
 
