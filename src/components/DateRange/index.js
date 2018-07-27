@@ -167,6 +167,7 @@ class DateRange extends BaseComponent {
      */
     hide () {
         const ele = ReactDOM.findDOMNode(this.refs.datePicker);
+        this._isSelecting = false;
         velocity(ele, 'fadeOut', {
             delay: 200,
             duration: 300,

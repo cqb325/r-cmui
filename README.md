@@ -13,6 +13,7 @@ v2.3.3
 5、Transfer 数据id为数字的时候bug
 6、Form元素的LabelWidth优先级更高
 7、ScrollDateTime在未初始化的时候time变化而date获取为空的问题
+8、DateRange隐藏时间框的时候将选取状态设置为false
 
 v2.3.2
 
