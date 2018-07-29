@@ -297,7 +297,7 @@ class FormControl extends BaseComponent {
                 url = url();
             } else {
                 const params = {};
-                params[name] = value;
+                params[this.props.name] = value;
                 url = this._URLParse(url, params);
                 url = this._rebuildURL(url);
             }
