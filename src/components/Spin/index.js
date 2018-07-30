@@ -201,7 +201,7 @@ class SVGSpin extends BaseComponent {
         });
         const spin = this.renderSpin();
         return (
-            <div className={className}>
+            <div className={className} style={this.props.style}>
                 { spin }
                 <div className={containerClassName}>{this.props.children}</div>
             </div>
