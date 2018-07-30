@@ -12,14 +12,14 @@ class Transfer extends React.Component {
     static defaultProps = {
         sourceTitle: window.RCMUI_I18N['Transfer.sourceTitle'],
         targetTitle: window.RCMUI_I18N['Transfer.targetTitle'],
-        transdered: '',
+        transfered: '',
         filter: false
     };
 
     static propTypes = {
         data: PropTypes.array,
         onChange: PropTypes.func,
-        transdered: PropTypes.string,
+        transfered: PropTypes.string,
         sourceTitle: PropTypes.string,
         targetTitle: PropTypes.string,
         filter: PropTypes.bool,
@@ -32,8 +32,8 @@ class Transfer extends React.Component {
         targetDisable: true
     };
 
-    getData (data, transdered) {
-        const keys = transdered.split(',');
+    getData (data, transfered) {
+        const keys = transfered.split(',');
         const source = [];
         let target = [];
         if (data) {
@@ -91,7 +91,7 @@ class Transfer extends React.Component {
             'cm-transfer-filter': this.props.filter
         });
 
-        const data = this.getData(this.props.data, this.props.transdered);
+        const data = this.getData(this.props.data, this.props.transfered);
         return (
             <div className={clazzName} style={style}>
                 <List ref={(f) => this.source = f} 
