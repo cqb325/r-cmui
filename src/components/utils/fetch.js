@@ -62,8 +62,19 @@ async function myFetch (url = '', data = {}, type = 'GET', options) {
 
 export default myFetch;
 
+export async function fetchJSON (url = '', data = {}, type = 'GET', options) {
+    options = options || {};
+    options.headers = options.headers || {};
+    Object.assign(options.headers, {
+        'Accept': 'text/json',
+        'Content-Type': 'application/json; charset=UTF-8'
+    });
+    return await myFetch(url, data, type, options);
+}
+
 export async function fetchText (url = '', data = {}, type = 'GET', options) {
     options = options || {};
+    options.headers = options.headers || {};
     Object.assign(options.headers, {
         'Accept': 'text/plain',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -73,6 +84,7 @@ export async function fetchText (url = '', data = {}, type = 'GET', options) {
 
 export async function fetchXML (url = '', data = {}, type = 'GET', options) {
     options = options || {};
+    options.headers = options.headers || {};
     Object.assign(options.headers, {
         'Accept': 'text/xml',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'

@@ -1,50 +1,50 @@
-![](https://img.shields.io/badge/r--cmui-2.3.3-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.3.4-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
 
+v2.3.4
+
+1. fetch添加fetchJSON 修复headers assign错误
+2. Transfer修改参数transfered拼写错误
+3. Spin添加style属性
+
 v2.3.3
-1、SimpleListPage参数是字符串的删除头尾空格,添加查询的try catch避免查询出错后js不执行
-2、InnerDropdown 删除ref  会将外面设置的ref覆盖
-3、FormControl当注册的元素为disable的时候不进行验证, 远程验证携带参数问题
-4、RadioGroup添加自定义style属性
-5、Transfer 数据id为数字的时候bug
-6、Form元素的LabelWidth优先级更高
-7、ScrollDateTime在未初始化的时候time变化而date获取为空的问题
-8、DateRange隐藏时间框的时候将选取状态设置为false
+
+1. SimpleListPage参数是字符串的删除头尾空格,添加查询的try catch避免查询出错后js不执行
+1. InnerDropdown 删除ref  会将外面设置的ref覆盖
+1. FormControl当注册的元素为disable的时候不进行验证, 远程验证携带参数问题
+1. RadioGroup添加自定义style属性
+1. Transfer 数据id为数字的时候bug
+1. Form元素的LabelWidth优先级更高
+1. ScrollDateTime在未初始化的时候time变化而date获取为空的问题
+1. DateRange隐藏时间框的时候将选取状态设置为false
 
 v2.3.2
 
-1、Tree添加右键菜单
-2、删除Notification的immutable依赖
-3、删除Select组件的immutable依赖
-4、Progress注册到FormControl中
-5、FormControl中range规则错误信息展示错误问题
-6、Table有边框没数据的时候样式问题修复
+1. Tree添加右键菜单
+1. 删除Notification的immutable依赖
+1. 删除Select组件的immutable依赖
+1. Progress注册到FormControl中
+1. FormControl中range规则错误信息展示错误问题
+1. Table有边框没数据的时候样式问题修复
 
 v2.3.1
 
-1、Tree添加level属性
-
-2、ScrollDateTime兼容firefox
+1. Tree添加level属性
+1. ScrollDateTime兼容firefox
 
 v2.3.0
 
-1、添加 ScrollDateTime & ScrollRangeDateTime
-
-2、select选项添加disabled参数
-
-3、添加国际化支持添加了简体中文和英文 通过window.RCMUI_LANG指定 默认为zh_cn
-
-4、将ScrollDateTime & ScrollRangeDateTime加入FormControl中
-
-5、ScrollDateTime设置起止时间方法
-
-6、ScrollDate的setStartDate和SetEndDate方法在初始无值状态下的bug
-
-7、Menu 修复child为空的节点渲染问题
+1. 添加 ScrollDateTime & ScrollRangeDateTime
+1. select选项添加disabled参数
+1. 添加国际化支持添加了简体中文和英文 通过window.RCMUI_LANG指定 默认为zh_cn
+1. 将ScrollDateTime & ScrollRangeDateTime加入FormControl中
+1. ScrollDateTime设置起止时间方法
+1. ScrollDate的setStartDate和SetEndDate方法在初始无值状态下的bug
+1. Menu 修复child为空的节点渲染问题
 
 8、添加二维码QRCode组件
 
