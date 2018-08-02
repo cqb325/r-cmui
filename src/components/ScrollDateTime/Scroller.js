@@ -5,7 +5,18 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+
+class ScrollItem extends React.Component {
+    displayName = 'ScrollItem';
+
+    render () {
+        const clazzName = classNames('cm-date-scroll-item-num', {
+            'cm-date-scroll-item-num-active': this.props.active,
+            'cm-date-scroll-item-num-disable': this.props.disable
+        });
+        return <div className={clazzName} onClick={this.props.onClick}>{this.props.num}</div>;
+    }
+}
 
 class Scroller extends React.Component {
     displayName = 'Scroller';
@@ -28,46 +39,60 @@ class Scroller extends React.Component {
         value = Math.min(value, this.state.max);
         for (let i = this.state.min; i <= this.state.max; i++) {
             const num = i < 10 ? `0${i}` : i;
-            const clazzName = classNames('cm-date-scroll-item-num', {
-                'cm-date-scroll-item-num-active': i === value
-            });
-            arr.push(<div className={clazzName} key={i}>{num}</div>);
+            arr.push(<ScrollItem key={i} onClick={this.onClick.bind(this, i)} active={value == i} num={num}></ScrollItem>);
         }
         return arr;
     }
 
     componentDidMount () {
-        this.wrap.addEventListener('mousewheel', this.scrollWrap, false);
-        this.wrap.addEventListener('DOMMouseScroll',this.scrollWrap,false);
+        // this.wrap.addEventListener('mousewheel', this.scrollWrap, false);
+        // this.wrap.addEventListener('DOMMouseScroll',this.scrollWrap,false);
+        this.scrollTop();
     }
 
-    scrollWrap = (e) => {
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        }
-        const delta = e.wheelDelta || -e.detail;
-        if (delta < 0) {
-            this.addNum();
-        } else {
-            this.subNum();
-        }
+    scrollTop () {
+        let value = Math.max(this.state.value, this.state.min);
+        value = Math.min(value, this.state.max);
+        const top = 34 * (value - this.state.min);
+        this.scroller.scrollTop = top;
     }
 
-    addNum () {
-        const value = Math.min(this.state.value + 1, this.state.max);
+    // scrollWrap = (e) => {
+    //     if (e.preventDefault) {
+    //         e.preventDefault();
+    //     }
+    //     if (e.stopPropagation) {
+    //         e.stopPropagation();
+    //     }
+    //     const delta = e.wheelDelta || -e.detail;
+    //     if (delta < 0) {
+    //         this.addNum();
+    //     } else {
+    //         this.subNum();
+    //     }
+    // }
+
+    // addNum () {
+    //     const value = Math.min(this.state.value + 1, this.state.max);
+    //     this.setState({value}, () => {
+    //         if (this.props.onChange) {
+    //             this.props.onChange(value);
+    //         }
+    //     });
+    // }
+
+    // subNum () {
+    //     const value = Math.max(this.state.value - 1, this.state.min);
+    //     this.setState({value}, () => {
+    //         if (this.props.onChange) {
+    //             this.props.onChange(value);
+    //         }
+    //     });
+    // }
+
+    onClick (value) {
         this.setState({value}, () => {
-            if (this.props.onChange) {
-                this.props.onChange(value);
-            }
-        });
-    }
-
-    subNum () {
-        const value = Math.max(this.state.value - 1, this.state.min);
-        this.setState({value}, () => {
+            this.scrollTop();
             if (this.props.onChange) {
                 this.props.onChange(value);
             }
@@ -131,15 +156,9 @@ class Scroller extends React.Component {
     render () {
         const {className, style} = this.props;
         const clazzName = classNames(className, 'cm-date-scroll-item');
-        let value = Math.max(this.state.value, this.state.min);
-        value = Math.min(value, this.state.max);
-        const top = -34 * (value - this.state.min);
-        const css = {
-            transform: `translate3d(0px, ${top}px, 0px)`
-        };
         return (
             <div className={clazzName} style={style} ref={(f) => this.wrap = f}>
-                <div className='cm-date-scroll-item-wrap' style={css}>
+                <div ref={(f) => this.scroller = f} className='cm-date-scroll-item-wrap'>
                     {this.renderItems()}
                 </div>
             </div>

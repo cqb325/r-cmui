@@ -225,7 +225,7 @@ class ScrollDate extends BaseComponent {
     renderScrollers () {
         const current = this.state.current;
         const year = current.get('year');
-        const yearScroller = <Scroller ref={(f) => this.year = f} key='year' min={this.getMinYear(year)} max={this.getMaxYear(year)} value={year} onChange={this.changeYear}/>;
+        const yearScroller = <Scroller className='cm-date-scroll-item-year' ref={(f) => this.year = f} key='year' min={this.getMinYear(year)} max={this.getMaxYear(year)} value={year} onChange={this.changeYear}/>;
         const month = current.get('month');
         const monthScroller = <Scroller ref={(f) => this.month = f} key='month' min={this.getMinMonth()} max={this.getMaxMonth()} value={month + 1} onChange={this.changeMonth}/>;
         const max = this.getMaxDate(true);
@@ -240,6 +240,18 @@ class ScrollDate extends BaseComponent {
         }
 
         return [yearScroller, monthScroller, dateScroller];
+    }
+
+    scrollTop () {
+        if (this.year) {
+            this.year.scrollTop();
+        }
+        if (this.month) {
+            this.month.scrollTop();
+        }
+        if (this.date) {
+            this.date.scrollTop();
+        }
     }
 
     getValue () {

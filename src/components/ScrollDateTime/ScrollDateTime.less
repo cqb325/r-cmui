@@ -13,6 +13,18 @@
         bottom: 28px;
     }
 }
+// .cm-date-scroll-box{
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     overflow: auto;
+//     height: 100%;
+// }
+// .cm-date-scroll-helper{
+//     width: 100%;
+//     height: 500px;
+// }
 .cm-scroll-datetime-text {
     padding: 0 30px 0 6px;
     border: 1px solid #d9d9d9;
@@ -37,9 +49,6 @@
     z-index: 10;
     padding: 5px;
     background: whitesmoke;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
-    box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
 
     white-space: nowrap;
     padding: 10px;
@@ -61,39 +70,62 @@
 .cm-date-scroll-item-num{
     height: 34px;
     line-height: 34px;
-    text-align: center;
-    font-size: 23px;
+    font-size: 15px;
     color: #959595;
 
     user-select: none;
+    width: 100%;
+    padding-left: 25px;
+    &:last-child:after{
+        content: '';
+        height: 151px;
+        display: block;
+    }
     &.cm-date-scroll-item-num-active{
-        color: #555;
+        color: #000;
+        font-weight: 700;
+        background-color: #f5f5f5;
+    }
+    &:hover{
+        background-color: #e6f7ff;
+    }
+}
+.cm-date-scroll-item-year{
+    .cm-date-scroll-item-num {
+        padding-left: 15px;
     }
 }
 .cm-date-scroll-item{
     width: 70px;
-    margin: 0 2px;
     height: 187px;
     overflow: hidden;
     position: relative;
     float: left;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 
-    background: #ddd;
-    background: linear-gradient(#aaa 0,#eee 45%,#eee 55%,#aaa 100%);
-    background: -webkit-gradient(linear,left bottom,left top,from(#aaa),color-stop(0.45,#eee),color-stop(0.55,#eee),to(#aaa));
-    background: -moz-linear-gradient(#aaa 0,#ddd 45%,#ddd 55%,#aaa 100%);
-    background: -o-linear-gradient(#aaa 0,#ddd 45%,#ddd 55%,#aaa 100%);
+    &:first-child{
+        border-left: 1px solid #ccc;
+    }
+
+    // background: linear-gradient(#aaa 0,#eee 45%,#eee 55%,#aaa 100%);
+    // background: -webkit-gradient(linear,left bottom,left top,from(#aaa),color-stop(0.45,#eee),color-stop(0.55,#eee),to(#aaa));
+    // background: -moz-linear-gradient(#aaa 0,#ddd 45%,#ddd 55%,#aaa 100%);
+    // background: -o-linear-gradient(#aaa 0,#ddd 45%,#ddd 55%,#aaa 100%);
 }
 .cm-date-scroll-item-wrap{
-    transform: translate3d(0px, 0px, 0px);
-    transition: -webkit-transform 1000ms cubic-bezier(0.19, 1, 0.22, 1);
-    position: relative;
-    margin-top: 76.5px;
+    height: 100%;
+    overflow: hidden;
+
+    &:hover{
+        overflow-y: auto;
+    }
 }
 
 
 .cm-scroll-date{
-    background: #f7f7f7;
+    background: #ffffff;
     padding: 10px;
     border: 1px solid #ddd;
     display: inline-block;
@@ -106,7 +138,6 @@
     display: inline-block;
     text-align: center;
     width: 70px;
-    margin: 0 2px;
     line-height: 30px;
     font-weight: bold;
 }
@@ -120,7 +151,7 @@
     }
     .cm-scroll-date-head-item,
     .cm-date-scroll-item{
-        width: 45px;
+        width: 70px;
     }
 }
 

@@ -234,6 +234,15 @@ class ScrollDateTimeComp extends BaseComponent {
         }
     }
 
+    scrollTop () {
+        if (this.scrollDate) {
+            this.scrollDate.scrollTop();
+        }
+        if (this.scrollTime) {
+            this.scrollTime.scrollTop();
+        }
+    }
+
     /**
      * 设置值
      * @method setValue

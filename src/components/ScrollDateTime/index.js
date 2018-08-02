@@ -129,7 +129,11 @@ class ScrollDateTime extends BaseComponent {
         }
 
         const ele = this.wrap;
+        if (!ele) {
+            return;
+        }
         Dom.dom(ele).show();
+        this.comp.scrollTop();
         const container = Dom.closest(ele, '.cm-scroll-datetime');
         const offset = Dom.getOuterHeight(ele) + 5;
         const dropup = Dom.overView(container, offset);

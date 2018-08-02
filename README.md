@@ -10,6 +10,8 @@ v2.3.4
 1. fetch添加fetchJSON 修复headers assign错误
 2. Transfer修改参数transfered拼写错误
 3. Spin添加style属性
+4. 重构ScrollDateTime组件， 删除ScrollDateTimeRange组件
+5. TimePicker添加键盘加减
 
 v2.3.3
 
