@@ -234,6 +234,18 @@ class ScrollTime extends BaseComponent {
         return [hourScroller, minuteScroller, secondScroller];
     }
 
+    scrollTop () {
+        if (this.hour) {
+            this.hour.scrollTop();
+        }
+        if (this.minute) {
+            this.minute.scrollTop();
+        }
+        if (this.second) {
+            this.second.scrollTop();
+        }
+    }
+
     getValue () {
         return this.state.value;
     }

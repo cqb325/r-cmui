@@ -146,6 +146,15 @@ class Spinner extends BaseComponent {
         return (num1 * m + num2 * m) / m;
     }
 
+    onKeyDown = (e) => {
+        if (e.keyCode === 38) {
+            this.plus();
+        }
+        if (e.keyCode === 40) {
+            this.sub();
+        }
+    }
+
     componentWillReceiveProps (nextProps) {
         const value = nextProps.value;
         if (value !== this.props.value && value !== this.state.value) {
@@ -161,7 +170,7 @@ class Spinner extends BaseComponent {
         return (
             <div className={className} style={this.props.style}>
                 <span className='cm-spinner-value'>
-                    <Input name={this.props.name} value={`${this.state.value}`} onChange={this.inputChange} />
+                    <Input name={this.props.name} value={`${this.state.value}`} onChange={this.inputChange} onKeyDown={this.onKeyDown}/>
                 </span>
                 <span className='cm-spinner-plus' onClick={this.plus}>
                     <i className='fa fa-angle-up' />
