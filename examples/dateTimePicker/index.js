@@ -6,11 +6,9 @@ import ScrollTime from '../../src/components/ScrollDateTime/ScrollTime';
 import ScrollDateTime from '../../src/components/ScrollDateTime';
 import ScrollDateTimeComp from '../../src/components/ScrollDateTime/ScrollDateTime';
 import DateTime from '../../src/components/DateTime';
-import DateRange from '../../src/components/DateRange';
 import Button from '../../src/components/Button';
-import Form from '../../src/components/Form';
-import FormControl from '../../src/components/FormControl';
-import ScrollRangeDateTime from '../../src/components/ScrollRangeDateTime';
+import TimePicker from '../../src/components/TimePicker';
+import DateRange from '../../src/components/DateRange';
 import '../../src/components/ScrollDateTime/ScrollDateTime.less';
 
 class Comp extends React.Component {
@@ -60,30 +58,9 @@ class Comp extends React.Component {
                             console.log(v);
                         }}></ScrollDateTime>
                 </div>
-
                 <div>
-                    asd: <DateRange/>
-                    asd: <ScrollRangeDateTime ref={(f) => this.range = f} view='ymd' endDate='2018-06-01' maxRange={5} onChange={(v) => {
-                        console.log(v);
-                    }}/>
-                    <Button onClick={() => {
-                        // this.range.setValue('12:30:10~15:30:48');
-                        this.range.setValue();
-                    }}>设置初始值</Button>
-                    <Button onClick={() => {
-                        console.log(this.range.getValue());
-                    }}>获取值</Button>
-                </div>
-
-                <div>
-                    <Form ref={(f) => this.form = f}>
-                        <FormControl clear type='scrollRangeDateTime' label='选择时间: ' name='rangeTime' required onChange={(v) => {
-                            console.log(v);
-                        }}/>
-                    </Form>
-                    <Button onClick={() => {
-                        this.form.isValid();
-                    }}>提交</Button>
+                    <TimePicker/>
+                    <DateRange showTime format='YYYY-MM-DD HH:mm:ss' endDate='2018-08-02 17:30:00'/>
                 </div>
             </div>
         );
