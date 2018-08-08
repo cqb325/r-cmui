@@ -27,6 +27,18 @@ class Table extends BaseComponent {
         sortMode: 'single'
     };
 
+    static childContextTypes = {
+        bindRow: PropTypes.func,
+        unBindRow: PropTypes.func
+    }
+
+    getChildContext () {
+        return {
+            bindRow: this.bindRow,
+            unBindRow: this.unBindRow
+        };
+    }
+
     constructor (props) {
         super(props);
 
@@ -40,6 +52,7 @@ class Table extends BaseComponent {
         });
 
         this.checkboxes = {};
+        this.rows = {};
 
         this._index = 1;
     }
@@ -198,6 +211,24 @@ class Table extends BaseComponent {
      */
     unBindCheckBox (key) {
         delete this.checkboxes[key];
+    }
+
+    /**
+     * 绑定row
+     */
+    bindRow  = (key, row) => {
+        this.rows[key] = row;
+    }
+
+    /**
+     * 绑定row
+     */
+    unBindRow  = (key) => {
+        delete this.rows[key];
+    }
+
+    getRow (id) {
+        return this.rows[id];
     }
 
     /**
