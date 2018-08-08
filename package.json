@@ -1,6 +1,6 @@
 {
   "name": "r-cmui",
-  "version": "2.3.4",
+  "version": "2.4.0",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
