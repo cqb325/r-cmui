@@ -81,8 +81,8 @@ class Comp extends React.Component {
 
         return (
             <div style={{padding: 50, height: 800}}>
-                <Grid ref={(f) => this.grid = f} columns={this.columns} selectMode='row' editable
-                    border total={data.length} pageSize={50} pageNum={1} muiltiSort={false} data={data} />
+                <Grid ref={(f) => this.grid = f} columns={this.columns} editable
+                    border total={data.length} pageSize={20} pageNum={1} muiltiSort={false} data={data} />
                 {/* {source='dynamic' action='http://localhost:8415/mock/cdn-ops/dc/list'} */}
                 <Button onClick={this.addRow}>添加数据</Button>
                 <Button onClick={this.removeRow}>删除数据</Button>

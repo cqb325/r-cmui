@@ -1,0 +1,42 @@
+.cm-tree-grid{
+    width: 100%;
+    height: 100%;
+}
+.cm-tree-grid-arrow{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    vertical-align: top;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+
+    background-image: url(../../styles/imgs/tree/plus.gif);
+    &.cm-tree-grid-arrow-open{
+        background-image: url(../../styles/imgs/tree/minus.gif);
+    }
+}
+
+.cm-tree-grid-icon{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    vertical-align: top;
+    cursor: default;
+    margin-right: 2px;
+}
+.cm-tree-grid-icon-leaf{
+    background-image: url(../../styles/imgs/tree/leaf.gif);
+}
+.cm-tree-grid-icon-branch{
+    background-image: url(../../styles/imgs/tree/folderClosed.gif);
+    &.cm-tree-grid-icon-open{
+        background-image: url(../../styles/imgs/tree/folderOpen.gif);
+    }
+}
