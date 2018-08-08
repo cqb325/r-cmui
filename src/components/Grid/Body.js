@@ -240,7 +240,7 @@ class Body extends React.Component {
     }
 
     windowResize = () => {
-        this.updateScrollSize();
+        this.updateSize();
     }
 
     /**
@@ -290,13 +290,17 @@ class Body extends React.Component {
         if (boxWidth > spacerWidth) {
             barwidth = boxWidth - spacerWidth;
             this.content.style.right = `${barwidth}px`;
+            this.hbox.style.right = `${barwidth}px`;
         } else {
             this.content.style.right = '0';
+            this.hbox.style.right = '0';
         }
         if (boxHeight > spacerHeight) {
             this.content.style.bottom = `${boxHeight - spacerHeight}px`;
+            this.box.style.bottom = `${boxHeight - spacerHeight}px`;
         } else {
             this.content.style.bottom = '0';
+            this.box.style.bottom = '0';
         }
     }
 
@@ -317,20 +321,31 @@ class Body extends React.Component {
         let top = this.box.scrollTop;
         top = top + this.step;
 
+        const spacerHeight = this.spacer.getBoundingClientRect().height;
+        const boxHeight = this.content.getBoundingClientRect().height;
+
         this.box.scrollTop = top;
-        top = this.box.scrollTop;
+        if (top > spacerHeight - boxHeight) {
+            top = spacerHeight - boxHeight;
+        } else {
+            top = this.box.scrollTop;
+        }
         this.body.style.top = `${-top}px`;
     }
 
     onSpacerScroll () {
         Events.on(this.box, 'scroll', this.spaceScroll);
+        Events.on(this.hbox, 'scroll', this.xspaceScroll);
     }
 
     spaceScroll = () => {
         this.body.style.top = `${-this.box.scrollTop}px`;
-        this.body.style.left = `${-this.box.scrollLeft}px`;
+    }
+
+    xspaceScroll = () => {
+        this.body.style.left = `${-this.hbox.scrollLeft}px`;
         if (this.props.onScrollX) {
-            this.props.onScrollX(-this.box.scrollLeft);
+            this.props.onScrollX(-this.hbox.scrollLeft);
         }
     }
 
