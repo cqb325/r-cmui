@@ -12,6 +12,7 @@ v2.3.4
 3. Spin添加style属性
 4. 重构ScrollDateTime组件， 删除ScrollDateTimeRange组件
 5. TimePicker添加键盘加减
+6. 修改Grid组件横向滚动条无法滚动问题
 
 v2.3.3
 
