@@ -8,6 +8,7 @@
 v2.4.0
 
 1. 添加TreeGrid组件
+2. TouchRipple 修改兼容firefox
 
 v2.3.4
 

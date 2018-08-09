@@ -27,20 +27,20 @@ class CircleRipple extends React.PureComponent {
         aborted: false
     };
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         clearTimeout(this.enterTimer);
         // clearTimeout(this.leaveTimer);
     }
 
-    componentWillEnter(callback) {
+    componentWillEnter (callback) {
         this.initializeAnimation(callback);
     }
 
-    componentDidEnter() {
+    componentDidEnter () {
         this.animate();
     }
 
-    componentWillLeave(callback) {
+    componentWillLeave (callback) {
         const style = ReactDOM.findDOMNode(this).style;
         style.opacity = 0;
         // If the animation is aborted, remove from the DOM immediately
@@ -52,7 +52,7 @@ class CircleRipple extends React.PureComponent {
      * 设置动画
      * @method animate
      */
-    animate() {
+    animate () {
         const style = ReactDOM.findDOMNode(this).style;
         const transitionValue = `${transitions.easeOut('2s', 'opacity')}, ${
             transitions.easeOut('1s', 'transform')}`;
@@ -64,14 +64,14 @@ class CircleRipple extends React.PureComponent {
      * 初始化动画参数
      * @param callback
      */
-    initializeAnimation(callback) {
+    initializeAnimation (callback) {
         const style = ReactDOM.findDOMNode(this).style;
         style.opacity = this.props.opacity;
         autoPrefix.set(style, 'transform', 'scale(0)');
         this.leaveTimer = setTimeout(callback, 0);
     }
 
-    render() {
+    render () {
         const {
             color,
             opacity,
@@ -87,11 +87,13 @@ class CircleRipple extends React.PureComponent {
             borderRadius: '50%',
             display: 'inline-block',
             backgroundColor: color,
-            opacity: opacity
+            opacity
         }, style);
 
         return (
-            <div style={mergedStyles} />
+            <div style={mergedStyles} onClick={() => {
+                console.log(111111111111111111);
+            }}/>
         );
     }
 }

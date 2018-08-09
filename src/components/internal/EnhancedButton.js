@@ -1,4 +1,3 @@
-
 import React from 'react';
 const Component = React.PureComponent;
 import TouchRipple from './TouchRipple';
@@ -9,7 +8,7 @@ class EnhancedButton extends Component {
      * @method createButtonChildren
      * @returns {*}
      */
-    createButtonChildren() {
+    createButtonChildren () {
         const {
             children,
             disabled,
@@ -21,7 +20,7 @@ class EnhancedButton extends Component {
 
         const touchRipple = !disabled ? (
             <TouchRipple
-                key="touchRipple"
+                key='touchRipple'
                 centerRipple={centerRipple}
                 color={touchRippleColor}
                 opacity={touchRippleOpacity}
@@ -31,7 +30,7 @@ class EnhancedButton extends Component {
             </TouchRipple>
         ) : undefined;
 
-        let ret = [];
+        const ret = [];
         ret.push(touchRipple);
         if (!touchRipple) {
             ret.push(children);
@@ -39,7 +38,7 @@ class EnhancedButton extends Component {
         return ret;
     }
 
-    handleClick = (event)=> {
+    handleClick = (event) => {
         if (!this.props.disabled) {
             if (this.props.onClick) {
                 this.props.onClick(event);
@@ -47,7 +46,7 @@ class EnhancedButton extends Component {
         }
     }
 
-    render() {
+    render () {
         const {
             disabled,
             style
@@ -66,9 +65,9 @@ class EnhancedButton extends Component {
 
         const buttonChildren = this.createButtonChildren();
 
-        let props = {
+        const props = {
             style: mergedStyles,
-            disabled: disabled,
+            disabled,
             onClick: this.handleClick
         };
         return (

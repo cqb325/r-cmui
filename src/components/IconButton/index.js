@@ -78,7 +78,7 @@ class IconButton extends BaseComponent {
 
         const iconSize = this.props.size ? this.props.size : (this.props.style && this.props.style.fontSize) ? parseInt(this.props.style.fontSize, 10) : 24;
         const style = Object.assign({
-            fontSize: `${iconSize  }px`,
+            fontSize: `${iconSize}px`,
             overflow: 'visible',
             padding: iconSize / 2,
             width: iconSize * 2,
