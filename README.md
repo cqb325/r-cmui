@@ -10,9 +10,10 @@ v2.4.0
 1. 添加TreeGrid组件
 2. TouchRipple 修改兼容firefox
 3. form setData 中isValid 延迟校验
-4. Form setData 中先resetValid再验证
+4. Form setData 中赋值延迟执行，先resetValid再验证，默认不立即验证当传参immediateValid为true时可以立即验证
 5. 添加ConfirmButton组件
 6. 添加SubmitButton组件
+7. FormControl对Lable类型的不需要验证， 支持动态type,动态rules和messages 删除setRule和setMessage
 
 v2.3.4
 
