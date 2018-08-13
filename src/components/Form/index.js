@@ -232,19 +232,29 @@ class Form extends BaseComponent {
 
     /**
      * 设置表单初始值
+     * setData需要延迟执行，如果某个FormControl的type是动态设置的，
+     * 在当前组件中会先执行setData后支持render 那么FormControl的值就设置不进去
+     * 所以必须延迟执行
      */
-    setData (data) {
-        for (const name in this.items) {
-            const item = this.items[name];
-            const val = data[name];
-            if (item.ref.setValue && val != undefined) {
-                item.ref.setValue(val);
+    setData (data, immediateValid) {
+        window.setTimeout(() => {
+            for (const name in this.items) {
+                const item = this.items[name];
+                const val = data[name];
+                if (item.ref.setValue && val != undefined) {
+                    item.ref.setValue(val);
+                }
             }
-        }
-
-        this.resetValid();
-        window.setTimeout(()=>{
-            this.isValid();
+    
+            // 先消除所有的验证信息 防止之前的验证错误信息遗留
+            this.resetValid();
+            // setValue是通过setState执行的，是异步操作  所以
+            // 验证需要等setState执行完成
+            if (immediateValid) {
+                window.setTimeout(() => {
+                    this.isValid();
+                }, 0);
+            }
         }, 0);
     }
 
