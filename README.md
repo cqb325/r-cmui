@@ -9,6 +9,9 @@ v2.4.0
 
 1. 添加TreeGrid组件
 2. TouchRipple 修改兼容firefox
+3. form setData 中isValid 延迟校验
+4. Form setData 中先resetValid再验证
+5. 添加ConfirmButton组件
 
 v2.3.4
 

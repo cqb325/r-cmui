@@ -242,6 +242,7 @@ class Form extends BaseComponent {
             }
         }
 
+        this.resetValid();
         window.setTimeout(()=>{
             this.isValid();
         }, 0);
