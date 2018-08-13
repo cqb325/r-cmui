@@ -12,6 +12,7 @@ v2.4.0
 3. form setData 中isValid 延迟校验
 4. Form setData 中先resetValid再验证
 5. 添加ConfirmButton组件
+6. 添加SubmitButton组件
 
 v2.3.4
 
