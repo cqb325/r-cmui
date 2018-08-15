@@ -402,8 +402,10 @@ class Select extends BaseComponent {
         html = `${html}<input type="hidden" class="${this.props.className || ''}" name="${ 
             this.props.name || ''}" value="${this.state.value || ''}">`;
 
-
-        return (<span style={{maxWidth: this.props.maxWidth, minWidth: this.props.minWidth}} className={className} dangerouslySetInnerHTML={{__html: html}} />);
+        const w = this.props.style ? this.props.style.width : null;
+        const maxW = (w && this.props.maxWidth) ? Math.max(this.props.maxWidth, w) : this.props.maxWidth || w;
+        const minW = (w && this.props.minWidth) ? Math.min(this.props.minWidth, w) : this.props.minWidth || w;
+        return (<span style={{maxWidth: maxW, minWidth: minW}} className={className} dangerouslySetInnerHTML={{__html: html}} />);
     }
 
     _renderFilter () {
