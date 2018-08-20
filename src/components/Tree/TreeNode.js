@@ -12,7 +12,7 @@ import TreeSubNodes from './TreeSubNodes';
  * @extend BaseComponent
  */
 class TreeNode extends BaseComponent {
-    static childContextTypes = {
+    static contextTypes = {
         enableDynamicTreeNode: PropTypes.bool
     }
     
