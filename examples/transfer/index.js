@@ -2,6 +2,7 @@ import React from 'react';
 
 import Transfer from '../../src/components/Transfer/index';
 import List from '../../src/components/List';
+import AList from './List';
 import Avatar from '../../src/components/Avatar';
 
 class Comp extends React.Component {
@@ -33,6 +34,10 @@ class Comp extends React.Component {
                     <List head='Head' data={listData} border size='large' spinning={false}
                         actions={[<li className='text-link' key='edit' onClick={(data) => console.log(data)}>edit</li>,<li className='text-link' key='more'>more</li>]}
                     />
+                </div>
+
+                <div className='mt-30'>
+                    <AList data={data} filter/>
                 </div>
             </div>
         );
