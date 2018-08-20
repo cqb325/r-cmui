@@ -1,0 +1,217 @@
+@border-color: #e9e9e9;
+
+.cm-grid-tree{
+  border: 1px solid @border-color;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.cm-grid-tree-head{
+  position: relative;
+  left: 0;
+  table-layout: fixed;
+  display: table;
+  width: 100%;
+}
+.cm-grid-tree-head-wrap{
+  background: #f7f7f7;
+  position: relative;
+  overflow: hidden;
+  height: 41px;
+  width: 100%;
+  border-bottom: 1px solid @border-color;
+}
+.cm-grid-tree-column{
+  display: table-cell;
+  border-right: 1px solid @border-color;
+  padding: 11px 8px;
+  overflow: hidden;
+  font-weight: 500;
+  position: relative;
+  cursor: default;
+  &:last-child{
+    border-right: 0;
+  }
+}
+
+
+
+
+
+
+
+
+.cm-tree{
+  font-size: 12px;
+  overflow: auto;
+}
+.draghelper{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #F4DB9D;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.tree_arrow{
+  width: 20px;
+  height: 35px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  &.tree-arrow-empty{
+    background-image: none!important;
+  }
+}
+.tree_checkbox{
+  width: 20px;
+  height: 35px;
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.tree_checkbox.dischecked{
+  .cm-checkbox-outter{
+    background-color: rgba(177,177,177,.8);
+    border-color: rgba(177,177,177,.8);
+  }
+  &.cm-checkbox.disabled.cm-checkbox-checked .cm-checkbox-outter{
+    background-color: rgba(177,177,177,.2) !important;
+    border-color: rgba(177,177,177,.2)!important;
+  }
+}
+
+.tree_icon{
+  width: 20px;
+  height: 35px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  vertical-align: top;
+  cursor: default;
+}
+.tree_text{
+  margin-left: 2px;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  padding: 0px 2px;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  white-space: nowrap;
+}
+.tree_text.dragenter{
+  background-color: #C1D1FF;
+}
+.node_selected{
+  background-color: #eee;
+  .tree_text{
+    color: #39c;
+  }
+}
+.tree_node{
+  clear: both;
+  white-space: nowrap;
+}
+.tree_subNode{
+  clear: both;
+}
+.tree_node_wrap{
+  height: 35px;
+  line-height: 35px;
+  white-space: nowrap;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  &.node_disabled{
+    .tree_text{
+      text-decoration: line-through;
+      color: #ccc;
+    }
+  }
+}
+.icon_branch{
+  background-image: url(../../styles/imgs/tree/folderClosed.gif);
+}
+.node_open>.cm-grid-tree-cell>.tree_arrow{
+  background-image: url(../../styles/imgs/tree/minus.gif);
+}
+.node_close>.cm-grid-tree-cell>.tree_arrow{
+  background-image: url(../../styles/imgs/tree/plus.gif);
+}
+.node_open>.cm-grid-tree-cell>.tree_cont>.icon_branch{
+  background-image: url(../../styles/imgs/tree/folderOpen.gif);
+}
+.node_close>.cm-grid-tree-cell>.tree_cont>.icon_branch{
+  background-image: url(../../styles/imgs/tree/folderClosed.gif);
+}
+.icon_leaf{
+  background-image: url(../../styles/imgs/tree/leaf.gif);
+}
+
+.cm-grid-tree-cell{
+  display: table-cell;
+  padding: 2px 8px;
+  box-sizing: border-box;
+  border-right: 1px solid @border-color;
+  border-bottom: 1px solid @border-color;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tree_node_wrap{
+  .cm-grid-tree-cell:last-child{
+    border-right: 0;
+  }
+}
+
+.cm-grid-tree-scroll{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  top: 41px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cm-grid-tree-scroll-content{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.cm-grid-tree-body-wrap{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+}
+.cm-grid-tree-body{
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.cm-grid-tree-scroll-box{
+  overflow: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}

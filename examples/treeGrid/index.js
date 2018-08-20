@@ -1,12 +1,13 @@
 import React from 'react';
 import TreeGrid from '../../src/components/TreeGrid';
+import GridTree from '../../src/components/GridTree';
 
 class Comp extends React.Component {
     displayName = 'Comp';
 
     render () {
         const data = [
-            {id: '1', text: '中国', desc: '中国', time: '2018-07-30', open: false, children: [
+            {id: '1', text: '中国', desc: '中国中国中国中国中国中国中国中国中国中国', time: '2018-07-30', open: false, children: [
                 {id: '2', text: '北京', desc: '北京', time: '2018-07-30', open: false, children: [
                     {id: '211', text: '北京2', desc: '北京2', time: '2018-07-30'},
                     {id: '212', text: '北京2', desc: '北京2', time: '2018-07-30'}
@@ -32,16 +33,11 @@ class Comp extends React.Component {
         ];
         return (
             <div style={{width: 800, height: 600}}>
-                <table style={{width: '100%', height: 0, borderSpacing: 0}} height='0px'>
-                    <tbody style={{height: '0'}}>
-                        <tr style={{height: 'auto'}}>
-                            <th style={{height: 0, fontSize: 0}}>区域区域区域区域区域区域区域区域区域区域</th>
-                            <th style={{height: 0, fontSize: 0}}>描述</th>
-                            <th style={{height: 0, fontSize: 0}}>时间</th>
-                        </tr>
-                    </tbody>
-                </table>
-                <TreeGrid columns={columns} data={data} valueField='id' textField='text'/>
+                {/* <TreeGrid columns={columns} data={data} valueField='id' textField='text'/> */}
+
+                <div style={{height: 200}}>
+                    <GridTree columns={columns} data={data} enableSmartDisabled enableCheckbox enableSmartCheckbox/>
+                </div>
             </div>
         );
     }
