@@ -117,6 +117,29 @@ class SimpleListPage extends React.Component {
     getParamsByConditionForm (params) {
         if (this.form) {
             const ps = this.form.getFormParams();
+            for (const name in this.form.items) {
+                const item = this.form.items[name];
+                let clazz = '';
+                if (item.ref.item.constructor.name) {
+                    clazz = item.ref.item.constructor.name;
+                } else {
+                    const matches = item.ref.item.constructor.toString().match(/function\s*([^(]*)\(/);
+                    if (matches) {
+                        clazz = matches[1];
+                    }
+                }
+                if (item.ref.item && clazz === 'DateRange') {
+                    const v = ps[name];
+                    delete ps[name];
+                    if (v && v.length) {
+                        ps[item.ref.item.props.startName] = v[0];
+                        ps[item.ref.item.props.endName] = v[1];
+                    } else {
+                        ps[item.ref.item.props.startName] = '';
+                        ps[item.ref.item.props.endName] = '';
+                    }
+                }
+            }
             Object.assign(params, ps);
         }
     }
