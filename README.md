@@ -14,6 +14,8 @@ v2.4.0
 5. 添加ConfirmButton组件
 6. 添加SubmitButton组件
 7. FormControl对Lable类型的不需要验证， 支持动态type,动态rules和messages 删除setRule和setMessage
+8. SimpleListPage 对DateRange拆分查询条件
+9. 添加GridTree表格样式的树，和TreeGrid不一样
 
 v2.3.4
 
