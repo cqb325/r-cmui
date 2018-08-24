@@ -7,7 +7,11 @@ async function myFetch (url = '', data = {}, type = 'GET', options) {
     dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
     if (type === 'GET') {
         if (dataStr !== '') {
-            url = `${url}?${dataStr}`;
+            if (url.indexOf('?') > -1) {
+                url = `${url}&${dataStr}`;
+            } else {
+                url = `${url}?${dataStr}`;
+            }
         }
         if (url.indexOf('?') > -1) {
             url += `&_=${new Date().getTime()}`;
