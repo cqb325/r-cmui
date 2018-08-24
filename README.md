@@ -18,6 +18,7 @@ v2.4.0
 9. 添加GridTree表格样式的树，和TreeGrid不一样
 10. fetch get的时候拼url问题
 11. SubmitButton逻辑修改
+12. Sider 设置className问题
 
 v2.3.4
 

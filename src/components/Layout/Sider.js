@@ -71,7 +71,7 @@ class Sider extends React.Component {
 
     render () {
         let {prefixCls, className, collapsible, trigger, style, width, collapsedWidth} = this.props;
-        const divProps = omit(this.props, ['prefixCls', 'collapsible', 'collapsedWidth', 'collapsed', 'defaultCollapsed', 'onCollapse', 'name']);
+        const divProps = omit(this.props, ['className', 'prefixCls', 'collapsible', 'collapsedWidth', 'collapsed', 'defaultCollapsed', 'onCollapse', 'name']);
 
         className = classNames(className, prefixCls, {
             [`${prefixCls}-collapsed`]: !!this.state.collapsed,
