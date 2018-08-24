@@ -7,29 +7,30 @@ class SubmitButton extends React.Component {
 
     box = null;
 
-    onClick = async () => {
-        this.btn.setLoading(true);
-        if (this.props.onClick) {
-            const ret = await this.props.onClick();
-            if (ret && ret.success) {
-                const tip = this.props.back ? this.stip : this.tip;
-                tip.show(this.props.successTip);
-            } else {
-                ret.msg
-                    ? this.tip.show(`${this.props.errorTip}: ${ret.msg}`)
-                    : this.tip.show(this.props.errorTip);
-            }
-        }
-        this.btn.setLoading(false);
+    static defaultProps = {
+        successTip: '保存成功',
+        errorTip: '保存失败'
     }
 
-    onConfirm = (flag) => {
-        if (flag) {
-            if (this.props.onConfirm) {
-                this.props.onConfirm(this.props.data);
+    onClick = async () => {
+        if (this.props.isValid) {
+            const ret = this.props.isValid();
+            if (ret) {
+                if (this.props.onSubmit) {
+                    this.btn.setLoading(true);
+                    const ret = await this.props.onSubmit();
+                    if (ret && ret.success) {
+                        const tip = this.props.back ? this.stip : this.tip;
+                        tip.show(this.props.successTip);
+                    } else {
+                        ret.msg
+                            ? this.tip.show(`${this.props.errorTip}: ${ret.msg}`)
+                            : this.tip.show(this.props.errorTip);
+                    }
+                    this.btn.setLoading(false);
+                }
             }
         }
-        return true;
     }
 
     goBack = () => {
@@ -37,14 +38,16 @@ class SubmitButton extends React.Component {
     }
 
     render () {
-        return <span>
+        return <span style={{display: 'inline-block'}}>
             <Button {...this.props} onClick={this.onClick} ref={(f) => this.btn = f}>{this.props.children}</Button>
-            <MessageBox title='提示' ref={(f) => this.tip = f}/>
-            {
-                this.props.back
-                    ? <MessageBox title='提示' ref={(f) => this.stip = f} confirm={this.goBack}/>
-                    : null
-            }
+            <div style={{display: 'inline'}}>
+                <MessageBox title='提示' ref={(f) => this.tip = f}/>
+                {
+                    this.props.back
+                        ? <MessageBox title='提示' ref={(f) => this.stip = f} confirm={this.goBack}/>
+                        : null
+                }
+            </div>
         </span>;
     }
 }
