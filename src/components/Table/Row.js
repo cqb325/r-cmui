@@ -27,6 +27,7 @@ class Row extends BaseComponent {
     constructor (props) {
         super(props);
 
+        props.data._show = props.data._show || true;
         this.addState({
             data: props.data
         });
