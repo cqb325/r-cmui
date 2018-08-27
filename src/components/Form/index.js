@@ -115,6 +115,19 @@ class Form extends BaseComponent {
     }
 
     /**
+     * onChange事件回调
+     * @param {*} value 
+     * @param {*} selectItem 
+     * @param {*} option 
+     * @param {*} control 
+     */
+    onChange (value, selectItem, option, control) {
+        if (this.props.onChange) {
+            this.props.onChange(value, selectItem, option, control);
+        }
+    }
+
+    /**
      * 渲染子元素
      * @method renderChildren
      * @returns {*}
@@ -134,6 +147,12 @@ class Form extends BaseComponent {
                 props.tipAlign = tipAlign;
                 props.tipAuto = this.props.tipAuto ? this.props.tipAuto : props.tipAuto;
                 props.labelWidth = props.labelWidth || this.props.labelWidth;
+                const changeHandler = props.onChange || function () {};
+                const scope = this;
+                props.onChange = function (value, selectItem, option) {
+                    changeHandler.apply(this, [value, selectItem, option]);
+                    scope.onChange(value, selectItem, option, this);
+                };
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;
                 }

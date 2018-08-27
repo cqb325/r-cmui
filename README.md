@@ -19,6 +19,7 @@ v2.4.0
 10. fetch get的时候拼url问题
 11. SubmitButton逻辑修改
 12. Sider 设置className问题
+13. Form添加onChange事件回调，监听表单中元素变化事件
 
 v2.3.4
 
