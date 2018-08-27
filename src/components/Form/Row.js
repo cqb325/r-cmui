@@ -19,6 +19,14 @@ class Row extends React.Component {
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;
                 }
+                const changeHandler = props.onChange || function () {};
+                const scope = this;
+                props.onChange = function (value, selectItem, option) {
+                    changeHandler.apply(this, [value, selectItem, option]);
+                    if (scope.props.onChange) {
+                        scope.props.onChange.apply(this, [value, selectItem, option]);
+                    }
+                };
                 if (componentName === 'Row') {
                     props.data = this.props.data;
                 }

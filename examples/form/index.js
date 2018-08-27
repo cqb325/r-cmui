@@ -114,7 +114,9 @@ class Comp extends React.Component {
                     <FormControl name='name' required type='daterange' label='机房名称：'/>
                 </Form>
 
-                <Form ajax layout='inline' style={{padding: '0 12.5px'}} labelWidth={100}>
+                <Form ajax layout='inline' style={{padding: '0 12.5px'}} labelWidth={100} onChange={(value, item, option, control) => {
+                    console.log(value, control);
+                }}>
                     <Row>
                         <FormControl name='name' required type='text' label='机房名称：' placeholder='输入机房名称'/>
                     </Row>
