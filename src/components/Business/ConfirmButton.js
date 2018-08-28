@@ -21,7 +21,7 @@ class ConfirmButton extends React.Component {
     }
 
     render () {
-        return <span>
+        return <span style={{display: 'inline-block'}}>
             <Button {...this.props} onClick={this.onClick}>{this.props.children}</Button>
             <MessageBox title='提示' ref={(f) => this.tip = f} type='confirm' confirm={this.onConfirm}/>
         </span>;
