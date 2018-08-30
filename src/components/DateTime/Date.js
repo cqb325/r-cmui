@@ -72,6 +72,26 @@ class Date extends BaseComponent {
         });
     }
 
+    /**
+     * 设置开始时间
+     * @param {*} value 
+     */
+    setStartDate (value) {
+        this.setState({
+            startDate: value
+        });
+    }
+
+    /**
+     * 设置允许的结束时间
+     * @param {*} value 
+     */
+    setEndDate (value) {
+        this.setState({
+            endDate: value
+        });
+    }
+
     setMonthOnly () {
         this.minStage = 2;
         this.maxStage = 3;
@@ -338,6 +358,7 @@ class Date extends BaseComponent {
         first.set('hour', 0);
         first.set('minute', 0);
         first.set('second', 0);
+        first.set('millisecond', 0);
         const end = moment(first).add(1, 'months').add(-1, 'days');
         const min = 1 - first.weekday();
         const max = (Math.ceil((end.get('date') - min + 1) / 7) * 7);

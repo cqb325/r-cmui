@@ -66,7 +66,7 @@ class Comp extends React.Component {
     render () {
         const data = [];
         const now = moment();
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < 100000; i++) {
             data.push({
                 id: `id_${i}`,
                 name: `name_${i}`,
