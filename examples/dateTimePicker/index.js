@@ -60,7 +60,12 @@ class Comp extends React.Component {
                 </div>
                 <div>
                     <TimePicker/>
-                    <DateRange showTime format='YYYY-MM-DD HH:mm:ss' endDate='2018-08-02 17:30:00'/>
+                    <DateRange clear ref={(f) => this.range = f} showTime format='YYYY-MM-DD HH:mm' startDate='2018-08-01 00:00' endDate='2018-08-05 17:30'/>
+                    <Button onClick={() => {
+                        this.range.setStartDate('2018-08-02 01:00');
+                    }}>
+                        设置开始时间
+                    </Button>
                 </div>
             </div>
         );
