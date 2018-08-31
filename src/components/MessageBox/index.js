@@ -163,7 +163,13 @@ class MessageBox extends BaseComponent {
         if (!this._isMounted) {
             return false;
         }
-        velocity(this.container, 'fadeOut', { duration: 300 });
+        if (this.isHiding) {
+            return ;
+        }
+        this.isHiding = true;
+        velocity(this.container, 'fadeOut', { duration: 300 , complete: () => {
+            this.isHiding = false;
+        }});
 
         if (this.props.onHide) {
             this.props.onHide();

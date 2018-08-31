@@ -175,6 +175,12 @@ class Dialog extends BaseComponent {
         if (!this._isMounted) {
             return false;
         }
+        if (this.isHiding) {
+            return ;
+        }
+
+        this.isHiding = true;
+
         this.setState({
             visibility: false
         });
@@ -189,11 +195,15 @@ class Dialog extends BaseComponent {
             }, {
                 duration: 300,
                 complete: () => {
-                    velocity(this.container, 'fadeOut', {duration: 0});
+                    velocity(this.container, 'fadeOut', {duration: 0, complete: () => {
+                        this.isHiding = false;
+                    }});
                 }
             });
         } else {
-            velocity(this.container, 'fadeOut', {duration: 300});
+            velocity(this.container, 'fadeOut', {duration: 300, complete: () => {
+                this.isHiding = false;
+            }});
         }
 
         if (this.props.onClose) {
