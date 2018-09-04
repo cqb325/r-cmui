@@ -22,10 +22,16 @@ class SubmitButton extends React.Component {
                     if (ret && ret.success) {
                         const tip = this.props.back ? this.stip : this.tip;
                         tip.show(this.props.successTip);
+                        if (this.props.onSuccess) {
+                            this.props.onSuccess();
+                        }
                     } else {
                         ret.msg
                             ? this.tip.show(`${this.props.errorTip}: ${ret.msg}`)
                             : this.tip.show(this.props.errorTip);
+                        if (this.props.onError) {
+                            this.props.onError();
+                        }
                     }
                     this.btn.setLoading(false);
                 }
