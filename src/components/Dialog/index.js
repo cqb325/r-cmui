@@ -373,6 +373,7 @@ class Dialog extends BaseComponent {
 
     componentWillUnmount () {
         this._isMounted = false;
+        Dom.dom(this.container).remove();
     }
 
     componentWillReceiveProps (nextProps) {
