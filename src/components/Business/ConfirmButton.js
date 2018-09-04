@@ -7,8 +7,14 @@ class ConfirmButton extends React.Component {
 
     box = null;
 
-    onClick = () => {
-        this.tip.show(this.props.tip);
+    onClick = async () => {
+        let ret = true;
+        if (this.props.onBeforeClick) {
+            ret = await this.props.onBeforeClick();
+        }
+        if (ret) {
+            this.tip.show(this.props.tip);
+        }
     }
 
     onConfirm = (flag) => {
