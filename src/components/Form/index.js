@@ -125,6 +125,7 @@ class Form extends BaseComponent {
         if (this.props.onChange) {
             this.props.onChange(value, selectItem, option, control);
         }
+        this.emit('change', value, selectItem, option, control);
     }
 
     /**
