@@ -13,6 +13,8 @@ v2.4.1
 4. SubmitButton添加成功和失败回调onSuccess/onError
 5. FormControl添加labelStyle属性可以自定义label的样式
 6. ConfirmButton 添加 onBeforeClick 回调
+7. Dialog 组件移除的时候将挂在的Panel也移除 减少页面容量
+8. MessageBox 组件移除的时候将挂在的Panel也移除 减少页面容量
 
 v2.4.0
 
