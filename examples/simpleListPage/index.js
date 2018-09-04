@@ -25,7 +25,7 @@ class Comp extends React.Component {
                         <FormControl name='name' type='text' label='机房名称：' placeholder='输入机房名称'/>
                     </Form>
                 </div>
-                <SimpleListPage condition={() => this.condition} pagination columns={this.columns} action='http://172.18.34.66:8415/mock/ops-portal/config/module/list'/>
+                <SimpleListPage autoSearch condition={() => this.condition} pagination columns={this.columns} action='http://172.18.34.66:8415/mock/ops-portal/config/module/list'/>
             </Card>
         );
     }

@@ -17,7 +17,8 @@ class SimpleListPage extends React.Component {
         pageSize: 10,
         bordered: true,
         pagination: false,
-        theme: 'default'
+        theme: 'default',
+        autoSearch: false
     }
 
     static propTypes = {
@@ -31,7 +32,8 @@ class SimpleListPage extends React.Component {
         searchBtn: PropTypes.oneOfType([PropTypes.string,PropTypes.func]),
         searchParams: PropTypes.oneOfType([PropTypes.object,PropTypes.func]),
         afterRequest: PropTypes.func,
-        condition: PropTypes.func
+        condition: PropTypes.func,
+        autoSearch: PropTypes.bool
     }
 
     state = {
@@ -221,6 +223,11 @@ class SimpleListPage extends React.Component {
                     this.clickSearch();
                     return false;
                 };
+                if (this.props.autoSearch) {
+                    this.form.on('change', () => {
+                        this.clickSearch();
+                    });
+                }
             }
         }
 
