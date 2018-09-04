@@ -116,6 +116,7 @@ class InnerDropdown extends React.PureComponent {
     setPopupVisible (popupVisible) {
         if (this._isMounted) {
             this.setState({popupVisible});
+            this.onVisibleChange(popupVisible);
             this.popupRef.update(popupVisible);
         }
     }
@@ -125,6 +126,7 @@ class InnerDropdown extends React.PureComponent {
             if (this._isMounted) {
                 if (!this.state.isEmpty) {
                     this.setState({popupVisible});
+                    this.onVisibleChange(popupVisible);
                     this.popupRef.update(popupVisible);
                 }
             }
@@ -149,12 +151,17 @@ class InnerDropdown extends React.PureComponent {
     onVisibleChange (visible) {
         const tip = ReactDOM.findDOMNode(this.popupRef);
         if (!visible) {
-            velocity(tip, 'slideUp', {duration: 300});
+            velocity(tip, 'slideUp', {duration: 300, complete: () => {
+                if (this.props.onVisibleChange) {
+                    this.props.onVisibleChange();
+                }
+            }});
         } else {
-            velocity(tip, 'slideDown', {duration: 300});
-        }
-        if (this.props.onVisibleChange) {
-            this.props.onVisibleChange();
+            velocity(tip, 'slideDown', {duration: 300, complete: () => {
+                if (this.props.onVisibleChange) {
+                    this.props.onVisibleChange();
+                }
+            }});
         }
     }
 
@@ -183,7 +190,7 @@ class InnerDropdown extends React.PureComponent {
                     onSelect: this.onSelect.bind(this),
                     prefix: 'cm-dropdown-menu',
                     startIndex: 0
-                }, this.overlay.props : {});
+                }, this.overlay.props, {});
             } else {
                 overlayProps = this.overlay.props;
             }

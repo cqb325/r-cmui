@@ -148,9 +148,6 @@ class Popup extends PureComponent {
                 style.top = baseOffset.top - (tipHeight - baseHeight);
             }
 
-            // style.top = style.top - scrollTop;
-            // style.left = style.left - scrollLeft;
-
             this.setState({
                 visible,
                 style
@@ -159,14 +156,6 @@ class Popup extends PureComponent {
             this.setState({
                 visible
             });
-
-            // window.setTimeout(()=>{
-            //     tip.hide();
-            // }, this.props.delay || 0);
-        }
-
-        if (this.props.onVisibleChange) {
-            this.props.onVisibleChange(visible);
         }
     }
 
