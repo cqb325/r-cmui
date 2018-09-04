@@ -256,7 +256,7 @@ class FormControl extends BaseComponent {
         const rules = this.props.rules || {};
         if (this.props.required) {
             rules['required'] = true;
-        };
+        }
         const messages = this.props.messages;
         let rule;
         let result;
@@ -532,7 +532,8 @@ class FormControl extends BaseComponent {
             required,
             tipTheme,
             labelWidth,
-            group
+            group,
+            labelStyle
         } = this.props;
         //  console.log(layout);
 
@@ -568,11 +569,12 @@ class FormControl extends BaseComponent {
             if (label === '&nbsp;') {
                 label = ' ';
             }
-            const labelStyle = {};
+            const ls = {};
             if (labelWidth != undefined) {
-                labelStyle['width'] = labelWidth;
+                ls['width'] = labelWidth;
             }
-            labelEle = <Label className={labelClass} style={labelStyle}>{label}</Label>;
+            Object.assign(ls, labelStyle || {});
+            labelEle = <Label className={labelClass} style={ls}>{label}</Label>;
         }
         if (this.props.layout === 'stack-inline' && labelWidth && label) {
             style = Object.assign({paddingLeft: labelWidth}, style);

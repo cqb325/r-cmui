@@ -1,9 +1,18 @@
-![](https://img.shields.io/badge/r--cmui-2.4.0-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.4.1-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
+
+v2.4.1
+
+1. Form有变化的时候添加emit事件
+2. SimpleListPage添加autoSearch属性，为true时可以监听condition的变化，可以自动查询
+3. Dropdown修改滚动后不停刷新的问题
+4. SubmitButton添加成功和失败回调onSuccess/onError
+5. FormControl添加labelStyle属性可以自定义label的样式
+6. ConfirmButton 添加 onBeforeClick 回调
 
 v2.4.0
 
