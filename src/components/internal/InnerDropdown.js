@@ -67,12 +67,14 @@ class InnerDropdown extends React.PureComponent {
     }
 
     onDocumentClick (event) {
-        const target = event.target || event.srcElement;
-        const triggerEle = ReactDOM.findDOMNode(this);
-        const overlayEle = ReactDOM.findDOMNode(this.popupRef);
-        if (target !== triggerEle && !isDescendant(triggerEle, target)
+        if (this._isMounted) {
+            const target = event.target || event.srcElement;
+            const triggerEle = ReactDOM.findDOMNode(this);
+            const overlayEle = ReactDOM.findDOMNode(this.popupRef);
+            if (target !== triggerEle && !isDescendant(triggerEle, target)
             && target !== overlayEle && !isDescendant(overlayEle, target)) {
-            this.setPopupVisible(false);
+                this.setPopupVisible(false);
+            }
         }
         return false;
     }
@@ -142,6 +144,7 @@ class InnerDropdown extends React.PureComponent {
         const target = ReactDOM.findDOMNode(this);
         Events.off(target, 'click', this.onClick);
         Events.off(document, 'click', this.onClick);
+        Events.off(document, 'click', this.onDocumentClick);
         Events.off(target, 'mouseenter', this.onMouseEnter);
         Events.off(target, 'mouseleave', this.onMouseLeave);
         Events.off(document, 'mousemove', this.onDocumentMove);
