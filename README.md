@@ -1,9 +1,13 @@
-![](https://img.shields.io/badge/r--cmui-2.4.1-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.4.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
+
+v2.4.2
+1、RadioGroup和CheckBoxGroup的setValue中将value强制转化为字符串
+2、InnerDropdown组件unmount的时候注销事件
 
 v2.4.1
 

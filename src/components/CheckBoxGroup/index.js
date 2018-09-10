@@ -184,7 +184,7 @@ class CheckBoxGroup extends BaseComponent {
      * @param value {String} 要设置的值
      */
     setValue (value) {
-        this.setState({value});
+        this.setState({value: `${value}`});
     }
 
     /**

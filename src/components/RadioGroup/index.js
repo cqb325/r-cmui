@@ -37,7 +37,7 @@ class RadioGroup extends BaseComponent {
 
         this.addState({
             data,
-            value: props.value
+            value: `${props.value}`
         });
 
         this.items = [];
@@ -225,7 +225,7 @@ class RadioGroup extends BaseComponent {
      * @param value {String} 要设置的值
      */
     setValue (value) {
-        this.setState({value});
+        this.setState({value: `${value}`});
     }
 
     /**
