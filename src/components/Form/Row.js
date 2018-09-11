@@ -18,6 +18,7 @@ class Row extends React.Component {
                 props.labelWidth = props.labelWidth || this.props.labelWidth;
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;
+                    props.value = `${props.value}` || '';
                 }
                 const changeHandler = props.onChange || function () {};
                 const scope = this;

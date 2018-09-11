@@ -6,8 +6,11 @@
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
 
 v2.4.2
-1、RadioGroup和CheckBoxGroup的setValue中将value强制转化为字符串
-2、InnerDropdown组件unmount的时候注销事件
+
+1. RadioGroup和CheckBoxGroup的setValue中将value强制转化为字符串
+2. InnerDropdown组件unmount的时候注销事件
+3. fetch中的fetchJSON修改Accept错误
+4. Form中默认value转化为字符串
 
 v2.4.1
 
