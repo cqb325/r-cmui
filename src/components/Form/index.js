@@ -156,7 +156,7 @@ class Form extends BaseComponent {
                 };
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;
-                    props.value = `${props.value}` || '';
+                    props.value = (props.value !== undefined && props.value !== null) ? `${props.value}` : '';
                 }
                 if (componentName === 'Row') {
                     props.data = this.props.data;
