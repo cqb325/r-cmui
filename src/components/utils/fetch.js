@@ -70,7 +70,7 @@ export async function fetchJSON (url = '', data = {}, type = 'GET', options) {
     options = options || {};
     options.headers = options.headers || {};
     Object.assign(options.headers, {
-        'Accept': 'text/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8'
     });
     return await myFetch(url, data, type, options);
