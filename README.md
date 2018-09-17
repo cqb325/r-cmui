@@ -10,7 +10,7 @@ v2.4.2
 1. RadioGroup和CheckBoxGroup的setValue中将value强制转化为字符串
 2. InnerDropdown组件unmount的时候注销事件
 3. fetch中的fetchJSON修改Accept错误
-4. Form中默认value转化为字符串
+4. Form中默认value转化为字符串,Object类型的值保持不变
 
 v2.4.1
 
