@@ -106,14 +106,21 @@ class Option extends BaseComponent {
      * @param {[type]} active [description]
      */
     setActive (active) {
-        this.setState({active});
+        if (this._isMounted) {
+            this.setState({active});
+        }
     }
 
     componentWillUnmount () {
+        this._isMounted = false;
         const {itemUnBind} = this.props;
         if (itemUnBind) {
             itemUnBind(this.props.value);
         }
+    }
+
+    componentDidMount () {
+        this._isMounted = true;
     }
 
     componentWillReceiveProps (nextProps) {
@@ -460,13 +467,13 @@ class Select extends BaseComponent {
 
         this.setState({
             value
+        }, () => {
+            if (this.props.onChange) {
+                this.props.onChange(value, option.props.item, option);
+            }
+    
+            this.emit('change', value, option.props.item, option);
         });
-
-        if (this.props.onChange) {
-            this.props.onChange(value, option.props.item, option);
-        }
-
-        this.emit('change', value, option.props.item, option);
     }
 
     /**

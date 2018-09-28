@@ -57,6 +57,7 @@ class Dialog extends BaseComponent {
     };
 
     static defaultProps = {
+        title: window.RCMUI_I18N['Dialog.title'],
         visibility: false,
         okButtonText: window.RCMUI_I18N['Dialog.okButtonText'],
         cancelButtonText: window.RCMUI_I18N['Dialog.cancelButtonText'],

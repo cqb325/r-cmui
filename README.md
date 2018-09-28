@@ -1,9 +1,16 @@
-![](https://img.shields.io/badge/r--cmui-2.4.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.4.3-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
+
+v2.4.3
+
+1. MessageBox默认title为提示/Tip
+2. Dialog默认title为提示/Tip
+3. Select 点击后回调时机修改 在SimpleListPage中的autoSearch会延迟获得正确的值
+4. Select 级联的时候Option可能产生update unmount 错误
 
 v2.4.2
 
