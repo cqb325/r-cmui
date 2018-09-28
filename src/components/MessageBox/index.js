@@ -57,7 +57,7 @@ class MessageBox extends BaseComponent {
     };
 
     static defaultProps = {
-        title: '',
+        title: window.RCMUI_I18N['MessageBox.title'],
         msg: '',
         visibility: false,
         type: 'info',
