@@ -1,0 +1,110 @@
+.cm-resize-content-drag-helper{
+    position: relative;
+    background: #fff;
+    z-index: 5;
+    font: normal normal normal 14px/1 FontAwesome;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    &.cm-resize-content-drag-horizontal{
+        cursor: ns-resize;
+    }
+    &.cm-resize-content-drag-vertical{
+        cursor: ew-resize;
+    }
+    &.cm-resize-content-drag-disabled{
+        cursor: default;
+    }
+}
+.cm-resize-content{
+    display: flex;
+    position: relative;
+}
+.cm-resize-content-horizontal{
+    flex-direction: column;
+}
+.cm-resize-content-vertival{
+    flex-direction: row;
+}
+.cm-resize-content-header{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 5px;
+    background-color: #39c;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+}
+.cm-resize-content-body{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    overflow: auto;
+    background: #e7e7e7;
+    z-index: 1;
+}
+
+.cm-resize-content-drag-track{
+    position: absolute;
+    z-index: 10;
+    // background-color: #aaa;
+}
+.cm-resize-content-drag-horizontal{
+    .cm-resize-content-drag-track{
+        width: 60px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        &::after{
+            content: "\F141";
+            display: block;
+            text-align: center;
+            margin-top: -3px;
+        }
+    }    
+}
+.cm-resize-content-drag-vertical{
+    .cm-resize-content-drag-track{
+        width: 100%;
+        height: 60px;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+        &::after{
+            content: "\F142";
+            display: block;
+            text-align: center;
+            margin-top: 23px;
+        }
+    }    
+}
+
+.cm-resize-content-hidden{
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    .cm-resize-content-drag-track{
+        display: none;
+    }
+}
+.cm-resize-content-hidden::after{
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background: #39c;
+}
+.cm-resize-content-hasHeader{
+    .cm-resize-content-body{
+        padding-top: 30px;
+    }
+}

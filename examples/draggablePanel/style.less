@@ -1,0 +1,47 @@
+.cm-layout-drag-helper{
+    background: #ddd;
+    position: relative;
+    &.cm-layout-drag-horizontal{
+        cursor: ns-resize;
+    }
+    &.cm-layout-drag-vertical{
+        cursor: ew-resize;
+    }
+    &.cm-layout-drag-disabled{
+        cursor: default;
+    }
+}
+.cm-layout-panel{
+    display: flex;
+}
+.cm-layout-cont{
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: auto;
+}
+
+.cm-layout-drag-track{
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+    background-color: #aaa;
+}
+.cm-layout-drag-horizontal{
+    .cm-layout-drag-track{
+        width: 60px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }    
+}
+.cm-layout-drag-vertical{
+    .cm-layout-drag-track{
+        width: 100%;
+        height: 60px;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+    }    
+}
