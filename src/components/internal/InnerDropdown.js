@@ -119,7 +119,9 @@ class InnerDropdown extends React.PureComponent {
         if (this._isMounted) {
             this.setState({popupVisible});
             this.onVisibleChange(popupVisible);
-            this.popupRef.update(popupVisible);
+            if (this.popupRef) {
+                this.popupRef.update(popupVisible);
+            }
         }
     }
 
@@ -129,7 +131,9 @@ class InnerDropdown extends React.PureComponent {
                 if (!this.state.isEmpty) {
                     this.setState({popupVisible});
                     this.onVisibleChange(popupVisible);
-                    this.popupRef.update(popupVisible);
+                    if (this.popupRef) {
+                        this.popupRef.update(popupVisible);
+                    }
                 }
             }
         }, delay * 1000);
