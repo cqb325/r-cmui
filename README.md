@@ -9,6 +9,9 @@ v2.5.0
 
 1. 添加ResizeContent和CloseableContent组件
 2. InnerDropdown修改报错bug
+3. ConfirmButton onConfirm修改
+4. Form中value为boolean的话不需要转化为字符串
+5. add Scrollbar组件和Scroll自定义滚动条组件
 
 v2.4.3
 
