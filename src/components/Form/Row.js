@@ -19,7 +19,7 @@ class Row extends React.Component {
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;
                     if (props.value !== undefined && props.value !== null) {
-                        if (typeof props.value !== 'object') {
+                        if (typeof props.value !== 'object' && typeof props.value !== 'boolean') {
                             props.value = `${props.value}`;
                         }
                     } else {
