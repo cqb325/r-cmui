@@ -20,10 +20,26 @@ class ConfirmButton extends React.Component {
     onConfirm = (flag) => {
         if (flag) {
             if (this.props.onConfirm) {
-                this.props.onConfirm(this.props.data);
+                this.handConfirm();
             }
+            return false;
+        } else {
+            return true;
         }
-        return true;
+    }
+
+    /**
+     * 处理确定按钮回调
+     */
+    async handConfirm () {
+        let data = this.props.data;
+        if (typeof data === 'function') {
+            data = data();
+        }
+        this.tip.showLoading();
+        await this.props.onConfirm(data);
+        this.tip.hideLoading();
+        this.tip.hide();
     }
 
     render () {
