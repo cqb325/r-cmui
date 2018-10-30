@@ -49,7 +49,6 @@ class ButtonGroup extends BaseComponent {
     constructor (props) {
         super(props);
 
-        this.buttons = [];
         this.buttonsMap = {};
 
         this.addState({
@@ -62,7 +61,11 @@ class ButtonGroup extends BaseComponent {
      * @return {[type]} [description]
      */
     getActive () {
-        return this.state.current;
+        const btn = this.getActiveBtn();
+        if (btn) {
+            return btn._index;
+        }
+        return -1;
     }
 
     /**
@@ -70,7 +73,13 @@ class ButtonGroup extends BaseComponent {
      * @return {[type]} [description]
      */
     getActiveBtn () {
-        return this.buttons[this.state.current];
+        for (const k in this.buttonsMap) {
+            const btn = this.buttonsMap[k];
+            if (btn.isActive()) {
+                return btn;
+            }
+        }
+        return null;
     }
 
     /**
@@ -83,44 +92,40 @@ class ButtonGroup extends BaseComponent {
         });
     }
 
-    // itemBind (button) {
-    //     this.buttons.push(button);
-    //     button.on('click', () => {
-    //         if (!button.getActive()) {
-    //             this.buttons.forEach((btn) => {
-    //                 if (btn != button) {
-    //                     btn.setActive(false);
-    //                 } else {
-    //                     if (this.props.onSelect) {
-    //                         this.props.onSelect(btn);
-    //                     }
-    //                     this.emit('select', btn);
-    //                     btn.setActive(true);
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-    addButton = (key, button) => {
-        this.buttons.push(button);
+    addButton = (key, index, button) => {
+        button._index = index;
         this.buttonsMap[key] = button;
+    }
+
+    componentWillUnmount () {
+        this.buttonsMap = {};
     }
 
     onClick = (key) => {
         const button = this.buttonsMap[key];
         if (!button.isActive()) {
-            this.buttons.forEach((btn) => {
-                if (btn != button) {
+            for (const k in this.buttonsMap) {
+                const btn = this.buttonsMap[k];
+                if (k !== key) {
                     btn.setActive(false);
-                } else {
-                    if (this.props.onSelect) {
-                        this.props.onSelect(button);
-                    }
-                    this.emit('select', button);
-                    button.setActive(true);
                 }
-            });
+            }
+            button.setActive(true);
+            if (this.props.onSelect) {
+                this.props.onSelect(button);
+            }
+            this.emit('select', button);
+            // this.buttons.forEach((btn) => {
+            //     if (btn != button) {
+            //         btn.setActive(false);
+            //     } else {
+            //         if (this.props.onSelect) {
+            //             this.props.onSelect(button);
+            //         }
+            //         this.emit('select', button);
+            //         button.setActive(true);
+            //     }
+            // });
         }
     }
 
@@ -130,7 +135,7 @@ class ButtonGroup extends BaseComponent {
             if (componentName === 'Button') {
                 const key = `btn_${index}`;
                 const props = Object.assign({}, child.props, {
-                    ref: this.addButton.bind(this, key),
+                    ref: this.addButton.bind(this, key, index),
                     size: this.props.size,
                     onClick: this.onClick.bind(this, key),
                     key,
