@@ -1,6 +1,7 @@
 import React from 'react';
 import Events from '../utils/Events';
 import Scrollbar from './Scrollbar';
+import ResizeSensor from '../ResizeSensor';
 
 import './Scroll.less';
 
@@ -161,14 +162,14 @@ class Scroll extends React.Component {
             this.hbox.style.right = `${barwidth}px`;
         } else {
             this.content.style.right = '0';
-            this.hbox.style.right = 0;
+            this.hbox.style.right = '0';
         }
         if (boxHeight > spacerHeight) {
             this.content.style.bottom = `${barHeight}px`;
             this.wbox.style.bottom = `${barHeight}px`;
         } else {
             this.content.style.bottom = '0';
-            this.wbox.style.right = 0;
+            this.wbox.style.bottom = '0';
         }
 
         const params = {};
@@ -193,8 +194,8 @@ class Scroll extends React.Component {
         }
     }
 
-    renderChildren () {
-        return this.props.children;
+    onResize = () => {
+        this.updateScrollSize();
     }
 
     render () {
@@ -214,7 +215,7 @@ class Scroll extends React.Component {
                         barSize={this.props.barSize}
                         thumbSize={this.state.verticalThumbSize}
                         scrollOffset={this.state.scrollTop}
-                        style={{bottom: this.props.barSize}}
+                        style={{bottom: this.state.horizontalThumbSize ? this.props.barSize : 0}}
                         onChange={this.onVerticalScrollChange}
                     />
                     : null
@@ -225,15 +226,15 @@ class Scroll extends React.Component {
                         barSize={this.props.barSize}
                         thumbSize={this.state.horizontalThumbSize}
                         scrollOffset={this.state.scrollLeft}
-                        style={{right: this.props.barSize}}
+                        style={{right: this.state.verticalThumbSize ? this.props.barSize : 0}}
                         onChange={this.onHorizontalScrollChange}
                     />
                     : null
             }
             <div ref={(f) => this.content = f} style={{left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden', background: '#f7f7f7', position: 'absolute', zIndex: 10}}>
-                <div style={{display: 'inline-block'}}>
-                    {this.renderChildren()}
-                </div>
+                <ResizeSensor style={{display: 'inline-block'}} onResize={this.onResize}>
+                    {this.props.children}
+                </ResizeSensor>
             </div>
         </div>;
     }
