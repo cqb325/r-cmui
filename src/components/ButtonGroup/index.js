@@ -93,8 +93,10 @@ class ButtonGroup extends BaseComponent {
     }
 
     addButton = (key, index, button) => {
-        button._index = index;
-        this.buttonsMap[key] = button;
+        if (button) {
+            button._index = index;
+            this.buttonsMap[key] = button;
+        }
     }
 
     componentWillUnmount () {
@@ -110,11 +112,15 @@ class ButtonGroup extends BaseComponent {
                     btn.setActive(false);
                 }
             }
+            this.setState({
+                current: button._index
+            }, () => {
+                if (this.props.onSelect) {
+                    this.props.onSelect(button);
+                }
+                this.emit('select', button);
+            });
             button.setActive(true);
-            if (this.props.onSelect) {
-                this.props.onSelect(button);
-            }
-            this.emit('select', button);
             // this.buttons.forEach((btn) => {
             //     if (btn != button) {
             //         btn.setActive(false);
