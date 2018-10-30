@@ -144,6 +144,11 @@ class App extends BaseComponent {
                     <img src={logo} className='App-logo' alt='logo' />
                     <h2>Welcome to React</h2>
                 </div>
+                <ButtonGroup current={1}>
+                    <Button>阿萨德</Button>
+                    <Button>阿萨德</Button>
+                    <Button>阿萨德</Button>
+                </ButtonGroup>
                 <p className='App-intro'>
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
