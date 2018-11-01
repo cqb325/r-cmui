@@ -225,7 +225,9 @@ class SimpleListPage extends React.Component {
                 };
                 if (this.props.autoSearch) {
                     this.form.on('change', () => {
-                        this.clickSearch();
+                        window.setTimeout(() => {
+                            this.clickSearch();
+                        }, 0);
                     });
                 }
             }
