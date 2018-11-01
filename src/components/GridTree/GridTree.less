@@ -53,66 +53,9 @@
   border: 1px solid #ccc;
   border-radius: 3px;
 }
-.tree_arrow{
-  width: 20px;
-  height: 35px;
-  display: inline-block;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  vertical-align: top;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: default;
-  &.tree-arrow-empty{
-    background-image: none!important;
-  }
-}
-.tree_checkbox{
-  width: 20px;
-  height: 35px;
-  display: inline-block;
-  position: relative;
-  top: 1px;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.tree_checkbox.dischecked{
-  .cm-checkbox-outter{
-    background-color: rgba(177,177,177,.8);
-    border-color: rgba(177,177,177,.8);
-  }
-  &.cm-checkbox.disabled.cm-checkbox-checked .cm-checkbox-outter{
-    background-color: rgba(177,177,177,.2) !important;
-    border-color: rgba(177,177,177,.2)!important;
-  }
-}
 
-.tree_icon{
-  width: 20px;
-  height: 35px;
-  display: inline-block;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  vertical-align: top;
-  cursor: default;
-}
-.tree_text{
-  margin-left: 2px;
-  height: 20px;
-  line-height: 20px;
-  cursor: pointer;
-  padding: 0px 2px;
-  display: inline-block;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  white-space: nowrap;
-}
+
+
 .tree_text.dragenter{
   background-color: #C1D1FF;
 }
@@ -126,21 +69,83 @@
   clear: both;
   white-space: nowrap;
 }
-.tree_subNode{
-  clear: both;
-}
-.tree_node_wrap{
-  height: 35px;
-  line-height: 35px;
-  white-space: nowrap;
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  &.node_disabled{
-    .tree_text{
-      text-decoration: line-through;
-      color: #ccc;
+.cm-grid-tree{
+  .tree_node_wrap{
+    height: 35px;
+    line-height: 35px;
+    white-space: nowrap;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    &.node_disabled{
+      .tree_text{
+        text-decoration: line-through;
+        color: #ccc;
+      }
     }
+  }
+  .tree_arrow{
+    width: 20px;
+    height: 35px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    vertical-align: top;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+    &.tree-arrow-empty{
+      background-image: none!important;
+    }
+  }
+  .tree_checkbox{
+    width: 20px;
+    height: 35px;
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .tree_checkbox.dischecked{
+    .cm-checkbox-outter{
+      background-color: rgba(177,177,177,.8);
+      border-color: rgba(177,177,177,.8);
+    }
+    &.cm-checkbox.disabled.cm-checkbox-checked .cm-checkbox-outter{
+      background-color: rgba(177,177,177,.2) !important;
+      border-color: rgba(177,177,177,.2)!important;
+    }
+  }
+  .tree_icon{
+    width: 20px;
+    height: 35px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    vertical-align: top;
+    cursor: default;
+  }
+  .tree_text{
+    margin-left: 2px;
+    height: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    padding: 0px 2px;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    white-space: nowrap;
+  }
+  .tree_subNode{
+    clear: both;
+    margin: 0;
   }
 }
 .icon_branch{

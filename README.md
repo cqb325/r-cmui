@@ -8,6 +8,7 @@
 v2.5.1
 
 1. ButtonGroup中记录Button的实例对象不用数组
+2. 修改GridTree样式 会与Tree冲突
 
 v2.5.0
 
