@@ -9,6 +9,7 @@ v2.5.1
 
 1. ButtonGroup中记录Button的实例对象不用数组
 2. 修改GridTree样式 会与Tree冲突
+3. SimpleListPage在autoSearch的时候添加setTimeout
 
 v2.5.0
 
