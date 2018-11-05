@@ -1,0 +1,19 @@
+.cm-menu{
+    &.cm-menu-min{
+        width: 64px!important;
+        >.cm-menu-submenu>.cm-menu-submenu-title:after,
+        >.cm-menu-submenu>.cm-menu-submenu-title>.cm-menu-submenu-text,
+        >.cm-menu-item>.cm-menu-item-text{
+            display: none;
+        }
+        >.cm-menu-submenu>.cm-menu-submenu-title,
+        >.cm-menu-item{
+            transition: initial;
+            -webkit-transition: initial;
+            .fa {
+                text-align: center;
+                font-size: 18px;
+            }
+        }
+    }
+}
