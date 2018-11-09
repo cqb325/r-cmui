@@ -1,9 +1,13 @@
-![](https://img.shields.io/badge/r--cmui-2.5.1-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.5.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
+
+v2.5.2
+
+1. Button防止连续两次单击
 
 v2.5.1
 

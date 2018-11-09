@@ -117,6 +117,8 @@ class Button extends BaseComponent {
         loading: this.props.loadding || this.props.loading
     };
 
+    lastClick = null;
+
     /**
      * 点击回调
      * @private
@@ -129,10 +131,30 @@ class Button extends BaseComponent {
         if (this.state.loading) {
             return;
         }
-        if (this.props.onClick) {
-            this.props.onClick(e);
+        // 先执行一次click，快速点击执行doubleClick，永远不会触发连续两次的单击
+        const time = new Date().getTime();
+        if (!this.lastClick) {
+            if (this.props.onClick) {
+                this.props.onClick(e);
+            }
+            this.emit('click', e);
+        } else {
+            const diff = time - this.lastClick;
+            if (diff < 300) {
+                if (this.props.onDoubleClick) {
+                    this.props.onDoubleClick(e);
+                }
+                this.lastClick = null;
+                this.emit('dbclick', e);
+                return;
+            } else {
+                if (this.props.onClick) {
+                    this.props.onClick(e);
+                }
+                this.emit('click', e);
+            }
         }
-        this.emit('click', e);
+        this.lastClick = time;
     }
 
     /**
