@@ -28,7 +28,8 @@ class Tab extends BaseComponent {
         super(props);
 
         this.addState({
-            activeKey: props.activeKey || this.getDefaultActiveKey()
+            activeKey: props.activeKey || this.getDefaultActiveKey(),
+            headerSize: 0
         });
     }
 
@@ -68,22 +69,43 @@ class Tab extends BaseComponent {
         return this.state.activeKey;
     }
 
+    componentDidUpdate () {
+        this.updateSize();
+    }
+
+    componentDidMount () {
+        this.updateSize();
+    }
+
+    updateSize () {
+        const rect = this.header.getBoundingClientRect();
+        const w = rect.width ;
+        const length = this.props.children.length;
+        const size = this.props.children.length ? (w - 20 + 20 * length) / length : 0;
+        this.setState({
+            headerSize: size
+        });
+    }
+
     _getHeader () {
         const activeKey = this.state.activeKey;
         return React.Children.map(this.props.children, (child) => {
             const {title, disabled} = child.props;
             const key = child.key;
             const active = activeKey === key;
+            const style = {
+                width: this.state.headerSize
+            };
 
             const className = classNames({
                 active
             });
             return (
-                <li key={key} className={className} onClick={(e) => { this._selectTab(key, disabled, e); }}>
-                    {this.props.hasClose ? <a className='cm-tab-close' onClick={this._removeItem.bind(this, key)}>&times;</a> : null}
-                    <EnhancedButton initFull touchRippleColor={'rgba(0, 0, 0, 0.1)'}>
-                        <a href='javascript:void(0)'>{title}</a>
-                    </EnhancedButton>
+                <li key={key} className={className} style={style} onClick={(e) => { this._selectTab(key, disabled, e); }}>
+                    <a href='javascript:void(0)' className='cm-tab-title' title={title}>
+                        {title}
+                        {this.props.hasClose ? <span className='cm-tab-close' title='关闭' onClick={this._removeItem.bind(this, key)}>&times;</span> : null}
+                    </a>
                 </li>
             );
         });
@@ -131,7 +153,7 @@ class Tab extends BaseComponent {
         const contents = this._getContent();
         return (
             <div className={className} style={style}>
-                <ul className='cm-tab-header'>
+                <ul className='cm-tab-header' ref={(f) => this.header = f}>
                     {headers}
                     <div className='cm-tab-tools'>
                         {this.props.tools}

@@ -4,7 +4,7 @@ class ScrollInner extends React.Component {
     displayName = 'ScrollInner';
 
     static defaultProps = {
-        duration: 200
+        duration: 0
     }
 
     constructor (props) {
@@ -88,8 +88,8 @@ class ScrollInner extends React.Component {
         };
         this.jumpTo();
         return (
-            <div className="cm-tab-scroll-wrap" style={{width: '100%', height: '100%'}}>
-                <div ref="scroll" className="cm-tab-scroll-inner" style={innerStyle}>
+            <div className='cm-tab-scroll-wrap' style={{width: '100%', height: '100%'}}>
+                <div ref='scroll' className='cm-tab-scroll-inner' style={innerStyle}>
                     {this.renderChildren()}
                 </div>
             </div>

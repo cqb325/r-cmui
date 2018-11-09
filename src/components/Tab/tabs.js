@@ -49,6 +49,18 @@ class Tabs extends BaseComponent {
         });
     }
 
+    /**
+     * 是否存在该key的选项卡
+     * @param {*} key 
+     */
+    hasItem (key) {
+        const items = this.state.items;
+        const ret = items.filter(item => {
+            return item.key === key;
+        });
+        return ret.length;
+    }
+
     select (key) {
         const activeKey = this.state.activeKey;
         if (key === activeKey) {
@@ -64,9 +76,17 @@ class Tabs extends BaseComponent {
     }
 
     onSelect = (key) => {
+        const items = this.state.items;
+        const ret = items.filter(item => {
+            return item.key === key;
+        });
         if (this.props.onSelect) {
-            this.props.onSelect(key);
+            this.props.onSelect(key, ret[0]);
         }
+    }
+
+    getActive () {
+        return this.state.activeKey;
     }
 
     renderTans () {
@@ -74,9 +94,11 @@ class Tabs extends BaseComponent {
     }
 
     render () {
-        const {hasClose} = this.props;
+        const {hasClose, className, style} = this.props;
         return (
             <Tab 
+                className={className}
+                style={style}
                 hasClose={hasClose}
                 activeKey={this.state.activeKey}
                 onRemove={this.onRemove}
