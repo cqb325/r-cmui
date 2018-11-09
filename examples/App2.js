@@ -77,7 +77,7 @@ class Comp extends React.Component {
                     }}>刷 新</Button>
                     <Button theme='second' disabled>刷新</Button>
                     <Button theme='info' raised icon='download'>刷新</Button>
-                    <Button theme='danger'>刷新</Button>
+                    <Button theme='danger' onClick={() => console.log(1)} onDoubleClick={() => console.log(2)}>刷新</Button>
                     <Button theme='success' circle>刷新</Button>
                     <Button theme='primary' circle iconOnly icon='download'></Button>
                     <Button flat>连接按钮</Button>
