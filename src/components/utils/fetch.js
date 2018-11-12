@@ -25,6 +25,7 @@ async function myFetch (url = '', data = {}, type = 'GET', options) {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     };
+    headers['X-Request-With'] = 'XMLHttpRequest';
 
     const requestConfig = {
         method: type,
