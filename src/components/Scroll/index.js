@@ -12,7 +12,8 @@ class Scroll extends React.Component {
 
     static defaultProps = {
         barSize: 8,
-        minThumb: 30
+        minThumb: 30,
+        wrapDisplay: 'inline-block'
     };
 
     state = {
@@ -145,6 +146,28 @@ class Scroll extends React.Component {
         }
     }
 
+    getScrollTop () {
+        return this.content.scrollTop;
+    }
+
+    getScrollLeft () {
+        return this.content.scrollLeft;
+    }
+
+    getViewHeight () {
+        return this.hbox.getBoundingClientRect().height;
+    }
+
+    getViewWidth () {
+        return this.wbox.getBoundingClientRect().width;
+    }
+
+    getContentSize () {
+        const body = this.content.firstChild;
+        const bodyRect = body.getBoundingClientRect();
+        return bodyRect;
+    }
+
     updateScrollSize () {
         const body = this.content.firstChild;
         const bodyRect = body.getBoundingClientRect();
@@ -231,8 +254,8 @@ class Scroll extends React.Component {
                     />
                     : null
             }
-            <div ref={(f) => this.content = f} style={{left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden', background: '#f7f7f7', position: 'absolute', zIndex: 10}}>
-                <ResizeSensor style={{display: 'inline-block'}} onResize={this.onResize}>
+            <div ref={(f) => this.content = f} style={{left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden', position: 'absolute', zIndex: 10}}>
+                <ResizeSensor style={{display: this.props.wrapDisplay}} onResize={this.onResize}>
                     {this.props.children}
                 </ResizeSensor>
             </div>
