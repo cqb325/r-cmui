@@ -9,6 +9,7 @@ v2.5.2
 
 1. Button防止连续两次单击
 2. fetch 添加X-Request-With的header，可以让后台识别是ajax请求
+3. MessageBox和Dialog保存防止两次提交
 
 v2.5.1
 
