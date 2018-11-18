@@ -106,6 +106,8 @@ class MessageBox extends BaseComponent {
         this.data = null;
 
         this.panel = null;
+
+        this.preventClick = false;
     }
 
     /**
@@ -169,6 +171,7 @@ class MessageBox extends BaseComponent {
         this.isHiding = true;
         velocity(this.container, 'fadeOut', { duration: 300 , complete: () => {
             this.isHiding = false;
+            this.preventClick = false;
         }});
 
         if (this.props.onHide) {
@@ -190,6 +193,11 @@ class MessageBox extends BaseComponent {
      * @return {[type]} [description]
      */
     confirm () {
+        // 防止双击提交的场景
+        if (this.preventClick) {
+            return;
+        }
+        this.preventClick = true;
         const confirm = this.props.confirm || (this.listeners('confirm').length ? this.listeners('confirm')[0] : null);
         if (confirm) {
             if (this.props.type === 'confirm') {

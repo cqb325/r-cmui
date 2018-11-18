@@ -84,6 +84,7 @@ class Dialog extends BaseComponent {
 
         // 保存的数据
         this.data = null;
+        this.preventClick = false;
     }
 
     /**
@@ -158,11 +159,20 @@ class Dialog extends BaseComponent {
      * 按钮点击处理函数
      * @param flag
      */
-    btnHandler (flag) {
+    btnHandler = async (flag) => {
+        // 防止双击提交的场景
+        if (this.preventClick) {
+            return;
+        }
+        this.preventClick = true;
         if (this.props.onConfirm) {
-            const ret = this.props.onConfirm(flag);
+            const ret = await this.props.onConfirm(flag);
+            // 返回的结果是true的话关闭dialog
             if (ret) {
                 this.close();
+            } else {
+                // false的时候按钮可以响应回调信息
+                this.preventClick = false;
             }
 
             return ret;
@@ -198,12 +208,14 @@ class Dialog extends BaseComponent {
                 complete: () => {
                     velocity(this.container, 'fadeOut', {duration: 0, complete: () => {
                         this.isHiding = false;
+                        this.preventClick = false;
                     }});
                 }
             });
         } else {
             velocity(this.container, 'fadeOut', {duration: 300, complete: () => {
                 this.isHiding = false;
+                this.preventClick = false;
             }});
         }
 
