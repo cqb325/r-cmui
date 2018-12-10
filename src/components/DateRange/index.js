@@ -26,6 +26,7 @@ import './DateRange.less';
  */
 class DateRange extends BaseComponent {
     static displayName = 'DateRange';
+    displayName = 'DateRange';
     static defaultProps = {
         sep: '~',
         showTime: false,
