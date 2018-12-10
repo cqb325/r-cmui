@@ -121,15 +121,7 @@ class SimpleListPage extends React.Component {
             const ps = this.form.getFormParams();
             for (const name in this.form.items) {
                 const item = this.form.items[name];
-                let clazz = '';
-                if (item.ref.item.constructor.name) {
-                    clazz = item.ref.item.constructor.name;
-                } else {
-                    const matches = item.ref.item.constructor.toString().match(/function\s*([^(]*)\(/);
-                    if (matches) {
-                        clazz = matches[1];
-                    }
-                }
+                const clazz = item.ref.item.displayName;
                 if (item.ref.item && clazz === 'DateRange') {
                     const v = ps[name];
                     delete ps[name];
