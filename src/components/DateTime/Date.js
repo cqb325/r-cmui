@@ -491,8 +491,8 @@ class Date extends BaseComponent {
         const year = current.get('year');
         const month = current.get('month');
 
-        const startDate = this.state.startDate;
-        const endDate = this.state.endDate;
+        const startDate = moment(this.state.startDate);
+        const endDate = moment(this.state.endDate);
 
         const ret = [];
         const months = window.RCMUI_I18N['DateTime.month'];
