@@ -1,15 +1,25 @@
-![](https://img.shields.io/badge/r--cmui-2.5.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.6.0-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
 
+v2.6.0
+
+1. 添加LargeSelect组件支持百万级数据
+
+v2.5.3
+
+1. DateRange 添加对象属性 displayName SimpleListPage 判断DateRange修改
+2. Date中 startDate和endDate报错问题
+
 v2.5.2
 
 1. Button防止连续两次单击
 2. fetch 添加X-Request-With的header，可以让后台识别是ajax请求
 3. MessageBox和Dialog保存防止两次提交
+4. scroll 添加wrapDiaplay参数控制内容区域是否撑满
 
 v2.5.1
 

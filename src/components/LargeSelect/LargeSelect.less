@@ -1,0 +1,61 @@
+@import '../Select/Select.less';
+
+.cm-select-options-list{
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .cm-select-option{
+        line-height: 30px;
+        padding: 0 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+.cm-select-option{
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.65);
+    transition: background .3s ease;
+}
+.cm-select-option-active{
+    background-color: #f7f7f7;
+    font-weight: 700;
+}
+.cm-select-options{
+    -webkit-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+}
+
+.cm-large-select{
+    vertical-align: middle;
+    .cm-select-options{
+        overflow: hidden;
+        max-height: none!important;
+    }
+    .cm-input{
+        width: 100%;
+    }
+    .cm-select-text{
+        padding: 0 16px 0 6px;
+        height: 28px;
+        line-height: 24px;
+        border: 1px solid #d9d9d9;
+        border-radius: 3px;
+        color: #333;
+        min-width: 168px;
+        display: block;
+        background-color: #fff;
+        background-image: none;
+        transition: border-color ease-in-out 0.15s;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}
