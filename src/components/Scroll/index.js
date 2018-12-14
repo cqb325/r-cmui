@@ -110,6 +110,23 @@ class Scroll extends React.Component {
         this.emitChange(null, this.content.scrollTop);
     }
 
+    /**
+     * 重置
+     */
+    reset () {
+        this.content.scrollTop = 0;
+        if (this.wbox) {
+            this.wbox.scrollTop = 0;
+        }
+        if (this.hbox) {
+            this.hbox.scrollLeft = 0;
+        }
+        this.setState({
+            scrollTop: 0,
+            scrollLeft: 0
+        });
+    }
+
     windowResize = () => {
         this.updateScrollSize();
     }
