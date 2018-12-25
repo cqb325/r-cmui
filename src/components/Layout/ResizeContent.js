@@ -234,26 +234,25 @@ class ResizeContent extends React.Component {
     }
 
     render () {
-        let {style} = this.props;
+        const {style} = this.props;
         const {direction, hiddenSize, title, renderHead, className, align, flex} = this.props;
-        style = style || {};
-        style = Object.assign(style, this.state.style);
+        const newStyle = Object.assign({}, style || {}, this.state.style);
         if (!this.state.visible) {
             if (direction === 'horizontal') {
                 // 记住当前的大小
-                this.lastSize = style.height;
-                style.height = hiddenSize;
+                this.lastSize = newStyle.height;
+                newStyle.height = hiddenSize;
             } else {
-                this.lastSize = style.width;
-                style.width = hiddenSize;
+                this.lastSize = newStyle.width;
+                newStyle.width = hiddenSize;
             }
         } else {
             // 打开的时候初始化记住的大小
             if (this.lastSize) {
                 if (direction === 'horizontal') {
-                    style.height = this.lastSize;
+                    newStyle.height = this.lastSize;
                 } else {
-                    style.width = this.lastSize;
+                    newStyle.width = this.lastSize;
                 }
                 this.lastSize = null;
             }
@@ -264,7 +263,7 @@ class ResizeContent extends React.Component {
             [`cm-resize-content-align-${align}`]: align,
             'cm-resize-content-hasHeader': title || renderHead
         });
-        return <div style={style} className={clazzName} ref={(f) => this.container = f}>
+        return <div style={newStyle} className={clazzName} ref={(f) => this.container = f}>
             {this.renderHeader()}
             {this.renderContent()}
         </div>;

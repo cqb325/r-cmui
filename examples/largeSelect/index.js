@@ -420,7 +420,7 @@ class Comp extends React.Component {
             data1.push({id: i, text: `text${i}`});
         }
         return <div style={{width: 500, height: 500, margin: '0 auto', paddingTop: 50}}>
-            阿萨德：<Select2 data={this.state.data} multi style={{maxWidth: 168}} filter/>
+            阿萨德：<Select2 data={this.state.data} multi style={{maxWidth: 168}} filter />
             
             {/* <SelectOptions data={data} format={(text, item) => {
                 return <div>{`${item.id} ${text}`}</div>;
@@ -428,7 +428,7 @@ class Comp extends React.Component {
                 console.log(v, item);
             }}/> */}
 
-            <Select data={data1} />
+            <Select data={data1} hasEmptyOption placeholder='啊实打实'/>
             <Button onClick={() => {
                 const data = [];
                 for (let i = 0; i < 90000; i++) {

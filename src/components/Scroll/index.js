@@ -239,10 +239,9 @@ class Scroll extends React.Component {
     }
 
     render () {
-        let {style} = this.props;
-        style = style || {};
-        Object.assign(style, {overflow: 'hidden', position: 'relative'});
-        return <div style={style} className={this.props.className}>
+        const {style} = this.props;
+        const newStyle = Object.assign({}, style || {}, {overflow: 'hidden', position: 'relative'});
+        return <div style={newStyle} className={this.props.className}>
             <div ref={(f) => this.wbox = f} style={{overflow: 'auto', position: 'absolute', left: 0, top: 0, right: 0, bottom: 0}}>
                 <div ref={(f) => this.wspacer = f} style={{width: '100%'}}></div>
             </div>

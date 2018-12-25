@@ -1,13 +1,22 @@
-![](https://img.shields.io/badge/r--cmui-2.6.0-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.6.1-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
 
+v2.6.1
+
+1. Select 和 LargeSelect添加alwaysdown属性  不进行高度计算朝上显示
+2. fetch get请求中为null或undefined数据改为空字符串请求
+
 v2.6.0
 
 1. 添加LargeSelect组件支持百万级数据
+2. scroll的style只读bug
+3. 修复LargeSelect data为空时的bug
+4. Scroll IE兼容性
+5. Date组件下个月不能刷新问题
 
 v2.5.3
 

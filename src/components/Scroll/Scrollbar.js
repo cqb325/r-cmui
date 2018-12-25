@@ -68,7 +68,16 @@ class Scrollbar extends React.Component {
 
     onMouseDown = (e) => {
         e.preventDefault();
-        let tmp = this.thumb.style.webkitTransform.replace('translate(', '').replace(')', '').replace(/px/g, '');
+        let tmp;
+        if (this.thumb.style.webkitTransform) {
+            tmp = this.thumb.style.webkitTransform.replace('translate(', '').replace(')', '').replace(/px/g, '');
+        }
+        if (this.thumb.style.mozTransform) {
+            tmp = this.thumb.style.mozTransform.replace('translate(', '').replace(')', '').replace(/px/g, '');
+        }
+        if (this.thumb.style.msTransform) {
+            tmp = this.thumb.style.msTransform.replace('translate(', '').replace(')', '').replace(/px/g, '');
+        }
         tmp = tmp.split(',');
         if (this.props.type === 'vertical') {
             tmp = parseFloat(tmp[1].trim());
@@ -98,18 +107,18 @@ class Scrollbar extends React.Component {
             [`cm-scrollbar-${type}`]: type
         });
         const scrollOffset = this.state.scrollOffset;
-        style = style || {};
+        const newStyle = Object.assign({}, style || {});
         const thumbStyle = {};
         if (type === 'vertical') {
-            style.width = this.props.barSize;
+            newStyle.width = this.props.barSize;
             thumbStyle.height = thumbSize;
             thumbStyle.transform = `translate(0, ${scrollOffset}px)`;
         } else {
-            style.height = this.props.barSize;
+            newStyle.height = this.props.barSize;
             thumbStyle.width = thumbSize;
             thumbStyle.transform = `translate(${scrollOffset}px, 0)`;
         }
-        return <div className={className} style={style}>
+        return <div className={className} style={newStyle}>
             <div className='cm-scrollbar-track' ref={(f) => this.track = f}>
                 <div className='cm-scrollbar-thumb' style={thumbStyle} ref={(f) => this.thumb = f}></div>
             </div>

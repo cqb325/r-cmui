@@ -11,7 +11,7 @@ class Comp extends React.Component {
 
     render () {
         return <div style={{padding: 50}}>
-            <LargeSelect data={this.state.data} multi filter/>
+            <LargeSelect data={this.state.data} filter hasEmptyOption placeholder='ssss'/>
             <Button onClick={() => {
                 const data = [];
                 for (let i = 0; i < 1000000; i++) {

@@ -20,7 +20,10 @@ class LargeSelect extends BaseComponent {
         filter: false,
         multi: false,
         valueField: 'id',
-        textField: 'text'
+        textField: 'text',
+        choiceText: window.RCMUI_I18N['Select.choiceText'],
+        hasEmptyOption: false,
+        alwaysdown: false
     }
 
     state = {
@@ -59,8 +62,8 @@ class LargeSelect extends BaseComponent {
                 tip = this.props.tipFormat(values, items);
             }
         } else {
-            const arr = items.map(ele => (ele ? ele[this.props.textField] : ''));
-            showText = arr.join(this.props.sep);
+            const arr = items.length ? items.map(ele => (ele ? ele[this.props.textField] : '')) : null;
+            showText = arr ? arr.join(this.props.sep) : this.props.placeholder;
             tip = showText;
         }
         const className = classNames('cm-select-text', {
@@ -99,15 +102,17 @@ class LargeSelect extends BaseComponent {
         const options = this.options;
         options.style.display = 'block';
 
-        const container = Dom.closest(options, '.cm-select');
-        const offset = Dom.getOuterHeight(options) + 5;
-        const dropup = Dom.overView(container, offset);
+        if (!this.props.alwaysdown) {
+            const container = Dom.closest(options, '.cm-select');
+            const offset = Dom.getOuterHeight(options) + 5;
+            const dropup = Dom.overView(container, offset);
 
-        Dom.withoutTransition(container, () => {
-            if (this._isMounted) {
-                this.setState({ dropup });
-            }
-        });
+            Dom.withoutTransition(container, () => {
+                if (this._isMounted) {
+                    this.setState({ dropup });
+                }
+            });
+        }
 
         this.bindClickAway();
 
@@ -233,6 +238,7 @@ class SelectOptions extends React.Component {
         sep: ',',
         value: '',
         itemHeight: 30,
+        hasEmptyOption: false,
         checkType: 'checkbox'
     };
 
@@ -244,7 +250,7 @@ class SelectOptions extends React.Component {
     selectedItems = {};
 
     renderOptions (data) {
-        if (this.props.data.length) {
+        if (this.props.data && this.props.data.length) {
             const {textField, valueField, sep, value} = this.props;
             const page = this.state.page;
             const startPage = Math.max(page - 1, 0);
@@ -254,10 +260,13 @@ class SelectOptions extends React.Component {
             end = Math.min(end, data.length);
             const ret = [];
             const currentValues = value.split(sep);
+            if (start === 0) {
+                ret.push(<li className='cm-select-option' onClick={this.onSelect.bind(this, '', null)} key='_none'>{this.props.choiceText}</li>);
+            }
             for (let i = start; i < end; i++) {
                 const item = data[i];
                 const value = `${item[valueField]}`;
-                const active = currentValues.includes(value);
+                const active = currentValues.indexOf(value) !== -1;
                 const text = item[textField];
                 const content = this.format(text, item, active);
                 let tip = text;
@@ -277,7 +286,7 @@ class SelectOptions extends React.Component {
 
     filterData () {
         const {filter, textField, data, filterKey} = this.props;
-        if (filter) {
+        if (filter && data) {
             const items = data.filter(item => {
                 const text = item[textField];
                 return text.indexOf(filterKey) !== -1;
@@ -329,6 +338,13 @@ class SelectOptions extends React.Component {
     }
 
     onSelect (value, item) {
+        if (!item) {
+            this.selectedItems = {};
+            if (this.props.onChange) {
+                this.props.onChange('', null, this.selectedItems);
+            }
+            return null;
+        }
         if (item.type === 'checkbox') {
             return false;
         }
@@ -377,7 +393,10 @@ class SelectOptions extends React.Component {
     componentDidMount () {
         if (this.scroll) {
             const viewHeight = this.scroll.getViewHeight();
-            const contentHeight = this.props.data.length * this.props.itemHeight;
+            let contentHeight = this.props.data ? this.props.data.length * this.props.itemHeight : 0;
+            if (this.props.hasEmptyOption) {
+                contentHeight += this.props.itemHeight;
+            }
             if (contentHeight < viewHeight) {
                 this.setState({height: contentHeight});
             }
@@ -393,8 +412,11 @@ class SelectOptions extends React.Component {
     }
 
     render () {
-        const data = this.filterData();
-        const totalHeight = this.props.itemHeight * data.length;
+        const data = this.filterData() || [];
+        let totalHeight = this.props.itemHeight * data.length;
+        if (this.props.hasEmptyOption) {
+            totalHeight += this.props.itemHeight;
+        }
         return <Scroll ref={f => this.scroll = f} style={{height: this.state.height}} wrapDisplay='block' onScroll={this.onScroll}>
             <ul className='cm-select-options-list' ref={f => this.wrap = f}>
                 {this.renderOptions(data)}

@@ -183,7 +183,8 @@ class Select extends BaseComponent {
         choiceText: window.RCMUI_I18N['Select.choiceText'],
         active: false,
         value: '',
-        group: false
+        group: false,
+        alwaysdown: false
     };
 
     static propTypes = {
@@ -252,7 +253,11 @@ class Select extends BaseComponent {
          * @attribute placeholder
          * @type {String}
          */
-        placeholder: PropTypes.string
+        placeholder: PropTypes.string,
+        /**
+         * 总是下拉
+         */
+        alwaysdown: PropTypes.bool
     };
 
     constructor (props) {
@@ -663,15 +668,17 @@ class Select extends BaseComponent {
         const options = ReactDOM.findDOMNode(this.refs.options);
         options.style.display = 'block';
 
-        const container = Dom.closest(options, '.cm-select');
-        const offset = Dom.getOuterHeight(options) + 5;
-        const dropup = Dom.overView(container, offset);
+        if (!this.props.alwaysdown) {
+            const container = Dom.closest(options, '.cm-select');
+            const offset = Dom.getOuterHeight(options) + 5;
+            const dropup = Dom.overView(container, offset);
 
-        Dom.withoutTransition(container, () => {
-            if (this._isMounted) {
-                this.setState({ dropup });
-            }
-        });
+            Dom.withoutTransition(container, () => {
+                if (this._isMounted) {
+                    this.setState({ dropup });
+                }
+            });
+        }
 
         this.bindClickAway();
 

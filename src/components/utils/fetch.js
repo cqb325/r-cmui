@@ -2,7 +2,7 @@ async function myFetch (url = '', data = {}, type = 'GET', options) {
     type = type.toUpperCase();
     let dataStr = ''; // 数据拼接字符串
     Object.keys(data).forEach(key => {
-        dataStr += `${key}=${data[key]}&`;
+        dataStr += `${key}=${data[key] || ''}&`;
     });
     dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
     if (type === 'GET') {
