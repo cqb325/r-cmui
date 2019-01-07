@@ -14,7 +14,7 @@ class Row extends React.Component {
                     'itemBind': this.props['itemBind'],
                     'itemUnBind': this.props['itemUnBind']
                 }, child.props);
-                props.layout = this.props.layout ? this.props.layout : props.layout;
+                props.layout = props.layout ? props.layout : this.props.layout;
                 props.labelWidth = props.labelWidth || this.props.labelWidth;
                 if (componentName === 'FormControl') {
                     props.value = this.props.data ? this.props.data[props.name] : props.value;

@@ -231,7 +231,7 @@ class Button extends BaseComponent {
      */
     render () {
         let {id, className, style, target, size, iconButton, circle,
-            iconAlign, raised, flat, icon, href, children, img} = this.props;
+            iconAlign, raised, flat, icon, href, children, img, title} = this.props;
         className = classNames(
             className,
             'cm-button',
@@ -283,7 +283,8 @@ class Button extends BaseComponent {
                 onMouseDown={this.handleMouseDown}
                 className={className}
                 style={style}
-                target={target}>
+                target={target}
+                title={title}>
                 {nodes}
                 {this.state.loading ? <FontIcon icon='loading' font='cmui' spin className='ml-5' /> : null}
             </a>

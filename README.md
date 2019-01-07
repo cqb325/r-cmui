@@ -1,14 +1,21 @@
-![](https://img.shields.io/badge/r--cmui-2.6.1-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.6.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
 
+v2.6.2
+
+1. Button 添加title属性
+2. Select 在朝上显示的时候样式修改
+
 v2.6.1
 
 1. Select 和 LargeSelect添加alwaysdown属性  不进行高度计算朝上显示
 2. fetch get请求中为null或undefined数据改为空字符串请求
+3. Form和FormControl中修改关于layout的处理
+4. Notification 无法使用success等方法的问题
 
 v2.6.0
 

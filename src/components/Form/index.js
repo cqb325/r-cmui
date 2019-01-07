@@ -143,7 +143,7 @@ class Form extends BaseComponent {
                     'itemBind': this.itemBind,
                     'itemUnBind': this.itemUnBind
                 }, child.props);
-                props.layout = this.props.layout ? this.props.layout : props.layout;
+                props.layout = props.layout ? props.layout : this.props.layout;
                 props.tipTheme = this.props.tipTheme ? this.props.tipTheme : props.tipTheme;
                 props.tipAlign = tipAlign;
                 props.tipAuto = this.props.tipAuto ? this.props.tipAuto : props.tipAuto;

@@ -180,7 +180,7 @@ class Notification extends BaseComponent {
         const configs = this.state.configs;
         configs.forEach((config) => {
             if (boxes[config.dock]) {
-                boxes[config.dock][config.key] = config;
+                boxes[config.dock][config.key] = this.configs[config.key];
             }
         });
 

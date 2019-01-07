@@ -69,7 +69,7 @@ class FormControl extends BaseComponent {
             }
 
             const others = omit(this.props, ['itemUnBind', 'tipTheme', 'tipAlign', 'tipAuto', 'itemStyle', 'itemClass', 'labelWidth',
-                'handleChange', 'data-valueType', 'className', 'children', 'layout', 'rules', 'messages', 'isFormItem',
+                'handleChange', 'data-valueType', 'className', 'children', 'rules', 'messages', 'isFormItem',
                 'onValid', 'onChange', 'label', 'labelGrid']);
             const props = Object.assign({
                 type: this.props.type,
@@ -103,7 +103,7 @@ class FormControl extends BaseComponent {
             const registerComp = this.isRegisterComponent(child);
             if (registerComp) {
                 const others = omit(this.props, ['itemUnBind', 'tipTheme', 'tipAlign', 'tipAuto', 'itemStyle', 'itemClass', 'labelWidth',
-                    'handleChange', 'data-valueType', 'className', 'children', 'layout', 'rules', 'messages', 'isFormItem',
+                    'handleChange', 'data-valueType', 'className', 'children', 'rules', 'messages', 'isFormItem',
                     'onValid', 'onChange', 'label', 'labelGrid']);
                 let props = Object.assign({
                     key: index,
