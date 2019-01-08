@@ -386,7 +386,9 @@ class Dialog extends BaseComponent {
         }
         return (
             <div ref={f => this.container = f} className='cm-popup-warp' style={{display: this.state.visibility ? 'block' : 'none'}}>
-                <Panel ref={(ref) => { this.panel = ref; }} {...props} />
+                <Panel ref={(ref) => { this.panel = ref; }} {...props}>
+                    {this.props.children}
+                </Panel>
             </div>
         );
     }
