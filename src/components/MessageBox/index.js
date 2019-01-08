@@ -29,13 +29,13 @@ class MessageBox extends BaseComponent {
          * @attribute title
          * @type {String}
          */
-        title: PropTypes.string,
+        title: PropTypes.any,
         /**
          * 信息
          * @attribute msg
          * @type {String}
          */
-        msg: PropTypes.string,
+        msg: PropTypes.any,
         /**
          * 类型
          * @attribute type
@@ -223,7 +223,7 @@ class MessageBox extends BaseComponent {
         if (!this._isMounted) {
             return false;
         }
-        this.panel.setTitleAndContent(this.state.title || title, this.state.msg || msg);
+        this.panel.setTitleAndContent(title || this.state.title, msg || this.state.msg);
 
         if (!this.backdrop) {
             const ele = Dom.query('.shadow-backdrop');
@@ -271,11 +271,22 @@ class MessageBox extends BaseComponent {
     }
 
     componentDidMount () {
-        this.container = document.createElement('div');
-        document.body.appendChild(this.container);
-        Dom.dom(this.container).addClass('cm-popup-warp');
-        Dom.dom(this.container).hide();
+        this._isMounted = true;
+    }
 
+    componentWillUnmount () {
+        this._isMounted = false;
+    }
+
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.msg !== this.state.msg && nextProps.msg !== this.props.msg) {
+            this.setState({
+                msg: nextProps.msg
+            });
+        }
+    }
+
+    render () {
         let {className, style} = this.props;
         className = classNames('cm-messageBox', className, `cm-messageBox-${this.props.type}`);
         const props = Object.assign({}, this.props);
@@ -284,21 +295,10 @@ class MessageBox extends BaseComponent {
         props.footers = this.footers;
         style = Object.assign({}, style);
         props.style = style;
-
-        ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}
-            content={this.state.msg} />, this.container);
-
-        this._isMounted = true;
-    }
-
-    componentWillUnmount () {
-        this._isMounted = false;
-        Dom.dom(this.container).remove();
-    }
-
-    render () {
         return (
-            <div />
+            <div className='cm-popup-warp' ref={f => this.container = f} style={{display: 'none'}}>
+                <Panel ref={(ref) => { this.panel = ref; }} {...props} content={this.state.msg} />
+            </div>
         );
     }
 }
