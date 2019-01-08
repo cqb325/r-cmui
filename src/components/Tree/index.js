@@ -666,6 +666,7 @@ class Tree extends BaseComponent {
         this.idData[item.id] = item;
 
         item.parent = parent;
+        
         if (parent) {
             item.level = parent.level + 1;
             parent._node.addItem(item, () => {
@@ -965,6 +966,7 @@ class Tree extends BaseComponent {
 
     render () {
         const className = classNames('cm-tree');
+        
         return (
             <div className={className}>
                 <TreeSubNodes

@@ -9,6 +9,7 @@ v2.6.2
 
 1. Button 添加title属性
 2. Select 在朝上显示的时候样式修改
+3. Tree data 变化之后不更新问题
 
 v2.6.1
 

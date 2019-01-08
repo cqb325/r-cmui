@@ -3,7 +3,7 @@ import BaseComponent from '../core/BaseComponent';
 import classNames from 'classnames';
 import CheckBox from '../CheckBox';
 import PropTypes from 'prop-types';
-import {List, Map} from 'immutable';
+import {List} from 'immutable';
 import TreeSubNodes from './TreeSubNodes';
 
 /**
@@ -19,18 +19,15 @@ class TreeNode extends BaseComponent {
     constructor (props) {
         super(props);
 
-        this.item = this.props.item;
-
         this.addState({
-            item: props.item
+            item: props.item,
+            open: props.item.open,
+            checked: props.item._checked,
+            selected: props.item._selected,
+            disabled: props.item._disabled,
+            text: props.item.text,
+            children: props.item.children
         });
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.item !== this.props.item) {
-            this.item = nextProps.item;
-            this.setState({item: nextProps.item});
-        }
     }
 
     /**
@@ -39,7 +36,7 @@ class TreeNode extends BaseComponent {
      * @private
      */
     _select () {
-        const item = this.item;
+        const item = this.state.item;
         this.props.onSelect ? this.props.onSelect(item) : false;
     }
 
@@ -49,11 +46,11 @@ class TreeNode extends BaseComponent {
      * @private
      */
     _openClose () {
-        let item = this.item;
+        const open = this.state.open;
+        const item = this.state.item;
         item.open = !item.open;
-        item = Map(item).toJS();
         this.setState({
-            item
+            open: !open
         }, () => {
             if (this.refs.subNodes) {
                 this.refs.subNodes.display();
@@ -68,20 +65,19 @@ class TreeNode extends BaseComponent {
      * @private
      */
     _check () {
-        let item = this.item;
-        if (item._disabled) {
+        if (this.state.disabled) {
             return false;
         }
+        const item = this.state.item;
 
         if (item._checked === 0 || item._checked === 2) {
             item._checked = 1;
         } else if (item._checked === 1) {
             item._checked = 0;
         }
-        item = Map(item).toJS();
 
         this.setState({
-            item
+            checked: item._checked
         }, () => {
             this.props.onCheck ? this.props.onCheck(item) : false;
         });
@@ -93,14 +89,13 @@ class TreeNode extends BaseComponent {
      * @memberof TreeNode
      */
     setChecked (checked) {
-        let item = this.item;
-        if (item._disabled) {
+        if (this.state.disabled) {
             return false;
         }
+        const item = this.state.item;
         item._checked = checked;
-        item = Map(item).toJS();
         this.setState({
-            item
+            checked
         });
     }
 
@@ -116,9 +111,8 @@ class TreeNode extends BaseComponent {
     }
 
     setText (text) {
-        this.item.text = text;
-        const item = Map(this.item).toJS();
-        this.setState({item});
+        this.state.item.text = text;
+        this.setState({text});
     }
 
     /**
@@ -126,13 +120,12 @@ class TreeNode extends BaseComponent {
      * @method open
      */
     open () {
-        let item = this.item;
+        const item = this.state.item;
         if (!item.open) {
             item.open = true;
-            item = Map(item).toJS();
 
             this.setState({
-                item
+                open: true
             }, () => {
                 if (this.refs.subNodes) {
                     this.refs.subNodes.display();
@@ -146,13 +139,12 @@ class TreeNode extends BaseComponent {
      * @method close
      */
     close () {
-        let item = this.item;
+        const item = this.state.item;
         if (item.open) {
             item.open = false;
-            item = Map(item).toJS();
 
             this.setState({
-                item
+                open: false
             }, () => {
                 if (this.refs.subNodes) {
                     this.refs.subNodes.display();
@@ -166,12 +158,13 @@ class TreeNode extends BaseComponent {
      * @method select
      */
     select () {
-        let item = this.item;
+        const item = this.state.item;
         if (!item._selected) {
+            // item = Map(item).set('_selected', true).toJS();
+            // console.log(item);
             item._selected = true;
-            item = Map(item).toJS();
             this.setState({
-                item
+                selected: true
             });
         }
     }
@@ -181,26 +174,24 @@ class TreeNode extends BaseComponent {
      * @method unSelect
      */
     unSelect () {
-        let item = this.item;
+        const item = this.state.item;
         if (item._selected === true) {
             item._selected = false;
-            item = Map(item).toJS();
             this.setState({
-                item
+                selected: false
             });
         }
     }
 
     addItem (newItem, callback) {
-        let item = this.item;
+        const item = this.state.item;
         if (item.children) {
             item.children = List(item.children).push(newItem).toJS();
         } else {
             item.children = [newItem];
         }
-        item = Map(item).toJS();
 
-        this.setState({item}, callback);
+        this.setState({children: item.children}, callback);
     }
 
     /**
@@ -209,37 +200,37 @@ class TreeNode extends BaseComponent {
      * @memberof TreeNode
      */
     clearChildren (callback) {
-        let item = this.item;
+        const item = this.state.item;
         delete item.children;
 
-        let checked = item.checked;
+        let checked = this.state.checked;
         if (checked === 2) {
             checked = 0;
         }
         item._checked = checked;
         item.open = false;
-        item = Map(item).toJS();
 
-        this.setState({item}, callback);
+        this.setState({children: null, checked, open: false}, callback);
     }
 
     removeItem (theItem, callback) {
-        let item = this.item;
-        let children = item.children;
+        const item = this.state.item;
+        let children = this.state.children;
 
         const arr = List(children);
         const index = arr.indexOf(theItem);
         children = arr.delete(index).toJS();
 
+        let opened = this.state.open;
         if (!children || !children.length) {
             children = null;
             delete item['children'];
+            opened = false;
             item.open = false;
         } else {
             item.children = children;
         }
-        item = Map(item).toJS();
-        this.setState({item, children}, callback);
+        this.setState({children, open: opened}, callback);
     }
 
     /**
@@ -249,8 +240,8 @@ class TreeNode extends BaseComponent {
      * @memberof TreeNode
      */
     addChildren (children, callback) {
-        let item = this.item;
-        let childs = item.children;
+        const item = this.state.item;
+        let childs = this.state.children;
 
         const arr = List(childs);
         if (childs && childs.length) {
@@ -259,22 +250,16 @@ class TreeNode extends BaseComponent {
             childs = children;
         }
         item.children = childs;
-        item = Map(item).toJS();
 
-        this.setState({item}, callback);
+        this.setState({children: childs}, callback);
     }
 
     disabled (disabled) {
-        let item = this.item;
+        const item = this.state.item;
         item._disabled = disabled;
-        item = Map(item).toJS();
         this.setState({
-            item
+            disabled
         });
-    }
-
-    getItem () {
-        return this.state.item;
     }
 
     render () {
@@ -290,18 +275,18 @@ class TreeNode extends BaseComponent {
                 dischecked: item._checked === 2
             });
             // checkboxEle = (<span className={checkClassName} onClick={this._check.bind(this)} />);
-            checkboxEle = <CheckBox className={checkClassName} disabled={item._disabled} checked={item._checked === 1 || item._checked === 2} onChange={this._check.bind(this)} />;
+            checkboxEle = <CheckBox className={checkClassName} disabled={this.state.disabled} checked={item._checked === 1 || item._checked === 2} onChange={this._check.bind(this)} />;
         }
 
         let subNodes = null;
-        const children = item.children;
+        const children = this.state.children;
 
         if (children && children.length) {
             subNodes = (
                 <TreeSubNodes
                     items={children}
-                    parent={this.item}
-                    visible={!!item.open}
+                    parent={item}
+                    visible={!!this.state.open}
                     onSelect={this.props.onSelect}
                     ref='subNodes'
                     onOpenClose={this.props.onOpenClose}
@@ -318,14 +303,14 @@ class TreeNode extends BaseComponent {
         });
 
         const nodeClassName = classNames('tree_node_wrap', {
-            node_open: item.open,
-            node_close: !item.open,
+            node_open: this.state.open,
+            node_close: !this.state.open,
             node_isBranch: item.children && item.children.length,
-            node_disabled: item._disabled
+            node_disabled: this.state.disabled
         });
 
         const contClassName = classNames('tree_cont', {
-            node_selected: item._selected
+            node_selected: this.state.selected
         });
 
         const arrowClassName = classNames('tree_arrow', {
@@ -338,7 +323,7 @@ class TreeNode extends BaseComponent {
                     {checkboxEle}
                     <span data-id={item.id} className={contClassName} onClick={this._select.bind(this)}>
                         <span className={iconClassName} />
-                        <span className='tree_text' title={item.text}>{item.text}</span>
+                        <span className='tree_text' title={this.state.text}>{this.state.text}</span>
                     </span>
                 </span>
                 {subNodes}

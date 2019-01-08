@@ -11,38 +11,6 @@ import TreeNode from './TreeNode';
  * @extend BaseComponent
  */
 class TreeSubNodes extends BaseComponent {
-    constructor (props) {
-        super(props);
-
-        this.addState({
-            items: props.items
-        });
-    }
-
-    /**
-     * 更新状态
-     * @method updateState
-     * @param newItems 新的数据
-     */
-    updateState (newItems) {
-        const items = newItems || this.state.items;
-        this.setState({
-            items: List(items).toJS()
-        });
-    }
-
-    /**
-     * 接收到新的属性的时候更新节点
-     * @method componentWillReceiveProps
-     * @param nextProps
-     * @override
-     */
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.items != this.props.items) {
-            this.setState({ items: nextProps.items });
-        }
-    }
-
     display () {
         if (this._isMounted) {
             const visible = this.props.visible;
@@ -66,7 +34,7 @@ class TreeSubNodes extends BaseComponent {
     }
 
     render () {
-        const items = this.state.items;
+        const items = this.props.items;
 
         if (this.props.parent) {
             this.props.parent._subNodes = this;
