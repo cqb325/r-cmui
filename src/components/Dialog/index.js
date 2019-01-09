@@ -127,7 +127,7 @@ class Dialog extends BaseComponent {
      */
     setTitle (title) {
         this.setState({title});
-        // this.panel.setTitle(title);
+        this.panel.setTitle(title);
     }
 
     /**
@@ -136,7 +136,7 @@ class Dialog extends BaseComponent {
      */
     setContent (content) {
         this.setState({content});
-        // this.panel.setContent(content);
+        this.panel.setContent(content);
     }
 
     /**
@@ -338,27 +338,14 @@ class Dialog extends BaseComponent {
         return this.panel;
     }
 
+    /**
+     *
+     */
     componentDidMount () {
-        this._isMounted = true;
-    }
+        this.container = document.createElement('div');
+        document.body.appendChild(this.container);
+        Dom.dom(this.container).addClass('cm-popup-warp');
 
-    componentWillUnmount () {
-        this._isMounted = false;
-    }
-
-    componentWillReceiveProps (nextProps) {
-        const params = {};
-        if (nextProps.title !== this.props.title && nextProps.title !== this.state.title) {
-            params.title = nextProps.title;
-        }
-        if (nextProps.content !== this.props.content && nextProps.content !== this.state.content) {
-            params.content = nextProps.content;
-        }
-
-        this.setState(params);
-    }
-
-    render () {
         let {className, style, hasCloseBtn, useDefaultFooters, okButtonText, okButtonTheme, okButtonIcon,
             cancelButtonText, cancelButtonTheme, cancelButtonIcon} = this.props;
         className = classNames('cm-dialog', className);
@@ -384,12 +371,45 @@ class Dialog extends BaseComponent {
                     className='cm-dialog-close'>&times;</a>
             </span>;
         }
+
+        if (this.state.visibility) {
+            Dom.dom(this.container).show();
+        } else {
+            Dom.dom(this.container).hide();
+        }
+
+        ReactDOM.render(<Panel ref={(ref) => { this.panel = ref; }} {...props}>
+            {this.props.children}
+        </Panel>, this.container);
+        this._isMounted = true;
+    }
+
+    componentWillUnmount () {
+        this._isMounted = false;
+        Dom.dom(this.container).remove();
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const params = {};
+        if (nextProps.title !== this.props.title && nextProps.title !== this.state.title) {
+            if (this.panel) {
+                this.panel.setTitle(nextProps.title);
+            }
+            params.title = nextProps.title;
+        }
+        if (nextProps.content !== this.props.content && nextProps.content !== this.state.content) {
+            if (this.panel) {
+                this.panel.setContent(nextProps.content);
+            }
+            params.content = nextProps.content;
+        }
+
+        this.setState(params);
+    }
+
+    render () {
         return (
-            <div ref={f => this.container = f} className='cm-popup-warp' style={{display: this.state.visibility ? 'block' : 'none'}}>
-                <Panel ref={(ref) => { this.panel = ref; }} {...props}>
-                    {this.props.children}
-                </Panel>
-            </div>
+            <div />
         );
     }
 }

@@ -10,7 +10,7 @@ v2.6.2
 1. Button 添加title属性
 2. Select 在朝上显示的时候样式修改
 3. Tree data 变化之后不更新问题
-4. dialog和messageBox 解决延迟渲染问题可以使用mobx进行注入
+4. Dialog this.panel为undefined问题
 
 v2.6.1
 
