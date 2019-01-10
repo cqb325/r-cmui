@@ -321,22 +321,22 @@ class TreeNode extends BaseComponent {
             node_open: item.open,
             node_close: !item.open,
             node_isBranch: item.children && item.children.length,
-            node_disabled: item._disabled
-        });
-
-        const contClassName = classNames('tree_cont', {
+            node_disabled: item._disabled,
             node_selected: item._selected
         });
+
+        const contClassName = classNames('tree_cont');
 
         const arrowClassName = classNames('tree_arrow', {
             'tree-arrow-empty': !this.context.enableDynamicTreeNode && !(item.children && item.children.length)
         });
+        const padding = item.level * 20;
         return (
             <div className='tree_node'>
-                <span className={nodeClassName}>
+                <span style={{paddingLeft: padding}} className={nodeClassName} onClick={this._select.bind(this)}>
                     <span className={arrowClassName} onClick={this._openClose.bind(this)} />
                     {checkboxEle}
-                    <span data-id={item.id} className={contClassName} onClick={this._select.bind(this)}>
+                    <span data-id={item.id} className={contClassName}>
                         <span className={iconClassName} />
                         <span className='tree_text' title={item.text}>{item.text}</span>
                     </span>

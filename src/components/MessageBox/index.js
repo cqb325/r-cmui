@@ -29,13 +29,13 @@ class MessageBox extends BaseComponent {
          * @attribute title
          * @type {String}
          */
-        title: PropTypes.string,
+        title: PropTypes.any,
         /**
          * 信息
          * @attribute msg
          * @type {String}
          */
-        msg: PropTypes.string,
+        msg: PropTypes.any,
         /**
          * 类型
          * @attribute type

@@ -1,7 +1,6 @@
 import React from 'react';
 import BaseComponent from '../core/BaseComponent';
 import PropTypes from 'prop-types';
-import {List} from 'immutable';
 import velocity from '../../lib/velocity';
 import TreeNode from './TreeNode';
 

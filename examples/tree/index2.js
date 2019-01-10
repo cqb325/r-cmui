@@ -17,7 +17,9 @@ class Comp extends React.Component {
                 text: 'gitgit',
                 type: 'directory',
                 children: [
-                    {id: 'K:/gitgit/aaa111', text: 'aaa111', path: 'K:/gitgit/aaa111', name: 'aaa111', children: Array(0), size: 0, type: 'directory'}
+                    {id: 'K:/gitgit/aaa111', text: 'aaa111', path: 'K:/gitgit/aaa111', name: 'aaa111', children: [
+                        {id: '2222', text: '22222'}
+                    ], size: 0, type: 'directory'}
                 ]
             }
         ],
@@ -36,7 +38,9 @@ class Comp extends React.Component {
                     text: 'gitgit',
                     type: 'directory',
                     children: [
-                        {id: 'K:/gitgit/aaa111', text: 'aaa111', path: 'K:/gitgit/aaa111', name: 'aaa111', children: Array(0), size: 0, type: 'directory'},
+                        {id: 'K:/gitgit/aaa111', text: 'aaa111', path: 'K:/gitgit/aaa111', name: 'aaa111', size: 0, type: 'directory', children: [
+                            {id: '2222', text: '22222'}
+                        ]},
                         {id: 'K:/gitgit/1111', text: '1111', path: 'K:/gitgit/1111', name: '1111', children: Array(0), size: 0, type: 'directory'}
                     ]
                 }
@@ -71,7 +75,10 @@ class Comp extends React.Component {
             <Button onClick={() => {
                 this.tree.openItem('14');
             }}>打开节点</Button>
-            <Tree ref={f => this.tree = f} key={this.state.treeKey} data={this.state.data} enableCheckbox enableSmartCheckbox/>
+
+            <div style={{width: 300}}>
+                <Tree ref={f => this.tree = f} key={this.state.treeKey} data={this.state.data} enableCheckbox enableSmartCheckbox/>
+            </div>
         </div>;
     }
 }

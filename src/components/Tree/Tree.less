@@ -78,9 +78,11 @@
   background-color: #C1D1FF;
 }
 .node_selected{
-  background-color: #eee;
   .tree_text{
     color: #39c;
+  }
+  .tree_cont{
+    background-color: #eee;
   }
 }
 .tree_node{
@@ -89,14 +91,13 @@
 }
 .tree_subNode{
   clear: both;
-  margin-left: 20px;
 }
 .tree_node_wrap{
   height: 20px;
   line-height: 20px;
-  display: inline-block;
-  vertical-align: middle;
+  display: block;
   white-space: nowrap;
+  cursor: pointer;
   &.node_disabled{
     .tree_text{
       text-decoration: line-through;
