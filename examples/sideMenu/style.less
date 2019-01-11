@@ -1,0 +1,22 @@
+.cm-side-menu-body{
+    position: fixed;
+    background: #eee;
+    border-right: 1px solid #aaa;
+    top: 0;
+    bottom: 0;
+    z-index: 60001;
+    transition: transform 0.2s ease;
+}
+.cm-side-menu-back{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60000;
+}
+.cm-side-menu.left{
+    .cm-side-menu-body.cm-side-menu-body-show{
+        transform: translateX(300px);
+    }
+}
