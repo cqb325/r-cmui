@@ -1,9 +1,13 @@
-![](https://img.shields.io/badge/r--cmui-2.6.2-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![](https://img.shields.io/badge/r--cmui-2.7.0-blue.svg) ![](https://img.shields.io/badge/licence-MIT%20License-blue.svg) ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ### r-cmui
 
 #demo
 
 [https://cqb325.github.io/cmui/#/](https://cqb325.github.io/cmui/#/ "cmui demo")
+
+v2.7.0
+
+1. 添加SideMenu组件
 
 v2.6.2
 

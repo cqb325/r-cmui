@@ -1,41 +1,47 @@
 import React from 'react';
-import Dom from '../../src/components/utils/Dom';
-import Button from '../../src/components/Button';
+import Dom from '../utils/Dom';
 import classNames from 'classnames';
 
-import './style.less';
+import './SideMenu.less';
 
-class Comp extends React.Component {
-    displayName = 'Comp';
+class SideMenu extends React.Component {
+    displayName = 'SideMenu';
 
     static defaultProps = {
         width: 300,
-        align: 'right'
+        align: 'left',
+        visibility: false
     }
 
     state = {
-        visibility: true
+        visibility: this.props.visibility
     }
 
     onClick = (e) => {
         let ele = Dom.closest(e.target, '.cm-side-menu-back');
         
         if (ele) {
-            this.setState({
-                visibility: false
-            });
+            this.close();
         }
     }
 
     close () {
         this.setState({
             visibility: false
+        }, () => {
+            if (this.props.onClose) {
+                this.props.onClose();
+            }
         });
     }
 
     open () {
         this.setState({
             visibility: true
+        }, () => {
+            if (this.props.onOpen) {
+                this.props.onOpen();
+            }
         });
     }
 
@@ -53,25 +59,16 @@ class Comp extends React.Component {
         if (this.props.align === 'right') {
             css.right = -this.props.width;
         }
-        return <div>
-            <div onClick={this.onClick} className={clazzName}>
-                <div style={{
-                    display: this.state.visibility ? 'block' : 'none'
-                }} className='cm-side-menu-back'>
-                </div>
-                <div style={css} className={bodyClassName}>
-                    <Button onClick={this.close.bind(this)}>关闭</Button>
-                </div>
+        return <div onClick={this.onClick} className={clazzName}>
+            <div style={{
+                display: this.state.visibility ? 'block' : 'none'
+            }} className='cm-side-menu-back'>
             </div>
-
-            <div className='pull-right'>
-                asdsadasdasdasd
-                <div>
-                    <Button onClick={this.open.bind(this)}>打开</Button>
-                </div>
+            <div style={css} className={bodyClassName}>
+                {this.props.children}
             </div>
         </div>;
     }
 }
 
-export default Comp;
+export default SideMenu;
