@@ -13,6 +13,7 @@ class Scroll extends React.Component {
     static defaultProps = {
         barSize: 8,
         minThumb: 30,
+        minThumbSize: 0,
         wrapDisplay: 'inline-block'
     };
 
@@ -241,7 +242,7 @@ class Scroll extends React.Component {
     render () {
         const {style} = this.props;
         const newStyle = Object.assign({}, style || {}, {overflow: 'hidden', position: 'relative'});
-        return <div style={newStyle} className={this.props.className}>
+        return <div style={newStyle} className={`cm-scroll ${this.props.className ? this.props.className : ''}`}>
             <div ref={(f) => this.wbox = f} style={{overflow: 'auto', position: 'absolute', left: 0, top: 0, right: 0, bottom: 0}}>
                 <div ref={(f) => this.wspacer = f} style={{width: '100%'}}></div>
             </div>
@@ -252,6 +253,7 @@ class Scroll extends React.Component {
                 this.state.verticalThumbSize
                     ? <Scrollbar ref={(f) => this.verticalScroll = f} 
                         barSize={this.props.barSize}
+                        minThumbSize={this.props.minThumbSize}
                         thumbSize={this.state.verticalThumbSize}
                         scrollOffset={this.state.scrollTop}
                         style={{bottom: this.state.horizontalThumbSize ? this.props.barSize : 0}}
@@ -263,6 +265,7 @@ class Scroll extends React.Component {
                 this.state.horizontalThumbSize
                     ? <Scrollbar type='horizontal' ref={(f) => this.horizontalScroll = f} 
                         barSize={this.props.barSize}
+                        minThumbSize={this.props.minThumbSize}
                         thumbSize={this.state.horizontalThumbSize}
                         scrollOffset={this.state.scrollLeft}
                         style={{right: this.state.verticalThumbSize ? this.props.barSize : 0}}
