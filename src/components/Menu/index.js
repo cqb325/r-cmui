@@ -162,6 +162,9 @@ class Menu extends BaseComponent {
     selectItem (key) {
         const item = this.items[key];
         if (item && item.select) {
+            if (this.lastSelect && this.lastSelect != item) {
+                this.lastSelect.unSelect();
+            }
             item.select();
             let parent = item.props.parent;
             while (parent) {
