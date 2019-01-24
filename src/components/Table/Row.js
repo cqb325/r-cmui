@@ -37,6 +37,7 @@ class Row extends BaseComponent {
 
     componentWillReceiveProps (nextProps) {
         if (nextProps.data !== this.props.data && nextProps.data !== this.state.data) {
+            nextProps.data._show = nextProps.data._show || true;
             this.setState({
                 data: nextProps.data
             });

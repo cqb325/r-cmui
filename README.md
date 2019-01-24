@@ -10,6 +10,7 @@ v2.7.0
 1. 添加SideMenu组件
 2. scroll当内容超长的时候可以设置滑动块的最小值
 3. Menu组件代码选择menuItem的时候清除上次选中的菜单
+4. Table refresh hide rows bug
 
 v2.6.2
 
