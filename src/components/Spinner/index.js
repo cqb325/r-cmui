@@ -115,11 +115,16 @@ class Spinner extends BaseComponent {
     }
 
     inputChange = (value) => {
-        value = this.props.max !== undefined ? Math.min(value, this.props.max) : value;
-        value = this.props.min !== undefined ? Math.max(value, this.props.min) : value;
-        this.setState({value});
+        let val = this.props.max !== undefined ? Math.min(value, this.props.max) : value;
+        val = this.props.min !== undefined ? Math.max(val, this.props.min) : val;
+        // state 已经是value值了
+        if (this.state.value !== value && this.state.value === val) {
+            this.input.setValue(val);
+        } else {
+            this.setState({value: val});
+        }
         if (this.props.onChange) {
-            this.props.onChange(value);
+            this.props.onChange(val);
         }
     }
 
@@ -170,7 +175,7 @@ class Spinner extends BaseComponent {
         return (
             <div className={className} style={this.props.style}>
                 <span className='cm-spinner-value'>
-                    <Input name={this.props.name} value={`${this.state.value}`} onChange={this.inputChange} onKeyDown={this.onKeyDown}/>
+                    <Input ref={f => this.input = f } name={this.props.name} value={`${this.state.value}`} onChange={this.inputChange} onKeyDown={this.onKeyDown}/>
                 </span>
                 <span className='cm-spinner-plus' onClick={this.plus}>
                     <i className='fa fa-angle-up' />

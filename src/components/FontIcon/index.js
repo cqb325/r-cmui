@@ -75,6 +75,7 @@ class FontIcon extends BaseComponent {
         }
 
         if (color) {
+            style = style || {};
             style.color = color;
         }
         return (
