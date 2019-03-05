@@ -13,6 +13,7 @@ v2.7.0
 4. Table refresh hide rows bug
 5. FontIcon 传输color的时候报错问题
 6. Spinner input中值最大限制第二次修改超出最大值不自动回复到最大值的问题
+7. Steps vertical的layout不计算width
 
 v2.6.2
 

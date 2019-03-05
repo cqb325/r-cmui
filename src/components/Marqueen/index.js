@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import BaseComponent from '../core/BaseComponent';
 import './Marqueen.less';
 
-class Marqueen extends BaseComponent{
+class Marqueen extends BaseComponent {
     static displayName = 'Marqueen';
     static defaultProps = {
         step: 15,
@@ -16,7 +16,7 @@ class Marqueen extends BaseComponent{
         pausing: false
     };
 
-    constructor(props){
+    constructor (props) {
         super(props);
 
         // 每次滚动的步长(px)
@@ -47,35 +47,35 @@ class Marqueen extends BaseComponent{
         this.timer = null;
     }
 
-    calcuStyle(){
-        let ele = ReactDOM.findDOMNode(this.refs.wrap);
+    calcuStyle () {
+        const ele = ReactDOM.findDOMNode(this.refs.wrap);
 
-        var childrens = ele.children;
+        const childrens = ele.children;
 
-        if(this.dir === 'up' || this.dir === 'down'){
-            ReactDOM.findDOMNode(this).style.height = ele.offsetHeight /2 + 'px';
+        if (this.dir === 'up' || this.dir === 'down') {
+            ReactDOM.findDOMNode(this).style.height = `${ele.offsetHeight / 2}px`;
         }
         // 如果是左右滚动就给滚动元素加上宽度
         if (this.dir == 'left' || this.dir == 'right') {
             let totalWidth = 0;
-            for(let i = 0; i < childrens.length; i++) {
-                if(childrens[i].getBoundingClientRect){
-                    let rect = childrens[i].getBoundingClientRect();  
-                    let mw = rect.right - rect.left;
+            for (let i = 0; i < childrens.length; i++) {
+                if (childrens[i].getBoundingClientRect) {
+                    const rect = childrens[i].getBoundingClientRect();  
+                    const mw = rect.right - rect.left;
                     totalWidth += mw;
-                }else{
+                } else {
                     totalWidth += childrens[i].offsetWidth;
                 }
             }
             
-            ele.style.width = totalWidth + 'px';
-            ReactDOM.findDOMNode(this).style.width = totalWidth / 2.0 + 'px';
-            ReactDOM.findDOMNode(this).style.height = ele.offsetHeight + 'px';
+            ele.style.width = `${totalWidth}px`;
+            ReactDOM.findDOMNode(this).style.width = `${totalWidth / 2.0}px`;
+            ReactDOM.findDOMNode(this).style.height = `${ele.offsetHeight}px`;
         }
 
         // 如果是向右滚动，初始时将滚动元素的left设置为负的自身宽度的一半
         if (this.dir == 'right' && ele.offsetLeft == 0) {
-            ele.style.left = -ele.offsetWidth / 2 + 'px';
+            ele.style.left = `${-ele.offsetWidth / 2}px`;
         }
 
         // 如果是向左滚动，初始时将滚动元素的left设置为0
@@ -85,7 +85,7 @@ class Marqueen extends BaseComponent{
 
         // 如果是向下滚动，初始时将滚动元素的top设置为负的自向高度的一半
         if (this.dir == 'down' && ele.offsetTop == 0) {
-            ele.style.top = -ele.offsetHeight / 2 + 'px';
+            ele.style.top = `${-ele.offsetHeight / 2}px`;
         }
 
         // 如果是向上滚动，初始时将滚动元素的top设置为0
@@ -94,15 +94,15 @@ class Marqueen extends BaseComponent{
         }
     }
 
-    startScroll() {
-        this.timer = window.setInterval(()=> {
+    startScroll () {
+        this.timer = window.setInterval(() => {
             this.doScroll();
         }, this.interval);
     }
 
-    doScroll() {
-        var style, offset, target, step, elemSize;
-        let ele = ReactDOM.findDOMNode(this.refs.wrap);
+    doScroll () {
+        let style, offset, target, step, elemSize;
+        const ele = ReactDOM.findDOMNode(this.refs.wrap);
 
         if (this.dir == 'left' || this.dir == 'right') {
             // element.style[ "left" | "top" ]
@@ -125,23 +125,22 @@ class Marqueen extends BaseComponent{
             }
             target = ele[offset] + step;
             target = this.fixTarget(step, ele[offset] + step, elemSize);
-            ele.style[style] = target + 'px';
+            ele.style[style] = `${target}px`;
         } else {
+            if (this.timerStep != null) { return; }
 
-            if (this.timerStep != null) {return;}
-
-            //先停止掉this.timer，在滚动执行完过后再开启
+            // 先停止掉this.timer，在滚动执行完过后再开启
             this.stop();
 
             // 将step按stepInterval分割
-            var seed = 30 / this.stepInterval * step;
+            let seed = 30 / this.stepInterval * step;
             seed = seed < 0 ? Math.ceil(seed) : Math.floor(seed);
 
-            this.timerStep = window.setInterval(()=> {
+            this.timerStep = window.setInterval(() => {
                 seed = seed > 0 ? Math.min(seed, step) : Math.max(seed, step);
 
                 target = this.fixTarget(seed, ele[offset] + seed, elemSize);
-                ele.style[style] = target + 'px';
+                ele.style[style] = `${target}px`;
 
                 step -= seed;
                 if (step == 0) {
@@ -165,7 +164,7 @@ class Marqueen extends BaseComponent{
      * @returns 
      * @memberof Marqueen
      */
-    fixTarget(dir, target, max) {
+    fixTarget (dir, target, max) {
         // left or up, 当元素offset=最大滚动值时将offset变为0
         if (dir < 0 && Math.abs(target) >= max) {
             return 0;
@@ -183,24 +182,24 @@ class Marqueen extends BaseComponent{
      * 
      * @memberof Marqueen
      */
-    stop() {
+    stop () {
         window.clearInterval(this.timer);
     }
 
-    componentDidMount(){
-        let ele = ReactDOM.findDOMNode(this.refs.wrap);
+    componentDidMount () {
+        const ele = ReactDOM.findDOMNode(this.refs.wrap);
         ele.innerHTML += ele.innerHTML;
         this.calcuStyle();
 
         this.autoPlay && this.startScroll();
     }
 
-    render(){
+    render () {
         let {className, style} = this.props;
         className = classNames('cm-marqueen', className);
         return (
             <div className={className} style={style}>
-                <div ref="wrap" className="cm-marqueen-wrap">
+                <div ref='wrap' className='cm-marqueen-wrap'>
                     {this.props.children}
                 </div>
             </div>

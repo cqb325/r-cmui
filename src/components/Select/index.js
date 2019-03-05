@@ -61,15 +61,15 @@ class Option extends BaseComponent {
                 }
             });
         } else {
-            if (!this.state.active) {
-                this.setState({
-                    active: true
-                }, () => {
-                    if (this.props.onClick) {
-                        this.props.onClick(this);
-                    }
-                });
-            }
+            // if (!this.state.active) {
+            this.setState({
+                active: true
+            }, () => {
+                if (this.props.onClick) {
+                    this.props.onClick(this);
+                }
+            });
+            // }
         }
     }
 

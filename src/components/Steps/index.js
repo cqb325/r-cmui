@@ -41,17 +41,19 @@ class Steps extends BaseComponent {
     }
 
     componentDidMount () {
-        const w = this.steps.length === 1 ? '100%' : `${1 / (this.steps.length - 1) * 100}%`;
-        const lastWidth = this.steps.length > 1 ? this.steps[this.steps.length - 1].getWidth() : 0;
+        if (this.props.layout !== 'vertical') {
+            const w = this.steps.length === 1 ? '100%' : `${1 / (this.steps.length - 1) * 100}%`;
+            const lastWidth = this.steps.length > 1 ? this.steps[this.steps.length - 1].getWidth() : 0;
 
-        this.steps.forEach((step, index) => {
-            if (index < this.steps.length - 1) {
-                step.updateStyle({
-                    width: w,
-                    marginRight: `${-lastWidth / (this.steps.length - 1)}px`
-                });
-            }
-        });
+            this.steps.forEach((step, index) => {
+                if (index < this.steps.length - 1) {
+                    step.updateStyle({
+                        width: w,
+                        marginRight: `${-lastWidth / (this.steps.length - 1)}px`
+                    });
+                }
+            });
+        }
     }
 
     bindStep = (step) => {
