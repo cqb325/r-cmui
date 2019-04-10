@@ -204,7 +204,7 @@ class Step extends BaseComponent {
             status = 'process';
         }
 
-        className = classNames('cm-steps-item', {
+        className = classNames('cm-steps-item', className, {
             'cm-steps-status-finish': status === 'finished',
             'cm-steps-status-process': status === 'process'
         });

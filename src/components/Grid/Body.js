@@ -324,6 +324,10 @@ class Body extends React.Component {
         const spacerHeight = this.spacer.getBoundingClientRect().height;
         const boxHeight = this.content.getBoundingClientRect().height;
 
+        if (spacerHeight < boxHeight) {
+            return;
+        }
+
         this.box.scrollTop = top;
         if (top > spacerHeight - boxHeight) {
             top = spacerHeight - boxHeight;

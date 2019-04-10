@@ -14,6 +14,8 @@ v2.7.0
 5. FontIcon 传输color的时候报错问题
 6. Spinner input中值最大限制第二次修改超出最大值不自动回复到最大值的问题
 7. Steps vertical的layout不计算width
+8. Step 添加外部className
+9. Grid 内容区域高度小于容器高度滚动bug
 
 v2.6.2
 
