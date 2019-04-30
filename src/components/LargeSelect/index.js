@@ -260,9 +260,9 @@ class SelectOptions extends React.Component {
             end = Math.min(end, data.length);
             const ret = [];
             const currentValues = value.split(sep);
-            if (start === 0) {
-                ret.push(<li className='cm-select-option' onClick={this.onSelect.bind(this, '', null)} key='_none'>{this.props.choiceText}</li>);
-            }
+            // if (start === 0) {
+            //     ret.push(<li className='cm-select-option' onClick={this.onSelect.bind(this, '', null)} key='_none'>{this.props.choiceText}</li>);
+            // }
             for (let i = start; i < end; i++) {
                 const item = data[i];
                 const value = `${item[valueField]}`;
@@ -383,7 +383,7 @@ class SelectOptions extends React.Component {
         const pageHeight = this.props.itemHeight * this.props.pageSize;
         const page = parseInt(top / pageHeight, 10);
         if (page !== this.state.page) {
-            let t = top - this.props.pageSize * this.props.itemHeight;
+            let t = (page - 1) * pageHeight;
             t = Math.max(t, 0);
             this.wrap.style.top = `${t}px`;
             this.setState({page});

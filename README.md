@@ -16,6 +16,7 @@ v2.7.0
 7. Steps vertical的layout不计算width
 8. Step 添加外部className
 9. Grid 内容区域高度小于容器高度滚动bug
+10. LargeSelect 高度计算问题
 
 v2.6.2
 
