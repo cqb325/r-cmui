@@ -52,7 +52,7 @@ class TableForm extends BaseComponent {
     buildColumn (column) {
         const scope = this;
         column.format = (value, col, row) => {
-            const itemProps = Object.assign({}, column.props || {});
+            const itemProps = Object.assign({row}, column.props || {});
             scope.mergeProps(itemProps, column, ['rules','messages','name']);
             itemProps.value = value || itemProps.defaultValue || '';
             return <FormControl ref={(ref) => {

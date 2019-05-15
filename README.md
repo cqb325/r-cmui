@@ -19,6 +19,7 @@ v2.7.0
 10. LargeSelect 高度计算问题
 11. SimpleListPage 请求出错给出提示
 12. Dom 超出页面范围的计算如果父节点存在overflow: hidden的情况有限考虑是否超出父节点
+13. TableForm将每行的数据传入对应的单元格的组件
 
 v2.6.2
 
