@@ -5,6 +5,7 @@ import Dom from '../utils/Dom';
 import Events from '../utils/Events';
 import fetch from '../utils/fetch';
 import Spin from '../Spin';
+import MessageBox from '../MessageBox';
 import PropTypes from 'prop-types';
 const {SVGSpin} = Spin;
 
@@ -147,6 +148,8 @@ class SimpleListPage extends React.Component {
             const ret = await fetch(this.props.action, this.getSearchParams(page, pageSize), 'GET', {
                 fail: (error) => {
                     console.log(window.RCMUI_I18N['SimpleListPage.fetchDataError'], error);
+                    this.setState({spinning: false});
+                    this.tip.show('请求超时或网络不畅，请检查网络或服务');
                 }
             });
             if (ret) {
@@ -289,6 +292,8 @@ class SimpleListPage extends React.Component {
                             onShowSizeChange={this.search} /> : null
                     }
                 </div>
+
+                <MessageBox ref={f => this.tip = f}/>
             </SVGSpin>
         );
     }

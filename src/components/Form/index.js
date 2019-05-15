@@ -143,9 +143,9 @@ class Form extends BaseComponent {
                     'itemBind': this.itemBind,
                     'itemUnBind': this.itemUnBind
                 }, child.props);
-                props.layout = props.layout ? props.layout : this.props.layout;
+                props.layout = props.customTipAlign ? props.customTipAlign : this.props.layout;
                 props.tipTheme = this.props.tipTheme ? this.props.tipTheme : props.tipTheme;
-                props.tipAlign = tipAlign;
+                props.tipAlign = props.customTipAlign ? props.customTipAlign : tipAlign;
                 props.tipAuto = this.props.tipAuto ? this.props.tipAuto : props.tipAuto;
                 props.labelWidth = props.labelWidth || this.props.labelWidth;
                 const changeHandler = props.onChange || function () {};

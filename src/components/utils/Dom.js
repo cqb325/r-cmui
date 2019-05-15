@@ -435,10 +435,28 @@ class Dom {
      * @returns {boolean}
      */
     static overView (el, pad = 0) {
-        const height = window.innerHeight || document.documentElement.clientHeight;
+        let parent = Dom.getOverflowParent(el);
         const bottom = el.getBoundingClientRect().bottom + pad;
-        return bottom > height;
+        if(parent){
+            return bottom > parent.getBoundingClientRect().bottom;
+        } else {
+            const height = window.innerHeight || document.documentElement.clientHeight;
+            return bottom > height;
+        }
     }
+
+    static getOverflowParent (ele) {
+        let parent = ele.parentNode;
+
+        while (parent !== null && parent.tagName !== 'HTML') {
+            if (Dom.dom(parent).css('overflow-y') === 'hidden') {
+                return parent;
+            }
+            parent = parent.parentNode;
+        }
+        return null;
+    }
+
 
     /**
      * 获取元素的最终样式

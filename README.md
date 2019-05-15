@@ -17,6 +17,8 @@ v2.7.0
 8. Step 添加外部className
 9. Grid 内容区域高度小于容器高度滚动bug
 10. LargeSelect 高度计算问题
+11. SimpleListPage 请求出错给出提示
+12. Dom 超出页面范围的计算如果父节点存在overflow: hidden的情况有限考虑是否超出父节点
 
 v2.6.2
 
