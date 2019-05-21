@@ -18,10 +18,13 @@ class ContextMenu extends React.Component {
         overlay: PropTypes.element
     };
 
-    onSelect = (item) => {
+    onSelect = (outerOnSelect, item) => {
         this.hideMenu();
+        if (outerOnSelect) {
+            outerOnSelect(item, this.target);
+        }
         if (this.props.onSelect) {
-            this.props.onSelect(item);
+            this.props.onSelect(item, this.target);
         }
     }
 
@@ -52,16 +55,20 @@ class ContextMenu extends React.Component {
         const wrap = document.createElement('div');
         document.body.appendChild(wrap);
         const overlay = this.props.overlay;
-
         if (overlay) {
             const props = Object.assign({
             }, overlay.props, {
-                onSelect: this.onSelect,
+                onSelect: this.onSelect.bind(this, overlay.props.onSelect),
                 storeClickState: false,
+                ref: this.saveRef,
                 className: 'cm-contextmenu'
             });
-            this.overlay = ReactDOM.render(React.cloneElement(overlay, props), wrap);
+            ReactDOM.render(React.cloneElement(overlay, props), wrap);
         }
+    }
+
+    saveRef = (f) => {
+        this.overlay = f;
     }
 
     onScroll = (event) => {
