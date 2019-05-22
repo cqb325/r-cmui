@@ -21,6 +21,7 @@ v2.7.0
 12. Dom 超出页面范围的计算如果父节点存在overflow: hidden的情况有限考虑是否超出父节点
 13. TableForm将每行的数据传入对应的单元格的组件
 14. 修改ContentMenu的ref和onSelect
+15. ContentMenu性能问题修改
 
 v2.6.2
 

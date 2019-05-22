@@ -20,7 +20,7 @@ class ContextMenu extends React.Component {
 
     onSelect = (outerOnSelect, item) => {
         this.hideMenu();
-        if (outerOnSelect) {
+        if(outerOnSelect){
             outerOnSelect(item, this.target);
         }
         if (this.props.onSelect) {
@@ -29,12 +29,14 @@ class ContextMenu extends React.Component {
     }
 
     onClick = (event) => {
-        const target = Dom.closest(event.target, '.cm-menu');
-        if (target) {
-            return false;
-        } else {
-            this.hideMenu();
+        console.log('click');
+        if(this.clickTimer){
+            window.clearTimeout(this.clickTimer);
+            this.clickTimer = null;
         }
+        this.clickTimer = window.setTimeout(() => {
+            this.hideMenu();
+        }, 300);
     }
 
     componentWillUnmount () {
@@ -72,12 +74,18 @@ class ContextMenu extends React.Component {
     }
 
     onScroll = (event) => {
-        const target = Dom.closest(event.target, '.cm-contextmenu');
-        if (target) {
-            return false;
-        } else {
-            this.hideMenu();
+        if(this.scrollTimer){
+            window.clearTimeout(this.scrollTimer);
+            this.scrollTimer = null;
         }
+        this.scrollTimer = window.setTimeout(() => {
+            // const target = Dom.closest(event.target, '.cm-contextmenu');
+            // if (target) {
+                // return false;
+            // } else {
+            this.hideMenu();
+            // }
+        }, 300);
     }
 
     onContextMenu = (event) => {
