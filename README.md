@@ -22,6 +22,7 @@ v2.7.0
 13. TableForm将每行的数据传入对应的单元格的组件
 14. 修改ContentMenu的ref和onSelect
 15. ContentMenu性能问题修改
+16. closest优化如原生支持直接使用原生方法
 
 v2.6.2
 

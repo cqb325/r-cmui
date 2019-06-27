@@ -18,7 +18,8 @@ class Comp extends React.Component {
                 type: 'directory',
                 children: [
                     {id: 'K:/gitgit/aaa111', text: 'aaa111', path: 'K:/gitgit/aaa111', name: 'aaa111', children: [
-                        {id: '2222', text: '22222'}
+                        {id: '2222', text: '22222'},
+                        {id: '2223', text: '2223'}
                     ], size: 0, type: 'directory'}
                 ]
             }
@@ -59,6 +60,10 @@ class Comp extends React.Component {
         return <div>
             <Button onClick={this.reloadData}>数据</Button>
             <Button onClick={this.reloadData2}>数据2</Button>
+            <Button onClick={() => {
+                this.tree.checkItem('2222');
+                this.tree.checkItem('2223');
+            }}>勾选节点</Button>
             <Button onClick={() => {
                 this.tree.addItem('K:/gitgit', {
                     id: 'K:/gitgit/222', text: '222'

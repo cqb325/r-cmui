@@ -220,6 +220,9 @@ class Dom {
     // }
     
     static closest (el, selector) {
+        if (el.closest) {
+            return el.closest(selector);
+        }
         const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
     
         while (el) {
@@ -435,9 +438,9 @@ class Dom {
      * @returns {boolean}
      */
     static overView (el, pad = 0) {
-        let parent = Dom.getOverflowParent(el);
+        const parent = Dom.getOverflowParent(el);
         const bottom = el.getBoundingClientRect().bottom + pad;
-        if(parent){
+        if (parent) {
             return bottom > parent.getBoundingClientRect().bottom;
         } else {
             const height = window.innerHeight || document.documentElement.clientHeight;
